@@ -84,7 +84,7 @@ class UserController extends Controller
         $data['id_user'] = $id_user;
         $user = User::create($data);
 
-        return redirect('user')->with('success', 'User created successfully');
+        return redirect('admin/user')->with('success', 'User created successfully');
     }
 
     /**
@@ -146,7 +146,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect('user')->with('success', 'User updated successfully');
+        return redirect('admin/user')->with('success', 'User updated successfully');
     }
 
     /**

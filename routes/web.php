@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
 
 Route::get('/', function () {
@@ -26,5 +29,10 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
 
         Route::resource('role', RoleController::class);
         Route::resource('user', UserController::class);
+        Route::resource('config', ConfigController::class)
+            ->only(['index', 'update']);
+        Route::resource('category', CategoryController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('article', BlogController::class);
     });
 });

@@ -20,14 +20,16 @@
         </div>
         <nav class="mt-2">
             @php
-                $permissionDashboard = App\Models\PermissionRole::getPermission('Dashboard', Auth::user()->role_id);
+                $PermissionDashboard = App\Models\PermissionRole::getPermission('Dashboard', Auth::user()->role_id);
                 $PermissionUser = App\Models\PermissionRole::getPermission('User', Auth::user()->role_id);
                 $PermissionRole = App\Models\PermissionRole::getPermission('Role', Auth::user()->role_id);
+                $PermissionCategory = App\Models\PermissionRole::getPermission('Category', Auth::user()->role_id);
+                $PermissionConfig = App\Models\PermissionRole::getPermission('Config', Auth::user()->role_id);
             @endphp
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
 
-                @if (!empty($permissionDashboard))
+                @if (!empty($PermissionDashboard))
                     <li class="nav-header">General</li>
                     <li class="nav-item">
                         <a href="{{ route('dashboard') }}"
@@ -40,8 +42,57 @@
                     </li>
                 @endif
 
-                @if (!empty($PermissionUser) || !empty($PermissionRole))
+                <li class="nav-item">
+                    <a href="" class="nav-link @if (Request::segment(2) == 'donasi') active @endif">
+                        <i class="fas fa-hand-holding-heart nav-icon"></i>
+                        <p>Donasi</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Management Page</li>
+
+                <li class="nav-item">
+                    <a href="" class="nav-link @if (Request::segment(2) == 'website') active @endif">
+                        <i class="fas fa-globe nav-icon"></i>
+                        <p>Webiste</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('article.index') }}" class="nav-link @if (Request::segment(2) == 'blog') active @endif">
+                        <i class="fas fa-newspaper nav-icon"></i>
+                        <p>Blog</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="" class="nav-link @if (Request::segment(2) == 'event') active @endif">
+                        <i class="fas fa-calendar nav-icon"></i>
+                        <p>Event</p>
+                    </a>
+                </li>
+
+                @if (!empty($PermissionUser) || !empty($PermissionRole || !empty($PermissionCategory || !empty($PermissionConfig))))
                     <li class="nav-header">Management</li>
+                @endif
+
+                @if (!empty($PermissionConfig))
+                <li class="nav-item">
+                    <a href="{{ route('config.index') }}" class="nav-link @if (Request::segment(2) == 'config') active @endif">
+                        <i class="fas fa-cogs nav-icon"></i>
+                        <p>Config</p>
+                    </a>
+                </li>
+                @endif
+
+                @if (!empty($PermissionCategory))
+                    <li class="nav-item">
+                        <a href="{{ route('category.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'category') active @endif">
+                            <i class="fas fa-list nav-icon"></i>
+                            <p>Category</p>
+                        </a>
+                    </li>
                 @endif
 
                 @if (!empty($PermissionUser))

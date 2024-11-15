@@ -87,6 +87,54 @@ class PermissionSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            [
+                'id' => 10,
+                'name' => 'Category',
+                'slug' => 'Category',
+                'groupby' => 3,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 11,
+                'name' => 'Add Category',
+                'slug' => 'Add Category',
+                'groupby' => 3,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 12,
+                'name' => 'Edit Category',
+                'slug' => 'Edit Category',
+                'groupby' => 3,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 13,
+                'name' => 'Delete Category',
+                'slug' => 'Delete Category',
+                'groupby' => 3,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 14,
+                'name' => 'Config',
+                'slug' => 'Config',
+                'groupby' => 4,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 15,
+                'name' => 'Edit Config',
+                'slug' => 'Edit Config',
+                'groupby' => 4,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
         ]);
     }
 }

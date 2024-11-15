@@ -73,7 +73,7 @@ class RoleController extends Controller
 
         PermissionRole::InsertUpdateRecord($request->permission_id, $role->id);
 
-        return redirect('role')->with('success', 'Role created successfully');
+        return redirect('admin/role')->with('success', 'Role created successfully');
     }
 
     /**
@@ -127,7 +127,7 @@ class RoleController extends Controller
 
         PermissionRole::InsertUpdateRecord($request->permission_id, $id);
 
-        return redirect('role')->with('success', 'Role updated successfully');
+        return redirect('admin/role')->with('success', 'Role updated successfully');
     }
 
     /**
@@ -142,6 +142,6 @@ class RoleController extends Controller
 
         Role::getRecord($id)->delete();
 
-        return redirect('role')->with('success', 'Role deleted successfully');
+        return redirect('admin/role')->with('success', 'Role deleted successfully');
     }
 }

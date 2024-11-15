@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->uuid('blog_id'); // Primary Key
+            $table->string('category_id'); // FK ke categories
             $table->string('title', 100);
             $table->text('content');
+            $table->string('status');
             $table->timestamps();
         });
     }
