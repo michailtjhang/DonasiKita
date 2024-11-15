@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blogs', function (Blueprint $table) {
-            $table->uuid('blog_id'); // Primary Key
-            $table->string('category_id'); // FK ke categories
-            $table->string('title', 100);
+            $table->uuid('blog_id')->primary(); // Primary Key
+            $table->foreignId('category_id')->index()->constrained(); // FK ke categories
+            $table->string('title');
+            $table->string('slug');
             $table->text('content');
+            $table->integer('views');
             $table->string('status');
+            $table->date('published_date');
             $table->timestamps();
         });
     }

@@ -27,22 +27,13 @@
                             <th>No</th>
                             <th>Title</th>
                             <th>Category</th>
-                            <th>Views</th>
+                            {{-- <th>Views</th> --}}
                             <th>Status</th>
-                            <th>Published Date</th>
+                            {{-- <th>Published Date</th> --}}
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
-                            <th>6</th>
-                            <th>7</th>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -59,7 +50,7 @@
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
 
-    {{-- <script>
+    <script>
         const swal = $('.swal').data('swal');
 
         if (swal) {
@@ -117,8 +108,8 @@
                 }
             })
         }
-    </script> --}}
-    {{-- <script>
+    </script>
+    <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
                 processing: true,
@@ -136,18 +127,18 @@
                         data: 'category_id',
                         name: 'category_id'
                     },
-                    {
-                        data: 'views',
-                        name: 'views'
-                    },
+                    // {
+                    //     data: 'views',
+                    //     name: 'views'
+                    // },
                     {
                         data: 'status',
                         name: 'status'
                     },
-                    {
-                        data: 'published_date',
-                        name: 'published_date'
-                    },
+                    // {
+                    //     data: 'published_date',
+                    //     name: 'published_date'
+                    // },
                     {
                         data: 'action',
                         name: 'action'
@@ -155,5 +146,5 @@
                 ]
             });
         });
-    </script> --}}
+    </script>
 @endsection

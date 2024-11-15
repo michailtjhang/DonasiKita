@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('donations', function (Blueprint $table) {
-            $table->uuid('donation_id'); // Primary Key
+            $table->uuid('donation_id')->primary(); // Primary Key
             $table->string('user_id')->nullable(); // FK ke users
             $table->uuid('event_id'); // FK ke events
             $table->string('email'); // Untuk mencatat email donatur tanpa login

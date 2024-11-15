@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contact_messages', function (Blueprint $table) {
-            $table->uuid('message_id'); // Primary Key
+            $table->uuid('message_id')->primary(); // Primary Key
             $table->string('user_id'); // FK ke users
             $table->text('message');
             $table->timestamps();

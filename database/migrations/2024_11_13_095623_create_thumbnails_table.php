@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('thumbnails', function (Blueprint $table) {
-            $table->uuid('thumbnail_id'); // Primary Key
+            $table->uuid('thumbnail_id')->primary(); // Primary Key
             $table->uuid('blog_id'); // FK ke blogs
             $table->string('file_path', 255);
             $table->string('type', 50); // Image, Video

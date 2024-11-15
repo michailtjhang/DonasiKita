@@ -3,17 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class NeedDonation extends Model
 {
-    use HasFactory, HasUlids;
-
-    protected $keyType = 'string';
+    use HasFactory;
     protected $table = 'need_donations';
     protected $fillable = [
-        'need_donation_id',
         'donation_id',
         'need_id'
     ];
