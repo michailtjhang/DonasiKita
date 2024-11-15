@@ -23,61 +23,71 @@
                             <th>Nama</th>
                             <th>Slug</th>
                             <th>Created at</th>
-                            <th>Aksi</th>
+                            @if (!empty($data['PermissionEdit']) || !empty($data['PermissionDelete']))
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $row)
+                        @foreach ($data['category'] as $row)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $row->name }}</td>
                                 <td>{{ $row->slug }}</td>
                                 <td>{{ $row->created_at }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalUpdate{{ $row->id }}">
-                                        <i class="fas fa-fw fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger"
-                                        onclick="confirmDelete('{{ route('category.destroy', $row->id) }}', '{{ $row->name }}')">
-                                        <i class="fas fa-fw fa-trash"></i>
-                                    </button>
+                                @if (!empty($data['PermissionEdit']) || !empty($data['PermissionDelete']))
+                                    <td>
+                                        @if (!empty($data['PermissionEdit']))
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                                data-target="#modalUpdate{{ $row->id }}">
+                                                <i class="fas fa-fw fa-edit"></i>
+                                            </button>
+                                        @endif
 
-                                    <script>
-                                        function confirmDelete(deleteUrl, name) {
-                                            Swal.fire({
-                                                title: "Are you sure?",
-                                                text: `You won't be able to revert this! This will delete ${name}.`,
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#d33",
-                                                cancelButtonColor: "#3085d6",
-                                                confirmButtonText: "Yes, delete it!"
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    var form = document.createElement('form');
-                                                    form.method = 'POST';
-                                                    form.action = deleteUrl;
+                                        @if (!empty($data['PermissionDelete']))
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="confirmDelete('{{ route('category.destroy', $row->id) }}', '{{ $row->name }}')">
+                                                <i class="fas fa-fw fa-trash"></i>
+                                            </button>
+                                        @endif
 
-                                                    var csrfToken = document.createElement('input');
-                                                    csrfToken.type = 'hidden';
-                                                    csrfToken.name = '_token';
-                                                    csrfToken.value = '{{ csrf_token() }}';
-                                                    form.appendChild(csrfToken);
+                                        <script>
+                                            function confirmDelete(deleteUrl, name) {
+                                                Swal.fire({
+                                                    title: "Are you sure?",
+                                                    text: `You won't be able to revert this! This will delete ${name}.`,
+                                                    icon: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#d33",
+                                                    cancelButtonColor: "#3085d6",
+                                                    confirmButtonText: "Yes, delete it!"
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        var form = document.createElement('form');
+                                                        form.method = 'POST';
+                                                        form.action = deleteUrl;
 
-                                                    var methodField = document.createElement('input');
-                                                    methodField.type = 'hidden';
-                                                    methodField.name = '_method';
-                                                    methodField.value = 'DELETE';
-                                                    form.appendChild(methodField);
+                                                        var csrfToken = document.createElement('input');
+                                                        csrfToken.type = 'hidden';
+                                                        csrfToken.name = '_token';
+                                                        csrfToken.value = '{{ csrf_token() }}';
+                                                        form.appendChild(csrfToken);
 
-                                                    document.body.appendChild(form);
-                                                    form.submit();
-                                                }
-                                            });
-                                        }
-                                    </script>
+                                                        var methodField = document.createElement('input');
+                                                        methodField.type = 'hidden';
+                                                        methodField.name = '_method';
+                                                        methodField.value = 'DELETE';
+                                                        form.appendChild(methodField);
 
-                                </td>
+                                                        document.body.appendChild(form);
+                                                        form.submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -90,7 +100,6 @@
     <!-- /.modal-content -->
     @include('Backend.category.create-modal')
     @include('Backend.category.edit-modal')
-
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,4 +1,4 @@
-@foreach ($data as $row)
+@foreach ($data['config'] as $row)
     <div class="modal fade" id="modalUpdate{{ $row->id }}">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -19,27 +19,33 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Value</th>
-                            <th>Aksi</th>
+                            @if (!empty($data['PermissionEdit']))
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $item => $row)
+                        @foreach ($data['config'] as $item => $row)
                             <tr>
-                                <td>{{ $data->firstItem() + $item }}</td>
+                                {{-- Periksa jika method firstItem() tersedia --}}
+                                <td>{{ $data['config']->firstItem() + $item }}</td>
                                 <td>{{ $row->name }}</td>
                                 <td>{{ Str::limit(strip_tags($row->value), 50, '...') }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalUpdate{{ $row->id }}">
-                                        <i class="fas fa-fw fa-edit"></i>
-                                    </button>
-                                </td>
+                                @if (!empty($data['PermissionEdit']))
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                            data-target="#modalUpdate{{ $row->id }}">
+                                            <i class="fas fa-fw fa-edit"></i>
+                                        </button>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
-                    {!! $data->onEachSide(1)->links('pagination::bootstrap-4') !!}
-                </div>                
+                    {!! $data['config']->onEachSide(1)->links('pagination::bootstrap-4') !!}
+                </div>
             </div>
         </div>
     </div>
@@ -47,7 +53,6 @@
 
     <!-- /.modal-content -->
     @include('Backend.config.edit-modal')
-
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

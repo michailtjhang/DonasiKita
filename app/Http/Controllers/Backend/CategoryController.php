@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PermissionRole;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -14,9 +16,20 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $PermissionRole = PermissionRole::getPermission('Category', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            abort(404);
+        }
+
+        $data['PermissionAdd'] = PermissionRole::getPermission('Add Category', Auth::user()->role_id);
+        $data['PermissionEdit'] = PermissionRole::getPermission('Edit Category', Auth::user()->role_id);
+        $data['PermissionDelete'] = PermissionRole::getPermission('Delete Category', Auth::user()->role_id);
+
+        $data['category'] = Category::latest()->get();
+
         return view('Backend.category.index', [
-            'data' => Category::latest()->get(),
-            'page_title' => 'Category',
+            'data' => $data,
+            'page_title' => 'Category List',
         ]);
     }
 

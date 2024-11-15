@@ -45,7 +45,7 @@
                 <li class="nav-item">
                     <a href="" class="nav-link @if (Request::segment(2) == 'donasi') active @endif">
                         <i class="fas fa-hand-holding-heart nav-icon"></i>
-                        <p>Donasi</p>
+                        <p>Laporan Donasi</p>
                     </a>
                 </li>
 
