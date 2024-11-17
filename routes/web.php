@@ -10,7 +10,7 @@ use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
 
 Route::get('/', function () {
-    return view('home');
+    return view('front.home.home');
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -36,3 +36,9 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('article', BlogController::class);
     });
 });
+
+
+//contoh route ke page lainnya
+// Route('/about', function () {
+//     return view('front.home.');
+// });

@@ -1,9 +1,9 @@
-:root{
-    --light-color: #FFFFFF;
+:root {
+    --light-color: #ffffff;
     --dark-color: #145071;
-    --skyline-color: #E9F4FA;
-    --aqua-color: #6CB6DE;
-    --primary-color: #2185BB;
+    --skyline-color: #e9f4fa;
+    --aqua-color: #6cb6de;
+    --primary-color: #2185bb;
 
     --font-size-small: 13px;
     --font-size-medium: 16px;
@@ -11,52 +11,81 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-a{
+a {
     text-decoration: none;
 }
-.bg-aqua{
+.bg-aqua {
     background-color: var(--aqua-color);
 }
-.bg-primary{
-    background-color: var(--primary-color)!important;
+.bg-primary {
+    background-color: var(--primary-color) !important;
 }
-.bg-skyline{
+.bg-skyline {
     background-color: var(--skyline-color);
 }
 
-.text-aqua{
+.text-aqua {
     color: var(--aqua-color);
 }
-.text-primary{
-    color: var(--primary-color)!important;
+.text-primary {
+    color: var(--primary-color) !important;
 }
-.text-skyline{
+.text-skyline {
     color: var(--skyline-color);
 }
-.text-dark{
-    color: var(--dark-color)!important;
+.text-dark {
+    color: var(--dark-color) !important;
 }
 
-.bolder-text{
+.bolder-text {
     font-weight: bolder;
 }
-.text-small{
+.text-small {
     font-size: var(--font-size-small);
 }
-.text-medium{
+.text-medium {
     font-size: var(--font-size-medium);
 }
-.text-large{
+.text-large {
     font-size: var(--font-size-large);
 }
 
+.card-item {
+    width: 18rem;
+}
+.space-section {
+    margin-bottom: 200px;
+}
+
+@media (max-width: 762px) {
+    .card-item {
+        width: 25rem;
+    }
+}
+
+@media (max-width: 629px) {
+    .card-item {
+        width: 20rem;
+    }
+}
+@media (max-width: 485px) {
+    .card-item {
+        width: 18rem;
+    }
+}
+@media (max-width: 420px) {
+    .card-item {
+        width: 17rem;
+    }
+}
+
 /* navbar */
-.nav-link{
+.nav-link {
     color: var(--primary-color);
 }
-.nav-link .active{
+.nav-link .active {
     color: var(--dark-color);
 }
 .avatar {
@@ -67,28 +96,30 @@ a{
 }
 
 .logo-brand {
-    width: 150px; 
+    width: 150px;
     height: auto;
 }
-  
+
 @media (max-width: 992px) {
     .logo-brand {
         width: 120px;
     }
 }
 
-@media (max-width: 768px) { /* Untuk layar ukuran kecil ke bawah (mobile) */
+@media (max-width: 768px) {
+    /* Untuk layar ukuran kecil ke bawah (mobile) */
     .logo-brand {
         width: 100px;
     }
 }
 
-@media (max-width: 576px) { /* Untuk layar ekstra kecil ke bawah (ponsel kecil) */
+@media (max-width: 576px) {
+    /* Untuk layar ekstra kecil ke bawah (ponsel kecil) */
     .logo-brand {
         width: 80px;
     }
 }
-.btn-primary{
+.btn-primary {
     background-color: var(--aqua-color);
     margin-left: 10px;
     border: 0px;
@@ -107,35 +138,34 @@ a{
 }
 /* hero */
 
-
 .about-image {
-    width: 100%; 
-    max-width: 500px; 
-    height: auto; 
+    width: 100%;
+    max-width: 500px;
+    height: auto;
 }
 
 @media (max-width: 800px) {
     .about-image {
-        max-width: 350px; 
+        max-width: 350px;
     }
 }
 @media (max-width: 768px) {
     .about-image {
-        max-width: 300px; 
+        max-width: 300px;
     }
     #upcoming-content {
         max-width: 300px;
     }
-    .banner-content h1{
+    .banner-content h1 {
         font-size: 30px !important;
     }
-    .banner-content p{
+    .banner-content p {
         font-size: 30px !important;
     }
-    .banner-content h1{
+    .banner-content h1 {
         font-size: 30px !important;
     }
-    .banner-content button{
+    .banner-content button {
         font-size: 30px !important;
     }
 }
@@ -145,13 +175,20 @@ a{
     }
 }
 
-#card-donate {
-    margin-left: 10% !important;
-    margin-right: 10% !important
+/* debugging */
+
+/* .container, .row, .col-md-6, .col-lg-3 {
+    border: 1px solid red;
 }
+.row, .col-md-6 {
+    border: 1px solid rgb(0, 47, 255);
+}
+.col-md-6, .col-lg-3 {
+    border: 1px solid rgb(4, 122, 0);
+} */
 
 #button-event {
-    background: rgb(33,133,187) !important;
+    background: rgb(33, 133, 187) !important;
     margin: 6px;
     font-weight: lighter;
     padding: 10px 20px;
@@ -160,10 +197,24 @@ a{
     position: relative;
     overflow: hidden;
     height: 500px;
-    width: 110%;
+    width: 350px;
     padding: 0px;
     box-sizing: border-box;
+    margin: 0 auto;
 }
+@media (max-width: 1150px) {
+    .event-card {
+        height: 500px;
+        width: 300px;
+    }
+}
+@media (max-width: 760px) {
+    .event-card {
+        height: 450px;
+        width: 400px;
+    }
+}
+
 .event-card img {
     width: 100%;
     height: 100%;
@@ -174,12 +225,12 @@ a{
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #26547C;
+    background-color: #26547c;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 24px
+    font-size: 24px;
 }
 
 .event-details {
@@ -188,13 +239,17 @@ a{
     width: 100%;
     padding: 15px;
     color: white;
-    background: linear-gradient(0deg, rgba(21, 110, 110, 1) 0%, rgba(21, 110, 110, 0.8) 75%, rgba(21, 110, 110, 0.01) 100%);
-    background-size: 100% 100%; 
-    background-position: 0 100%; 
+    background: linear-gradient(
+        0deg,
+        rgba(21, 110, 110, 1) 0%,
+        rgba(21, 110, 110, 0.8) 75%,
+        rgba(21, 110, 110, 0.01) 100%
+    );
+    background-size: 100% 100%;
+    background-position: 0 100%;
     overflow: hidden;
     text-align: left !important;
 }
-
 
 .event-title {
     font-size: 1.25rem;
@@ -215,7 +270,7 @@ a{
 
 .banner {
     position: relative;
-    background-image: url('../images/content/invitation.svg'); /* Replace with your image URL */
+    background-image: url("../images/content/invitation.svg"); /* Replace with your image URL */
     background-size: fill;
     background-position: center;
     height: 430px;
@@ -225,10 +280,14 @@ a{
     justify-content: center;
     color: white;
     text-align: center;
-    
-  }
-
-  /* .banner-overlay {
+    background-repeat: no-repeat;
+}
+@media (max-width: 800px) {
+    .banner {
+        background-image: url("../images/content/invtiation2.svg");
+    }
+}
+/* .banner-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -236,20 +295,20 @@ a{
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5); 
   } */
-  
-  .banner-content {
+
+.banner-content {
     position: relative;
     z-index: 1;
-  }
-  .banner h1 {
+}
+.banner h1 {
     font-size: 2em;
     font-weight: bold;
-  }
-  .banner p {
+}
+.banner p {
     font-size: 1.2em;
     margin-bottom: 20px;
-  }
-  .btn-custom {
+}
+.btn-custom {
     background-color: #007bff;
     color: white;
     font-weight: bold;
@@ -257,13 +316,13 @@ a{
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-  }
+}
 
-  .bg-footer{
-    background: rgb(9,38,53) !important;
-  }
+.bg-footer {
+    background: rgb(9, 38, 53) !important;
+}
 
-  .social-icons .icon {
+.social-icons .icon {
     background-color: #ffffff;
     border-radius: 8px;
     padding: 10px;
@@ -274,16 +333,16 @@ a{
     height: 50px;
     color: #0d3b4c;
     margin: 0 5px;
-  }
-  .social-icons {
+}
+.social-icons {
     margin-top: 20px;
-  }
-  /* WhatsApp Floating Button */
-  .whatsapp-icon {
+}
+/* WhatsApp Floating Button */
+.whatsapp-icon {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #25D366;
+    background-color: #25d366;
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -293,7 +352,32 @@ a{
     color: #ffffff;
     font-size: 24px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  }
-  .whatsapp-icon:hover {
+}
+.whatsapp-icon:hover {
     background-color: #1ebe57;
-  }
+}
+
+/* Page donation_details */
+
+.list-unstyled li {
+    position: relative;
+    padding-left: 1.5rem; /* Ruang untuk penanda titik */
+    margin-bottom: 1rem;
+}
+
+.list-unstyled strong {
+    position: relative;
+}
+
+.list-unstyled strong::before {
+    content: "•"; /* Penanda titik */
+    position: absolute;
+    left: -1.5rem; /* Tempatkan di kiri elemen */
+    color: #000; /* Warna titik */
+    font-size: 1.4rem; /* Ukuran titik */
+    line-height: 1.5; /* Menyamakan tinggi dengan teks */
+}
+
+.spacing-donation p {
+    line-height: 2; /* Mengatur jarak antar baris */
+}
