@@ -36,3 +36,19 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('article', BlogController::class);
     });
 });
+
+Route::get('/home', function () {
+    return view('front.home.home');
+});
+
+Route::get('/about', function () {
+    return view('front.about.about');
+});
+
+Route::get('/donation', function () {
+    return view('front.donation.donation');
+});
+
+Route::get('/event', function () {
+    return view('front.event.event');
+});
