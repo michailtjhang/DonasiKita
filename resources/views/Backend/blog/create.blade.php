@@ -1,7 +1,10 @@
 @extends('Backend.layouts.app')
+<<<<<<< HEAD
+=======
 @section('seoMeta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 @section('css')
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
@@ -9,7 +12,11 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.css">
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/theme/monokai.css">
     <!-- SimpleMDE -->
+<<<<<<< HEAD
+    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css">
+=======
     {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css"> --}}
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 @endsection
 @section('content')
     <div class="card">
@@ -63,12 +70,21 @@
                 </div>
 
                 <div class="form-group">
+<<<<<<< HEAD
+                    <label for="desc">Description</label>
+                    <textarea id="summernote" name="desc" class="form-control @error('desc') is-invalid @enderror">
+                        {!! old('desc') !!}
+                    </textarea>
+
+                    @error('desc')
+=======
                     <label for="content">Description</label>
                     <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
                         {!! old('content') !!}
                     </textarea>
 
                     @error('content')
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -77,7 +93,11 @@
                 </div>
 
                 <div class="form-group">
+<<<<<<< HEAD
+                    <label for="img">Image</label>
+=======
                     <label for="img">Image Cover</label>
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="img" id="img">
@@ -141,7 +161,10 @@
 @endsection
 @section('js')
     <!-- Summernote -->
+<<<<<<< HEAD
+=======
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>
@@ -151,6 +174,17 @@
 
     <script>
         $(function() {
+<<<<<<< HEAD
+            // Summernote
+            $('#summernote').summernote()
+
+            // CodeMirror
+            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                mode: "htmlmixed",
+                theme: "monokai"
+            });
+        })
+=======
             bsCustomFileInput.init();
         });
     </script>
@@ -191,5 +225,6 @@
                 });
             }
         });
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
     </script>
 @endsection

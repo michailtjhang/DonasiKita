@@ -4,9 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
+=======
 
     @yield('seoMeta')
     
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
     <title>{{ $page_title ?? 'Dashboard' }} | {{ config('app.name', 'Laravel') }}</title>
 
     <link rel="stylesheet"
@@ -75,6 +78,10 @@
                         }
                     }));
                     eS.referrerPolicy = "origin";
+<<<<<<< HEAD
+                    eS.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(eK.zarazData)));
+=======
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
                     eR.parentNode.insertBefore(eS, eR)
                 };
                 ["complete", "interactive"].includes(eL.readyState) ? zaraz.init() : eK.addEventListener(

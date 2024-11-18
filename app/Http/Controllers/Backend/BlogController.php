@@ -37,9 +37,15 @@ class BlogController extends Controller
                 ->addColumn('action', function ($blogs) {
                     return '
                     <th>
+<<<<<<< HEAD
+                        <a href="article/' . $blogs->blog_id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>
+                        <a href="article/' . $blogs->blog_id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>
+                        <a href="#" onclick="deleteData(this)" data-id="' . $blogs->blog_id . '" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+=======
                         <a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>
                         <a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>
                         <a href="#" onclick="deleteData(this)" data-id="' . $blogs->id . '" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
                     </th>';
                 })
                 ->rawColumns(['category_id', 'status', 'action'])
@@ -60,6 +66,20 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+<<<<<<< HEAD
+        dd($request->all());
+        $data = $request->all();
+
+        // upload image
+        $file = $request->file('img'); // get file
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
+        $file->move(storage_path('app/public/article'), $filename); // path file
+
+        // table blog
+        $data['slug'] = Str::slug($data['title']);
+        $data['views'] = 0;
+        Blog::create($data);
+=======
         $request->validate([
             'title' => 'required',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
@@ -87,11 +107,16 @@ class BlogController extends Controller
 
         // Simpan data ke tabel Blog
         $blog = Blog::create($data);
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 
         // table thumbnail 
         $dataThumbnail['file_path'] = $filename;
         $dataThumbnail['type'] = 'Image';
+<<<<<<< HEAD
+        $dataThumbnail['blog_id'] = Blog::latest()->first()->blog_id;
+=======
         $dataThumbnail['blog_id'] = $blog->blog_id;
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
         Thumbnail::create($dataThumbnail);
 
         return redirect()->route('article.index')->with('success', 'Data added successfully');
@@ -100,6 +125,9 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
+<<<<<<< HEAD
+    public function show(string $id) {}
+=======
     public function show(string $id)
     {
         // Cari artikel berdasarkan ID
@@ -111,10 +139,14 @@ class BlogController extends Controller
             'article' => $Blog,
         ]);
     }
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 
     /**
      * Show the form for editing the specified resource.
      */
+<<<<<<< HEAD
+    public function edit(string $id) {}
+=======
     public function edit(string $id)
     {
         return view('Backend.blog.edit', [
@@ -123,10 +155,14 @@ class BlogController extends Controller
             'categories' => Category::get(),
         ]);
     }
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 
     /**
      * Update the specified resource in storage.
      */
+<<<<<<< HEAD
+    public function update(Request $request, string $id) {}
+=======
     public function update(Request $request, string $id)
     {
         // Validasi data
@@ -181,10 +217,14 @@ class BlogController extends Controller
 
         return redirect()->route('article.index')->with('success', 'Data updated successfully');
     }
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 
     /**
      * Remove the specified resource from storage.
      */
+<<<<<<< HEAD
+    public function destroy(string $id) {}
+=======
     public function destroy(string $id)
     {
         $blog = Blog::findOrFail($id); // Pastikan blog ditemukan
@@ -237,4 +277,5 @@ class BlogController extends Controller
 
         return response()->json($url);
     }
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 }
