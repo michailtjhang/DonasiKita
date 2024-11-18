@@ -8,10 +8,13 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Front\HomeController;
 
-Route::get('/', function () {
-    return view('front.home.home');
-});
+// Route::get('/', function () {
+//     return view('front.home.home');
+// });
+
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'auth_login']);
