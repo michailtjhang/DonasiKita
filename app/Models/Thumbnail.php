@@ -3,14 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Thumbnail extends Model
 {
-    use HasFactory, HasUlids;
-
-    protected $keyType = 'string';
+    use HasFactory;
     protected $table = 'thumbnails';
     protected $fillable = [
         'thumbnail_id',

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('thumbnails', function (Blueprint $table) {
-            $table->uuid('thumbnail_id')->primary(); // Primary Key
-            $table->uuid('blog_id'); // FK ke blogs
+            $table->id(); // Primary Key
+            $table->char('blog_id', 5); // FK ke blogs
             $table->string('file_path', 255);
             $table->string('type', 50); // Image, Video
             $table->timestamps();

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('need_donations', function (Blueprint $table) {
             $table->id(); // Primary Key
-            $table->uuid('donation_id'); // FK ke donations
-            $table->uuid('need_id'); // FK ke needs
+            $table->char('donation_id', 5); // FK ke donations
+            $table->char('need_id', 5); // FK ke needs
             $table->timestamps();
         });
     }

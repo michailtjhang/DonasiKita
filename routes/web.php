@@ -34,5 +34,8 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('category', CategoryController::class)
             ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('article', BlogController::class);
+
+        Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
+
     });
 });

@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->uuid('event_id')->primary(); // Primary Key
+            $table->uuid('id')->primary(); // Primary Key
+            $table->string('event_id'); 
+            $table->foreignId('category_id')->index()->constrained(); // FK ke categories
             $table->string('title');
             $table->string('slug');
             $table->text('description');

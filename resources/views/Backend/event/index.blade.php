@@ -1,7 +1,4 @@
 @extends('Backend.layouts.app')
-@section('seoMeta')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
 @section('css')
     <!-- ======================== datatable ========================= -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
@@ -72,7 +69,7 @@
             console.log(id);
             Swal.fire({
                 title: 'Delete!!',
-                text: "Are you sure want to delete this data?" + id,
+                text: "Are you sure want to delete this data?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -131,10 +128,10 @@
                         data: 'category_id',
                         name: 'category_id'
                     },
-                    {
-                        data: 'views',
-                        name: 'views'
-                    },
+                    // {
+                    //     data: 'views',
+                    //     name: 'views'
+                    // },
                     {
                         data: 'status',
                         name: 'status'

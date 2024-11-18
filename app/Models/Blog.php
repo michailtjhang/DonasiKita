@@ -16,11 +16,19 @@ class Blog extends Model
         'blog_id',
         'category_id',
         'title',
+        'slug',
+        'views',
+        'status',
         'content'
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function thumbnail()
+    {
+        return $this->hasOne(Thumbnail::class, 'blog_id', 'blog_id');
     }
 }
