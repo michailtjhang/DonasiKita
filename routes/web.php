@@ -10,7 +10,11 @@ use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
 
 Route::get('/', function () {
+<<<<<<< HEAD
     return view('front.home.home');
+=======
+    return view('welcome');
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -34,6 +38,7 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('category', CategoryController::class)
             ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('article', BlogController::class);
+<<<<<<< HEAD
     });
 });
 
@@ -42,3 +47,10 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
 // Route('/about', function () {
 //     return view('front.home.');
 // });
+=======
+
+        Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
+
+    });
+});
+>>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51

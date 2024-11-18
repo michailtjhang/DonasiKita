@@ -1,10 +1,4 @@
 @extends('Backend.layouts.app')
-<<<<<<< HEAD
-=======
-@section('seoMeta')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 @section('css')
     <!-- ======================== datatable ========================= -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
@@ -21,11 +15,7 @@
         <div class="card-body">
 
             <!-- ======================== Alert Success ========================= -->
-<<<<<<< HEAD
-            {{-- <div class="swal" data-swal="{{ session('success') }}"></div> --}}
-=======
             <div class="swal" data-swal="{{ session('success') }}"></div>
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 
             <div class="table-responsive">
                 <a href="{{ route('article.create') }}" class="btn btn-success mb-2 btn-sm">
@@ -54,10 +44,7 @@
     <!-- /.modal-content -->
 @endsection
 @section('js')
-<<<<<<< HEAD
-=======
     <!-- SweetAlert2 -->
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- DataTables JS -->
@@ -82,11 +69,7 @@
             console.log(id);
             Swal.fire({
                 title: 'Delete!!',
-<<<<<<< HEAD
                 text: "Are you sure want to delete this data?",
-=======
-                text: "Are you sure want to delete this data?" + id,
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -145,17 +128,10 @@
                         data: 'category_id',
                         name: 'category_id'
                     },
-<<<<<<< HEAD
                     // {
                     //     data: 'views',
                     //     name: 'views'
                     // },
-=======
-                    {
-                        data: 'views',
-                        name: 'views'
-                    },
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
                     {
                         data: 'status',
                         name: 'status'
