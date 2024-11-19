@@ -22,4 +22,9 @@ class Event extends Model
         'capacity',
         'status'
     ];
+
+    public function thumbnails()
+    {
+        return $this->hasMany(Thumbnail::class, 'event_id');
+    }
 }

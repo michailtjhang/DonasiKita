@@ -7,8 +7,8 @@
             <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
                 style="background-image: url('/images/hero-bg.svg');">
                 <div>
-                    <h1 class="hero-title bolder-text display-4">Charity Platform</h1>
-                    <p class="lead">Berbagi, Berkontribusi, Berubah</p>
+                    <h1 class="hero-title bolder-text display-4">{{ $config['title_home'] }}</h1>
+                    <p class="lead">{{ $config['subtitle_home'] }}</p>
                 </div>
             </div>
         </div>
@@ -16,8 +16,8 @@
             <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
                 style="background-image: url('/images/hero-bg.svg');">
                 <div>
-                    <h1 class="hero-title bolder-text display-4">Charity Platform</h1>
-                    <p class="lead">Berbagi, Berkontribusi, Berubah</p>
+                    <h1 class="hero-title bolder-text display-4">{{ $config['title_home'] }}</h1>
+                    <p class="lead">{{ $config['subtitle_home'] }}</p>
                 </div>
             </div>
         </div>

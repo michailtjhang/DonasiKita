@@ -18,7 +18,7 @@
             <div class="swal" data-swal="{{ session('success') }}"></div>
 
             <div class="table-responsive">
-                <a href="{{ route('article.create') }}" class="btn btn-success mb-2 btn-sm">
+                <a href="{{ route('event.create') }}" class="btn btn-success mb-2 btn-sm">
                     Tambah
                 </a>
                 <table id="dataTable" class="table table-bordered table-hover table-stripped">
@@ -51,65 +51,6 @@
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
 
-    <script>
-        const swal = $('.swal').data('swal');
-
-        if (swal) {
-            swal.fire({
-                'title': 'Success',
-                'text': swal,
-                'icon': 'success',
-                'showConfirmButton': false,
-                'timer': 1500
-            })
-        }
-
-        function deleteData(e) {
-            let id = e.getAttribute('data-id');
-            console.log(id);
-            Swal.fire({
-                title: 'Delete!!',
-                text: "Are you sure want to delete this data?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        type: 'DELETE',
-                        url: 'article/' + id,
-                        dataType: 'json',
-                        success: function(response) {
-                            Swal.fire({
-                                'title': 'Success',
-                                'text': response.message,
-                                'icon': 'success',
-                                'showConfirmButton': false,
-                                'timer': 1500
-                            }).then((result) => {
-                                window.location.href = "article";
-                            })
-                        },
-                        error: function(response) {
-                            Swal.fire({
-                                'title': 'Error',
-                                'text': response.message,
-                                'icon': 'error',
-                                'showConfirmButton': false,
-                                'timer': 1500
-                            })
-                        }
-                    });
-
-                }
-            })
-        }
-    </script>
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({

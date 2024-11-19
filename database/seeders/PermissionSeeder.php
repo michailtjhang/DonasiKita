@@ -134,7 +134,39 @@ class PermissionSeeder extends Seeder
                 'groupby' => 4,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]
+            ],
+            [
+                'id' => 16,
+                'name' => 'Blog & Article',
+                'slug' => 'Blog & Article',
+                'groupby' => 5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 17,
+                'name' => 'Add Blog',
+                'slug' => 'Add Blog',
+                'groupby' => 5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 18,
+                'name' => 'Edit Blog',
+                'slug' => 'Edit Blog',
+                'groupby' => 5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 19,
+                'name' => 'View Blog',
+                'slug' => 'View Blog',
+                'groupby' => 5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ]);
     }
 }

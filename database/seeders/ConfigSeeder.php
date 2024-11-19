@@ -19,11 +19,11 @@ class ConfigSeeder extends Seeder
                 'value' => 'logo.png'
             ],
             [
-                'name' => 'website name',
+                'name' => 'website_name',
                 'value' => 'DonasiKita'
             ],
             [
-                'name' => 'title home',
+                'name' => 'title_home',
                 'value' => 'Charity Platform'
             ],
             [
@@ -31,35 +31,35 @@ class ConfigSeeder extends Seeder
                 'value' => 'Bersama Kami Membangun, Bersama Kami Mengubah'
             ],
             [
-                'name' => 'subtitle home',
+                'name' => 'subtitle_home',
                 'value' => 'Berbagai, Berkontribusi, Berubah.'
             ],
             [
-                'name' => 'heading home',
+                'name' => 'heading_home',
                 'value' => 'Kamu Adalah Harapan Lainnya'
             ],
             [
-                'name' => 'description heading home',
+                'name' => 'description_heading_home',
                 'value' => 'DonasiKita meyakinkan Anda untuk menjadi bagian dari perubahaan positif melalui platform donasi yang transparan, aman, dan terpercaya'
             ],
             [
-                'name' => 'quotes home section',
+                'name' => 'quotes_home_section',
                 'value' => 'DonasiKita is a simple system with Laravel and Bootstrap.'
             ],
             [
-                'name' => 'author quotes home section',
+                'name' => 'author_quotes_home_section',
                 'value' => 'John Doe'
             ],
             [
-                'name' => 'meta title',
+                'name' => 'meta_title',
                 'value' => 'DonasiKita'
             ],
             [
-                'name' => 'meta description',
+                'name' => 'meta_description',
                 'value' => 'DonasiKita is a simple system with Laravel and Bootstrap.'
             ],
             [
-                'name' => 'meta keywords',
+                'name' => 'meta_keywords',
                 'value' => 'DonasiKita, Laravel, Bootstrap'
             ],
             [
