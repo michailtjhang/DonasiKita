@@ -11,23 +11,13 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\HomeController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'home']);
 
-Route::get('/home', function () {
-    return view('front.home.home');
-});
+Route::get('/about', [HomeController::class, 'about']);
 
-Route::get('/about', function () {
-    return view('front.about.about');
-});
+Route::get('/donation',[HomeController::class, 'donation']);
 
-Route::get('/donation', function () {
-    return view('front.donation.donation');
-});
-
-Route::get('/event', function () {
-    return view('front.event.event');
-});
+Route::get('/event', [HomeController::class, 'event']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'auth_login']);

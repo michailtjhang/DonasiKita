@@ -21,7 +21,7 @@ class HomeProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('front.home.home', function ($view) {
+        View::composer('front.home', function ($view) {
             $configKey = [
                 'title_home',
                 'caption',

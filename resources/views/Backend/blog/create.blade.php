@@ -62,46 +62,26 @@
 
                 </div>
 
-                <div class="form-group">
-                    <label for="content">Description</label>
-                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
-                        {!! old('content') !!}
-                    </textarea>
-
-                    @error('content')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                </div>
-
-                <div class="form-group">
-                    <label for="img">Image Cover</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="img" id="img">
-                            <label class="custom-file-label" for="img">Choose file</label>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-2">
-                        <img src="" id="img_preview" class="img-thumbnail img_preview" alt=""
-                            width="60px">
-                    </div>
-
-                    @error('img')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-
                 <div class="row">
+                    <div class="col-6 form-group">
+                        <label for="img">Image Cover</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="img" id="img">
+                                <label class="custom-file-label" for="img">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
+
+                        @error('img')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
                     <div class="col-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
@@ -118,19 +98,19 @@
                         @enderror
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="publish_date">Publish Date</label>
-                        <input type="date" name="published_date" id="publish_date"
-                            class="form-control @error('publish_date') is-invalid @enderror"
-                            value="{{ old('published_date') }}">
+                </div>
 
-                        @error('published_date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                <div class="form-group">
+                    <label for="content">Description</label>
+                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
+                        {!! old('content') !!}
+                    </textarea>
 
-                    </div>
+                    @error('content')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
 
                 </div>
 
@@ -140,9 +120,9 @@
     </div>
 @endsection
 @section('js')
-<!-- -->
-<script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<!-- Summernote -->
+    <!-- -->
+    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- Summernote -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>

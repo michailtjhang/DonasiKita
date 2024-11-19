@@ -6,11 +6,8 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateArticteRequest;
 use App\Models\Blog;
 use App\Models\Thumbnail;
-use Illuminate\Container\Attributes\Auth;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class BlogController extends Controller
@@ -39,7 +36,6 @@ class BlogController extends Controller
                     <th>
                         <a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>
                         <a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>
-                        <a href="#" onclick="deleteData(this)" data-id="' . $blogs->id . '" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-trash"></i></a>
                     </th>';
                 })
                 ->rawColumns(['category_id', 'status', 'action'])
@@ -67,6 +63,7 @@ class BlogController extends Controller
             'category_id' => 'required',
             'status' => 'required',
         ]);
+        
         $data = $request->all();
 
         // Generate blog_id unik
@@ -190,28 +187,28 @@ class BlogController extends Controller
      */
     public function destroy(string $id)
     {
-        $blog = Blog::findOrFail($id); // Pastikan blog ditemukan
+        // $blog = Blog::findOrFail($id); // Pastikan blog ditemukan
 
-        // Hapus file gambar jika ada
-        if (!empty($blog->thumbnail->file_path)) {
-            $filePath = storage_path('app/public/cover/' . $blog->thumbnail->file_path);
+        // // Hapus file gambar jika ada
+        // if (!empty($blog->thumbnail->file_path)) {
+        //     $filePath = storage_path('app/public/cover/' . $blog->thumbnail->file_path);
 
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+        //     if (file_exists($filePath)) {
+        //         unlink($filePath);
+        //     }
+        // }
 
-        // Hapus data thumbnail
-        if ($blog->thumbnail) {
-            $blog->thumbnail->delete();
-        }
+        // // Hapus data thumbnail
+        // if ($blog->thumbnail) {
+        //     $blog->thumbnail->delete();
+        // }
 
-        // Hapus data blog
-        $blog->delete();
+        // // Hapus data blog
+        // $blog->delete();
 
-        return response()->json([
-            'message' => 'Data deleted successfully',
-        ]);
+        // return response()->json([
+        //     'message' => 'Data deleted successfully',
+        // ]);
     }
 
     public function uploadImage(Request $request)

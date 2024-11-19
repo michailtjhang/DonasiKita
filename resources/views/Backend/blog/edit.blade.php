@@ -62,19 +62,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">Description</label>
-                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
-                        {!! old('content', $article->content) !!}
-                    </textarea>
-
-                    @error('content')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
                     <label for="img">Image</label>
                     <div class="input-group">
                         <div class="custom-file">
@@ -86,10 +73,10 @@
                         </div>
                     </div>
 
-                    @if ($article->image_path)
+                    @if ($article->thumbnail && $article->thumbnail->file_path)
                         <div class="mt-2">
-                            <img src="{{ asset($article->image_path) }}" id="img_preview" class="img-thumbnail img_preview"
-                                alt="" width="100px">
+                            <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}" id="img_preview"
+                                class="img-thumbnail img_preview" alt="" width="100px">
                         </div>
                     @endif
 
@@ -101,6 +88,32 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-6 form-group">
+                        <label for="img">Image</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="img" id="img">
+                                <label class="custom-file-label" for="img">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
+
+                        @if ($article->thumbnail && $article->thumbnail->file_path)
+                            <div class="mt-2">
+                                <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}" id="img_preview"
+                                    class="img-thumbnail img_preview" alt="" width="100px">
+                            </div>
+                        @endif
+
+                        @error('img')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
                     <div class="col-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
@@ -116,19 +129,19 @@
                             </div>
                         @enderror
                     </div>
+                </div>
 
-                    <div class="col-6 form-group">
-                        <label for="publish_date">Publish Date</label>
-                        <input type="date" name="published_date" id="publish_date"
-                            class="form-control @error('published_date') is-invalid @enderror"
-                            value="{{ old('published_date', $article->published_date) }}">
+                <div class="form-group">
+                    <label for="content">Description</label>
+                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
+                        {!! old('content', $article->content) !!}
+                    </textarea>
 
-                        @error('published_date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+                    @error('content')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

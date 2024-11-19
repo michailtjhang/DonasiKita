@@ -19,9 +19,8 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->date('date');
-            $table->string('location', 100);
-            $table->integer('capacity')->nullable();
-            $table->string('status', 50)->default('upcoming'); // upcoming, ongoing, completed
+            $table->integer('capacity');
+            $table->string('status', 50)->default('0'); // upcoming, ongoing, completed
             $table->timestamps();
         });
     }

@@ -67,9 +67,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('article.index') }}" class="nav-link @if (Request::segment(2) == 'blog') active @endif">
+                    <a href="{{ route('article.index') }}" class="nav-link @if (Request::segment(2) == 'article') active @endif">
                         <i class="fas fa-newspaper nav-icon"></i>
-                        <p>Blog</p>
+                        <p>Article & Blog</p>
                     </a>
                 </li>
 
@@ -123,7 +123,7 @@
                     </li>
                 @endif
 
-                <li class="nav-item mt-4">
+                <li class="nav-item my-4">
                     <a href="{{ route('logout') }}" class="nav-link bg-danger">
                         <i class="nav-icon fas fa-power-off"></i>
                         <p>

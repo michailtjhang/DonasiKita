@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('thumbnails', function (Blueprint $table) {
             $table->id(); // Primary Key
-            $table->char('blog_id', 5); // FK ke blogs
+            $table->char('blog_id', 5)->nullable(); // FK ke blogs
+            $table->char('event_id', 5)->nullable(); // FK ke events
             $table->string('file_path', 255);
             $table->string('type', 50); // Image, Video
             $table->timestamps();

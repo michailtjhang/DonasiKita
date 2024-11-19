@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function home()
     {
-        
-        return view('front.home.home');
+        return view('front.home');
+    }
+    public function about()
+    {
+        return view('front.about');
+    }
+    public function donation()
+    {
+        return view('front.donation.index');
+    }
+    public function event()
+    {
+        return view('front.event.index');
     }
 }

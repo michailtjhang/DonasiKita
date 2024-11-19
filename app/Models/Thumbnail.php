@@ -12,6 +12,7 @@ class Thumbnail extends Model
     protected $fillable = [
         'thumbnail_id',
         'blog_id',
+        'event_id',
         'file_path',
         'type'
     ];
@@ -19,5 +20,10 @@ class Thumbnail extends Model
     public function blog()
     {
         return $this->belongsTo(Blog::class, 'blog_id');
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class, 'event_id');
     }
 }
