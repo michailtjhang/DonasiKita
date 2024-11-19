@@ -9,8 +9,22 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
 
-Route::get('/', function () {
+Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/home', function () {
     return view('front.home.home');
+});
+
+Route::get('/about', function () {
+    return view('front.about.about');
+});
+
+Route::get('/donation', function () {
+    return view('front.donation.donation');
+});
+
+Route::get('/event', function () {
+    return view('front.event.event');
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -38,9 +52,3 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
     });
 });
-
-
-//contoh route ke page lainnya
-// Route('/about', function () {
-//     return view('front.home.');
-// });
