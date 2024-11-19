@@ -45,10 +45,10 @@ Route::get('/about', function () {
     return view('front.about.about');
 });
 
-Route::get('/donation', function () {
-    return view('front.donation.donation');
+Route::get('/detail_donation', function () {
+    return view('front.detail_donation.detail_donation');
 });
 
 Route::get('/event', function () {
-    return view('front.event.event');
+    return view('front.event.detail_event');
 });
