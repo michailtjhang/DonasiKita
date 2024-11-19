@@ -84,6 +84,7 @@ class BlogController extends Controller
         // Tambahkan slug dan views
         $data['slug'] = Str::slug($data['title']);
         $data['views'] = 0;
+        $data['user_id'] = auth()->user()->id;
 
         // Simpan data ke tabel Blog
         $blog = Blog::create($data);

@@ -8,11 +8,8 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\HomeController;
-
-// Route::get('/', function () {
-//     return view('front.home.home');
-// });
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -37,6 +34,7 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('category', CategoryController::class)
             ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('article', BlogController::class);
+        Route::resource('event', EventController::class);
         
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
     });

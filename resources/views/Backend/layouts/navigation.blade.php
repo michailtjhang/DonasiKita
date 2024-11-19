@@ -41,15 +41,23 @@
                         </a>
                     </li>
                 @endif
+                
+                    <li class="nav-item">
+                        <a href=""
+                            class="nav-link @if (Request::segment(2) == 'laporan') active @endif">
+                            <i class="fas fa-chart-line nav-icon"></i>
+                            <p>Laporan</p>
+                        </a>
+                    </li>
+                
+                <li class="nav-header">Management Page</li>
 
                 <li class="nav-item">
                     <a href="" class="nav-link @if (Request::segment(2) == 'donasi') active @endif">
                         <i class="fas fa-hand-holding-heart nav-icon"></i>
-                        <p>Laporan Donasi</p>
+                        <p>Donasi</p>
                     </a>
                 </li>
-
-                <li class="nav-header">Management Page</li>
 
                 <li class="nav-item">
                     <a href="" class="nav-link @if (Request::segment(2) == 'website') active @endif">
@@ -66,7 +74,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link @if (Request::segment(2) == 'event') active @endif">
+                    <a href="{{ route('event.index') }}" class="nav-link @if (Request::segment(2) == 'event') active @endif">
                         <i class="fas fa-calendar nav-icon"></i>
                         <p>Event</p>
                     </a>

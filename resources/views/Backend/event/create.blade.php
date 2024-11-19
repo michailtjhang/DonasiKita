@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article & Blog List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('event.index') }}">Event List </a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -100,39 +100,18 @@
                     @enderror
                 </div>
 
+                    <div class="form-group">
+                        <label for="map">map</label>
+                        <input type="text" name="map" id="map"
+                            class="form-control @error('map') is-invalid @enderror" placeholder="Please Enter Title"
+                            value="{{ old('map') }}">
 
-                <div class="row">
-                    <div class="col-6 form-group">
-                        <label for="status">Status</label>
-                        <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
-                            name="status">
-                            <option value="" hidden>-- Please select --</option>
-                            <option value="0">Draft</option>
-                            <option value="1">Publish</option>
-                        </select>
-
-                        @error('status')
+                        @error('map')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
-
-                    <div class="col-6 form-group">
-                        <label for="publish_date">Publish Date</label>
-                        <input type="date" name="published_date" id="publish_date"
-                            class="form-control @error('publish_date') is-invalid @enderror"
-                            value="{{ old('published_date') }}">
-
-                        @error('published_date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-
-                    </div>
-
-                </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>

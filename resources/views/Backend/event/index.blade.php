@@ -18,7 +18,7 @@
             <div class="swal" data-swal="{{ session('success') }}"></div>
 
             <div class="table-responsive">
-                <a href="{{ route('article.create') }}" class="btn btn-success mb-2 btn-sm">
+                <a href="{{ route('event.create') }}" class="btn btn-success mb-2 btn-sm">
                     Tambah
                 </a>
                 <table id="dataTable" class="table table-bordered table-hover table-stripped">
@@ -82,7 +82,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: 'DELETE',
-                        url: 'article/' + id,
+                        url: 'event/' + id,
                         dataType: 'json',
                         success: function(response) {
                             Swal.fire({
@@ -92,7 +92,7 @@
                                 'showConfirmButton': false,
                                 'timer': 1500
                             }).then((result) => {
-                                window.location.href = "article";
+                                window.location.href = "event";
                             })
                         },
                         error: function(response) {
