@@ -11,13 +11,13 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\HomeController;
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::get('/about', [HomeController::class, 'about']);
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/donation', [HomeController::class, 'donation']);
+Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
-Route::get('/detail_donation', [HomeController::class, 'event']);
+Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
 
 Route::get('/event', [HomeController::class, 'event']);
 
