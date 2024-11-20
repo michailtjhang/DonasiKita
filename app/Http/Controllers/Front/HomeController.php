@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Config;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -23,5 +22,9 @@ class HomeController extends Controller
     public function event()
     {
         return view('front.event.index');
+    }
+    public function detail_donation()
+    {
+        return view('front.detail_donation.detail_donation');
     }
 }

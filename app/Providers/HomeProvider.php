@@ -30,6 +30,9 @@ class HomeProvider extends ServiceProvider
                 'description_heading_home',
                 'quotes_home_section',
                 'author_quotes_home_section',
+                'meta_title',
+                'meta_description',
+                'meta_keywords',
             ];
     
             $config = Config::whereIn('name', $configKey)->pluck('value', 'name');
