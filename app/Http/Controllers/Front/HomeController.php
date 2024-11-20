@@ -10,11 +10,11 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return view('front.home');
+        return view('front.home.home');
     }
     public function about()
     {
-        return view('front.about');
+        return view('front.about.about');
     }
     public function donation()
     {
