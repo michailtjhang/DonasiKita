@@ -27,9 +27,8 @@
                             <th>No</th>
                             <th>Title</th>
                             <th>Category</th>
-                            {{-- <th>Views</th> --}}
                             <th>Status</th>
-                            {{-- <th>Published Date</th> --}}
+                            <th>Date Events</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -69,18 +68,14 @@
                         data: 'category_id',
                         name: 'category_id'
                     },
-                    // {
-                    //     data: 'views',
-                    //     name: 'views'
-                    // },
                     {
                         data: 'status',
                         name: 'status'
                     },
-                    // {
-                    //     data: 'published_date',
-                    //     name: 'published_date'
-                    // },
+                    {
+                        data: 'date',
+                        name: 'date'
+                    },
                     {
                         data: 'action',
                         name: 'action'

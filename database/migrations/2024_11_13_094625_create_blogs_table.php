@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->index()->constrained(); // FK ke users
             $table->string('title');
             $table->string('slug');
-            $table->text('content');
+            $table->longText('content');
             $table->integer('views');
             $table->string('status');
             $table->timestamps();
