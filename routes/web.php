@@ -9,7 +9,14 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
 
+/*
 Route::get('/', [HomeController::class, 'index']);
+*/
+
+Route::get('/', function () {
+    return view('front.home.home');
+});
+
 
 Route::get('/home', function () {
     return view('front.home.home');
@@ -26,6 +33,25 @@ Route::get('/donation', function () {
 Route::get('/event', function () {
     return view('front.event.event');
 });
+
+Route::get('/donasibarang_login', function () {
+    return view('front.payment.donasibarang_login');
+});
+
+Route::get('/donasibarang_guest', function () {
+    return view('front.payment.donasibarang_guest');
+});
+
+Route::get('/confirmationbarang', function () {
+    return view('front.payment.confirmationbarang');
+});
+
+Route::post('/confirmationbarang', function () {
+    // Tambahkan logika backend untuk menangani data yang dikirim (opsional)
+    return response()->json(['message' => 'Form submitted successfully!']);
+})->name('confirmation.barang.submit');
+
+Route::post('/donasi-barang-submit', [DonationController::class, 'store'])->name('donasi.barang.submit');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'auth_login']);
