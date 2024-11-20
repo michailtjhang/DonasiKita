@@ -3,6 +3,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('css')
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+        href="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/daterangepicker/daterangepicker.css">
+    <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
@@ -65,21 +71,21 @@
 
                 <div class="form-group">
                     <label for="img">Image Cover</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="img" id="img">
-                            <label class="custom-file-label" for="img">Choose file</label>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input @error('img') is-invalid @enderror" name="img"
+                            id="img" onchange="previewImage(event)">
+                        <label class="custom-file-label" for="img">Choose file</label>
                     </div>
 
                     @error('img')
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {{ $message }}
                         </div>
                     @enderror
+
+                    <!-- Preview Image -->
+                    <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail mt-3"
+                        style="display: none; max-height: 150px;">
                 </div>
 
                 <div class="form-group">
@@ -96,38 +102,20 @@
 
                 </div>
 
-                <div class="form-group">
-                    <label for="location">Location Name</label>
-                    <input type="text" id="location" name="location" class="form-control"
-                        placeholder="Enter a location">
-                </div>
-
-                <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
-
-                <div class="row mt-3">
-
-                    <div class="col-6 form-group">
-                        <label for="latitude">Latitude</label>
-                        <input type="text" id="latitude" name="latitude" class="form-control" readonly>
-                    </div>
-
-                    <div class="col-6 form-group">
-                        <label for="longitude">Longitude</label>
-                        <input type="text" id="longitude" name="longitude" class="form-control" readonly>
-                    </div>
-
-                </div>
-
                 <div class="row mt-3">
                     <!-- Date Event Input -->
                     <div class="col-md-6 form-group">
-                        <label for="date">Date Event</label>
-                        <input type="date" name="date" id="date"
-                            class="form-control @error('date') is-invalid @enderror" value="{{ old('date') }}">
-                        @error('date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                        <label for="reservationtime">Event Date & Time</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control float-right @error('date') is-invalid @enderror"
+                                id="reservationtime" name="date" value="{{ old('date') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-clock"></i></span>
                             </div>
+                        </div>
+
+                        @error('date')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -147,7 +135,7 @@
                         <label for="participant">Capacity Participant</label>
                         <input type="text" id="participant" name="participant"
                             class="form-control @error('participant') is-invalid @enderror"
-                            placeholder="Please Enter Participant">
+                            placeholder="Please Enter Participant" value="{{ old('participant') }}">
 
                         @error('participant')
                             <div class="invalid-feedback">
@@ -160,14 +148,45 @@
                         <label for="Volunteer">Capacity Volunteer</label>
                         <input type="text" id="Volunteer" name="volunteer"
                             class="form-control @error('volunteer') is-invalid @enderror"
-                            placeholder="Please Enter Volunteer">
-                    
+                            placeholder="Please Enter Volunteer" value="{{ old('volunteer') }}">
+
                         @error('volunteer')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>                    
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location Name</label>
+                    <input type="text" id="location" name="location"
+                        class="form-control @error('location') is-invalid @enderror" placeholder="Enter a location"
+                        value="{{ old('location') }}">
+
+                    @error('location')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
+
+                <div class="row mt-3">
+
+                    <div class="col-6 form-group">
+                        <label for="latitude">Latitude</label>
+                        <input type="text" id="latitude" name="latitude" class="form-control" readonly
+                            value="{{ old('latitude') }}">
+                    </div>
+
+                    <div class="col-6 form-group">
+                        <label for="longitude">Longitude</label>
+                        <input type="text" id="longitude" name="longitude" class="form-control" readonly
+                            value="{{ old('longitude') }}">
+                    </div>
 
                 </div>
 
@@ -177,6 +196,14 @@
     </div>
 @endsection
 @section('js')
+    <!-- moment -->
+    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/moment/moment.min.js"></script>
+    <!-- tempusdominus-bootstrap-4 -->
+    <script
+        src="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+    <!-- date-range-picker -->
+    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Bootstrap Switch -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <!-- bs-custom-file-input -->
@@ -189,8 +216,10 @@
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
+    <!-- sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
@@ -268,6 +297,43 @@
         $("input[data-bootstrap-switch]").each(function() {
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })
+
+        $(function() {
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
+
+            //Date range picker
+            $('#reservation').daterangepicker()
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+        });
+    </script>
+
+    <!-- Image Preview -->
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('imgPreview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 
     <script>

@@ -32,7 +32,7 @@
                             <th>Category</th>
                             <th>Views</th>
                             <th>Status</th>
-                            {{-- <th>Published Date</th> --}}
+                            <th>Published Date</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -50,6 +50,9 @@
     <!-- DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+
+    <!-- Moment JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -77,10 +80,13 @@
                         data: 'status',
                         name: 'status'
                     },
-                    // {
-                    //     data: 'published_date',
-                    //     name: 'published_date'
-                    // },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data) {
+                            return moment(data).format('DD-MM-YYYY');
+                        }
+                    },
                     {
                         data: 'action',
                         name: 'action'

@@ -52,14 +52,14 @@
                             <td>: <span class="badge badge-danger">Draft</span></td>
                         @endif
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <th>Published Date</th>
-                        <td>: {{ $article->published_date }}</td>
+                        <td>: {{ $article->created_at->format('d M Y') }}</td>
                     </tr>
                     <tr>
                         <th>Writer</th>
                         <td>: {{ $article->user->name ?? '' }}</td>
-                    </tr> --}}
+                    </tr>
                 </table>
             </div>
 

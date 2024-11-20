@@ -18,7 +18,7 @@ class BlogController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $blogs = Blog::get();
+            $blogs = Blog::where('user_id', auth()->user()->id)->get();
             return DataTables::of($blogs)
                 ->addIndexColumn()
                 ->addColumn('category_id', function ($blogs) {
