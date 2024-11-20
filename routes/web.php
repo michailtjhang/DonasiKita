@@ -17,7 +17,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
-Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
+Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
 
 Route::get('/event', [HomeController::class, 'event']);
 
