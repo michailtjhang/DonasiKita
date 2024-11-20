@@ -8,16 +8,10 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\EventController;
-use App\Http\Controllers\Front\HomeController;
 
-Route::get('/', [HomeController::class, 'home']);
-
-Route::get('/about', [HomeController::class, 'about']);
-
-Route::get('/donation',[HomeController::class, 'donation']);
-
-Route::get('/event', [HomeController::class, 'event']);
+Route::get('/', function () {
+    return view('front.home.home');
+});
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'auth_login']);
@@ -40,8 +34,21 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('category', CategoryController::class)
             ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('article', BlogController::class);
-        Route::resource('event', EventController::class);
-        
-        Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
     });
+});
+
+Route::get('/home', function () {
+    return view('front.home.home');
+});
+
+Route::get('/about', function () {
+    return view('front.about.about');
+});
+
+Route::get('/detail_donation', function () {
+    return view('front.detail_donation.detail_donation');
+});
+
+Route::get('/event', function () {
+    return view('front.event.detail_event');
 });

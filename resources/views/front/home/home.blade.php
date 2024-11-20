@@ -7,8 +7,8 @@
             <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
                 style="background-image: url('/images/hero-bg.svg');">
                 <div>
-                    <h1 class="hero-title bolder-text display-4">{{ $config['title_home'] }}</h1>
-                    <p class="lead">{{ $config['subtitle_home'] }}</p>
+                    <h1 class="hero-title bolder-text display-4">Charity Platform</h1>
+                    <p class="lead">Berbagi, Berkontribusi, Berubah</p>
                 </div>
             </div>
         </div>
@@ -16,8 +16,8 @@
             <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
                 style="background-image: url('/images/hero-bg.svg');">
                 <div>
-                    <h1 class="hero-title bolder-text display-4">{{ $config['title_home'] }}</h1>
-                    <p class="lead">{{ $config['subtitle_home'] }}</p>
+                    <h1 class="hero-title bolder-text display-4">Charity Platform</h1>
+                    <p class="lead">Berbagi, Berkontribusi, Berubah</p>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
 <!-- End Donate Content Section -->
 
 <!-- Quote Content Section -->
-<section id="quote-content" class="space-section">
+<section id="quote-content">
     <div class="container-fluid py-5 justify-content-center text-center bg-skyline">
         <h1 class="bolder-text text-dark"><i class="fa-solid fa-quote-right"></i></h1>
         <p class="text-dark text-large">"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain." <br> <span class="fw-bold">-Rasulullah SAW-</span></p>
@@ -161,9 +161,9 @@
 <section id="upcoming-content" class="space-section container bg-skyline w-100 vw-100">
     <h1 class="bolder-text text-dark text-center bg-skyline">Join Our Upcoming Event</h1>
     <div class="container-fluid bg-skyline pt-4" id="container-upcoming" style="padding: 0 !important;">
-        <div class="row justify-content-between text-center py-0 my-0 gx-2" style="margin: 0 !important;">
+        <div class="row justify-content-between text-center py-0 my-0 gx-0" style="margin: 0 !important;">
             <!-- Kartu pertama -->
-            <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 ">
+            <div class="col-md-5 col-lg-4 d-flex justify-content-center mt-4 ">
                 <div class="event-card rounded rounded-5">
                     <img src="/images/event/1.svg" alt="Event Image" class="img-fluid overflow-hidden">
                     <div class="event-date">20 November</div>
@@ -180,7 +180,7 @@
                 </div>
             </div>
             <!-- Kartu kedua -->
-            <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 ">
+            <div class="col-md-5 col-lg-4 d-flex justify-content-center mt-4 ">
                 <div class="event-card rounded rounded-5">
                     <img src="/images/event/2.svg" alt="Event Image" class="img-fluid">
                     <div class="event-date">5 Desember</div>
@@ -198,7 +198,7 @@
             </div>
 
             <!-- Kartu ketiga -->
-            <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 ">
+            <div class="col-md-5 col-lg-4 d-flex justify-content-center mt-4 ">
                 <div class="event-card rounded rounded-5">
                     <img src="/images/event/3.svg" alt="Event Image" class="img-fluid">
                     <div class="event-date">15 Desember</div>
@@ -216,7 +216,7 @@
                 </div>
             </div>
             <div class="text-center bg-skyline pt-5 py-5">
-                <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                <button class="btn btn-primary" id="button-event">
                     <h3>See More Event</h3>
                 </button>
             </div>
@@ -255,10 +255,10 @@
                     </div>
                 </div>
 
-                <div class="row w-100">
+                <div class="row">
                     <!-- Kartu pertama -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 w-20 ">
-                        <div class="card rounded overflow-hidden shadow  h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                        <div class="card rounded overflow-hidden shadow card-item h-100 d-flex flex-column">
                             <img src="/images/donate/1.svg" class="card-img-top" alt="...">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <b class="text-dark">Membangun Komunitas Peduli</b>
@@ -274,8 +274,8 @@
                     </div>
 
                     <!-- Kartu kedua -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 w-20 ">
-                        <div class="card rounded overflow-hidden shadow  h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                        <div class="card rounded overflow-hidden shadow card-item h-100 d-flex flex-column">
                             <img src="/images/donate/2.svg" class="card-img-top" alt="...">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <b class="text-dark">Donasi Langsung Lebih Efektif</b>
@@ -291,8 +291,8 @@
                     </div>
 
                     <!-- Kartu ketiga -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 w-20">
-                        <div class="card rounded overflow-hidden shadow  h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                        <div class="card rounded overflow-hidden shadow card-item h-100 d-flex flex-column">
                             <img src="/images/donate/3.svg" class="card-img-top" alt="...">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <b class="text-dark">Alasan Melakukan Donasi</b>
