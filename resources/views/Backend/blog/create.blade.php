@@ -65,21 +65,21 @@
                 <div class="row">
                     <div class="col-6 form-group">
                         <label for="img">Image Cover</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="img" id="img">
-                                <label class="custom-file-label" for="img">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text">Upload</span>
-                            </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
+                                name="img" id="img" onchange="previewImage(event)">
+                            <label class="custom-file-label" for="img">Choose file</label>
                         </div>
 
                         @error('img')
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
+
+                        <!-- Preview Image -->
+                        <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail mt-3"
+                            style="display: none; max-height: 150px;">
                     </div>
 
                     <div class="col-6 form-group">
@@ -120,7 +120,7 @@
     </div>
 @endsection
 @section('js')
-    <!-- -->
+    <!-- bs-custom-file-input -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Summernote -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
@@ -130,10 +130,28 @@
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
+    <!-- bs-custom-file-input -->
     <script>
         $(function() {
             bsCustomFileInput.init();
         });
+    </script>
+
+    <!-- Image Preview -->
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('imgPreview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 
     <script>

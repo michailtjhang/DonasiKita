@@ -10,7 +10,6 @@ class Thumbnail extends Model
     use HasFactory;
     protected $table = 'thumbnails';
     protected $fillable = [
-        'thumbnail_id',
         'blog_id',
         'event_id',
         'file_path',
