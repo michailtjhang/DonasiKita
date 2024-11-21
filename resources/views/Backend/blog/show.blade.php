@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article & Blog List </a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -52,14 +52,14 @@
                             <td>: <span class="badge badge-danger">Draft</span></td>
                         @endif
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <th>Published Date</th>
-                        <td>: {{ $article->published_date }}</td>
+                        <td>: {{ $article->created_at->format('d M Y') }}</td>
                     </tr>
                     <tr>
                         <th>Writer</th>
                         <td>: {{ $article->user->name ?? '' }}</td>
-                    </tr> --}}
+                    </tr>
                 </table>
             </div>
 

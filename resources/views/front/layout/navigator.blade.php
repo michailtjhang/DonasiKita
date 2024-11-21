@@ -1,34 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/bootsrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
-    {{-- FontAwesome 6 CSS --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    {{-- Poppins Font CSS --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    {{-- Swiperjs CSS Link --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    @yield('style')
-</head>
-
-<body class="bg-skyline">
-    @include('front.layout.header')
-    @yield('content')
-    @include('front.layout.footer')
-    <a href="https://wa.me/yourphonenumber" target="_blank" class="whatsapp-icon">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    <script src="/js/bootsrap.min.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="/js/swiper.js"></script>
-    @yield('script')
-</body>
-
-</html>
+<!-- Navbar Section -->
+<section id="navbar" class="px-5">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="#">
+                <img src="/images/logo.svg" alt="" srcset="" class="logo-brand img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link @if (Request::segment(1) == '') active @endif" aria-current="page"
+                            href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if (Request::segment(1) == 'about') active @endif"
+                            href="{{ route('about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Donation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog & Article</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="" href="#">
+                            <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="avatar">
+                        </a>
+                    </li>
+                    <!-- uncomment jika belum login -->
+                    <!-- <li class="nav-item">
+                    <a class="btn btn-primary" href="#">
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="#">
+                        Signup
+                    </a>
+                </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>
+<!-- End Navbar Section -->

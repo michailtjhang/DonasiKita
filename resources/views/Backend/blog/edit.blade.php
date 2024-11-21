@@ -14,7 +14,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article List</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article & Blog List</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -22,7 +22,7 @@
 
             @include('_message')
 
-            <form action="{{ route('article.update', $article->blog_id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('article.update', $article->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -61,46 +61,43 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="content">Description</label>
-                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
-                        {!! old('content', $article->content) !!}
-                    </textarea>
-
-                    @error('content')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="img">Image</label>
-                    <div class="input-group">
+                <div class="row">
+                    <div class="col-6 form-group">
+                        <label for="img">Image Cover</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="img" id="img">
+                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
+                                name="img" id="img" onchange="previewImage(event)">
                             <label class="custom-file-label" for="img">Choose file</label>
                         </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
+
+                        @error('img')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                        <!-- Row for Preview and Existing Image -->
+                        <div class="row mt-3 text-center">
+                            <!-- Preview Image -->
+                            <div class="col-6">
+                                <span class="d-block mb-2 text-muted">Preview:</span>
+                                <img id="imgPreview" src="" alt="Preview Image"
+                                    class="img-thumbnail shadow-sm border"
+                                    style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                            </div>
+
+                            <!-- Existing Image -->
+                            @if ($article->thumbnail && $article->thumbnail->file_path)
+                                <div class="col-6">
+                                    <span class="d-block mb-2 text-muted">Existing:</span>
+                                    <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
+                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                        style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                </div>
+                            @endif
                         </div>
                     </div>
 
-                    @if ($article->image_path)
-                        <div class="mt-2">
-                            <img src="{{ asset($article->image_path) }}" id="img_preview" class="img-thumbnail img_preview"
-                                alt="" width="100px">
-                        </div>
-                    @endif
-
-                    @error('img')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="row">
                     <div class="col-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
@@ -116,19 +113,19 @@
                             </div>
                         @enderror
                     </div>
+                </div>
 
-                    <div class="col-6 form-group">
-                        <label for="publish_date">Publish Date</label>
-                        <input type="date" name="published_date" id="publish_date"
-                            class="form-control @error('published_date') is-invalid @enderror"
-                            value="{{ old('published_date', $article->published_date) }}">
+                <div class="form-group">
+                    <label for="content">Description</label>
+                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
+                        {!! old('content', $article->content) !!}
+                    </textarea>
 
-                        @error('published_date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+                    @error('content')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
@@ -137,6 +134,8 @@
     </div>
 @endsection
 @section('js')
+    <!-- bs-custom-file-input -->
+    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Summernote -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
@@ -144,6 +143,32 @@
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/css/css.js"></script>
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+    <!-- bs-custom-file-input -->
+    <script>
+        $(function() {
+            bsCustomFileInput.init();
+        });
+    </script>
+
+    <!-- Image Preview -->
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('imgPreview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block'; // Tampilkan gambar setelah berhasil di-load
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none'; // Sembunyikan jika tidak ada file
+            }
+        }
+    </script>
 
     <script>
         $.ajaxSetup({

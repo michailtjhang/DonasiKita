@@ -8,31 +8,19 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\EventController;
+use App\Http\Controllers\Front\HomeController;
 
-/*
-Route::get('/', [HomeController::class, 'index']);
-*/
-
-Route::get('/', function () {
-    return view('front.home.home');
-});
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
-Route::get('/home', function () {
-    return view('front.home.home');
-});
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/about', function () {
-    return view('front.about.about');
-});
+Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
-Route::get('/donation', function () {
-    return view('front.donation.donation');
-});
+Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
 
-Route::get('/event', function () {
-    return view('front.event.event');
-});
+Route::get('/event', [HomeController::class, 'event']);
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
@@ -73,8 +61,11 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
             ->only(['index', 'update']);
         Route::resource('category', CategoryController::class)
             ->only(['index', 'store', 'update', 'destroy']);
-        Route::resource('article', BlogController::class);
-        
+        Route::resource('article', BlogController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
+        Route::resource('event', EventController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
+
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
     });
 });

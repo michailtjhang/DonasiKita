@@ -1,10 +1,7 @@
 @extends('Backend.layouts.app')
-<<<<<<< HEAD
-=======
 @section('seoMeta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 @section('css')
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
@@ -12,18 +9,14 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.css">
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/theme/monokai.css">
     <!-- SimpleMDE -->
-<<<<<<< HEAD
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css">
-=======
     {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css"> --}}
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
 @endsection
 @section('content')
     <div class="card">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article & Blog List </a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -69,59 +62,26 @@
 
                 </div>
 
-                <div class="form-group">
-<<<<<<< HEAD
-                    <label for="desc">Description</label>
-                    <textarea id="summernote" name="desc" class="form-control @error('desc') is-invalid @enderror">
-                        {!! old('desc') !!}
-                    </textarea>
-
-                    @error('desc')
-=======
-                    <label for="content">Description</label>
-                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
-                        {!! old('content') !!}
-                    </textarea>
-
-                    @error('content')
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                </div>
-
-                <div class="form-group">
-<<<<<<< HEAD
-                    <label for="img">Image</label>
-=======
-                    <label for="img">Image Cover</label>
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
-                    <div class="input-group">
+                <div class="row">
+                    <div class="col-6 form-group">
+                        <label for="img">Image Cover</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="img" id="img">
+                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
+                                name="img" id="img" onchange="previewImage(event)">
                             <label class="custom-file-label" for="img">Choose file</label>
                         </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
+
+                        @error('img')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                        <!-- Preview Image -->
+                        <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail mt-3"
+                            style="display: none; max-height: 150px;">
                     </div>
 
-                    <div class="mt-2">
-                        <img src="" id="img_preview" class="img-thumbnail img_preview" alt=""
-                            width="60px">
-                    </div>
-
-                    @error('img')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-
-                <div class="row">
                     <div class="col-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
@@ -138,19 +98,19 @@
                         @enderror
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="publish_date">Publish Date</label>
-                        <input type="date" name="published_date" id="publish_date"
-                            class="form-control @error('publish_date') is-invalid @enderror"
-                            value="{{ old('published_date') }}">
+                </div>
 
-                        @error('published_date')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                <div class="form-group">
+                    <label for="content">Description</label>
+                    <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
+                        {!! old('content') !!}
+                    </textarea>
 
-                    </div>
+                    @error('content')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
 
                 </div>
 
@@ -160,11 +120,9 @@
     </div>
 @endsection
 @section('js')
-    <!-- Summernote -->
-<<<<<<< HEAD
-=======
+    <!-- bs-custom-file-input -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
+    <!-- Summernote -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>
@@ -172,21 +130,28 @@
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
     <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
+    <!-- bs-custom-file-input -->
     <script>
         $(function() {
-<<<<<<< HEAD
-            // Summernote
-            $('#summernote').summernote()
-
-            // CodeMirror
-            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                mode: "htmlmixed",
-                theme: "monokai"
-            });
-        })
-=======
             bsCustomFileInput.init();
         });
+    </script>
+
+    <!-- Image Preview -->
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('imgPreview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 
     <script>
@@ -225,6 +190,5 @@
                 });
             }
         });
->>>>>>> aa2915288201a3f410ab797e4264ee177c5d6d51
     </script>
 @endsection

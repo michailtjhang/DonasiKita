@@ -15,6 +15,7 @@ class Blog extends Model
     protected $fillable = [
         'blog_id',
         'category_id',
+        'user_id',
         'title',
         'slug',
         'views',
@@ -30,5 +31,10 @@ class Blog extends Model
     public function thumbnail()
     {
         return $this->hasOne(Thumbnail::class, 'blog_id', 'blog_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

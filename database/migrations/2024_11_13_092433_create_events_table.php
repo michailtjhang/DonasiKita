@@ -17,11 +17,13 @@ return new class extends Migration
             $table->foreignId('category_id')->index()->constrained(); // FK ke categories
             $table->string('title');
             $table->string('slug');
-            $table->text('description');
-            $table->date('date');
-            $table->string('location', 100);
-            $table->integer('capacity')->nullable();
-            $table->string('status', 50)->default('upcoming'); // upcoming, ongoing, completed
+            $table->longText('description');
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->string('user_id'); // FK ke users
+            $table->integer('capacity_participants');
+            $table->integer('capacity_volunteers')->default(0);
+            $table->string('status', 50)->default('0'); // upcoming, ongoing, completed
             $table->timestamps();
         });
     }

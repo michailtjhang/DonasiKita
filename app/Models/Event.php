@@ -15,11 +15,30 @@ class Event extends Model
 
     protected $fillable = [
         'event_id',
+        'category_id',
         'title',
+        'slug',
         'description',
-        'date',
-        'location',
-        'capacity',
+        'start',
+        'end',
+        'user_id',
+        'capacity_participants',
+        'capacity_volunteers',
         'status'
     ];
+
+    public function thumbnail()
+    {
+        return $this->hasOne(Thumbnail::class, 'event_id', 'event_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function location()
+    {
+        return $this->hasOne(Locations::class, 'event_id', 'event_id');
+    }
 }

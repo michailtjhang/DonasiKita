@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="" class="brand-link">
+    <a href="{{ route('dashboard') }}" class="brand-link">
         <img src="{{ asset('img/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
@@ -41,15 +41,23 @@
                         </a>
                     </li>
                 @endif
+                
+                    <li class="nav-item">
+                        <a href=""
+                            class="nav-link @if (Request::segment(2) == 'laporan') active @endif">
+                            <i class="fas fa-chart-line nav-icon"></i>
+                            <p>Laporan</p>
+                        </a>
+                    </li>
+                
+                <li class="nav-header">Management Page</li>
 
                 <li class="nav-item">
                     <a href="" class="nav-link @if (Request::segment(2) == 'donasi') active @endif">
                         <i class="fas fa-hand-holding-heart nav-icon"></i>
-                        <p>Laporan Donasi</p>
+                        <p>Donasi</p>
                     </a>
                 </li>
-
-                <li class="nav-header">Management Page</li>
 
                 <li class="nav-item">
                     <a href="" class="nav-link @if (Request::segment(2) == 'website') active @endif">
@@ -59,14 +67,14 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('article.index') }}" class="nav-link @if (Request::segment(2) == 'blog') active @endif">
+                    <a href="{{ route('article.index') }}" class="nav-link @if (Request::segment(2) == 'article') active @endif">
                         <i class="fas fa-newspaper nav-icon"></i>
-                        <p>Blog</p>
+                        <p>Article & Blog</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link @if (Request::segment(2) == 'event') active @endif">
+                    <a href="{{ route('event.index') }}" class="nav-link @if (Request::segment(2) == 'event') active @endif">
                         <i class="fas fa-calendar nav-icon"></i>
                         <p>Event</p>
                     </a>
@@ -115,7 +123,7 @@
                     </li>
                 @endif
 
-                <li class="nav-item mt-4">
+                <li class="nav-item my-4">
                     <a href="{{ route('logout') }}" class="nav-link bg-danger">
                         <i class="nav-icon fas fa-power-off"></i>
                         <p>
