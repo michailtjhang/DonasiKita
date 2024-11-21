@@ -19,9 +19,9 @@ class HomeController extends Controller
     {
         return view('front.donation.index');
     }
-    public function event()
+    public function detail_event()
     {
-        return view('front.event.index');
+        return view('front.detail_event.detail_event');
     }
     public function detail_donation()
     {

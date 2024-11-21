@@ -13,13 +13,33 @@ use App\Http\Controllers\Front\HomeController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
+
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
-Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
+Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
 
-Route::get('/event', [HomeController::class, 'event']);
+Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
+
+Route::get('/donasibarang_login', function () {
+    return view('front.payment.donasibarang_login');
+});
+
+Route::get('/donasibarang_guest', function () {
+    return view('front.payment.donasibarang_guest');
+});
+
+Route::get('/confirmationbarang', function () {
+    return view('front.payment.confirmationbarang');
+});
+
+Route::post('/confirmationbarang', function () {
+    // Tambahkan logika backend untuk menangani data yang dikirim (opsional)
+    return response()->json(['message' => 'Form submitted successfully!']);
+})->name('confirmation.barang.submit');
+
+Route::post('/donasi-barang-submit', [DonationController::class, 'store'])->name('donasi.barang.submit');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'auth_login']);
