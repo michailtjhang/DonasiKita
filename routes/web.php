@@ -19,7 +19,7 @@ Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
 Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
 
-Route::get('/event', [HomeController::class, 'event']);
+Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'auth_login']);
