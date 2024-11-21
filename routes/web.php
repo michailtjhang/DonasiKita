@@ -42,9 +42,9 @@ Route::group(['middleware' => ['auth', 'useradmin']], function () {
         Route::resource('category', CategoryController::class)
             ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('article', BlogController::class)
-            ->only(['index', 'store', 'update', 'show']);
+            ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
         Route::resource('event', EventController::class)
-            ->only(['index', 'store', 'update', 'show']);
+            ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
 
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
     });
