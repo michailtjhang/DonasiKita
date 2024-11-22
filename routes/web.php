@@ -22,6 +22,8 @@ Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name
 
 Route::get('/event', [HomeController::class, 'event'])->name('event');
 
+Route::get('/event_category_all', [HomeController::class, 'event_category_all'])->name('event_category_all');
+
 Route::get('/event_category_specific', [HomeController::class, 'event_category_specific'])->name('event_category_specific');
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');

@@ -27,6 +27,10 @@ class HomeController extends Controller
     {
         return view('front.detail_event.detail_event');
     }
+    public function event_category_all()
+    {
+        return view('front.event_category_all.event_category_all');
+    }
     public function event_category_specific()
     {
         return view('front.event_category_specific.event_category_specific');
