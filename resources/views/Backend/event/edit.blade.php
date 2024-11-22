@@ -71,41 +71,61 @@
                         @enderror
                     </div>
 
+                    <div class="col-6 form-group">
+                        <label for="status">Status</label>
+                        <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
+                            name="status">
+                            <option value="" hidden>-- UpComming --</option>
+                            <option value="1" {{ $article->status == 1 ? 'selected' : '' }}>Ongoing</option>
+                            <option value="2" {{ $article->status == 2 ? 'selected' : '' }}>Finished</option>
+                        </select>
+
+                        @error('status')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
                 </div>
 
-                <div class="form-group">
-                    <label for="img">Image Cover</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input @error('img') is-invalid @enderror" name="img"
-                            id="img" onchange="previewImage(event)">
-                        <label class="custom-file-label" for="img">Choose file</label>
-                    </div>
-
-                    @error('img')
-                        <div class="invalid-feedback d-block">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                    <!-- Row for Preview and Existing Image -->
-                    <div class="row mt-3 text-center">
-                        <!-- Preview Image -->
-                        <div class="col-6">
-                            <span class="d-block mb-2 text-muted">Preview:</span>
-                            <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail shadow-sm border"
-                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                <div class="row">
+                    <div class="col-6 form-group">
+                        <label for="img">Image Cover</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
+                                name="img" id="img" onchange="previewImage(event)">
+                            <label class="custom-file-label" for="img">Choose file</label>
                         </div>
 
-                        <!-- Existing Image -->
-                        @if ($event->thumbnail && $event->thumbnail->file_path)
-                            <div class="col-6">
-                                <span class="d-block mb-2 text-muted">Existing:</span>
-                                <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
-                                    class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                    style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                        @error('img')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
                             </div>
-                        @endif
+                        @enderror
+
+                        <!-- Row for Preview and Existing Image -->
+                        <div class="row mt-3 text-center">
+                            <!-- Preview Image -->
+                            <div class="col-6">
+                                <span class="d-block mb-2 text-muted">Preview:</span>
+                                <img id="imgPreview" src="" alt="Preview Image"
+                                    class="img-thumbnail shadow-sm border"
+                                    style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                            </div>
+
+                            <!-- Existing Image -->
+                            @if ($event->thumbnail && $event->thumbnail->file_path)
+                                <div class="col-6">
+                                    <span class="d-block mb-2 text-muted">Existing:</span>
+                                    <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
+                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                        style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                </div>
+                            @endif
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="form-group">

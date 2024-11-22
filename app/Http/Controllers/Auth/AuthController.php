@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -77,11 +78,13 @@ class AuthController extends Controller
         $data['id_user'] = $id_user;
         $user = User::create($data);
 
-        if ($user) {
-            return redirect()->intended('/login');
-        } else {
-            return redirect()->back()->with('error', 'Something went wrong');
-        }
+        event(new Registered($user));
+
+        $user->sendEmailVerificationNotification();
+
+        Auth::login($user);
+
+        return redirect('/login')->with('success', 'Registration successful! Please verify your email.');
     }
 
     public function logout()

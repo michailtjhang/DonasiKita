@@ -21,9 +21,11 @@
             <div class="swal" data-swal="{{ session('success') }}"></div>
 
             <div class="table-responsive">
-                <a href="{{ route('article.create') }}" class="btn btn-success mb-2 btn-sm">
-                    Tambah
-                </a>
+                @if (!empty($data['PermissionAdd']))
+                    <a href="{{ route('article.create') }}" class="btn btn-success mb-2 btn-sm">
+                        Tambah
+                    </a>
+                @endif
                 <table id="dataTable" class="table table-bordered table-hover table-stripped">
                     <thead>
                         <tr>
@@ -33,11 +35,25 @@
                             <th>Views</th>
                             <th>Status</th>
                             <th>Published Date</th>
-                            <th>Aksi</th>
+                            @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th><input type="text" placeholder="Search Title" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Category" class="form-control form-control-sm">
+                            </th>
+                            <th><input type="text" placeholder="Search Views" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Status" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Date" class="form-control form-control-sm"></th>
+                            @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
+                                <th></th>
+                            @endif
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -56,10 +72,11 @@
 
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({
+            // Inisialisasi DataTable
+            var table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ url()->current() }}",
+                ajax: "{{ route('article.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -84,14 +101,33 @@
                         data: 'created_at',
                         name: 'created_at',
                         render: function(data) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('MM-DD-YYYY');
                         }
                     },
-                    {
-                        data: 'action',
-                        name: 'action'
-                    },
+                    @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    @endif
                 ]
+            });
+
+            // Tambahkan input search ke setiap kolom footer
+            $('#dataTable tfoot th').each(function(i) {
+                var title = $('#dataTable thead th').eq(i).text();
+                if ($(this).find('input').length) {
+                    $('input', this).on('keyup change', function() {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                }
             });
         });
     </script>
