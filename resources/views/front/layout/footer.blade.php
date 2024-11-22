@@ -10,7 +10,7 @@
                     <!-- Content -->
                     <img src="/images/logo-footer.svg" alt="" style="width: 100px;">
                     <p>
-                        Bersama Kita Berbagi, Bersama Kita Mengubah.
+                        Bersama Kita Berbagi, <br> Bersama Kita Mengubah.
                     </p>
                 </div>
                 <!-- Grid column -->
