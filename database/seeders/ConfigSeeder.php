@@ -40,15 +40,15 @@ class ConfigSeeder extends Seeder
             ],
             [
                 'name' => 'description_heading_home',
-                'value' => 'DonasiKita meyakinkan Anda untuk menjadi bagian dari perubahaan positif melalui platform donasi yang transparan, aman, dan terpercaya'
+                'value' => 'DonasiKita meyakinkan Anda untuk menjadi bagian dari perubahan positif melalui platform donasi yang transparan, aman, dan terpercaya. Dengan menghubungkan donatur dengan beragam program bantuan, kami berkomitmen untuk memperkuat solidaritas sosial serta memberdayakan komunitas yang membutuhkan di seluruh Indonesia. Bersama, kita dapat menciptakan masa depan yang lebih peduli, inklusif, dan berdaya, di mana setiap kontribusi kecil membawa dampak besar bagi mereka yang membutuhkan uluran tangan kita.'
             ],
             [
                 'name' => 'quotes_home_section',
-                'value' => 'DonasiKita is a simple system with Laravel and Bootstrap.'
+                'value' => '"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain."'
             ],
             [
                 'name' => 'author_quotes_home_section',
-                'value' => 'John Doe'
+                'value' => 'Rasulullah SAW'
             ],
             [
                 'name' => 'meta_title',

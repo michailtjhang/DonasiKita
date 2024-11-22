@@ -41,19 +41,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password"
-                        class="form-control @error('password') is-invalid @enderror" placeholder="Please Enter Password">
-
-                    @error('password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-
-                </div>
-
-                <div class="form-group">
                     <label for="role">Role</label>
 
                     <select class="custom-select rounded-0 @error('role_id') is-invalid @enderror" id="role" name="role_id">
@@ -73,6 +60,19 @@
 
                 </div>
 
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password"
+                        class="form-control @error('password') is-invalid @enderror" placeholder="Please Enter Password">
+
+                    @error('password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+                
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>

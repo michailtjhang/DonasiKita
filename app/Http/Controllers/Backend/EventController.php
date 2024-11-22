@@ -20,7 +20,7 @@ class EventController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $events = Event::get();
+            $events = Event::where('user_id', auth()->user()->id)->get();
             return DataTables::of($events)
                 ->addIndexColumn()
                 ->addColumn('category_id', function ($events) {
