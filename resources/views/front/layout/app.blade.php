@@ -4,10 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $page_title ?? 'Home' }} | {{ config('app.name', 'Donasi Kita') }}</title>
-
-    @yield('meta')
-
+    <title>Document</title>
     <link rel="stylesheet" href="/css/bootsrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     {{-- FontAwesome 6 CSS --}}
@@ -17,18 +14,13 @@
     {{-- Swiperjs CSS Link --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
     @yield('style')
 </head>
 
 <body class="bg-skyline">
-
     @include('front.layout.navigator')
-
     @yield('content')
-
     @include('front.layout.footer')
-
     <a href="https://wa.me/yourphonenumber" target="_blank" class="whatsapp-icon">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -39,7 +31,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     @yield('script')
-
 </body>
 
 </html>
