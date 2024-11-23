@@ -18,6 +18,8 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+
 Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
 
 Route::get('/event', [HomeController::class, 'event'])->name('event');
@@ -25,6 +27,8 @@ Route::get('/event', [HomeController::class, 'event'])->name('event');
 Route::get('/event_category_specific', [HomeController::class, 'event_category_specific'])->name('event_category_specific');
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');

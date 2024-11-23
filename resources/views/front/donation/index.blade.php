@@ -130,50 +130,15 @@
 </section>
 <!-- End Hero Section -->
 
-<!-- Search Bar -->
+<!-- search bar -->
 <div class="container my-4">
-    <div 
-        class="Searchbar d-flex align-items-center mx-auto shadow" 
-        style="
-            width: 600px; 
-            height: 50px; 
-            background: white; 
-            border-radius: 25px; 
-            overflow: hidden; 
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);">
-        
-        <!-- Input Field -->
+    <div class="searchbar-container">
         <input 
             type="text" 
-            class="form-control border-0" 
-            placeholder="Ingin bantu siapa hari ini?" 
-            style="
-                font-size: 16px; 
-                color: #B3B3B3; 
-                outline: none; 
-                box-shadow: none; 
-                height: 100%; 
-                flex: 1; 
-                padding-left: 20px;">
-        
-        <!-- Search Icon Background -->
-        <div 
-            class="search-icon-container" 
-            style="
-                background: #6CB6DE; 
-                width: 90px; 
-                height: 100%; 
-                border-top-right-radius: 25px; 
-                border-bottom-right-radius: 25px; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center;">
-            
-            <!-- Search Icon -->
-            <img 
-                src="{{ asset('images/donate/Vector.svg') }}" 
-                alt="Search Icon" 
-                style="width: 20px; height: 20px;">
+            class="searchbar-input" 
+            placeholder="Ingin bantu siapa hari ini?">
+        <div class="search-icon-container">
+            <img src="{{ asset('images/donate/Vector.svg') }}" alt="Search Icon" class="search-icon">
         </div>
     </div>
 </div>
@@ -181,6 +146,18 @@
 <!-- Cards Section -->
 <section id="donation-cards" class="my-5">
     <div class="container">
+            <div class="container d-flex justify-content-between align-items-center my-4">
+            <!-- Left Section: Title and Description -->
+            <div>
+                <h1 style="font-size: 25px; font-weight: 700; font-family: 'Poppins', sans-serif; color: #0F3D56; margin-bottom: 5px;">
+                Bergabung dalam Gerakan Kebaikan
+                </h1>
+                <p style="font-size: 18px; font-weight: 400; font-family: 'Poppins', sans-serif; color: #0F3D56; line-height: 1.5;">
+                Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.
+                </p>
+            </div>
+        </div>
+
         <div class="row justify-content-center" id="card-container">
             <!-- Cards will be dynamically rendered -->
         </div>

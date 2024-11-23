@@ -150,3 +150,58 @@ input.form-control:focus {
     background: #2492CD;
     transform: scale(1.05);
 }
+
+/* search bar */
+.searchbar-container {
+    width: 600px;
+    height: 50px;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.searchbar-input {
+    font-size: 16px;
+    color: #B3B3B3;
+    outline: none;
+    box-shadow: none;
+    height: 100%;
+    flex: 1;
+    border: none;
+    padding-left: 20px;
+}
+
+.search-icon-container {
+    background: #6CB6DE;
+    width: 90px;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* <div class="container my-4">
+    <div class="searchbar-container">
+        <input 
+            type="text" 
+            class="searchbar-input" 
+            placeholder="Tulis teks pencarian di sini...">
+        <div class="search-icon-container">
+            <img src="{{ asset('images/donate/Vector.svg') }}" alt="Search Icon" class="search-icon">
+        </div>
+    </div>
+</div> */
+
+/* end of search bar */
+

@@ -23,6 +23,10 @@ class HomeController extends Controller
     {
         return view('front.event.event');
     }
+    public function blog()
+    {
+        return view('front.blog.blog');
+    }
     public function detail_event()
     {
         return view('front.detail_event.detail_event');
@@ -35,4 +39,8 @@ class HomeController extends Controller
     {
         return view('front.detail_donation.detail_donation');
     }
+    public function index() {
+        return view('blog.categories'); // Mengarahkan ke file categories.blade.php
+    }
+    
 }
