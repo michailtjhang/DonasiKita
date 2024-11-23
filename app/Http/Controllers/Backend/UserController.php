@@ -6,27 +6,62 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Cek masing-masing izin untuk Add, Edit, dan Delete
         $data['PermissionAdd'] = PermissionRole::getPermission('Add User', Auth::user()->role_id);
         $data['PermissionEdit'] = PermissionRole::getPermission('Edit User', Auth::user()->role_id);
         $data['PermissionDelete'] = PermissionRole::getPermission('Delete User', Auth::user()->role_id);
+
+        // Jika request adalah Ajax untuk DataTables
+        if ($request->ajax()) {
+            $users = User::with('role')->get();
+
+            return DataTables::of($users)
+                ->addIndexColumn()
+                ->addColumn('action', function ($user) use ($data) {
+                    $buttons = '';
+
+                    // Tambahkan tombol Edit jika izin Edit ada
+                    if (!empty($data['PermissionEdit'])) {
+                        $buttons .= '<a href="' . route('user.edit', $user->id) . '" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                 </a>';
+                    }
+
+                    // Tambahkan tombol Delete jika izin Delete ada
+                    if (!empty($data['PermissionDelete']) && $user->id !== Auth::user()->id) {
+                        $buttons .= '<button class="btn btn-sm btn-danger" onclick="confirmDelete(\'' . route('user.destroy', $user->id) . '\', \'' . $user->name . '\')">
+                                    <i class="fas fa-trash"></i>
+                                 </button>';
+                    } else if ($user->id === Auth::user()->id && !empty($data['PermissionDelete'])) {
+                        $buttons .= '<button class="btn btn-sm btn-danger" disabled onclick="confirmDelete(\'' . route('user.destroy', $user->id) . '\', \'' . $user->name . '\')">
+                                    <i class="fas fa-trash"></i>
+                                 </button>';
+                    } 
+
+                    return $buttons;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         
-        $data['user'] = User::getRecords();
         return view('Backend.user.index', [
             'page_title' => 'User List',
             'data' => $data
