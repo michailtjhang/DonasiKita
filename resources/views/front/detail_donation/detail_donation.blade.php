@@ -91,20 +91,20 @@
 
             <!-- Konten -->
             <div class="py-4">
-                <p class=" fw-bold h1">Bantuan Kemanusiaan untuk Palestina</p>
+                <p class=" fw-bold" style="font-size:52px">Bantuan Kemanusiaan untuk Palestina</p>
                 <!-- Target dan Total -->
                 <div class="row pt-4 align-items-center">
                     <div class="col-6">
                         <p
                             class="fw-bold text-dark text-nowrap m-0"
-                            style="font-size: clamp(1rem, 1.5vw, 1.75rem);">
+                            style="font-size: clamp(1rem, 1.5vw, 52px);">
                             Target
                         </p>
                     </div>
                     <div class="col-6 text-end">
                         <p
                             class="fw-bold text-dark text-nowrap m-0"
-                            style="font-size: clamp(1rem, 1.5vw, 1.75rem);">
+                            style="font-size: clamp(1rem, 1.5vw, 1.52rem);">
                             Rp 200.000.000
                         </p>
                     </div>
@@ -138,46 +138,41 @@
 
                 <!-- Yayasan -->
                 <div class="py-4">
-                    <h1 class="fw-light" style="color: #0f3d56;">
+                    <h1 class="fw-light" style="color: #0f3d56; font-size:57px">
                         <i class="fa-solid fa-user"></i> Yayasan Peduli Palestina
                     </h1>
                 </div>
 
                 <!-- Deskripsi -->
-                <div class="container">
-                    <div class="border rounded p-4">
-                        <p class="h4">
-                            Warga Palestina saat ini menghadapi kondisi kemanusiaan yang sangat memprihatinkan, dengan terbatasnya akses terhadap kebutuhan dasar sehari-hari. Krisis yang terus berlangsung telah mempengaruhi banyak keluarga yang kehilangan tempat tinggal, akses kesehatan, dan kebutuhan dasar mereka. Melalui kampanye ini, kami mengajak Anda untuk bersama-sama meringankan beban mereka. Setiap donasi yang Anda berikan akan langsung disalurkan untuk memenuhi kebutuhan esensial warga Palestina, sehingga mereka dapat bertahan dalam situasi yang sulit ini.
-                        </p>
-                    </div>
+                <div class="border rounded p-4">
+                    <p style="font-size: 36px!important;">
+                        Warga Palestina saat ini menghadapi kondisi kemanusiaan yang sangat memprihatinkan, dengan terbatasnya akses terhadap kebutuhan dasar sehari-hari. Krisis yang terus berlangsung telah mempengaruhi banyak keluarga yang kehilangan tempat tinggal, akses kesehatan, dan kebutuhan dasar mereka. Melalui kampanye ini, kami mengajak Anda untuk bersama-sama meringankan beban mereka. Setiap donasi yang Anda berikan akan langsung disalurkan untuk memenuhi kebutuhan esensial warga Palestina, sehingga mereka dapat bertahan dalam situasi yang sulit ini.
+                    </p>
                 </div>
 
 
                 <!-- Goals -->
-                <h6 class="fw-bold mt-4 h3">What They Needed (Goals)</h6>
-                <div class="container-fluid">
-                    <div class="border rounded p-4">
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <strong class="fw-bold h4">Paket Pangan</strong>
-                                <p class="h4" style="line-height: 2.0;">Pangan menjadi kebutuhan utama bagi warga Palestina yang kehilangan sumber penghasilan. Bantuan ini mencakup sembako seperti beras, minyak goreng, makanan kaleng, susu untuk anak-anak, dan kebutuhan gizi lainnya, yang diharapkan dapat menopang kesehatan mereka.</p>
-                            </li>
-                            <li class="mb-3">
-                                <strong class="fw-bold h4">Obat-obatan dan Peralatan Medis</strong>
-                                <p class="h4" style="line-height: 2.0;">Banyak warga Palestina yang memerlukan obat-obatan mendesak dan perawatan kesehatan. Donasi akan digunakan untuk membeli obat-obatan dasar, seperti antibiotik, vitamin, dan peralatan medis penting lainnya untuk merawat mereka yang terluka atau sakit. Kami juga akan membantu memenuhi kebutuhan di fasilitas kesehatan yang kekurangan persediaan.</p>
-                            </li>
-                            <li class="mb-3">
-                                <strong class="fw-bold h4">Perlengkapan Kebersihan dan Sanitasi</strong>
-                                <p class="h4" style="line-height: 2.0;">Kebersihan dan kesehatan sangat penting dalam situasi darurat. Kami menyediakan sabun, hand sanitizer, masker, dan kebutuhan kebersihan lainnya.</p>
-                            </li>
-                            <li>
-                                <strong class="fw-bold h4">Air Bersih dan Sanitasi</strong>
-                                <p class="h4" style="line-height: 2.0;">Air bersih adalah kebutuhan dasar yang sering sulit diakses. Bantuan akan digunakan untuk menyediakan air minum bersih dan fasilitas sanitasi.</p>
-                            </li>
-                        </ul>
-                    </div>
+                <p class="fw-bold mt-4" style="font-size:43px !important">What They Needed (Goals)</p>
+                <div class="border rounded p-4">
+                    <ul class="list-unstyled" style="font-size:36px !important">
+                        <li class="mb-3">
+                            <strong class="fw-bold h4">Paket Pangan</strong>
+                            <p class="h4" style="line-height: 2.0;">Pangan menjadi kebutuhan utama bagi warga Palestina yang kehilangan sumber penghasilan. Bantuan ini mencakup sembako seperti beras, minyak goreng, makanan kaleng, susu untuk anak-anak, dan kebutuhan gizi lainnya, yang diharapkan dapat menopang kesehatan mereka.</p>
+                        </li>
+                        <li class="mb-3">
+                            <strong class="fw-bold h4">Obat-obatan dan Peralatan Medis</strong>
+                            <p class="h4" style="line-height: 2.0;">Banyak warga Palestina yang memerlukan obat-obatan mendesak dan perawatan kesehatan. Donasi akan digunakan untuk membeli obat-obatan dasar, seperti antibiotik, vitamin, dan peralatan medis penting lainnya untuk merawat mereka yang terluka atau sakit. Kami juga akan membantu memenuhi kebutuhan di fasilitas kesehatan yang kekurangan persediaan.</p>
+                        </li>
+                        <li class="mb-3">
+                            <strong class="fw-bold h4">Perlengkapan Kebersihan dan Sanitasi</strong>
+                            <p class="h4" style="line-height: 2.0;">Kebersihan dan kesehatan sangat penting dalam situasi darurat. Kami menyediakan sabun, hand sanitizer, masker, dan kebutuhan kebersihan lainnya.</p>
+                        </li>
+                        <li>
+                            <strong class="fw-bold h4">Air Bersih dan Sanitasi</strong>
+                            <p class="h4" style="line-height: 2.0;">Air bersih adalah kebutuhan dasar yang sering sulit diakses. Bantuan akan digunakan untuk menyediakan air minum bersih dan fasilitas sanitasi.</p>
+                        </li>
+                    </ul>
                 </div>
-
             </div>
         </div>
     </div>
@@ -207,7 +202,7 @@
 <script>
     document.getElementById('donateNowBtn').addEventListener('click', () => {
         Swal.fire({
-            title: '<strong>Gabung Sebagai</strong>',
+            title: '<strong>Bentuk Donasi</strong>',
             html: `
         <button id="pesertaBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
             Donasi Barang

@@ -2,7 +2,7 @@
 @section('style')
 <style>
     .custom-tabs {
-        padding-top: 10px;
+
         display: flex;
         background-color: #6cb6de !important;
         /* Warna tab background */
@@ -63,8 +63,8 @@
 
 <!-- End Hero Section -->
 
-<section id="detail-donation" class="container my-5 px-lg-5  pt-5">
-    <div class=" rounded-4 mx-lg-5">
+<section id="detail-donation" class="container pt-5">
+    <div class=" rounded-4 ">
         <img src="/images/event/event-detail-1.svg" alt="Donation Image" class="card-img-top img-fluid rounded">
 
         <p class="card-title fw-bold my-4 h1">Bazar Donasi Kemanusiaan: Peduli Gempa</p>
@@ -72,7 +72,7 @@
             Bazar yang diadakan untuk menggalang dana bagi korban gempa. Kunjungi stand-stand kami dan dukung melalui pembelian produk yang hasilnya akan disumbangkan untuk korban bencana.
         </p>
 
-        <div class="container py-5">
+        <div class=" py-5">
             <div class="card shadow">
                 <!-- Custom Tabs -->
                 <div class="custom-tabs bg-dark mb-4" style="background-color: #6cb6de !important; color:#f8fcff">
@@ -85,69 +85,72 @@
                 </div>
 
                 <!-- Card Body -->
-                <div class="card-body mx-lg-4" id="card-content">
+                <div class="card-body mx-lg-2" id="card-content">
                     <!-- Default Content -->
-                    <div class="container border rounded-3 pb-2 mb-5" id="event-schedule">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="fw-bold pt-2 pb-5 h3">Peserta</p>
-                            <span style="font-size: 0.9rem;" class="pt-5 mt-1">150/1000 Peserta Mendaftar</span>
-                        </div>
-
-                        <!-- Progress Bar -->
-                        <div class="progress " style="height: 3px; background-color: #bbddf0;">
-                            <div
-                                class="progress-bar "
-                                role="progressbar"
-                                style="width: 15%; background-color:#2492cd"
-                                aria-valuenow="150"
-                                aria-valuemin="0"
-                                aria-valuemax="1000">
-
+                    <div id="event-schedule">
+                        <div class="container border rounded-3 pb-2 mb-5">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="fw-bold pt-2 pb-5 h3">Peserta</p>
+                                <span style="font-size: 0.9rem;" class="pt-5 mt-1">150/1000 Peserta Mendaftar</span>
                             </div>
+
+                            <!-- Progress Bar -->
+                            <div class="progress " style="height: 3px; background-color: #bbddf0;">
+                                <div
+                                    class="progress-bar "
+                                    role="progressbar"
+                                    style="width: 15%; background-color:#2492cd"
+                                    aria-valuenow="150"
+                                    aria-valuemin="0"
+                                    aria-valuemax="1000">
+
+                                </div>
+                            </div>
+                            <p class="h3 pt-3">
+                                Acara dimulai dengan sambutan, dilanjutkan kunjungan stand, lelang barang donasi, hiburan musik, dan diakhiri dengan penghargaan serta pengumuman hasil donasi.
+                            </p>
+                            <br>
+                            <ul class="h3">
+                                <li class="mb-1"><strong>Location: </strong>Gedung Serba Guna, Jakarta, Jawa Barat, Indonesia</li>
+                                <li class="mb-1"><strong>Jam: </strong>09:00–17:00</li>
+                                <li class="mb-1"><strong>Dress Code: </strong>Casual, warna putih atau biru</li>
+                            </ul>
                         </div>
-                        <p class="h3 pt-3">
-                            Acara dimulai dengan sambutan, dilanjutkan kunjungan stand, lelang barang donasi, hiburan musik, dan diakhiri dengan penghargaan serta pengumuman hasil donasi.
-                        </p>
-                        <br>
-                        <ul class="h3">
-                            <li class="mb-1"><strong>Location: </strong>Gedung Serba Guna, Jakarta, Jawa Barat, Indonesia</li>
-                            <li class="mb-1"><strong>Jam: </strong>09:00–17:00</li>
-                            <li class="mb-1"><strong>Dress Code: </strong>Casual, warna putih atau biru</li>
-                        </ul>
+                        <div class="container border rounded-3 ">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="fw-bold pt-2 pb-5 h3">Peserta</p>
+                                <span style="font-size: 0.9rem;" class="pt-5 mt-1">10/50 Sukarelawan Mendaftar</span>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div class="progress " style="height: 3px; background-color: #bbddf0;">
+                                <div
+                                    class="progress-bar "
+                                    role="progressbar"
+                                    style="width: 15%; background-color: #2492cd;"
+                                    aria-valuenow="150"
+                                    aria-valuemin="0"
+                                    aria-valuemax="1000">
+
+                                </div>
+                            </div>
+                            <p class="h3 pt-3">
+                                Jadilah Sukarelawan dalam event kemanusiaan ini! Ayo berkontribusi dengan tenaga dan waktu untuk mendukung misi kemanusiaan di lokasi yang telah ditentukan.
+                                <br>
+                                <br>
+                                <strong>Yang Di Butuhkan:</strong> Tenaga Kerja, Pembagian Brosur, Koordinasi Acara
+                            </p>
+                            <br>
+                            <ul class="h3">
+                                <li class="mb-1"><strong>Location: </strong>Gedung Serba Guna, Jakarta, Jawa Barat, Indonesia</li>
+                                <li class="mb-1"><strong>Waktu: </strong>7.30:00–17:00</li>
+                                <li class="mb-1"><strong>Hari: </strong>15 Des 2025</li>
+                                <li class="mb-1"><strong>DressCode </strong>Casual, warna biru</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="container border rounded-3 " id="event-schedule2">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="fw-bold pt-2 pb-5 h3">Peserta</p>
-                            <span style="font-size: 0.9rem;" class="pt-5 mt-1">10/50 Sukarelawan Mendaftar</span>
-                        </div>
 
-                        <!-- Progress Bar -->
-                        <div class="progress " style="height: 3px; background-color: #bbddf0;">
-                            <div
-                                class="progress-bar "
-                                role="progressbar"
-                                style="width: 15%; background-color: #2492cd;"
-                                aria-valuenow="150"
-                                aria-valuemin="0"
-                                aria-valuemax="1000">
-
-                            </div>
-                        </div>
-                        <p class="h3 pt-3">
-                            Jadilah Sukarelawan dalam event kemanusiaan ini! Ayo berkontribusi dengan tenaga dan waktu untuk mendukung misi kemanusiaan di lokasi yang telah ditentukan.
-                            <br>
-                            <br>
-                            <strong>Yang Di Butuhkan:</strong> Tenaga Kerja, Pembagian Brosur, Koordinasi Acara
-                        </p>
-                        <br>
-                        <ul class="h3">
-                            <li class="mb-1"><strong>Location: </strong>Gedung Serba Guna, Jakarta, Jawa Barat, Indonesia</li>
-                            <li class="mb-1"><strong>Waktu: </strong>7.30:00–17:00</li>
-                            <li class="mb-1"><strong>Hari: </strong>15 Des 2025</li>
-                            <li class="mb-1"><strong>DressCode </strong>Casual, warna biru</li>
-                        </ul>
-                    </div>
 
                     <!-- Map Content (Hidden by Default) -->
                     <div id="map-content">
@@ -159,6 +162,7 @@
     </div>
 
 </section>
+
 
 <!-- Button Share and Donate -->
 <div class="container my-5">
@@ -194,7 +198,8 @@
 </section>
 @endsection
 @section('script')
-<script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{{-- <script>
     const tabs = document.querySelectorAll('.custom-tab');
     const cardContent = document.getElementById('card-content');
     const eventSchedule = document.getElementById('event-schedule');
@@ -225,7 +230,7 @@
             }
         });
     });
-</script>
+</script> --}}
 <script>
     document.getElementById('donateNowBtn').addEventListener('click', () => {
         Swal.fire({

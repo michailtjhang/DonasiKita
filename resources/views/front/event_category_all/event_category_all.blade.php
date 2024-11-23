@@ -239,7 +239,7 @@
         </div>
 
         <!-- Navigasi Slider -->
-        <div class="pagination-container  my-5">
+        <div class="pagination-container  spacer-pagination">
             <button class="pagination-arrow" id="prev-page">&lt;</button>
             <div class="pagination-dots" id="pagination-dots"></div>
             <button class="pagination-arrow" id="next-page">&gt;</button>
