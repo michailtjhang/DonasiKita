@@ -20,8 +20,12 @@
                             href="{{ route('about') }}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Donation</a>
+                        <a class="nav-link @if (Request::segment(1) == 'donation') active @endif"
+                            href="{{ route('donation') }}">Donation</a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="">Donation</a>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="#">Event</a>
                     </li>
