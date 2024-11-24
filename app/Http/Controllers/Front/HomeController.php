@@ -47,5 +47,18 @@ class HomeController extends Controller
     {
         return view('front.blog_categories.blog_categories_specific');
     }
+    public function transfer_guest()
+    {
+        return view('front.payment_transfer.transfer_guest');
+    }
+    public function transfer_login()
+    {
+        return view('front.payment_transfer.transfer_login');
+    }
+    public function confirmationtransfer()
+    {
+        return view('front.payment_transfer.confirmationtransfer');
+    }
+    
     
 }

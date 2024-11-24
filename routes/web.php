@@ -46,6 +46,18 @@ Route::get('/blog_categories_specific', function () {
     return view('front.blog_categories.blog_categories_specific');
 });
 
+Route::get('/transfer_guest', function () {
+    return view('front.payment_transfer.transfer_guest');
+});
+
+Route::get('/transfer_login', function () {
+    return view('front.payment_transfer.transfer_login');
+});
+
+Route::get('/confirmationtransfer', function () {
+    return view('front.payment_transfer.confirmationtransfer');
+});
+
 Route::get('/verify-email', function () {
     return view('Auth.verify-email');
 });
