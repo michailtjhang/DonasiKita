@@ -17,7 +17,7 @@ class HomeController extends Controller
     }
     public function donation()
     {
-        return view('front.donation.index');
+        return view('front.donation.donation');
     }
     public function event()
     {
@@ -39,8 +39,13 @@ class HomeController extends Controller
     {
         return view('front.detail_donation.detail_donation');
     }
-    public function index() {
-        return view('blog.categories'); // Mengarahkan ke file categories.blade.php
+    public function categories()
+    {
+        return view('front.blog_categories.categories');
+    }
+    public function blog_categories_specific()
+    {
+        return view('front.blog_categories.blog_categories_specific');
     }
     
 }

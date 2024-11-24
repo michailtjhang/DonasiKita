@@ -28,7 +28,7 @@ Route::get('/event_category_specific', [HomeController::class, 'event_category_s
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories', [HomeController::class, 'categories'])->name('categories');
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
@@ -41,6 +41,15 @@ Route::get('/donasibarang_guest', function () {
 Route::get('/confirmationbarang', function () {
     return view('front.payment.confirmationbarang');
 });
+
+Route::get('/blog_categories_specific', function () {
+    return view('front.blog_categories.blog_categories_specific');
+});
+
+Route::get('/verify-email', function () {
+    return view('Auth.verify-email');
+});
+
 
 Route::post('/confirmationbarang', function () {
     // Tambahkan logika backend untuk menangani data yang dikirim (opsional)

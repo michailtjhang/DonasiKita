@@ -12,11 +12,11 @@
     display: flex;
     flex-direction: column;
     margin: 15px;
-    min-height: 300px;
+    min-height: 270px;
 }
 
 .card-img-top {
-    height: 150px; /* Sesuaikan tinggi gambar */
+    height: 150px;
     object-fit: cover;
     width: 100%;
     border-bottom: 1px solid #e0e0e0;
@@ -32,7 +32,7 @@
 
 .card-title {
     font-size: 1.2rem;
-    font-weight: bold; /* Judul dibuat bold */
+    font-weight: bold;
     margin-bottom: 0.5rem;
     text-align: left;
 }
@@ -41,13 +41,12 @@
     font-size: 0.875rem;
     text-align: left;
     margin-bottom: 1rem;
-    min-height: 40px; /* Tetapkan tinggi minimum untuk deskripsi */
-    max-height: 80px; /* Batasi tinggi maksimum */
-    overflow: hidden; /* Potong teks jika terlalu panjang */
-    text-overflow: ellipsis; /* Tambahkan '...' jika teks dipotong */
+    min-height: 40px;
+    max-height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Buttons for Date, Category, and Writer */
 .card-buttons {
     display: flex;
     justify-content: flex-start;
@@ -70,7 +69,6 @@
     text-decoration: underline;
 }
 
-/* Divider for Buttons */
 .card-buttons .divider {
     color: #ccc;
 }
@@ -84,28 +82,25 @@
     border-radius: 25px;
     text-decoration: none;
     transition: all 0.3s ease;
-    background-color: white; /* Default background */
+    background-color: white;
 }
 
-/* Hover Effect */
 .see-all-categories:hover {
-    background-color: #3498db; /* Change background to blue */
-    color: white; /* Change text color to white */
-}
-
-/* Active/Onclick Effect */
-.see-all-categories:active {
-    background-color: #2874a6; /* Slightly darker blue */
+    background-color: #3498db;
     color: white;
-    border-color: #2874a6; /* Adjust border color */
 }
 
-/* Pagination Styling */
+.see-all-categories:active {
+    background-color: #2874a6;
+    color: white;
+    border-color: #2874a6;
+}
+
 .pagination-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* Jarak antar tombol prev/next dan dots */
+    gap: 20px;
     margin-top: 20px;
 }
 
@@ -131,7 +126,6 @@
     background-color: #85c1e9;
 }
 
-/* Adjust Container */
 #donation-cards .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -140,7 +134,6 @@
 @endsection
 
 @section('content')
-<!-- Hero Section -->
 <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
@@ -148,9 +141,7 @@
         <p class="hero-subtitle2">Temukan artikel inspiratif, tips, dan informasi terbaru tentang aksi kemanusiaan, lingkungan, kesehatan, dan hiburan yang mendukung kegiatan penggalangan dana.</p>
     </div>
 </section>
-<!-- End Hero Section -->
 
-<!-- Search Bar -->
 <div class="container my-4">
     <div class="Searchbar d-flex align-items-center mx-auto shadow" style="width: 600px; height: 50px; background: white; border-radius: 25px; overflow: hidden;">
         <input type="text" class="form-control border-0" placeholder="Ingin bantu siapa hari ini?" style="font-size: 16px; color: #B3B3B3; outline: none; flex: 1; padding-left: 20px;">
@@ -160,11 +151,9 @@
     </div>
 </div>
 
-<!-- Cards Section -->
 <section id="blog-cards" class="my-5">
     <div class="container">
-            <div class="container d-flex justify-content-between align-items-center my-4">
-            <!-- Left Section: Blog Title and Description -->
+        <div class="container d-flex justify-content-between align-items-center my-4">
             <div>
                 <h1 style="font-size: 25px; font-weight: 700; font-family: 'Poppins', sans-serif; color: #0F3D56; margin-bottom: 5px;">
                     Blog
@@ -173,21 +162,12 @@
                     Temukan berbagai Blog menarik yang mendukung misi kemanusiaan dan edukasi tentang bencana.
                 </p>
             </div>
-
-            <!-- Right Section: Button -->
-            <div>
-                <a href="{{ route('categories.index') }}" 
-                class="see-all-categories" 
-                id="categoriesButton">
+            <a href="#" class="see-all-categories" id="categoriesButton">
                 See All Categories
-                </a>
-             </div>
+            </a>
         </div>
 
-        <div class="row" id="card-container">
-            <!-- Dynamic Content -->
-        </div>
-        <!-- Pagination -->
+        <div class="row" id="card-container"></div>
         <div class="pagination-wrapper">
             <button class="pagination-arrow" id="prev-page">&lt;</button>
             <div class="pagination-dots" id="pagination-dots"></div>
@@ -278,7 +258,6 @@ document.getElementById("next-page").addEventListener("click", () => {
     updatePagination();
 });
 
-// Initial rendering
 updatePagination();
 </script>
 @endsection
