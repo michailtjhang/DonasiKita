@@ -196,7 +196,7 @@
 <!-- End Quote Content Section -->
 
 <!-- Blog Upcoming Event -->
-<section id="upcoming-content" class="space-section container-fluid bg-skyline w-100 vw-100">
+<section id="upcoming-content" class="space-section container-fluid bg-skyline w-100">
     <h1 class="bolder-text text-dark text-center bg-skyline">Join Our Upcoming Event</h1>
     <div class="container mx-auto bg-skyline pt-4 event-container" id="container-upcoming" style="padding: 0 !important;">
         <div class="row justify-content-center text-center py-0 my-0 gx-4" style="margin: 0 !important;">

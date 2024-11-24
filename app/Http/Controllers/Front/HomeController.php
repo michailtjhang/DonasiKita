@@ -39,4 +39,8 @@ class HomeController extends Controller
     {
         return view('front.detail_donation.detail_donation');
     }
+    public function detail_blog()
+    {
+        return view('front.detail_blog.detail_blog');
+    }
 }

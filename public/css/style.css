@@ -27,6 +27,13 @@ a {
     background-color: var(--skyline-color);
 }
 
+.bg-dark {
+    background-color: var(--dark-color) !important;
+}
+.text-justify {
+    text-align: justify;
+}
+
 .text-aqua {
     color: var(--aqua-color);
 }

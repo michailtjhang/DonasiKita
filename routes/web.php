@@ -28,6 +28,8 @@ Route::get('/event_category_specific', [HomeController::class, 'event_category_s
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
 
+Route::get('/detail_blog', [HomeController::class, 'detail_blog'])->name('detail_blog');
+
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
 });
