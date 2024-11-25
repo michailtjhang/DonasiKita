@@ -41,13 +41,14 @@
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
                     <a href="" class="text-reset">
-                        <p><i class="fas fa-home me-3"></i>Daija6@gmail.com</p>
+                        <p><i class="fas fa-home me-3"></i>donasikita.maxy@gmail.com</p>
                     </a>
                     <a href="" class="text-reset">
                         <p>
                             <i class="fas fa-envelope me-3"></i>
-                            Jakarta, 32575 <br>
-                            Cummerata Vista
+                            Pakuwon Tower Lantai 26 Unit J, <br>
+                            Jln. Casablanca Raya kav 88 <br>
+                            Jakarta Selatan
                         </p>
                     </a>
                     <a href="" class="text-reset">
