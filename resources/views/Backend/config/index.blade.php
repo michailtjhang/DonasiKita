@@ -61,7 +61,7 @@
             var table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('config.index') }}",
+                ajax: "{{ url()->current() }}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'name', name: 'name' },

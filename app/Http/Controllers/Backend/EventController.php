@@ -7,9 +7,12 @@ use App\Models\Event;
 use App\Models\Category;
 use App\Models\Locations;
 use App\Models\Thumbnail;
+use App\Models\DetailEvent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PermissionRole;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class EventController extends Controller
@@ -19,6 +22,18 @@ class EventController extends Controller
      */
     public function index()
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            abort(404);
+        }
+
+        // Cek masing-masing izin untuk Add, Edit, dan Delete
+        $data['PermissionAdd'] = PermissionRole::getPermission('Add Event', Auth::user()->role_id);
+        $data['PermissionEdit'] = PermissionRole::getPermission('Edit Event', Auth::user()->role_id);
+        $data['PermissionShow'] = PermissionRole::getPermission('View Event', Auth::user()->role_id);
+
+        // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
             $events = Event::where('user_id', auth()->user()->id)->get();
             return DataTables::of($events)
@@ -41,18 +56,27 @@ class EventController extends Controller
                     $end = Carbon::parse($events->end)->format('d M Y h:i A');
                     return "$start - $end";
                 })
-                ->addColumn('action', function ($events) {
-                    return '
-                    <th>
-                        <a href="event/' . $events->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>
-                        <a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>
-                    </th>';
+                ->addColumn('action', function ($events) use ($data) {
+                    $buttons = '';
+
+                    // Tambahkan tombol show jika izin Show ada
+                    if (!empty($data['PermissionShow'])) {
+                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                    }
+
+                    // Tambahkan tombol Edit jika izin Edit ada
+                    if (!empty($data['PermissionEdit'])) {
+                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                    }
+
+                    return $buttons;
                 })
                 ->rawColumns(['category_id', 'status', 'action'])
-                ->make();
+                ->make(true);
         }
         return view('Backend.event.index', [
             'page_title' => 'Events',
+            'data' => $data
         ]);
     }
 
@@ -73,16 +97,19 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
             'content' => 'required',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'date' => 'required',
-            'participant' => 'required|integer',
-            'volunteer' => 'nullable|integer',
-            'location' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'date' => 'required|string',
+            'participant' => 'required|integer|min:1',
+            'participant_description' => 'required|string|max:200',
+            'volunteer' => 'nullable|integer|min:0',
+            'volunteer_description' => 'nullable|string|max:200',
+            'location' => 'required|string|max:255',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'when_volunteer' => 'required|boolean',
         ]);
 
         $data = $request->all();
@@ -92,32 +119,45 @@ class EventController extends Controller
             $eventId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
         } while (Event::where('event_id', $eventId)->exists()); // Pastikan unik
 
-        $data['event_id'] = $eventId;
+        // Tambahkan slug dan views
+        $eventData = [
+            'event_id' => $eventId,
+            'title' => $data['title'],
+            'slug' => Str::slug($data['title']),
+            'description' => $data['content'],
+            'user_id' => auth()->user()->id,
+            'category_id' => $data['category_id'],
+            'status' => 'upcoming', // Default status
+        ];
+
+        // Simpan data ke tabel Blog
+        $event = Event::create($eventData);
+
+        // Proses tanggal dari input 'date'
+        $dateRange = explode(' - ', $data['date']);
+
+        // Data untuk tabel `detail_events`
+        $detailData = [
+            'event_id' => $event->event_id, // id dari event
+            'start' => Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[0])),
+            'end' => Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[1])),
+            'capacity_participants' => $data['participant'],
+            'description_participants' => $data['participant_description'] ?? '',
+            'requires_volunteers' => $data['when_volunteer'],
+        ];
+
+        if (!empty($data['volunteer'])) {
+            $detailData['capacity_volunteers'] = $data['volunteer'];
+            $detailData['description_volunteers'] = $data['volunteer_description'] ?? '';
+        }
+
+        // Simpan ke tabel `detail_events`
+        DetailEvent::create($detailData);
 
         // upload image
         $file = $request->file('img'); // get file
         $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
         $file->move(storage_path('app/public/cover'), $filename); // path file
-
-        // Tambahkan slug dan views
-        $data['slug'] = Str::slug($data['title']);
-        $data['views'] = 0;
-        $data['description'] = $data['content'];
-        $data['user_id'] = auth()->user()->id;
-        $data['capacity_participants'] = $data['participant'];
-
-        // Jika ada input 'volunteer'
-        if ($data['volunteer']) {
-            $data['capacity_volunteers'] = $data['volunteer'];
-        }
-
-        // Proses tanggal dari input 'date'
-        $dateRange = explode(' - ', $data['date']);
-        $data['start'] = Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[0]));
-        $data['end'] = Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[1]));
-
-        // Simpan data ke tabel Blog
-        $event = Event::create($data);
 
         // Tambahkan data thumbnail 
         $dataThumbnail['file_path'] = $filename;
@@ -164,6 +204,10 @@ class EventController extends Controller
     public function edit(string $id)
     {
         $event = Event::find($id);
+        if ($event->whereStatus('finished')->exists()) {
+            return back()->with('error', 'Event already finished');
+        }
+
         return view('Backend.event.edit', [
             'page_title' => 'Edit Event',
             'event' => $event,
@@ -178,19 +222,23 @@ class EventController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
             'content' => 'required',
-            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'date' => 'required',
-            'participant' => 'required|integer',
-            'volunteer' => 'nullable|integer',
-            'location' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'date' => 'required|string',
+            'participant' => 'required|integer|min:1',
+            'participant_description' => 'required|string|max:200',
+            'volunteer' => 'nullable|integer|min:0',
+            'volunteer_description' => 'nullable|string|max:200',
+            'location' => 'required|string|max:255',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'requires_volunteers' => 'required|boolean',
+            'status' => 'required|in:ongoing,completed',
         ]);
 
-        $event = Event::with('thumbnail', 'location')->findOrFail($id); // Ambil event dengan relasi terkait
+        $event = Event::with('thumbnail', 'location', 'detailEvent')->findOrFail($id); // Ambil event dengan relasi terkait
         $data = $request->all();
 
         // Update file gambar jika ada file baru yang diupload
@@ -235,11 +283,21 @@ class EventController extends Controller
             'description' => $data['content'],
             'category_id' => $data['category_id'],
             'status' => $data['status'] ?? $event->status, // Pertahankan status jika tidak ada
-            'start' => $data['start'],
-            'end' => $data['end'],
-            'capacity_participants' => $data['participant'],
-            'capacity_volunteers' => $data['capacity_volunteers'],
         ]);
+
+        // Update Detail Event (Tabel detail_events)
+        $event->detailEvent()->updateOrCreate(
+            ['event_id' => $event->event_id], // Gunakan event_id yang sesuai
+            [
+                'start' => $data['start'],
+                'end' => $data['end'],
+                'capacity_participants' => $data['participant'],
+                'description_participants' => $data['participant_description'],
+                'capacity_volunteers' => $data['volunteer'] ?? 0,
+                'description_volunteers' => $data['volunteer_description'] ?? '',
+                'requires_volunteers' => $data['requires_volunteers'],
+            ]
+        );
 
         // Update lokasi
         $event->location()->updateOrCreate(

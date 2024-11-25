@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('needs', function (Blueprint $table) {
             $table->uuid('id')->primary(); // Primary Key
             $table->char('need_id', 5)->unique();
-            $table->string('title', 100);
-            $table->text('description');
+            $table->string('title');
+            $table->string('slug');
+            $table->string('towards');
+            $table->longText('description');
+            $table->longText('description_need');
             $table->double('target_amount');
             $table->double('current_amount')->default(0); // Default 0
             $table->string('status', 50)->default('ongoing'); // ongoing, completed

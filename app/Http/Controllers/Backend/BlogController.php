@@ -29,15 +29,20 @@ class BlogController extends Controller
         $data['PermissionAdd'] = PermissionRole::getPermission('Add Blog', Auth::user()->role_id);
         $data['PermissionEdit'] = PermissionRole::getPermission('Edit Blog', Auth::user()->role_id);
         $data['PermissionShow'] = PermissionRole::getPermission('View Blog', Auth::user()->role_id);
+
         // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
-            // $blogs = Blog::where('user_id', auth()->user()->id)->get();
-            $blogs = Blog::get();
+            $blogs = Blog::where('user_id', auth()->user()->id)->get();
+
+            // Tampilkan data blog
             return DataTables::of($blogs)
+                // Tampilkan kolom yang diinginkan
                 ->addIndexColumn()
+                // Tambahkan kolom category_id
                 ->addColumn('category_id', function ($blog) {
                     return $blog->category->name ?? '-';
                 })
+                // Tambahkan kolom status
                 ->addColumn('status', function ($blogs) {
                     if ($blogs->status == 1) {
                         return '<span class="badge badge-success">Published</span>';
@@ -45,24 +50,29 @@ class BlogController extends Controller
                         return '<span class="badge badge-danger">Draft</span>';
                     }
                 })
+                // Tambahkan kolom action
                 ->addColumn('action', function ($blogs) use ($data) {
                     $buttons = '';
 
                     // Tambahkan tombol show jika izin Show ada
                     if (!empty($data['PermissionShow'])) {
-                        $buttons .= '<a href="event/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                        $buttons .= '<a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
                     }
 
                     // Tambahkan tombol Edit jika izin Edit ada
                     if (!empty($data['PermissionEdit'])) {
-                        $buttons .= '<a href="event/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                        $buttons .= '<a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
                     }
 
                     return $buttons;
                 })
+                // Konfigurasi DataTables
                 ->rawColumns(['status', 'action'])
+                // Tampilkan DataTables
                 ->make(true);
         }
+
+        // Kirim data ke view
         return view('Backend.blog.index', [
             'page_title' => 'Blog Article',
             'data' => $data
@@ -79,6 +89,7 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi
         $request->validate([
             'title' => 'required',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',

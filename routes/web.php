@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Backend\DonationController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -24,11 +25,16 @@ Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_d
 
 Route::get('/event', [HomeController::class, 'event'])->name('event');
 
+Route::get('/event_category_all', [HomeController::class, 'event_category_all'])->name('event_category_all');
+
 Route::get('/event_category_specific', [HomeController::class, 'event_category_specific'])->name('event_category_specific');
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
 
 Route::get('/categories', [HomeController::class, 'categories'])->name('categories');
+
+Route::get('/detail_blog', [HomeController::class, 'detail_blog'])->name('detail_blog');
+
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
@@ -99,6 +105,8 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
         Route::resource('article', BlogController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
         Route::resource('event', EventController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
+        Route::resource('donation', DonationController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
 
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');

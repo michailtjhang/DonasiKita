@@ -101,7 +101,10 @@
         <!-- Verify Section -->
         <div class="verify-section">
             <h1>Verify Your Email</h1>
-            <p>You’ve entered <strong>example@mail.com</strong> as the email address for your account.</p>
+
+            @include('_message')
+
+            <p>You’ve entered <strong>{{ $email }}</strong> as the email address for your account.</p>
             <p>Please verify this email address by clicking the button below:</p>
             <form action="{{ route('verification.resend') }}" method="POST">
                 @csrf

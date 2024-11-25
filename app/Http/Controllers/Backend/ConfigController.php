@@ -13,15 +13,19 @@ class ConfigController extends Controller
 {
     public function index()
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Config', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Ambil data konfigurasi
         $data['configs'] = Config::all(); // Untuk modal editing
 
+        // Ambil izin Edit
         $data['PermissionEdit'] = PermissionRole::getPermission('Edit Config', Auth::user()->role_id);
 
+        // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
             $config = Config::get();
             return DataTables::of($config)
@@ -49,11 +53,13 @@ class ConfigController extends Controller
 
     public function update(Request $request, string $id)
     {
+        // Validasi input
         $data = $request->validate([
             'name' => 'required',
             'value' => 'required',
         ]);
 
+        // Update konfigurasi
         Config::find($id)->update($data);
 
         return back()->with('success', 'Config updated successfully');

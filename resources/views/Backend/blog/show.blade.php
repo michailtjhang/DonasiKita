@@ -18,9 +18,9 @@
                         <th>Title</th>
                         <td>: {{ $article->title }}</td>
                     </tr>
-                    <tr></tr>
-                    <th>Category</th>
-                    <td>: {{ $article->category->name }}</td>
+                    <tr>
+                        <th>Category</th>
+                        <td>: {{ $article->category->name }}</td>
                     </tr>
                     <tr>
                         <th>Description</th>
@@ -64,7 +64,7 @@
             </div>
 
             <!-- Back Button -->
-            <a href="{{ route('article.index') }}" class="btn btn-primary">Back</a>
+            <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
         </div>
     </div>
 @endsection

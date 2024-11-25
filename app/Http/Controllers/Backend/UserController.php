@@ -16,7 +16,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('User', Auth::user()->role_id);
@@ -30,7 +30,7 @@ class UserController extends Controller
         $data['PermissionDelete'] = PermissionRole::getPermission('Delete User', Auth::user()->role_id);
 
         // Jika request adalah Ajax untuk DataTables
-        if ($request->ajax()) {
+        if (request()->ajax()) {
             $users = User::with('role')->get();
 
             return DataTables::of($users)
@@ -73,11 +73,13 @@ class UserController extends Controller
      */
     public function create()
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Add User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Ambil data
         $data = Role::getRecords();
         return view('Backend.user.create', [
             'page_title' => 'Add New User',
@@ -90,11 +92,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Add User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Validasi
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -102,18 +106,22 @@ class UserController extends Controller
             'role_id' => 'required',
         ]);
 
+        // Cari user terakhir
         $user = User::latest()->first();
         $kodeUser = "US";
 
         if ($user == null) {
+            // Jika user terakhir belum ada
             $id_user = $kodeUser . "001";
         } else {
+            // Jika user terakhir sudah ada
             $id_user = $user->id_user;
             $urutan = (int) substr($id_user, 3, 3);
             $urutan++;
             $id_user = $kodeUser . sprintf("%03s", $urutan);
         }
 
+        // Simpan data
         $data = $request->all();
         $data['password'] = Hash::make($data['password']);
         $data['id_user'] = $id_user;
@@ -135,11 +143,13 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Edit User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Ambil data
         $data['user'] = User::getSingleRecord($id);
         $data['role'] = Role::getRecords();
         return view('Backend.user.edit', [
@@ -153,11 +163,13 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Edit User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Validasi
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -165,6 +177,7 @@ class UserController extends Controller
             'role_id' => 'required',
         ]);
 
+        // Update user
         $user = User::getSingleRecord($id);
         if (empty($request->password)) {
             $user->update([
@@ -189,11 +202,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Delete User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Hapus user
         $user = User::getSingleRecord($id);
         $user->delete();
 
