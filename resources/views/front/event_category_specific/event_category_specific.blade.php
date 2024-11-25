@@ -241,7 +241,7 @@
         </div>
 
         <!-- Navigasi Slider -->
-        <div class="pagination-container  my-5">
+        <div class="pagination-container  spacer-pagination">
             <button class="pagination-arrow" id="prev-page">&lt;</button>
             <div class="pagination-dots" id="pagination-dots"></div>
             <button class="pagination-arrow" id="next-page">&gt;</button>
@@ -409,27 +409,24 @@
 
         visibleCards.forEach((card) => {
             cardContainer.innerHTML += `
-                <div class="col-md-4 d-flex justify-content-center mt-4">
+                <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 " >
                     <div class="event-card rounded rounded-5">
-                        <img src="${card.img}" alt="Event Image" class="img-fluid">
-                        <div class="event-date">${card.date}</div>
-                        <div class="event-details pb-4 px-4">
-                            <p class="event-title  mb-3fw-bold">${card.title}</p>
-                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                        <img src="${card.img}" alt="Event Image" class="img-fluid overflow-hidden">
+                    <div class="event-card-spacer">
+                        <div class="event-date ms-2 mt-3">${card.date}</div>
+                    </div>
+                        <div class="event-details  event-card-spacer">
+                            <p class="event-title  mb-3 fw-bold">${card.title}</p>
+                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0" >
                             ${card.month} | <a href="#" class="text-decoration-none">${card.category}</a> | ${card.organizer}
                             </p>
-                            <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                            <p class="card-text  text-extra-small mb-3 opacity-75 small" >
                                 ${card.body}
                             </p>
-                            <div class="card-text text-extra-small d-flex justify-content-between">
-                                <div class="col-md-6">
-                                    <i class="fa-solid fa-clock"></i> ${card.time}<br>
-                                </div>
-                                <div class="col-md-6">
-                                    <i class="fa-solid fa-location-dot"></i> ${card.location}
-                                </div>
+                            <div class="event-info mt-2justify-content-between">
+                                <span><i class="fa fa-clock"></i> ${card.time}</span>
+                                <span><i class="fa fa-location-dot"></i> ${card.location}</span>
                             </div>
-
                         </div>
                     </div>
                 </div>`;

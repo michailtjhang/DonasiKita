@@ -1,154 +1,236 @@
-@extends('front.layout.navigator')
-
+@extends('front.layout.app')
 @section('style')
-<link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <style>
-    .swiper {
-        width: 100%;
-        padding: 20px 0;
+    .list-unstyled li {
+        position: relative;
+        padding-left: 1.5rem;
+        /* Ruang untuk penanda titik */
+        margin-bottom: 1rem;
     }
 
-    .swiper-slide {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        padding: 15px;
+    .list-unstyled strong {
+        position: relative;
     }
 
-    .swiper-pagination-bullet {
-        background: #6CB6DE !important;
+    .list-unstyled strong::before {
+        content: '•';
+        /* Penanda titik */
+        position: absolute;
+        left: -1.5rem;
+        /* Tempatkan di kiri elemen */
+        color: #000;
+        /* Warna titik */
+        font-size: 1.4rem;
+        /* Ukuran titik */
+        line-height: 1.5;
+        /* Menyamakan tinggi dengan teks */
     }
 
-    .swiper-button-next,
-    .swiper-button-prev {
-        color: #6CB6DE !important;
+    .spacing-donation p {
+        line-height: 2;
+    }
+
+    /* about page */
+    .leader-image {
+        width: 25%;
+    }
+
+    .team-slider .card {
+        border: none;
+        border-radius: 10px;
+        background-color: transparent;
+    }
+
+    .team-slider .card-body {
+        text-align: center;
+    }
+
+    .carousel-control-prev {
+        top: 50%;
+        transform: translateY(-50%);
+        left: -40px;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+    }
+
+    .carousel-control-next {
+        top: 50%;
+        transform: translateY(-50%);
+        right: -40px;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+    }
+
+    .team-slider .carousel-control-prev-icon,
+    .team-slider .carousel-control-next-icon {
+        font-size: 1.2rem;
+        color: #fff;
     }
 </style>
 @endsection
-
 @section('content')
-
 <!-- Hero Section -->
 <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
-        <h1 class="hero-title2">Donation</h1>
-        <p class="hero-subtitle2">Salurkan bantuan anda, dengan menyumbang mulai dari Rp1000</p>
+        <h1 class="hero-title2">Detail Donation</h1>
+        <p class="hero-subtitle2">Donation Bantuan Kemanusiaan untuk Palestina</p>
     </div>
 </section>
 <!-- End Hero Section -->
 
-<!-- Search Bar -->
-<div class="container my-4">
-    <div class="Searchbar d-flex align-items-center mx-auto shadow" style="width: 600px; height: 50px; background: white; border-radius: 25px; overflow: hidden; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);">
-        <input type="text" class="form-control border-0" placeholder="Ingin bantu siapa hari ini?" style="font-size: 16px; color: #B3B3B3; outline: none; box-shadow: none; height: 100%; flex: 1; padding-left: 20px;">
-        <div class="search-icon-container" style="background: #6CB6DE; width: 90px; height: 100%; border-top-right-radius: 25px; border-bottom-right-radius: 25px; display: flex; align-items: center; justify-content: center;">
-            <img src="{{ asset('images/donate/Vector.svg') }}" alt="Search Icon" style="width: 20px; height: 20px;">
-        </div>
-    </div>
-</div>
+<!-- Dontaion details -->
+<section id="detail-donation" class="container my-5 pt-5">
+    <div class="card shadow rounded-4">
+        <div class="container pt-5 px-lg-5 px-md-4 px-3 mt-lg-4" style="padding-left: 2.225rem !important; padding-right: 2.225rem !important;">
+            <!-- Gambar -->
+            <img src="/images/donate/3.svg" alt="Donation Image" class="card-img-top img-fluid rounded">
 
-<!-- Donation Slider -->
-<section id="donation-slider" class="my-5">
-    <div class="container">
-        <h2 class="section-title text-center mb-4">Bergabung dalam Gerakan Kebaikan</h2>
-        <p class="section-subtitle text-center text-muted mb-5">Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.</p>
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <!-- Card 1 -->
-                <div class="swiper-slide">
-                    <div class="card donation-card shadow-sm">
-                        <img src="/images/donate/1.svg" class="card-img-top rounded-top" alt="Donation Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Bantu Pendidikan Anak Pedalaman</h5>
-                            <p class="card-text text-muted">Yayasan Anak Nusantara</p>
-                            <div class="progress my-3">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="card-text"><strong>Rp 25.000.000</strong> / Rp 50.000.000</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">200 Donatur</small>
-                                <small class="text-muted">30 Hari Lagi</small>
-                            </div>
-                        </div>
+            <!-- Konten -->
+            <div class="py-4">
+                <p class=" fw-bold h1">Bantuan Kemanusiaan untuk Palestina</p>
+                <!-- Target dan Total -->
+                <div class="row pt-4 align-items-center">
+                    <div class="col-6">
+                        <p
+                            class="fw-bold text-dark text-nowrap m-0"
+                            style="font-size: clamp(16px, 5vw, 32px);">
+                            Target
+                        </p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p
+                            class="fw-bold text-dark text-nowrap m-0"
+                            style="font-size: clamp(16px, 5vw, 32px);">
+                            Rp 200.000.000
+                        </p>
                     </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="swiper-slide">
-                    <div class="card donation-card shadow-sm">
-                        <img src="/images/donate/2.svg" class="card-img-top rounded-top" alt="Donation Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Renovasi Masjid di Pelosok Negeri</h5>
-                            <p class="card-text text-muted">Yayasan Cahaya Iman</p>
-                            <div class="progress my-3">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="card-text"><strong>Rp 37.500.000</strong> / Rp 50.000.000</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">90 Donatur</small>
-                                <small class="text-muted">20 Hari Lagi</small>
-                            </div>
-                        </div>
+
+
+                <!-- Progress Bar -->
+                <div class="progress my-3 rounded" style="height: 22px;  background-color: #bbddf0 !important;">
+                    <div class="progress-bar progress-bar-animated rounded-5" role="progressbar" style="width: 40%;  background-color:#50a8d7 !important" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <!-- Terkumpul dan Donatur -->
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <p
+                            class="mb-0 fw-light text-nowrap h3"
+                            style="color: #145071 !important; font-size: clamp(0.7rem, 1.5vw, 2rem);">
+                            Terkumpul: Rp 70.000.000
+                        </p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p
+                            class="mb-0 text-nowrap h3"
+                            style="color: #145071 !important; font-size: clamp(0.7rem, 1.5vw, 2rem);">
+                            <strong>1,908</strong> Donatur
+                        </p>
                     </div>
                 </div>
 
-                <!-- Card 3 -->
-                <div class="swiper-slide">
-                    <div class="card donation-card shadow-sm">
-                        <img src="/images/donate/3.svg" class="card-img-top rounded-top" alt="Donation Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Aksi Bencana Alam</h5>
-                            <p class="card-text text-muted">Komunitas Peduli Sesama</p>
-                            <div class="progress my-3">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <p class="card-text"><strong>Rp 30.000.000</strong> / Rp 50.000.000</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">150 Donatur</small>
-                                <small class="text-muted">40 Hari Lagi</small>
-                            </div>
-                        </div>
-                    </div>
+
+                <!-- Yayasan -->
+                <div class="py-4">
+                    <h1 class="fw-light" style="color: #0f3d56;">
+                        <i class="fa-solid fa-user"></i> Yayasan Peduli Palestina
+                    </h1>
                 </div>
+
+                <!-- Deskripsi -->
+                <div class="border rounded p-4">
+                    <p class="" style="line-height: 1.5;font-size:26px">
+                        Warga Palestina saat ini menghadapi kondisi kemanusiaan yang sangat memprihatinkan, dengan terbatasnya akses terhadap kebutuhan dasar sehari-hari. Krisis yang terus berlangsung telah mempengaruhi banyak keluarga yang kehilangan tempat tinggal, akses kesehatan, dan kebutuhan dasar mereka. Melalui kampanye ini, kami mengajak Anda untuk bersama-sama meringankan beban mereka. Setiap donasi yang Anda berikan akan langsung disalurkan untuk memenuhi kebutuhan esensial warga Palestina, sehingga mereka dapat bertahan dalam situasi yang sulit ini.
+                    </p>
+                </div>
+
+
+                <!-- Goals -->
+                <h6 class="fw-bold mt-4 h3">What They Needed (Goals)</h6>
+
+                <div class="border rounded p-4">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Paket Pangan</strong> </p>
+                            <p class="" style="line-height: 2.0; font-size:26px">Pangan menjadi kebutuhan utama bagi warga Palestina yang kehilangan sumber penghasilan. Bantuan ini mencakup sembako seperti beras, minyak goreng, makanan kaleng, susu untuk anak-anak, dan kebutuhan gizi lainnya, yang diharapkan dapat menopang kesehatan mereka.</p>
+                        </li>
+                        <li class="mb-3">
+                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Obat-obatan dan Peralatan Medis</strong> </p>
+                            <p class="" style="line-height: 2.0; font-size:26px">Banyak warga Palestina yang memerlukan obat-obatan mendesak dan perawatan kesehatan. Donasi akan digunakan untuk membeli obat-obatan dasar, seperti antibiotik, vitamin, dan peralatan medis penting lainnya untuk merawat mereka yang terluka atau sakit. Kami juga akan membantu memenuhi kebutuhan di fasilitas kesehatan yang kekurangan persediaan.</p>
+                        </li>
+                        <li class="mb-3">
+                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Perlengkapan Kebersihan dan Sanitasi</strong> </p>
+                            <p class="" style="line-height: 2.0; font-size:26px">Kebersihan dan kesehatan sangat penting dalam situasi darurat. Kami menyediakan sabun, hand sanitizer, masker, dan kebutuhan kebersihan lainnya.</p>
+                        </li>
+                        <li>
+                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Air Bersih dan Sanitasi</strong> </p>
+                            <p class="" style="line-height: 2.0; font-size:26px">Air bersih adalah kebutuhan dasar yang sering sulit diakses. Bantuan akan digunakan untuk menyediakan air minum bersih dan fasilitas sanitasi.</p>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-
-            <!-- Pagination and Navigation -->
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
         </div>
     </div>
 </section>
-<!-- End Donation Slider -->
 
+<!-- Button Share and Donate -->
+<div class="container my-5">
+    <div class="row justify-content-between">
+        <!-- Share Button -->
+        <div class="col-12 col-md-4 d-flex justify-content-center">
+            <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center" style="background-color: #bbddf0;">
+                <h1 class="d-flex align-items-center mb-0" style="font-size: 1.5rem; color: #0f3d56;">
+                    <i class="fas fa-share-alt me-2"></i> Share
+                </h1>
+            </button>
+        </div>
+        <!-- Donate Now Button -->
+        <div class="col-12 col-md-8 d-flex justify-content-center">
+            <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center" id="donateNowBtn">
+                <h1 class="mb-0" style="font-size: 1.5rem;">Donate Now</h1>
+            </button>
+        </div>
+    </div>
+</div>
 @endsection
-
-@section('scripts')
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+@section('script')
 <script>
-    var swiper = new Swiper('.swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
+    document.getElementById('donateNowBtn').addEventListener('click', () => {
+        Swal.fire({
+            title: '<strong>Gabung Sebagai</strong>',
+            html: `
+        <button id="pesertaBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
+            Donasi Barang
+        </button>
+        <button id="sukarelawanBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
+            Donasi Uang
+        </button>
+        `,
+            showConfirmButton: false,
+            customClass: {
+                popup: 'custom-swal-popup'
             },
-            1024: {
-                slidesPerView: 3,
-            }
-        }
+            // didOpen: () => {
+            // // Event listener untuk tombol Peserta
+            // document.getElementById('pesertaBtn').addEventListener('click', () => {
+            //     Swal.fire('Anda Berhasil Mendonasikan Barang!');
+            // });
+
+            // // Event listener untuk tombol Sukarelawan
+            // document.getElementById('sukarelawanBtn').addEventListener('click', () => {
+            //     Swal.fire('Anda Berhasil Mendonasikan Uang!');
+            // });
+            // }
+        });
     });
 </script>
+
 @endsection
