@@ -25,6 +25,9 @@
                 $PermissionRole = App\Models\PermissionRole::getPermission('Role', Auth::user()->role_id);
                 $PermissionCategory = App\Models\PermissionRole::getPermission('Category', Auth::user()->role_id);
                 $PermissionConfig = App\Models\PermissionRole::getPermission('Config', Auth::user()->role_id);
+                $PermissionArticle = App\Models\PermissionRole::getPermission('Blog & Article', Auth::user()->role_id);
+                $PermissionEvent = App\Models\PermissionRole::getPermission('Event', Auth::user()->role_id);
+                $PermissionDonation = App\Models\PermissionRole::getPermission('Donation', Auth::user()->role_id);
             @endphp
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
@@ -41,23 +44,27 @@
                         </a>
                     </li>
                 @endif
-                
-                    <li class="nav-item">
-                        <a href=""
-                            class="nav-link @if (Request::segment(2) == 'laporan') active @endif">
-                            <i class="fas fa-chart-line nav-icon"></i>
-                            <p>Laporan</p>
-                        </a>
-                    </li>
-                
-                <li class="nav-header">Management Page</li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link @if (Request::segment(2) == 'donasi') active @endif">
-                        <i class="fas fa-hand-holding-heart nav-icon"></i>
-                        <p>Donasi</p>
+                    <a href="" class="nav-link @if (Request::segment(2) == 'laporan') active @endif">
+                        <i class="fas fa-chart-line nav-icon"></i>
+                        <p>Laporan</p>
                     </a>
                 </li>
+
+                @if (!empty($PermissionDonation) && !empty($PermissionArticle) && !empty($PermissionEvent))
+                    <li class="nav-header">Management Page</li>
+                @endif
+
+                @if (!empty($PermissionDonation))
+                    <li class="nav-item">
+                        <a href="{{ route('donation.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'donation') active @endif">
+                            <i class="fas fa-hand-holding-heart nav-icon"></i>
+                            <p>Donasi</p>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="" class="nav-link @if (Request::segment(2) == 'website') active @endif">
@@ -66,31 +73,38 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('article.index') }}" class="nav-link @if (Request::segment(2) == 'article') active @endif">
-                        <i class="fas fa-newspaper nav-icon"></i>
-                        <p>Article & Blog</p>
-                    </a>
-                </li>
+                @if (!empty($PermissionArticle))
+                    <li class="nav-item">
+                        <a href="{{ route('article.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'article') active @endif">
+                            <i class="fas fa-newspaper nav-icon"></i>
+                            <p>Article & Blog</p>
+                        </a>
+                    </li>
+                @endif
 
-                <li class="nav-item">
-                    <a href="{{ route('event.index') }}" class="nav-link @if (Request::segment(2) == 'event') active @endif">
-                        <i class="fas fa-calendar nav-icon"></i>
-                        <p>Event</p>
-                    </a>
-                </li>
+                @if (!empty($PermissionEvent))
+                    <li class="nav-item">
+                        <a href="{{ route('event.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'event') active @endif">
+                            <i class="fas fa-calendar nav-icon"></i>
+                            <p>Event</p>
+                        </a>
+                    </li>
+                @endif
 
                 @if (!empty($PermissionUser) || !empty($PermissionRole || !empty($PermissionCategory || !empty($PermissionConfig))))
                     <li class="nav-header">Management</li>
                 @endif
 
                 @if (!empty($PermissionConfig))
-                <li class="nav-item">
-                    <a href="{{ route('config.index') }}" class="nav-link @if (Request::segment(2) == 'config') active @endif">
-                        <i class="fas fa-cogs nav-icon"></i>
-                        <p>Config</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('config.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'config') active @endif">
+                            <i class="fas fa-cogs nav-icon"></i>
+                            <p>Config</p>
+                        </a>
+                    </li>
                 @endif
 
                 @if (!empty($PermissionCategory))

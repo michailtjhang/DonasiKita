@@ -15,9 +15,22 @@ class Need extends Model
     protected $fillable = [
         'need_id',
         'title',
+        'slug',
+        'towards',
         'description',
+        'description_need',
         'target_amount',
         'current_amount',
         'status'
     ];
+
+    public function donation()
+    {
+        return $this->hasMany(Donation::class, 'need_id');
+    }
+
+    public function thumbnail()
+    {
+        return $this->hasOne(Thumbnail::class, 'need_id', 'need_id');
+    }
 }

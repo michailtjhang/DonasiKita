@@ -1,7 +1,4 @@
 @extends('Backend.layouts.app')
-@section('seoMeta')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
 @section('css')
     <!-- ======================== datatable ========================= -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
@@ -21,39 +18,33 @@
             <div class="swal" data-swal="{{ session('success') }}"></div>
 
             <div class="table-responsive">
-                @if (!empty($data['PermissionAdd']))
-                    <a href="{{ route('article.create') }}" class="btn btn-success mb-2 btn-sm">
-                        Tambah
-                    </a>
-                @endif
+                <a href="{{ route('donation.create') }}" class="btn btn-success mb-2 btn-sm">
+                    Tambah
+                </a>
                 <table id="dataTable" class="table table-bordered table-hover table-stripped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Title</th>
-                            <th>Category</th>
-                            <th>Views</th>
+                            <th>Towards</th>
                             <th>Status</th>
-                            <th>Published Date</th>
-                            @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
-                                <th>Aksi</th>
-                            @endif
+                            <th>Target Amount</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th></th>
                             <th><input type="text" placeholder="Search Title" class="form-control form-control-sm"></th>
-                            <th><input type="text" placeholder="Search Category" class="form-control form-control-sm">
+                            <th><input type="text" placeholder="Search Towards" class="form-control form-control-sm">
                             </th>
-                            <th><input type="text" placeholder="Search Views" class="form-control form-control-sm"></th>
                             <th><input type="text" placeholder="Search Status" class="form-control form-control-sm"></th>
-                            <th><input type="text" placeholder="Search Date" class="form-control form-control-sm"></th>
-                            @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
-                                <th></th>
-                            @endif
+                            <th><input type="text" placeholder="Search Target Amount" class="form-control form-control-sm"></th>
+                            <th></th>
                         </tr>
                     </tfoot>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -63,12 +54,12 @@
     <!-- /.modal-content -->
 @endsection
 @section('js')
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
-
-    <!-- Moment JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -86,32 +77,28 @@
                         name: 'title'
                     },
                     {
-                        data: 'category_id',
-                        name: 'category_id'
-                    },
-                    {
-                        data: 'views',
-                        name: 'views'
+                        data: 'towards',
+                        name: 'towards'
                     },
                     {
                         data: 'status',
                         name: 'status'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at',
-                        render: function(data) {
-                            return moment(data).format('MM-DD-YYYY');
+                        data: 'target_amount',
+                        name: 'target_amount',
+                        render: function(data, type, row) {
+                            // Format angka menjadi format uang
+                            return new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(data);
                         }
                     },
-                    @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false,
-                            searchable: false
-                        },
-                    @endif
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
                 ]
             });
 

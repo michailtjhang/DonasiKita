@@ -21,6 +21,7 @@ class HomeProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // View Config In Home 
         View::composer('front.home.home', function ($view) {
             $configKey = [
                 'title_home',
@@ -34,7 +35,8 @@ class HomeProvider extends ServiceProvider
                 'meta_description',
                 'meta_keywords',
             ];
-    
+            
+            // Ambil data konfigurasi
             $config = Config::whereIn('name', $configKey)->pluck('value', 'name');
             $view->with('config', $config);
         });

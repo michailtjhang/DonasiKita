@@ -28,16 +28,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
+    // Ambil data
     static public function getRecords()
     {
         return User::with('role')->orderBy('updated_at', 'desc')->get();
     }
 
+    // Ambil data berdasarkan id
     static public function getSingleRecord($id)
     {
         return User::with('role')->find($id);
     }
 
+    // Ambil data berdasarkan role
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -66,6 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    // Send the email verification notification.
     public function sendEmailVerificationNotification()
     {
         $verificationUrl = URL::temporarySignedRoute(

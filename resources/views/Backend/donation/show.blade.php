@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article & Blog List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('donation.index') }}">Donation List </a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -16,23 +16,31 @@
                 <table class="table table-bordered table-hover table-stripped">
                     <tr>
                         <th>Title</th>
-                        <td>: {{ $article->title }}</td>
+                        <td>: {{ $donation->title }}</td>
                     </tr>
                     <tr>
-                        <th>Category</th>
-                        <td>: {{ $article->category->name }}</td>
+                        <th>Towards</th>
+                        <td>: {{ $donation->towards }}</td>
+                    </tr>
+                    <tr>
+                        <th>Target Amount</th>
+                        <td>: Rp. {{ number_format($donation->target_amount, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                         <th>Description</th>
-                        <td>: {!! $article->content !!}</td>
+                        <td>: {{ $donation->description }}</td>
                     </tr>
                     <tr>
-                        <th>Image</th>
+                        <th>Description Need</th>
+                        <td>: {!! $donation->description_need !!}</td>
+                    </tr>
+                    <tr>
+                        <th>Image Cover</th>
                         <td>
-                            @if ($article->thumbnail && $article->thumbnail->file_path)
-                                <a href="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}" target="_blank"
+                            @if ($donation->thumbnail && $donation->thumbnail->file_path)
+                                <a href="{{ asset('storage/cover/' . $donation->thumbnail->file_path) }}" target="_blank"
                                     rel="noopener noreferrer">
-                                    <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
+                                    <img src="{{ asset('storage/cover/' . $donation->thumbnail->file_path) }}"
                                         alt="Cover Image" width="500">
                                 </a>
                             @else
@@ -41,24 +49,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Views</th>
-                        <td>: {{ $article->views }}</td>
-                    </tr>
-                    <tr>
                         <th>Status</th>
-                        @if ($article->status == 1)
-                            <td>: <span class="badge badge-success">Published</span></td>
+                        @if ($donation->status == 'complete')
+                            <td>: <span class="badge badge-success">Complete</span></td>
                         @else
-                            <td>: <span class="badge badge-danger">Draft</span></td>
+                            <td>: <span class="badge badge-secondary">Progress</span></td>
                         @endif
-                    </tr>
-                    <tr>
-                        <th>Published Date</th>
-                        <td>: {{ $article->created_at->format('d M Y') }}</td>
-                    </tr>
-                    <tr>
-                        <th>Writer</th>
-                        <td>: {{ $article->user->name ?? '' }}</td>
                     </tr>
                 </table>
             </div>

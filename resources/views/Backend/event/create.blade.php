@@ -121,9 +121,9 @@
 
                     <!-- Volunteer Switch -->
                     <div class="col-md-6 form-group">
-                        <label for="when_volunteer">When Volunteer?</label>
+                        <label for="when_volunteer">Require Volunteer?</label>
                         <div>
-                            <input type="checkbox" id="when_volunteer" name="when_volunteer" checked data-bootstrap-switch
+                            <input type="checkbox" id="when_volunteer" name="when_volunteer" data-bootstrap-switch
                                 data-off-color="danger" data-on-color="success">
                         </div>
                     </div>
@@ -144,11 +144,26 @@
                         @enderror
                     </div>
 
-                    <div class="col-6 form-group" style="display: none;">
+                    <div class="col-6 form-group">
+                        <label for="description_participant">Description Participant</label>
+                        <textarea type="text" id="participant_description" name="participant_description"
+                            class="form-control @error('participant_description') is-invalid @enderror">{{ old('participant_description') }}</textarea>
+
+                        @error('participant_description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                </div>
+
+                <div class="row" id="volunteer_container">
+                    <div class="col-6 form-group">
                         <label for="Volunteer">Capacity Volunteer</label>
                         <input type="text" id="Volunteer" name="volunteer"
                             class="form-control @error('volunteer') is-invalid @enderror"
-                            placeholder="Please Enter Volunteer" value="{{ old('volunteer') }}">
+                            placeholder="Please Enter Volunteer">
 
                         @error('volunteer')
                             <div class="invalid-feedback">
@@ -157,6 +172,17 @@
                         @enderror
                     </div>
 
+                    <div class="col-6 form-group">
+                        <label for="description_volunteer">Description Volunteer</label>
+                        <textarea type="text" id="description_volunteer" name="volunteer_description"
+                            class="form-control @error('volunteer_description') is-invalid @enderror">{{ old('volunteer_description') }}</textarea>
+
+                        @error('volunteer_description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -293,11 +319,6 @@
             bsCustomFileInput.init();
         });
 
-        // bootstrap switch
-        $("input[data-bootstrap-switch]").each(function() {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
-
         $(function() {
             //Date and time picker
             $('#reservationdatetime').datetimepicker({
@@ -336,27 +357,33 @@
         }
     </script>
 
+    <!-- bootstrap switch -->
     <script>
         $(document).ready(function() {
             // Initialize Bootstrap Switch
             $("input[data-bootstrap-switch]").bootstrapSwitch();
 
-            // Check the state of the "when_volunteer" checkbox on page load
-            toggleVolunteerInput($("#when_volunteer").is(":checked"));
-
-            // Add event listener for toggle change
-            $("#when_volunteer").on("switchChange.bootstrapSwitch", function(event, state) {
-                toggleVolunteerInput(state);
+            // Add hidden input dynamically on form submit
+            $("form").on("submit", function() {
+                const isChecked = $("#when_volunteer").is(":checked");
+                $("<input>").attr({
+                    type: "hidden",
+                    name: "when_volunteer",
+                    value: isChecked ? "1" : "0"
+                }).appendTo(this);
             });
 
-            // Function to toggle visibility of the "Capacity Volunteer" input
-            function toggleVolunteerInput(isChecked) {
-                if (isChecked) {
-                    $("#Volunteer").closest(".form-group").show();
+            // Toggle visibility of volunteer input
+            $("#when_volunteer").on("switchChange.bootstrapSwitch", function(event, state) {
+                if (state) {
+                    $("#volunteer_container").show();
                 } else {
-                    $("#Volunteer").closest(".form-group").hide();
+                    $("#volunteer_container").hide();
                 }
-            }
+            });
+
+            // Set initial state for volunteer input visibility
+            $("#volunteer_container").toggle($("#when_volunteer").is(":checked"));
         });
     </script>
 

@@ -17,21 +17,25 @@ class Role extends Model
         'name',
     ];
 
+    // Relationship with User
     public function users()
     {
         return $this->hasMany(User::class);
     }
 
+    // Relationship with Permission
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'permission_role', 'role_id', 'permission_id');
     }
 
+    // Ambil data
     static public function getRecords()
     {
         return Role::get();
     }
 
+    // Ambil data berdasarkan id
     static public function getRecord($id)
     {
         return Role::find($id);

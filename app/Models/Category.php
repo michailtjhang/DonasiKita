@@ -14,6 +14,7 @@ class Category extends Model
         'slug',
     ];
 
+    // Many to Many relationship
     public function blogs()
     {
         return $this->hasMany(Blog::class, 'category_id', 'id');
