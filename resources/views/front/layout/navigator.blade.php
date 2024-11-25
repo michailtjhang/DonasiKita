@@ -17,13 +17,15 @@
                         <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="{{url('/about')}}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Donation</a>
+                        <a class="nav-link @if (Request::segment(1) == 'donation') active @endif"
+                            href="{{ route('donation') }}">Donation</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Event</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog & Article</a>
+                        <a class="nav-link @if (Request::segment(1) == 'blog') active @endif"
+                            href="{{ route('blog') }}">Blogs & Article</a>
                     </li>
                     <li class="nav-item">
                         <div class="dropdown bg-light">

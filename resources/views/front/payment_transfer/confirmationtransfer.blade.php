@@ -71,23 +71,23 @@
     <!-- Informasi -->
     <div class="info-section">
         <img src="{{ asset('images/donate/vector_blue.svg') }}" alt="Icon" style="width: 24px; height: 24px;">
-        <div>Bukti Donasi Barang Anda</div>
+        <div>Bukti Transfer Anda</div>
     </div>
 
     <!-- Form Konfirmasi -->
     <div class="form-section">
-        <h2 class="section-title">Konfirmasi Pengiriman Barang</h2>
+        <h2 class="section-title">Konfirmasi Transfer</h2>
         <form id="confirmationForm" action="{{ route('confirmation.barang.submit') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <!-- Nomor Resi -->
+            <!-- Nama Rekening -->
             <div class="mb-4">
-                <label for="nomor_resi" class="form-label">Masukan Nomor Resi</label>
-                <input type="text" id="nomor_resi" name="nomor_resi" class="form-control" placeholder="Masukkan Nomor Resi">
+                <label for="nomor_resi" class="form-label">Identitas Pengirim Atas Nama</label>
+                <input type="text" id="nomor_resi" name="nomor_resi" class="form-control" placeholder="Masukkan Nama Rekening">
             </div>
 
             <!-- Bukti Foto -->
             <div class="mb-4">
-                <label for="bukti_foto" class="form-label">Unggah Foto Resi</label>
+                <label for="bukti_foto" class="form-label">Unggah Bukti Transfer</label>
                 <input type="file" id="bukti_foto" name="bukti_foto" class="form-control">
             </div>
 
@@ -106,7 +106,7 @@
     document.getElementById('submitConfirmation').addEventListener('click', function () {
         Swal.fire({
             title: 'Berhasil Dikonfirmasi',
-            text: 'Kami akan memberikan notifikasi di email Anda jika barang sudah sampai.',
+            text: 'Kami akan memberikan notifikasi di email Anda jika bukti telah dikonfirmasi.',
             icon: 'success',
             confirmButtonText: 'Selesai',
             confirmButtonColor: '#6CB6DE',

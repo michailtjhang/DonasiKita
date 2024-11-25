@@ -1,4 +1,4 @@
-@extends('front.layout.navigator')
+@extends('front.layout.app')
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">

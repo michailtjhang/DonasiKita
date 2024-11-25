@@ -19,6 +19,8 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+
 Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
 
 Route::get('/event', [HomeController::class, 'event'])->name('event');
@@ -29,7 +31,10 @@ Route::get('/event_category_specific', [HomeController::class, 'event_category_s
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
 
+Route::get('/categories', [HomeController::class, 'categories'])->name('categories');
+
 Route::get('/detail_blog', [HomeController::class, 'detail_blog'])->name('detail_blog');
+
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
@@ -42,6 +47,27 @@ Route::get('/donasibarang_guest', function () {
 Route::get('/confirmationbarang', function () {
     return view('front.payment.confirmationbarang');
 });
+
+Route::get('/blog_categories_specific', function () {
+    return view('front.blog_categories.blog_categories_specific');
+});
+
+Route::get('/transfer_guest', function () {
+    return view('front.payment_transfer.transfer_guest');
+});
+
+Route::get('/transfer_login', function () {
+    return view('front.payment_transfer.transfer_login');
+});
+
+Route::get('/confirmationtransfer', function () {
+    return view('front.payment_transfer.confirmationtransfer');
+});
+
+Route::get('/verify-email', function () {
+    return view('Auth.verify-email');
+});
+
 
 Route::post('/confirmationbarang', function () {
     // Tambahkan logika backend untuk menangani data yang dikirim (opsional)

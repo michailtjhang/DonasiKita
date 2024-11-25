@@ -1,236 +1,261 @@
 @extends('front.layout.app')
+
 @section('style')
+<link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
 <style>
-    .list-unstyled li {
-        position: relative;
-        padding-left: 1.5rem;
-        /* Ruang untuk penanda titik */
-        margin-bottom: 1rem;
-    }
+/* Styling Cards */
+.donation-card {
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 10px; /* Memberikan jarak antar card */
+    min-height: 380px; /* Tinggi minimum untuk seragam */
+    max-height: 380px; /* Tinggi maksimum untuk seragam */
+}
 
-    .list-unstyled strong {
-        position: relative;
-    }
+.card-img-top {
+    height: 160px; /* Tetapkan tinggi gambar */
+    object-fit: cover; /* Gambar akan dipotong untuk menyesuaikan ukuran */
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
 
-    .list-unstyled strong::before {
-        content: '•';
-        /* Penanda titik */
-        position: absolute;
-        left: -1.5rem;
-        /* Tempatkan di kiri elemen */
-        color: #000;
-        /* Warna titik */
-        font-size: 1.4rem;
-        /* Ukuran titik */
-        line-height: 1.5;
-        /* Menyamakan tinggi dengan teks */
-    }
+.card-body {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-    .spacing-donation p {
-        line-height: 2;
-    }
+.card-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
 
-    /* about page */
-    .leader-image {
-        width: 25%;
-    }
+.card-text {
+    font-size: 0.875rem;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
 
-    .team-slider .card {
-        border: none;
-        border-radius: 10px;
-        background-color: transparent;
-    }
+.progress {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+}
 
-    .team-slider .card-body {
-        text-align: center;
-    }
+.progress-bar {
+    background-color: #3498db;
+}
 
-    .carousel-control-prev {
-        top: 50%;
-        transform: translateY(-50%);
-        left: -40px;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-    }
+.text-muted {
+    font-size: 0.75rem;
+    color: #7d7d7d;
+    text-align: left;
+}
 
-    .carousel-control-next {
-        top: 50%;
-        transform: translateY(-50%);
-        right: -40px;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-    }
+/* Pagination Styling */
+.pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-    .team-slider .carousel-control-prev-icon,
-    .team-slider .carousel-control-next-icon {
-        font-size: 1.2rem;
-        color: #fff;
-    }
+.pagination-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.pagination-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #d4e6f1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-dot.active {
+    background-color: #3498db;
+}
+
+.pagination-dot:hover {
+    background-color: #85c1e9;
+}
+
+.pagination-arrow {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #bbddf0;
+    color: #0f3d56;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-arrow:hover {
+    background-color: #a9cce3;
+}
+
+/* Container Styling */
+#donation-cards .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
 </style>
 @endsection
+
 @section('content')
+
 <!-- Hero Section -->
 <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
-        <h1 class="hero-title2">Detail Donation</h1>
-        <p class="hero-subtitle2">Donation Bantuan Kemanusiaan untuk Palestina</p>
+        <h1 class="hero-title2">Donation</h1>
+        <p class="hero-subtitle2">Salurkan bantuan anda, dengan menyumbang mulai dari Rp1000</p>
     </div>
 </section>
 <!-- End Hero Section -->
 
-<!-- Dontaion details -->
-<section id="detail-donation" class="container my-5 pt-5">
-    <div class="card shadow rounded-4">
-        <div class="container pt-5 px-lg-5 px-md-4 px-3 mt-lg-4" style="padding-left: 2.225rem !important; padding-right: 2.225rem !important;">
-            <!-- Gambar -->
-            <img src="/images/donate/3.svg" alt="Donation Image" class="card-img-top img-fluid rounded">
-
-            <!-- Konten -->
-            <div class="py-4">
-                <p class=" fw-bold h1">Bantuan Kemanusiaan untuk Palestina</p>
-                <!-- Target dan Total -->
-                <div class="row pt-4 align-items-center">
-                    <div class="col-6">
-                        <p
-                            class="fw-bold text-dark text-nowrap m-0"
-                            style="font-size: clamp(16px, 5vw, 32px);">
-                            Target
-                        </p>
-                    </div>
-                    <div class="col-6 text-end">
-                        <p
-                            class="fw-bold text-dark text-nowrap m-0"
-                            style="font-size: clamp(16px, 5vw, 32px);">
-                            Rp 200.000.000
-                        </p>
-                    </div>
-                </div>
-
-
-
-                <!-- Progress Bar -->
-                <div class="progress my-3 rounded" style="height: 22px;  background-color: #bbddf0 !important;">
-                    <div class="progress-bar progress-bar-animated rounded-5" role="progressbar" style="width: 40%;  background-color:#50a8d7 !important" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-
-                <!-- Terkumpul dan Donatur -->
-                <div class="row mt-2">
-                    <div class="col-6">
-                        <p
-                            class="mb-0 fw-light text-nowrap h3"
-                            style="color: #145071 !important; font-size: clamp(0.7rem, 1.5vw, 2rem);">
-                            Terkumpul: Rp 70.000.000
-                        </p>
-                    </div>
-                    <div class="col-6 text-end">
-                        <p
-                            class="mb-0 text-nowrap h3"
-                            style="color: #145071 !important; font-size: clamp(0.7rem, 1.5vw, 2rem);">
-                            <strong>1,908</strong> Donatur
-                        </p>
-                    </div>
-                </div>
-
-
-                <!-- Yayasan -->
-                <div class="py-4">
-                    <h1 class="fw-light" style="color: #0f3d56;">
-                        <i class="fa-solid fa-user"></i> Yayasan Peduli Palestina
-                    </h1>
-                </div>
-
-                <!-- Deskripsi -->
-                <div class="border rounded p-4">
-                    <p class="" style="line-height: 1.5;font-size:26px">
-                        Warga Palestina saat ini menghadapi kondisi kemanusiaan yang sangat memprihatinkan, dengan terbatasnya akses terhadap kebutuhan dasar sehari-hari. Krisis yang terus berlangsung telah mempengaruhi banyak keluarga yang kehilangan tempat tinggal, akses kesehatan, dan kebutuhan dasar mereka. Melalui kampanye ini, kami mengajak Anda untuk bersama-sama meringankan beban mereka. Setiap donasi yang Anda berikan akan langsung disalurkan untuk memenuhi kebutuhan esensial warga Palestina, sehingga mereka dapat bertahan dalam situasi yang sulit ini.
-                    </p>
-                </div>
-
-
-                <!-- Goals -->
-                <h6 class="fw-bold mt-4 h3">What They Needed (Goals)</h6>
-
-                <div class="border rounded p-4">
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Paket Pangan</strong> </p>
-                            <p class="" style="line-height: 2.0; font-size:26px">Pangan menjadi kebutuhan utama bagi warga Palestina yang kehilangan sumber penghasilan. Bantuan ini mencakup sembako seperti beras, minyak goreng, makanan kaleng, susu untuk anak-anak, dan kebutuhan gizi lainnya, yang diharapkan dapat menopang kesehatan mereka.</p>
-                        </li>
-                        <li class="mb-3">
-                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Obat-obatan dan Peralatan Medis</strong> </p>
-                            <p class="" style="line-height: 2.0; font-size:26px">Banyak warga Palestina yang memerlukan obat-obatan mendesak dan perawatan kesehatan. Donasi akan digunakan untuk membeli obat-obatan dasar, seperti antibiotik, vitamin, dan peralatan medis penting lainnya untuk merawat mereka yang terluka atau sakit. Kami juga akan membantu memenuhi kebutuhan di fasilitas kesehatan yang kekurangan persediaan.</p>
-                        </li>
-                        <li class="mb-3">
-                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Perlengkapan Kebersihan dan Sanitasi</strong> </p>
-                            <p class="" style="line-height: 2.0; font-size:26px">Kebersihan dan kesehatan sangat penting dalam situasi darurat. Kami menyediakan sabun, hand sanitizer, masker, dan kebutuhan kebersihan lainnya.</p>
-                        </li>
-                        <li>
-                            <p><strong class="fw-bold h4 pb-4" style="font-size:26px">Air Bersih dan Sanitasi</strong> </p>
-                            <p class="" style="line-height: 2.0; font-size:26px">Air bersih adalah kebutuhan dasar yang sering sulit diakses. Bantuan akan digunakan untuk menyediakan air minum bersih dan fasilitas sanitasi.</p>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Button Share and Donate -->
-<div class="container my-5">
-    <div class="row justify-content-between">
-        <!-- Share Button -->
-        <div class="col-12 col-md-4 d-flex justify-content-center">
-            <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center" style="background-color: #bbddf0;">
-                <h1 class="d-flex align-items-center mb-0" style="font-size: 1.5rem; color: #0f3d56;">
-                    <i class="fas fa-share-alt me-2"></i> Share
-                </h1>
-            </button>
-        </div>
-        <!-- Donate Now Button -->
-        <div class="col-12 col-md-8 d-flex justify-content-center">
-            <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center" id="donateNowBtn">
-                <h1 class="mb-0" style="font-size: 1.5rem;">Donate Now</h1>
-            </button>
+<!-- search bar -->
+<div class="container my-4">
+    <div class="searchbar-container">
+        <input 
+            type="text" 
+            class="searchbar-input" 
+            placeholder="Ingin bantu siapa hari ini?">
+        <div class="search-icon-container">
+            <img src="{{ asset('images/donate/Vector.svg') }}" alt="Search Icon" class="search-icon">
         </div>
     </div>
 </div>
+
+<!-- Cards Section -->
+<section id="donation-cards" class="my-5">
+    <div class="container">
+            <div class="container d-flex justify-content-between align-items-center my-4">
+            <!-- Left Section: Title and Description -->
+            <div>
+                <h1 style="font-size: 25px; font-weight: 700; font-family: 'Poppins', sans-serif; color: #0F3D56; margin-bottom: 5px;">
+                Bergabung dalam Gerakan Kebaikan
+                </h1>
+                <p style="font-size: 18px; font-weight: 400; font-family: 'Poppins', sans-serif; color: #0F3D56; line-height: 1.5;">
+                Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" id="card-container">
+            <!-- Cards will be dynamically rendered -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrapper mt-4">
+            <button class="pagination-arrow" id="prev-page">&lt;</button>
+            <div class="pagination-dots" id="pagination-dots"></div>
+            <button class="pagination-arrow" id="next-page">&gt;</button>
+        </div>
+    </div>
+</section>
 @endsection
+
 @section('script')
 <script>
-    document.getElementById('donateNowBtn').addEventListener('click', () => {
-        Swal.fire({
-            title: '<strong>Gabung Sebagai</strong>',
-            html: `
-        <button id="pesertaBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-            Donasi Barang
-        </button>
-        <button id="sukarelawanBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-            Donasi Uang
-        </button>
-        `,
-            showConfirmButton: false,
-            customClass: {
-                popup: 'custom-swal-popup'
-            },
-            // didOpen: () => {
-            // // Event listener untuk tombol Peserta
-            // document.getElementById('pesertaBtn').addEventListener('click', () => {
-            //     Swal.fire('Anda Berhasil Mendonasikan Barang!');
-            // });
+const cardsData = [
+    { title: "Bantu Pendidikan Anak Pedalaman", category: "Yayasan Anak Nusantara", target: "Rp 50.000.000", collected: "Rp 5.550.000", donors: "285 Donatur", daysLeft: "50 Hari Lagi", img: "/images/donate/1.svg" },
+    { title: "Aksi Bencana Alam untuk Korban Gempa", category: "Komunitas Peduli Sesama", target: "Rp 100.000.000", collected: "Rp 10.050.000", donors: "598 Donatur", daysLeft: "41 Hari Lagi", img: "/images/donate/2.svg" },
+    { title: "Bantuan Kemanusiaan untuk Palestina", category: "Yayasan Peduli Palestina", target: "Rp 200.000.000", collected: "Rp 70.000.000", donors: "1.088 Donatur", daysLeft: "57 Hari Lagi", img: "/images/donate/3.svg" },
+    { title: "Renovasi Masjid di Pelosok Negeri", category: "Yayasan Cahaya Iman", target: "Rp 150.000.000", collected: "Rp 37.500.000", donors: "320 Donatur", daysLeft: "32 Hari Lagi", img: "/images/donate/4.svg" },
+    { title: "Operasi Gratis untuk Penderita Bibir Sumbing", category: "Komunitas Senyuman Baru", target: "Rp 400.000.000", collected: "Rp 100.000.000", donors: "190 Donatur", daysLeft: "44 Hari Lagi", img: "/images/donate/5.svg" },
+    { title: "Bantu Petani Lokal di Masa Sulit", category: "Lembaga Petani Sejahtera", target: "Rp 120.000.000", collected: "Rp 30.000.000", donors: "160 Donatur", daysLeft: "30 Hari Lagi", img: "/images/donate/6.svg" },
+    { title: "Kursi Roda untuk Penyandang Disabilitas", category: "Yayasan Sahabat Difabel", target: "Rp 50.000.000", collected: "Rp 12.500.000", donors: "50 Donatur", daysLeft: "28 Hari Lagi", img: "/images/donate/7.svg" },
+    { title: "Air Bersih untuk Daerah Terdampak Kekeringan", category: "Lembaga Air untuk Kehidupan", target: "Rp 300.000.000", collected: "Rp 75.000.000", donors: "300 Donatur", daysLeft: "40 Hari Lagi", img: "/images/donate/8.svg" },
+    { title: "Makanan untuk Anak Yatim", category: "Komunitas Kasih Anak Yatim", target: "Rp 100.000.000", collected: "Rp 25.000.000", donors: "92 Donatur", daysLeft: "22 Hari Lagi", img: "/images/donate/9.svg" },
+    { title: "Bantu Pendidikan Anak Pedalaman", category: "Yayasan Anak Nusantara", target: "Rp 50.000.000", collected: "Rp 5.550.000", donors: "285 Donatur", daysLeft: "50 Hari Lagi", img: "/images/donate/1.svg" },
+    { title: "Aksi Bencana Alam untuk Korban Gempa", category: "Komunitas Peduli Sesama", target: "Rp 100.000.000", collected: "Rp 10.050.000", donors: "598 Donatur", daysLeft: "41 Hari Lagi", img: "/images/donate/2.svg" },
+    { title: "Bantuan Kemanusiaan untuk Palestina", category: "Yayasan Peduli Palestina", target: "Rp 200.000.000", collected: "Rp 70.000.000", donors: "1.088 Donatur", daysLeft: "57 Hari Lagi", img: "/images/donate/3.svg" },
+    { title: "Renovasi Masjid di Pelosok Negeri", category: "Yayasan Cahaya Iman", target: "Rp 150.000.000", collected: "Rp 37.500.000", donors: "320 Donatur", daysLeft: "32 Hari Lagi", img: "/images/donate/4.svg" },
+    { title: "Operasi Gratis untuk Penderita Bibir Sumbing", category: "Komunitas Senyuman Baru", target: "Rp 400.000.000", collected: "Rp 100.000.000", donors: "190 Donatur", daysLeft: "44 Hari Lagi", img: "/images/donate/5.svg" },
+    { title: "Bantu Petani Lokal di Masa Sulit", category: "Lembaga Petani Sejahtera", target: "Rp 120.000.000", collected: "Rp 30.000.000", donors: "160 Donatur", daysLeft: "30 Hari Lagi", img: "/images/donate/6.svg" },
+    { title: "Kursi Roda untuk Penyandang Disabilitas", category: "Yayasan Sahabat Difabel", target: "Rp 50.000.000", collected: "Rp 12.500.000", donors: "50 Donatur", daysLeft: "28 Hari Lagi", img: "/images/donate/7.svg" },
+    { title: "Air Bersih untuk Daerah Terdampak Kekeringan", category: "Lembaga Air untuk Kehidupan", target: "Rp 300.000.000", collected: "Rp 75.000.000", donors: "300 Donatur", daysLeft: "40 Hari Lagi", img: "/images/donate/8.svg" },
+    { title: "Makanan untuk Anak Yatim", category: "Komunitas Kasih Anak Yatim", target: "Rp 100.000.000", collected: "Rp 25.000.000", donors: "92 Donatur", daysLeft: "22 Hari Lagi", img: "/images/donate/9.svg" }
+];
 
-            // // Event listener untuk tombol Sukarelawan
-            // document.getElementById('sukarelawanBtn').addEventListener('click', () => {
-            //     Swal.fire('Anda Berhasil Mendonasikan Uang!');
-            // });
-            // }
-        });
+let currentPage = 1;
+const cardsPerPage = 9; // Display 3 columns x 3 rows = 9 cards
+
+function renderCards(page) {
+    const startIndex = (page - 1) * cardsPerPage;
+    const visibleCards = cardsData.slice(startIndex, startIndex + cardsPerPage);
+
+    const cardsContainer = document.getElementById("card-container");
+    cardsContainer.innerHTML = "";
+
+    visibleCards.forEach(card => {
+        cardsContainer.innerHTML += `
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="donation-card">
+                    <img src="${card.img}" class="card-img-top" alt="${card.title}">
+                    <div class="card-body">
+                        <h5 class="card-title">${card.title}</h5>
+                        <p class="card-text text-muted">${card.category}</p>
+                        <div class="progress my-3">
+                            <div class="progress-bar" role="progressbar" style="width: ${(parseInt(card.collected.replace(/Rp|\.|,/g, '')) / parseInt(card.target.replace(/Rp|\.|,/g, ''))) * 100}%"></div>
+                        </div>
+                        <p class="card-text"><strong>${card.collected}</strong> / ${card.target}</p>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">${card.donors}</small>
+                            <small class="text-muted">${card.daysLeft}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     });
-</script>
+}
 
+function updatePagination() {
+    const dotsContainer = document.getElementById("pagination-dots");
+    dotsContainer.innerHTML = "";
+
+    for (let i = 1; i <= Math.ceil(cardsData.length / cardsPerPage); i++) {
+        const dot = document.createElement("div");
+        dot.className = "pagination-dot" + (i === currentPage ? " active" : "");
+        dot.addEventListener("click", () => {
+            currentPage = i;
+            updatePagination();
+        });
+        dotsContainer.appendChild(dot);
+    }
+
+    renderCards(currentPage);
+}
+
+document.getElementById("prev-page").addEventListener("click", () => {
+    currentPage = currentPage > 1 ? currentPage - 1 : Math.ceil(cardsData.length / cardsPerPage);
+    updatePagination();
+});
+
+document.getElementById("next-page").addEventListener("click", () => {
+    currentPage = currentPage < Math.ceil(cardsData.length / cardsPerPage) ? currentPage + 1 : 1;
+    updatePagination();
+});
+
+// Initial rendering
+updatePagination();
+</script>
 @endsection
