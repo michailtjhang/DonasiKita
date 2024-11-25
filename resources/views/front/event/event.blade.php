@@ -7,6 +7,10 @@
         padding: 0 15px;
     }
 
+    .event-card-spacer-short {
+        padding-bottom: 18px !important;
+    }
+
     /* Search bar styling */
     .search-box {
         display: flex;
@@ -61,7 +65,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 10px;
         gap: 10px;
     }
 
@@ -156,6 +160,10 @@
         margin: 0 auto;
     }
 
+    .gap-35 {
+        gap: 17.5px !important;
+    }
+
     /* Gaya umum untuk scrollbar */
     ::-webkit-scrollbar {
         height: 10px;
@@ -229,15 +237,15 @@
 <!-- End Search Bar -->
 
 <!-- Followed Event -->
-<section id="folowed-event" class="container pt-2">
-    <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
+<section id="folowed-event" class="container-fluid spacer-x pt-2" style="padding-bottom: 100px">
+    <div class="row justify-content-center  px-2  mx-2 ">
         <h2 class="fw-bold">Event yang Diikuti</h2>
         <p class="text-muted">Selesaikan Event untuk membantu saudara kita.</p>
 
         <!-- Container untuk card -->
-        <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
+        <div class="card-container d-flex gap-35 p-25" style="overflow-x: auto; scroll-snap-type: x mandatory; ">
             <!-- Card 1 -->
-            <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4" style="scroll-snap-align: start; width: 300px;">
+            <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4 " style="scroll-snap-align: start; width: 300px;">
                 <div class="position-relative">
                     <img src="./images/event/followed-event-1.svg" class="card-img-top" alt="Donasi Buku">
                     <div class="date-label position-absolute top-0 start-0 bg-primary text-white mx-3 mt-3 event-date">
@@ -252,7 +260,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-extra-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 08:00 - 15:00 <br>
                         </div>
@@ -279,7 +287,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short ">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 18:00 - 22:00 <br>
                         </div>
@@ -306,7 +314,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 08:00 - 15:00 <br>
                         </div>
@@ -333,7 +341,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 18:00 - 06:00 <br>
                         </div>
@@ -360,7 +368,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 08:00 - 021:00 <br>
                         </div>
@@ -387,7 +395,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 18:00 - 21:00 <br>
                         </div>
@@ -414,7 +422,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 10:00 - 19:00 <br>
                         </div>
@@ -431,8 +439,8 @@
 <!-- End Followed Event -->
 
 <!-- History Event -->
-<section id="history-event" class="container py-2">
-    <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
+<section id="history-event" class="container-fluid spacer-x pt-2" style="padding-bottom: 100px">
+    <div class="row justify-content-center  px-2  mx-2 ">
         <h2 class="fw-bold">History yang pernah di ikuti</h2>
         <p class="text-muted">Semua progress anda akan disimpan dan menjadi langkah untuk mengubah dunia.</p>
 
@@ -454,7 +462,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 18:00 - 06:00 <br>
                         </div>
@@ -482,7 +490,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 09:00 - 15:00 <br>
                         </div>
@@ -509,7 +517,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 09:00 - 13:00 <br>
                         </div>
@@ -536,7 +544,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-extra-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 09:00 - 16:00 <br>
                         </div>
@@ -563,7 +571,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 06:00 - 09:00 <br>
                         </div>
@@ -590,7 +598,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 10:00 - 18:00 <br>
                         </div>
@@ -617,7 +625,7 @@
                     <p class="card-text text-extra-small opacity-75 small">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
                     </p>
-                    <div class="card-text text-small d-flex justify-content-between">
+                    <div class="card-text text-extra-small d-flex justify-content-between event-card-spacer-short">
                         <div class="col-md-6">
                             <i class="fa-solid fa-clock"></i> 10:00 - 19:00 <br>
                         </div>
@@ -634,8 +642,8 @@
 <!-- End HistoryEvent -->
 
 <!-- Kategori Event -->
-<div class="container mt-5">
-    <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
+<div class="container-fluid spacer-x pt-2">
+    <div class="row justify-content-center  px-2  mx-2 ">
         <h2 class="fw-bold">Jelajahi dan Ikuti Beragam Acara Kebaikan</h2>
         <div class="d-flex justify-content-between align-items-center mt-3">
             <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
@@ -650,7 +658,7 @@
         </div>
 
         <!-- Navigasi Slider -->
-        <div class="pagination-container  my-5">
+        <div class="pagination-container spacer-pagination">
             <button class="pagination-arrow" id="prev-page">&lt;</button>
             <div class="pagination-dots" id="pagination-dots"></div>
             <button class="pagination-arrow" id="next-page">&gt;</button>
@@ -817,19 +825,21 @@
 
         visibleCards.forEach((card) => {
             cardContainer.innerHTML += `
-                <div class="col-md-4 d-flex justify-content-center mt-4">
+                <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 " >
                     <div class="event-card rounded rounded-5">
-                        <img src="${card.img}" alt="Event Image" class="img-fluid">
-                        <div class="event-date">${card.date}</div>
-                        <div class="event-details pb-4 px-4">
-                            <p class="event-title  mb-3fw-bold">${card.title}</p>
-                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                        <img src="${card.img}" alt="Event Image" class="img-fluid overflow-hidden">
+                    <div class="event-card-spacer">
+                        <div class="event-date ms-2 mt-3">${card.date}</div>
+                    </div>
+                        <div class="event-details  event-card-spacer">
+                            <p class="event-title fw-bold">${card.title}</p>
+                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0" >
                             ${card.month} | <a href="#" class="text-decoration-none">${card.category}</a> | ${card.organizer}
                             </p>
-                            <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                            <p class="card-text  text-extra-small mb-3 opacity-75 small" >
                                 ${card.body}
                             </p>
-                            <div class="event-info mt-2 d-flex justify-content-between">
+                            <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short">
                                 <span><i class="fa fa-clock"></i> ${card.time}</span>
                                 <span><i class="fa fa-location-dot"></i> ${card.location}</span>
                             </div>

@@ -27,6 +27,13 @@ a {
     background-color: var(--skyline-color);
 }
 
+.bg-dark {
+    background-color: var(--dark-color) !important;
+}
+.text-justify {
+    text-align: justify;
+}
+
 .text-aqua {
     color: var(--aqua-color);
 }
@@ -68,6 +75,7 @@ footer {
 }
 /* navbar */
 .nav-link {
+    font-size: 18pt;
     color: var(--primary-color);
 }
 .nav-link .active {
@@ -81,15 +89,36 @@ footer {
 }
 
 .logo-brand {
-    width: 150px;
+    width: 200px;
     height: auto;
 }
 
 .btn-primary {
     background-color: var(--aqua-color);
-    margin-left: 10px;
     border: 0px;
 }
+/* Memperbesar ukuran avatar */
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* Memperpanjang dropdown menu */
+.profile-dropdown {
+    width: 250px;
+    align-content: center;
+    transform: translateX(-30%);
+}
+.spacer-pagination {
+    margin-bottom: 100px;
+}
+.dropdown-divider {
+    border-top: 3px solid var(--aqua-color); /* Atur ketebalan dan warna garis */
+    margin: 10px 0; /* Jarak atas dan bawah */
+    border-radius: 2px; /* Membuat ujung melengkung */
+}
+
 /* navbar */
 
 /* hero */
@@ -138,7 +167,7 @@ footer {
 
 .hero-subtitle2 {
     font-size: 1.25rem;
-    width: 50%;
+    width: 90%;
 }
 .hero-subtitle-event {
     font-size: 1.25rem;
@@ -163,15 +192,20 @@ footer {
 .col-md-6, .col-lg-3 {
     border: 1px solid rgb(4, 122, 0);
 } */
-
+.event-container {
+    width: 80%;
+}
 .event-card {
     position: relative;
     overflow: hidden;
-    height: 500px;
-    width: 350px;
+    height: 450px;
+    width: 100%;
     padding: 0px;
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0;
+}
+.event-card-spacer {
+    padding: 50px 20px !important;
 }
 
 .event-card-short {
@@ -179,9 +213,23 @@ footer {
     overflow: hidden;
     height: 300px;
     width: 300px;
-    padding: 0px;
+    padding: 0;
     box-sizing: border-box;
     margin: 0 auto;
+}
+
+.p-25 {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+}
+
+.container-200 {
+    padding-left: 200px !important;
+    padding-right: 200px !important;
+}
+
+.gap-10 {
+    gap: 10px;
 }
 
 .event-card img {
@@ -193,15 +241,18 @@ footer {
 .event-date {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 15px;
     background-color: #26547c;
     color: white;
-    padding: 5px 10px;
+    padding: 5px 15px;
+    margin-left: 10px;
     border-radius: 5px;
     font-weight: bold;
     font-size: 24px;
 }
-
+.mb-25px {
+    margin-bottom: 25px;
+}
 .event-details {
     position: absolute;
     bottom: 0;
@@ -313,6 +364,15 @@ footer {
     background-color: #1ebe57;
 }
 
+.spacer-x {
+    width: 80%;
+}
+.spacer-x-v2 {
+    width: 93%;
+}
+.blog-details-container {
+    padding: 20px 30px;
+}
 /* responsive */
 @media (max-width: 576px) {
     .hero-section2 {
@@ -324,9 +384,12 @@ footer {
     .leader-image {
         width: 45%;
     }
-    /* .leader-image{
-        width: 50%;
-    } */
+    .hero-title2 {
+        font-size: 2rem;
+    }
+    .hero-subtitle2 {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -365,5 +428,8 @@ footer {
     }
     .leader-image {
         width: 35%;
+    }
+    .event-date {
+        font-size: 15pt !important;
     }
 }
