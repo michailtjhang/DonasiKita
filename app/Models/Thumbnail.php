@@ -12,6 +12,7 @@ class Thumbnail extends Model
     protected $fillable = [
         'blog_id',
         'event_id',
+        'need_id',
         'file_path',
         'type'
     ];

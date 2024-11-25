@@ -16,15 +16,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Category', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             abort(404);
         }
 
+        // Cek masing-masing izin untuk Add, Edit, dan Delete
         $data['PermissionAdd'] = PermissionRole::getPermission('Add Category', Auth::user()->role_id);
         $data['PermissionEdit'] = PermissionRole::getPermission('Edit Category', Auth::user()->role_id);
         $data['PermissionDelete'] = PermissionRole::getPermission('Delete Category', Auth::user()->role_id);
 
+        // Ambil data kategori
         $data['category'] = Category::latest()->get();
 
         return view('Backend.category.index', [
@@ -35,6 +38,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi
         $request->validate([
             'name' => 'required|min:3',
         ], [
@@ -43,6 +47,7 @@ class CategoryController extends Controller
         ]);
         $data = $request->all();
 
+        // Buat kategori
         $data['slug'] = Str::slug($data['name']);
         Category::create($data);
 
@@ -51,6 +56,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, string $id)
     {
+        // Validasi
         $request->validate([
             'name' => 'required|min:3',
         ], [
@@ -58,6 +64,7 @@ class CategoryController extends Controller
             'name.min' => 'Name must be at least 3 characters',
         ]);
 
+        // Update kategori
         $data = $request->all();
         $data['slug'] = Str::slug($data['name']);
         $category = Category::find($id);
@@ -71,6 +78,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        // Hapus kategori
         $category = Category::find($id);
         $category->delete();
         

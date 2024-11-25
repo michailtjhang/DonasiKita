@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->uuid('id')->primary(); // Primary Key
-            $table->string('event_id'); 
+            $table->char('event_id', 5)->unique(); 
             $table->foreignId('category_id')->index()->constrained(); // FK ke categories
             $table->string('title');
             $table->string('slug');
             $table->longText('description');
-            $table->dateTime('start');
-            $table->dateTime('end');
             $table->string('user_id'); // FK ke users
-            $table->integer('capacity_participants');
-            $table->integer('capacity_volunteers')->default(0);
-            $table->string('status', 50)->default('0'); // upcoming, ongoing, completed
+            $table->string('status', 50)->default('upcoming'); // upcoming, ongoing, completed
             $table->timestamps();
         });
     }

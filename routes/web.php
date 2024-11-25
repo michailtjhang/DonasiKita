@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Backend\DonationController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -74,6 +75,8 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
         Route::resource('article', BlogController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
         Route::resource('event', EventController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
+        Route::resource('donation', DonationController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
 
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
