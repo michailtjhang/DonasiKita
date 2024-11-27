@@ -73,8 +73,7 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="col-6 form-group">
+                    <div class="form-group">
                         <label for="img">Image Cover</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
@@ -110,6 +109,23 @@
                         </div>
                     </div>
 
+                    
+                <div class="row">
+                    <!-- Organizer -->
+                    <div class="form-group col-6">
+                        <label for="organizer">Organizer</label>
+                        <input type="text" name="organizer" id="organizer"
+                            class="form-control @error('organizer') is-invalid @enderror"
+                            placeholder="Please Enter Organizer" value="{{ old('organizer', $event->organizer) }}">
+
+                        @error('organizer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <!-- Status Event -->
                     <div class="col-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"

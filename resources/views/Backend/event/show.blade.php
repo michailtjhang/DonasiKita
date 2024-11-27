@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <th>Date Events</th>
-                        <td>: {{ $event->start->format('d F Y H:i') }} - {{ $event->end->format('d F Y H:i') }}</td>
+                        <td>: {{ $event->detailEvent->start->format('d F Y H:i') }} - {{ $event->detailEvent->end->format('d F Y H:i') }}</td>
                     </tr>
                     <tr>
                         <th>Location</th>

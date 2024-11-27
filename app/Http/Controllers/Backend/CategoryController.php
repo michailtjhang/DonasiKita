@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Category;
+use App\Models\Thumbnail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
@@ -41,6 +42,8 @@ class CategoryController extends Controller
         // Validasi
         $request->validate([
             'name' => 'required|min:3',
+            'description' => 'required',
+            'img' => 'required',
         ], [
             'name.required' => 'Name is required',
             'name.min' => 'Name must be at least 3 characters',
@@ -49,7 +52,20 @@ class CategoryController extends Controller
 
         // Buat kategori
         $data['slug'] = Str::slug($data['name']);
-        Category::create($data);
+        $category = Category::create($data);
+
+        // upload image
+        $file = $request->file('img'); // get file
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
+        $file->move(storage_path('app/public/cover'), $filename); // path file
+
+        // Tambahkan data thumbnail 
+        $dataThumbnail['file_path'] = $filename;
+        $dataThumbnail['type'] = 'Image';
+        $dataThumbnail['category_id'] = $category->id;
+
+        // Simpan data ke tabel Thumbnail
+        Thumbnail::create($dataThumbnail);
 
         return back()->with('success', 'Category created successfully');
     }
@@ -59,15 +75,44 @@ class CategoryController extends Controller
         // Validasi
         $request->validate([
             'name' => 'required|min:3',
+            'description' => 'required',
+            'img' => 'required',
         ], [
             'name.required' => 'Name is required',
             'name.min' => 'Name must be at least 3 characters',
         ]);
 
-        // Update kategori
         $data = $request->all();
-        $data['slug'] = Str::slug($data['name']);
         $category = Category::find($id);
+
+        // Cek apakah ada file baru yang diupload
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(storage_path('app/public/cover'), $filename);
+
+            // Hapus file lama jika ada
+            if (!empty($category->thumbnail->file_path)) {
+                $oldFilePath = storage_path('app/public/cover/' . $category->thumbnail->file_path);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+
+            // Update nama file ke $data
+            $data['img'] = $filename;
+
+            // Update data thumbnail
+            $category->thumbnail->update([
+                'file_path' => $filename,
+                'type' => 'Image',
+            ]);
+        } else {
+            $data['img'] = $category->thumbnail->file_path; // Pertahankan file lama
+        }
+
+        // Update kategori
+        $data['slug'] = Str::slug($data['name']);
         $category->update($data);
 
         return back()->with('success', 'Category updated successfully');

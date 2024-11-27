@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('category.store') }}" method="post">
+                <form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -18,6 +18,32 @@
                             value="{{ old('name') }}">
 
                         @error('name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description') !!}</textarea>
+
+                        @error('description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" name="img" id="image"
+                            class="form-control @error('img') is-invalid @enderror" placeholder="Please Enter Image"
+                            value="{{ old('img') }}">
+
+                        @error('img')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

@@ -12,11 +12,17 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description',
     ];
 
     // Many to Many relationship
     public function blogs()
     {
         return $this->hasMany(Blog::class, 'category_id', 'id');
+    }
+
+    public function thumbnail()
+    {
+        return $this->hasOne(Thumbnail::class, 'category_id', 'id');
     }
 }

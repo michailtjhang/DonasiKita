@@ -7,34 +7,36 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
+use App\Http\Controllers\Front\ArticleController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Http\Controllers\Backend\DonationController;
+use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
+use App\Http\Controllers\Front\EventController as FrontEventController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+
+Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
+Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
+
+Route::get('/categories', [FrontCategoryController::class, 'index'])->name('categories');
+Route::get('/category/{slug}', [FrontCategoryController::class, 'show'])->name('category');
+
+Route::get('/events', [FrontEventController::class, 'index'])->name('events');
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
-Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
-
 Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
-
-Route::get('/event', [HomeController::class, 'event'])->name('event');
 
 Route::get('/event_category_all', [HomeController::class, 'event_category_all'])->name('event_category_all');
 
 Route::get('/event_category_specific', [HomeController::class, 'event_category_specific'])->name('event_category_specific');
 
 Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
-
-Route::get('/categories', [HomeController::class, 'categories'])->name('categories');
-
-Route::get('/detail_blog', [HomeController::class, 'detail_blog'])->name('detail_blog');
-
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');

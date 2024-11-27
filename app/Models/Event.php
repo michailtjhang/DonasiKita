@@ -19,6 +19,7 @@ class Event extends Model
         'title',
         'slug',
         'description',
+        'organizer',
         'user_id',
         'status'
     ];
