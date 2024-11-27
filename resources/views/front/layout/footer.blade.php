@@ -91,7 +91,7 @@
                         <a href="" class="me-2 text-reset">
                             <i class="fab rounded fa-youtube"></i>
                         </a>
-                        <a href="" class="me-2 text-reset">
+                        <a href="https://www.instagram.com/donasi__kita/?utm_source=ig_web_button_share_sheet" class="me-2 text-reset">
                             <i class="fab rounded fa-instagram"></i>
                         </a>
                     </div>

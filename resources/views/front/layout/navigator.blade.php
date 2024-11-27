@@ -1,7 +1,9 @@
 <!-- Navbar Section -->
 <section id="navbar" class="px-5">
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3">
-        <div class="container-fluid spacer-x-v2 align-items-center">
+        <div class="container d-flex align-items-center">
+
             <a class="navbar-brand" href="#">
                 <img src="/images/logo-navbar.svg" alt="" srcset="" class="logo-brand img-fluid">
             </a>
@@ -9,7 +11,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" aria-current="page" href="{{url('/home')}}">Home</a>
                     </li>
@@ -20,29 +22,27 @@
                         <a class="nav-link" href="#">Donation</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Event</a>
+                        <a class="nav-link {{ Request::is('event') ? 'active' : '' }}" href="{{url('/event')}}">Event</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Blog & Article</a>
                     </li>
                     <li class="nav-item">
-                        <div class="dropdown bg-light">
-                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="avatar">
-                            </button>
-                            <ul class="dropdown-menu profile-dropdown bg-light px-2" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown">
+                            <button class="dropbtn bg-light"><img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="avatar"></button>
+                            <div class="dropdown-content bg-light profile-dropdown bg-light px-2 py-2">
                                 <hr class="dropdown-divider">
-                                <li class="text-center">
+                                <div class="text-center">
                                     <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar" class="avatar mb-2">
-                                </li>
-                                <li class="text-center px-2 mb-2">
+                                </div>
+                                <div class="text-center px-2 mb-2">
                                     <p class="text-dark text-large">Amanda Jonas</p>
-                                </li>
+                                </div>
                                 <hr class="dropdown-divider">
-                                <li class="text-center px-2">
+                                <div class="text-center px-2">
                                     <a class="btn btn-primary w-100">Logout Account</a>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <!-- uncomment jika belum login -->
@@ -62,3 +62,22 @@
     </nav>
 </section>
 <!-- End Navbar Section -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropbtn = document.querySelector('.dropbtn');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        // Toggle dropdown visibility on button click
+        dropbtn.addEventListener('click', () => {
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!dropbtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+    });
+</script>

@@ -239,7 +239,7 @@
         </div>
 
         <!-- Navigasi Slider -->
-        <div class="pagination-container  spacer-pagination">
+        <div class="pagination-container  my-5 pb-5">
             <button class="pagination-arrow" id="prev-page">&lt;</button>
             <div class="pagination-dots" id="pagination-dots"></div>
             <button class="pagination-arrow" id="next-page">&gt;</button>
@@ -336,6 +336,7 @@
         visibleCards.forEach((card) => {
             cardContainer.innerHTML += `
                 <div class="col-md-4 d-flex justify-content-center mt-4">
+                <a class="text-light" href="{{url('/event_category_specific')}}">
                     <div class="event-card rounded rounded-5">
                         <img src="${card.img}" alt="Event Image" class="img-fluid">
                         <div class="event-date">${card.date}</div>
@@ -343,6 +344,7 @@
                             <p class="event-title  mb-3 fw-bold" style="font-size:14px !important">${card.title}</p>
                         </div>
                     </div>
+                    </a>
                 </div>`;
         });
     }

@@ -14,7 +14,7 @@
         --font-size-large: 20px;
     }
 
-    .blog-container {
+    .blog-details-container {
         padding: 20px 30px;
     }
 
@@ -153,7 +153,7 @@
 
     .th-comments-wrap {
         padding: 40px;
-        box-shadow: 0px 6px 30px rgba(7, 36, 95, 0.07);
+        /* box-shadow: 0px 6px 30px rgba(7, 36, 95, 0.07); */
     }
 
     .th-comments-wrap {
@@ -365,7 +365,7 @@
             padding: 40px;
         }
 
-        .blog .blog-single {
+        .blog-details .blog-single {
             --blog-space-x: 20px;
             --blog-space-y: 40px;
         }
@@ -385,7 +385,7 @@
             --blog-space-x: 20px;
         }
 
-        .blog .blog-single {
+        .blog-details .blog-single {
             --blog-space-x: 20px;
             --blog-space-y: 20px;
         }
@@ -484,18 +484,18 @@
 </section>
 <!-- End Hero Section -->
 
-<section class="th-blog-wrapper blog space-section">
+<section class="th-blog-wrapper blog-details space-section">
     <div class="container">
         <div class="row">
             <div class="col-xxl-8 col-lg-7 ">
                 <div class="th-blog blog-single">
                     <div class="mb-3">
-                        <img class="img img-fluid rounded rpunded-3" src="images/blog/thumbnail.svg" alt="Blog Image">
+                        <img class="img img-fluid rounded rounded-3" src="images/blog-details/thumbnail.svg" alt="Blog Image">
                         <p class="text-primary text-medium mt-3">
                             21 November 2024 | Donasi Kita
                         </p>
                     </div>
-                    <div class="card rounded rounded-3 px-3 py-3">
+                    <div class="card rounded rounded-3 px-3 py-1 my-5">
                         <div class="blog-content text-dark fs-6">
                             <h2 class="bolder-text content-spacer">Peduli Sesama: Aksi Donasi untuk Korban Bencana Alam</h2>
                             <p class="text-justify">
@@ -521,23 +521,25 @@
                                 Mari bergandengan tangan untuk membangun kembali harapan mereka yang terkena dampak bencana. Semua donasi akan dikelola secara transparan dan kami akan memberikan laporan lengkap setelah kampanye selesai.
                             </p>
                             <div class="row content-spacer">
-                                <div class="col-md-6">
-                                    <img class="img img-fluid rounded rpunded-3" src="images/blog/1.svg" alt="Blog Image">
+                                <div class="col-md-6 sm-margin">
+                                    <img class="img img-fluid rounded rounded-3" src="images/blog-details/1.svg" alt="Blog Image">
                                 </div>
                                 <div class="col-md-6">
-                                    <img class="img img-fluid rounded rpunded-3" src="images/blog/2.svg" alt="Blog Image">
+                                    <img class="img img-fluid rounded rounded-3" src="images/blog-details/2.svg" alt="Blog Image">
                                 </div>
                             </div>
                         </div>
                         <div class="share-links text-center text-dark content-spacer">
                             <b class="fs-4 mb-2">Share This Article</b><br>
                             <ul class="social-links">
-                                <li><a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="https://www.instagram.com/donasi__kita/" target="_blank"><i class="fab fa-instagram"></i></a></li>
                                 <li><a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a></li>
                                 <li><a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
                             </ul><!-- End Social Share -->
                         </div>
+                    </div>
+                    <div class="card rounded rounded-3 px-3 py-3 md-margin-extra">
                         <div class="th-comment-form text-dark fs-4">
                             <div class="form-title">
                                 <p class="blog-inner-title mb-2">Post Comment</p>
@@ -558,7 +560,7 @@
                                     <hr class="w-100 bg-primary" style="height: 3px; border: none; margin-top: 5px;">
                                     <div class="th-post-comment">
                                         <div class="comment-avater">
-                                            <img src="images\blog\avatar-1.svg" alt="Comment Author">
+                                            <img src="images\blog-details\avatar-1.svg" alt="Comment Author">
                                         </div>
                                         <div class="comment-content">
                                             <h3 class="name">Sindy Pratiwi</h3>
@@ -590,7 +592,7 @@
                                     <hr class="w-100 bg-primary" style="height: 3px; border: none; margin-top: 5px;">
                                     <div class="th-post-comment">
                                         <div class="comment-avater">
-                                            <img src="images\blog\avatar-2.svg" alt="Comment Author">
+                                            <img src="images\blog-details\avatar-2.svg" alt="Comment Author">
                                         </div>
                                         <div class="comment-content">
                                             <h3 class="name">Alfred Davidson</h3>
@@ -621,6 +623,8 @@
                             </ul>
                         </div> <!-- Comment end --> <!-- Comment Form -->
                     </div>
+
+
                 </div>
             </div>
             <div class="col-xxl-4 col-lg-5 text-dark">
@@ -652,7 +656,7 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="media-img col-4">
                                         <a href="">
-                                            <img class="img img-fluid rounded rounded-4" src="images/blog/post-1.svg" alt="Blog Image">
+                                            <img class="img img-fluid rounded rounded-4" src="images/blog-details/post-1.svg" alt="Blog Image">
                                         </a>
                                     </div>
                                     <div class="media-body col-8 px-4 justify-content-center">
@@ -673,7 +677,7 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="media-img col-4">
                                         <a href="">
-                                            <img class="img img-fluid rounded rounded-4" src="images/blog/post-2.svg" alt="Blog Image">
+                                            <img class="img img-fluid rounded rounded-4" src="images/blog-details/post-2.svg" alt="Blog Image">
                                         </a>
                                     </div>
                                     <div class="media-body col-8 px-4 justify-content-center">
@@ -694,7 +698,7 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="media-img col-4">
                                         <a href="">
-                                            <img class="img img-fluid rounded rounded-4" src="images/blog/post-3.svg" alt="Blog Image">
+                                            <img class="img img-fluid rounded rounded-4" src="images/blog-details/post-3.svg" alt="Blog Image">
                                         </a>
                                     </div>
                                     <div class="media-body col-8 px-4 justify-content-center">
