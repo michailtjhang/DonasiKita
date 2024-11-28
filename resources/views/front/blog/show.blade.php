@@ -1,5 +1,6 @@
 @extends('front.layout.app')
-@section('content')
+
+@section('style')
     <style>
         :root {
             --light-color: #FFFFFF;
@@ -14,7 +15,7 @@
             --font-size-large: 20px;
         }
 
-        .blog-container {
+        .blog-details-container {
             padding: 20px 30px;
         }
 
@@ -153,7 +154,7 @@
 
         .th-comments-wrap {
             padding: 40px;
-            box-shadow: 0px 6px 30px rgba(7, 36, 95, 0.07);
+            /* box-shadow: 0px 6px 30px rgba(7, 36, 95, 0.07); */
         }
 
         .th-comments-wrap {
@@ -365,7 +366,7 @@
                 padding: 40px;
             }
 
-            .blog .blog-single {
+            .blog-details .blog-single {
                 --blog-space-x: 20px;
                 --blog-space-y: 40px;
             }
@@ -385,7 +386,7 @@
                 --blog-space-x: 20px;
             }
 
-            .blog .blog-single {
+            .blog-details .blog-single {
                 --blog-space-x: 20px;
                 --blog-space-y: 20px;
             }
@@ -474,6 +475,9 @@
             }
         }
     </style>
+@endsection
+
+@section('content')
     <!-- Hero Section -->
     <section class="hero-section2 w-100 space-section" style="background-image: url('/images/hero-bg-2.svg');">
         <div class="hero-overlay2"></div>
@@ -484,7 +488,7 @@
     </section>
     <!-- End Hero Section -->
 
-    <section class="th-blog-wrapper blog space-section">
+    <section class="th-blog-wrapper blog-details space-section">
         <div class="container">
             <div class="row">
                 <div class="col-xxl-8 col-lg-7">
@@ -502,7 +506,7 @@
                                 {{ $article->category->name ?? 'Uncategorized' }}
                             </p>
                         </div>
-                        <div class="card rounded rounded-3 px-3 py-3">
+                        <div class="card rounded rounded-3 px-3 py-1 my-5">
                             <div class="blog-content text-dark fs-6">
                                 <h2 class="bolder-text content-spacer">{{ $article->title }}</h2>
                                 <p class="text-justify">

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Blog;
+use App\Models\Event;
 use App\Models\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -35,10 +37,15 @@ class HomeProvider extends ServiceProvider
                 'meta_description',
                 'meta_keywords',
             ];
+
+            $last_articles = Blog::whereStatus(1)->take(3)->latest()->get();
+            $last_events = Event::whereStatus('upcoming')->take(3)->latest()->get();
             
             // Ambil data konfigurasi
             $config = Config::whereIn('name', $configKey)->pluck('value', 'name');
             $view->with('config', $config);
+            $view->with('popular_articles', $last_articles);
+            $view->with('last_events', $last_events);
         });
     }
 }

@@ -271,7 +271,7 @@
                         <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4">
                             <div class="card h-100 shadow-sm rounded">
                                 <!-- Event Image -->
-                                <a href="#">
+                                <a href="{{ route('events.show', $event->slug) }}">
                                     @if ($event->thumbnail && $event->thumbnail->file_path)
                                         <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
                                             alt="Event Image" class="card-img-top img-fluid">
@@ -286,7 +286,7 @@
                                 <!-- Event Details -->
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
-                                        <a href="#" class="text-dark text-decoration-none">{{ $event->title }}</a>
+                                        <a href="{{ route('events.show', $event->slug) }}" class="text-dark text-decoration-none">{{ $event->title }}</a>
                                     </h5>
                                     <div class="card-text text-muted small mb-3">
                                         <span><i

@@ -673,8 +673,6 @@
                     style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
             </div>
 
-
-
             <!-- Wadah kartu -->
             <div id="card-container" class="row d-flex justify-content-center">
                 @forelse ($events as $event)
@@ -682,8 +680,10 @@
                         <div class="event-card rounded rounded-5">
                             <!-- Thumbnail -->
                             @if ($event->thumbnail && $event->thumbnail->file_path)
+                                <a href="{{ route('events.show', $event->slug) }}">
                                 <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
                                     alt="{{ $event->title }}" class="img-fluid overflow-hidden">
+                                    </a>
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                     style="height: 200px;">
