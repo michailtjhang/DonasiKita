@@ -174,7 +174,7 @@
                         Temukan berbagai Blog menarik yang mendukung misi kemanusiaan dan edukasi tentang bencana.
                     </p>
                 </div>
-                <a href="{{ route('categories') }}" class="see-all-categories" id="categoriesButton">
+                <a href="{{ route('blogs.categories') }}" class="see-all-categories" id="categoriesButton">
                     See All Categories
                 </a>
             </div>

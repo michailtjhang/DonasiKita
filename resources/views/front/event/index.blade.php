@@ -465,7 +465,7 @@
                             15 Maret
                         </div>
                     </div>
-                    <div class="event-details">
+                    <div class="event-details p-3">
                         <p class="card-title fw-bold h4">Penggalangan Dana Virtual: Game Marathon</p>
                         <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
                             08 Feb 25 | <a href="#" class="text-decoration-none">Hiburan</a> | Komunitas Gamer
@@ -669,7 +669,7 @@
             <h2 class="fw-bold">Jelajahi dan Ikuti Beragam Acara Kebaikan</h2>
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
-                <a href="{{ route('categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
+                <a href="{{ route('events.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
                     style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
             </div>
 

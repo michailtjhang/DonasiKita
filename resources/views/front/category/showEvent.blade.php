@@ -215,54 +215,11 @@
     <!-- End Hero Section -->
 
     <div class="container mt-5">
-        <!-- Artikel -->
-        @if ($articles->count())
-            <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
-                <h2 class="fw-bold">Artikel</h2>
-                <p class="text-muted">Menampilkan artikel kategori "{{ ucfirst($categories) }}"</p>
-                <div id="card-container" class="row">
-                    @forelse ($articles as $article)
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100 shadow-sm">
-                                <a href="{{ route('blog.show', $article->slug) }}">
-                                    @if ($article->thumbnail && $article->thumbnail->file_path)
-                                        <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
-                                            class="card-img-top" alt="{{ $article->title }}">
-                                    @else
-                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                            style="height: 200px;">
-                                            <span>No cover image</span>
-                                        </div>
-                                    @endif
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <a href="{{ route('blog.show', $article->slug) }}"
-                                            class="text-dark text-decoration-none">{{ $article->title }}</a>
-                                    </h5>
-                                    <p class="card-text text-muted">{{ Str::limit($article->description, 100, '...') }}</p>
-                                    <div class="d-flex justify-content-between">
-                                        <small class="text-muted">{{ $article->created_at->format('d M Y') }}</small>
-                                        <a href="{{ route('category', $article->category->slug) }}"
-                                            class="badge bg-primary text-light text-decoration-none">{{ $article->category->name }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-center font-weight-bold">Tidak ada artikel yang ditemukan.</p>
-                    @endforelse
-                </div>
-                <div class="mt-4">
-                    {{ $articles->links() }}
-                </div>
-            </div>
-        @endif
 
         <!-- Event -->
         @if ($events->count())
             <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
-                <h2 class="fw-bold">{{ ucfirst($categories) }}</h2>
+                <h2 class="fw-bold">Event</h2>
                 <p class="text-muted">Menampilkan event kategori "{{ ucfirst($categories) }}"</p>
 
                 <!-- Card Container -->
@@ -302,7 +259,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small class="text-muted">{{ $event->created_at->format('d M Y') }}</small>
-                                        <a href="{{ route('category', $event->category->slug) }}"
+                                        <a href="{{ route('events.category', $event->category->slug) }}"
                                             class="badge bg-primary text-light text-decoration-none">
                                             {{ $event->category->name }}
                                         </a>
