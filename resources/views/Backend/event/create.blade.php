@@ -69,23 +69,38 @@
 
                 </div>
 
-                <div class="form-group">
-                    <label for="img">Image Cover</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input @error('img') is-invalid @enderror" name="img"
-                            id="img" onchange="previewImage(event)">
-                        <label class="custom-file-label" for="img">Choose file</label>
+                <div class="row">
+                    <!-- Image Cover -->
+                    <div class="form-group col-6">
+                        <label for="img">Image Cover</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
+                                name="img" id="img" onchange="previewImage(event)">
+                            <label class="custom-file-label" for="img">Choose file</label>
+                        </div>
+
+                        @error('img')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                        <!-- Preview Image -->
+                        <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail mt-3"
+                            style="display: none; max-height: 150px;">
                     </div>
 
-                    @error('img')
-                        <div class="invalid-feedback d-block">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <div class="form-group col-6">
+                        <label for="organizer">Organizer</label>
+                        <input type="text" class="form-control @error('organizer') is-invalid @enderror" id="organizer"
+                            name="organizer" placeholder="Please Enter Organizer" value="{{ old('organizer') }}">
 
-                    <!-- Preview Image -->
-                    <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail mt-3"
-                        style="display: none; max-height: 150px;">
+                        @error('organizer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group">

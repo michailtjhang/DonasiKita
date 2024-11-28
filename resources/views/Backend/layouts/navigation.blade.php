@@ -52,7 +52,7 @@
                     </a>
                 </li>
 
-                @if (!empty($PermissionDonation) && !empty($PermissionArticle) && !empty($PermissionEvent))
+                @if (!empty($PermissionDonation) || !empty($PermissionArticle) || !empty($PermissionEvent))
                     <li class="nav-header">Management Page</li>
                 @endif
 

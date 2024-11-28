@@ -100,6 +100,7 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'content' => 'required',
+            'organizer' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
@@ -125,6 +126,7 @@ class EventController extends Controller
             'title' => $data['title'],
             'slug' => Str::slug($data['title']),
             'description' => $data['content'],
+            'organizer' => $data['organizer'],
             'user_id' => auth()->user()->id,
             'category_id' => $data['category_id'],
             'status' => 'upcoming', // Default status
@@ -225,6 +227,7 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'content' => 'required',
+            'organizer' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
@@ -281,6 +284,7 @@ class EventController extends Controller
             'title' => $data['title'],
             'slug' => $data['slug'],
             'description' => $data['content'],
+            'organizer' => $data['organizer'],
             'category_id' => $data['category_id'],
             'status' => $data['status'] ?? $event->status, // Pertahankan status jika tidak ada
         ]);

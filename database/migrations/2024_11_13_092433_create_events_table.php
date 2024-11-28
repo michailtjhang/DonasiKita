@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->longText('description');
+            $table->string('organizer');
             $table->string('user_id'); // FK ke users
             $table->string('status', 50)->default('upcoming'); // upcoming, ongoing, completed
             $table->timestamps();

@@ -19,14 +19,6 @@ class HomeController extends Controller
     {
         return view('front.donation.donation');
     }
-    public function event()
-    {
-        return view('front.event.event');
-    }
-    public function blog()
-    {
-        return view('front.blog.blog');
-    }
     public function detail_event()
     {
         return view('front.detail_event.detail_event');
@@ -43,10 +35,6 @@ class HomeController extends Controller
     {
         return view('front.detail_donation.detail_donation');
     }
-    public function categories()
-    {
-        return view('front.blog_categories.categories');
-    }
     public function blog_categories_specific()
     {
         return view('front.blog_categories.blog_categories_specific');
@@ -62,9 +50,5 @@ class HomeController extends Controller
     public function confirmationtransfer()
     {
         return view('front.payment_transfer.confirmationtransfer');
-    }
-    public function detail_blog()
-    {
-        return view('front.detail_blog.detail_blog');
     }
 }
