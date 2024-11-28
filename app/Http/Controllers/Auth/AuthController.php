@@ -15,7 +15,11 @@ class AuthController extends Controller
     {
         // Check if user is already logged in
         if (!empty(Auth::check())) {
-            return redirect()->intended('admin/dashboard');
+            if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
+                return redirect()->intended('admin/dashboard');
+            } else {
+                return redirect()->intended('/');
+            }
         }
 
         // Check if user is already logged in
@@ -41,7 +45,11 @@ class AuthController extends Controller
             // Cek password
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
                 // Jika password benar
-                return redirect()->intended('admin/dashboard');
+                if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
+                    return redirect()->intended('admin/dashboard');
+                } else {
+                    return redirect()->intended('/');
+                }
             } else {
                 // Jika password salah
                 return redirect()->back()->with('error', 'Incorrect password. Please try again.');

@@ -25,6 +25,7 @@ Route::get('/categories', [FrontCategoryController::class, 'index'])->name('cate
 Route::get('/category/{slug}', [FrontCategoryController::class, 'show'])->name('category');
 
 Route::get('/events', [FrontEventController::class, 'index'])->name('events');
+Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
