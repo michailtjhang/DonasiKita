@@ -36,6 +36,11 @@ DonasiKita adalah sebuah
   ```bash
   php artisan key:generate
   ```
+### Command Public Package (Wajib)
+-   menjalankan storage di website, ketikan command :
+    ```bash
+    php artisan storage:link
+    ```
 ### Command Run Website
 - menjalanlan Laravel di website, ketikan command :
   ```bash
