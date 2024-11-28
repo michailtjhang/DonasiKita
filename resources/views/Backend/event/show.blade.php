@@ -42,25 +42,35 @@
                     </tr>
                     <tr>
                         <th>Status</th>
-                        @if ($event->status == 1)
-                            <td>: <span class="badge badge-success">Published</span></td>
+                        @if ($event->status == 'finished')
+                            <td>: <span class="badge badge-success">Finished</span></td>
                         @else
-                            <td>: <span class="badge badge-danger">Draft</span></td>
+                            <td>: <span class="badge badge-secondary">Upcoming</span></td>
                         @endif
                     </tr>
                     <tr>
                         <th>Date Events</th>
-                        <td>: {{ $event->start->format('d F Y H:i') }} - {{ $event->end->format('d F Y H:i') }}</td>
+                        <td>: {{ $event->detailEvent->start->format('d F Y H:i') }} - {{ $event->detailEvent->end->format('d F Y H:i') }}</td>
                     </tr>
                     <tr>
                         <th>Location</th>
                         <td>: {{ $event->location->name_location }}</td>
                     </tr>
+                    <tr>
+                        <th>Capacity Participants</th>
+                        <td>: {{ number_format($event->detailEvent->capacity_participants, 0, ',', '.') }} people</th>
+                    </tr>
+                    @if ($event->detailEvent->capacity_volunteers > 0)
+                        <tr>
+                            <th>Capacity Volunteers</th>
+                            <td>: {{ $event->detailEvent->capacity_volunteers }}</th>
+                        </tr>
+                    @endif
                 </table>
             </div>
 
             <!-- Back Button -->
-            <a href="{{ route('article.index') }}" class="btn btn-primary">Back</a>
+            <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
         </div>
     </div>
 @endsection

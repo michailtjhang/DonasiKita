@@ -167,6 +167,70 @@ class PermissionSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            [
+                'id' => 20,
+                'name' => 'Event',
+                'slug' => 'Event',
+                'groupby' => 6,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 21,
+                'name' => 'Add Event',
+                'slug' => 'Add Event',
+                'groupby' => 6,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 22,
+                'name' => 'Edit Event',
+                'slug' => 'Edit Event',
+                'groupby' => 6,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 23,
+                'name' => 'View Event',
+                'slug' => 'View Event',
+                'groupby' => 6,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 24,
+                'name' => 'Donation',
+                'slug' => 'Donation',
+                'groupby' => 7,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 25,
+                'name' => 'Add Donation',
+                'slug' => 'Add Donation',
+                'groupby' => 7,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 26,
+                'name' => 'Edit Donation',
+                'slug' => 'Edit Donation',
+                'groupby' => 7,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id' => 27,
+                'name' => 'View Donation',
+                'slug' => 'View Donation',
+                'groupby' => 7,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
         ]);
     }
 }

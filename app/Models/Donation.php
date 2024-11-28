@@ -15,7 +15,7 @@ class Donation extends Model
     protected $fillable = [
         'donation_id',
         'user_id',
-        'event_id',
+        'need_id',
         'email',
         'name',
         'amount',
@@ -28,8 +28,8 @@ class Donation extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function event()
+    public function need()
     {
-        return $this->belongsTo(Event::class, 'event_id');
+        return $this->belongsTo(Need::class, 'need_id');
     }
 }

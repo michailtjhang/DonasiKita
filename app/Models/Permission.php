@@ -22,6 +22,7 @@ class Permission extends Model
         return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id');
     }
 
+    // Get Permission 
     static public function getRecords()
     {
         $getPermissions = Permission::select('groupby', DB::raw('MIN(id) as id')) // Mengambil MIN(id) agar urut sesuai nama aslinya
@@ -52,11 +53,13 @@ class Permission extends Model
         return $result;
     }
 
+    // Get Permission Group
     static public function getPermissionsGroup($group)
     {
         return Permission::where('groupby', $group)->get();
     }
 
+    // Get Record
     static public function getRecord($id)
     {
         return Permission::find($id);

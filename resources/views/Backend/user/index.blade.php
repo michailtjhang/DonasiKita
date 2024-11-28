@@ -1,5 +1,26 @@
 @extends('Backend.layouts.app')
 
+@section('seoMeta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section('css')
+    <!-- Tambahkan CSS untuk memastikan pagination berada di kanan -->
+    <style>
+        .pagination-right {
+            justify-content: flex-end !important;
+        }
+
+        .info-left {
+            justify-content: flex-start !important;
+        }
+    </style>
+
+    <!-- ======================== datatable ========================= -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
+@endsection
+
 @section('content')
     <div class="card">
         <nav aria-label="breadcrumb">
@@ -9,88 +30,35 @@
             </ol>
         </nav>
         <div class="card-body">
-
             @include('_message')
 
             <div class="table-responsive">
-                @if (!empty($data['PermissionAdd']))
-                    <a href="{{ route('user.create') }}" class="btn btn-success mb-2 btn-sm">Tambah</a>
-                @endif
-                <table class="table table-bordered table-hover table-stripped">
+                <table id="dataTable" class="table table-bordered table-hover table-stripped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Date</th>
+                            <th>Date Created</th>
                             @if (!empty($data['PermissionEdit']) || !empty($data['PermissionDelete']))
                                 <th>Aksi</th>
                             @endif
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($data['user'] as $row)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $row->name }}</td>
-                                <td>{{ $row->email }}</td>
-                                <td>{{ $row->role->name }}</td>
-                                <td>{{ $row->created_at }}</td>
-                                <td>
-                                    @if (!empty($data['PermissionEdit']))
-                                        <a href="{{ route('user.edit', $row->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-fw fa-edit"></i>
-                                        </a>
-                                    @endif
-
-                                    @if (!empty($data['PermissionDelete']))
-                                        <button type="button" class="btn btn-sm btn-danger"
-                                            @if (auth()->user()->id === $row->id) disabled @endif
-                                            onclick="confirmDelete('{{ route('user.destroy', $row->id) }}', '{{ $row->name }}')">
-                                            <i class="fas fa-fw fa-trash"></i>
-                                        </button>
-
-                                        <script>
-                                            function confirmDelete(deleteUrl, name) {
-                                                Swal.fire({
-                                                    title: "Are you sure?",
-                                                    text: `You won't be able to revert this! This will delete ${name}.`,
-                                                    icon: "warning",
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: "#3085d6",
-                                                    cancelButtonColor: "#d33",
-                                                    confirmButtonText: "Yes, delete it!"
-                                                }).then((result) => {
-                                                    if (result.isConfirmed) {
-                                                        var form = document.createElement('form');
-                                                        form.method = 'POST';
-                                                        form.action = deleteUrl;
-
-                                                        var csrfToken = document.createElement('input');
-                                                        csrfToken.type = 'hidden';
-                                                        csrfToken.name = '_token';
-                                                        csrfToken.value = '{{ csrf_token() }}';
-                                                        form.appendChild(csrfToken);
-
-                                                        var methodField = document.createElement('input');
-                                                        methodField.type = 'hidden';
-                                                        methodField.name = '_method';
-                                                        methodField.value = 'DELETE';
-                                                        form.appendChild(methodField);
-
-                                                        document.body.appendChild(form);
-                                                        form.submit();
-                                                    }
-                                                });
-                                            }
-                                        </script>
-                                    @endif
-
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th><input type="text" placeholder="Search Nama" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Email" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Role" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Date Created"
+                                    class="form-control form-control-sm"></th>
+                            @if (!empty($data['PermissionEdit']) || !empty($data['PermissionDelete']))
+                                <th></th>
+                            @endif
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -98,5 +66,81 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi DataTable
+            var table = $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ url()->current() }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'role.name',
+                        name: 'role.name'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data) {
+                            return moment(data).format('MM-DD-YYYY');
+                        }
+                    },
+                    @if (!empty($data['PermissionEdit']) || !empty($data['PermissionDelete']))
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    @endif
+                ],
+                dom: '<"d-flex justify-content-between align-items-center"<"btn-tambah"B><"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>',
+                buttons: [
+                    @if (!empty($data['PermissionAdd']))
+                        {
+                            text: '<i class="fas fa-plus"></i> Tambah',
+                            className: 'btn btn-success btn-sm',
+                            action: function() {
+                                window.location.href = "{{ route('user.create') }}";
+                            }
+                        }
+                    @endif
+                ],
+                language: {
+                    lengthMenu: "_MENU_ entries per page",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "No entries available",
+                    infoFiltered: "(filtered from _MAX_ total entries)"
+                }
+            });
+
+            // Tambahkan input search ke setiap kolom footer
+            $('#dataTable tfoot th').each(function(i) {
+                var title = $('#dataTable thead th').eq(i).text();
+                if ($(this).find('input').length) {
+                    $('input', this).on('keyup change', function() {
+                        if (table.column(i).search() !== this.value) {
+                            table.column(i).search(this.value).draw();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary(); // Primary Key
             $table->char('donation_id', 5);
             $table->string('user_id')->nullable(); // FK ke users
-            $table->uuid('event_id'); // FK ke events
+            $table->char('need_id', 5); // FK ke needs
             $table->string('email'); // Untuk mencatat email donatur tanpa login
             $table->string('name'); // Nama donatur
             $table->double('amount');

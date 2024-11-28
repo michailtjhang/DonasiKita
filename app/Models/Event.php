@@ -19,11 +19,8 @@ class Event extends Model
         'title',
         'slug',
         'description',
-        'start',
-        'end',
+        'organizer',
         'user_id',
-        'capacity_participants',
-        'capacity_volunteers',
         'status'
     ];
 
@@ -40,5 +37,10 @@ class Event extends Model
     public function location()
     {
         return $this->hasOne(Locations::class, 'event_id', 'event_id');
+    }
+
+    public function detailEvent()
+    {
+        return $this->hasOne(DetailEvent::class, 'event_id', 'event_id');
     }
 }

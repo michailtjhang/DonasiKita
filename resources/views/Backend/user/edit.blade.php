@@ -43,6 +43,28 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="role">Role</label>
+
+                    <select class="custom-select rounded-0 @error('role_id') is-invalid @enderror" id="role"
+                        name="role_id">
+                        <option>Select</option>
+
+                        @foreach ($data['role'] as $row)
+                            <option value="{{ $row->id }}" {{ $data['user']->role_id == $row->id ? 'selected' : '' }}>
+                                {{ $row->name }}</option>
+                        @endforeach
+
+                    </select>
+
+                    @error('role_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password"
                         class="form-control @error('password') is-invalid @enderror" placeholder="Please Enter Password">
@@ -62,28 +84,6 @@
                         </div>
                         (Do you want to change password? Please enter new password. Otherwise leave it blank)
                     </div>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="role">Role</label>
-
-                    <select class="custom-select rounded-0 @error('role_id') is-invalid @enderror" id="role"
-                        name="role_id" disabled>
-                        <option>Select</option>
-
-                        @foreach ($data['role'] as $row)
-                            <option value="{{ $row->id }}" {{ $data['user']->role_id == $row->id ? 'selected' : '' }}>
-                                {{ $row->name }}</option>
-                        @endforeach
-
-                    </select>
-
-                    @error('role_id')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
 
                 </div>
 

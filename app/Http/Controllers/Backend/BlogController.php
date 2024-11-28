@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Thumbnail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PermissionRole;
 use App\Http\Controllers\Controller;
-use App\Models\Blog;
-use App\Models\Thumbnail;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class BlogController extends Controller
@@ -17,13 +19,30 @@ class BlogController extends Controller
      */
     public function index()
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Blog & Article', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            abort(404);
+        }
+
+        // Cek masing-masing izin untuk Add, Edit, dan Delete
+        $data['PermissionAdd'] = PermissionRole::getPermission('Add Blog', Auth::user()->role_id);
+        $data['PermissionEdit'] = PermissionRole::getPermission('Edit Blog', Auth::user()->role_id);
+        $data['PermissionShow'] = PermissionRole::getPermission('View Blog', Auth::user()->role_id);
+
+        // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
             $blogs = Blog::where('user_id', auth()->user()->id)->get();
+
+            // Tampilkan data blog
             return DataTables::of($blogs)
+                // Tampilkan kolom yang diinginkan
                 ->addIndexColumn()
-                ->addColumn('category_id', function ($blogs) {
-                    return $blogs->category->name;
+                // Tambahkan kolom category_id
+                ->addColumn('category_id', function ($blog) {
+                    return $blog->category->name ?? '-';
                 })
+                // Tambahkan kolom status
                 ->addColumn('status', function ($blogs) {
                     if ($blogs->status == 1) {
                         return '<span class="badge badge-success">Published</span>';
@@ -31,18 +50,32 @@ class BlogController extends Controller
                         return '<span class="badge badge-danger">Draft</span>';
                     }
                 })
-                ->addColumn('action', function ($blogs) {
-                    return '
-                    <th>
-                        <a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>
-                        <a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>
-                    </th>';
+                // Tambahkan kolom action
+                ->addColumn('action', function ($blogs) use ($data) {
+                    $buttons = '';
+
+                    // Tambahkan tombol show jika izin Show ada
+                    if (!empty($data['PermissionShow'])) {
+                        $buttons .= '<a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                    }
+
+                    // Tambahkan tombol Edit jika izin Edit ada
+                    if (!empty($data['PermissionEdit'])) {
+                        $buttons .= '<a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                    }
+
+                    return $buttons;
                 })
-                ->rawColumns(['category_id', 'status', 'action'])
-                ->make();
+                // Konfigurasi DataTables
+                ->rawColumns(['status', 'action'])
+                // Tampilkan DataTables
+                ->make(true);
         }
+
+        // Kirim data ke view
         return view('Backend.blog.index', [
             'page_title' => 'Blog Article',
+            'data' => $data
         ]);
     }
 
@@ -56,6 +89,7 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi
         $request->validate([
             'title' => 'required',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
@@ -63,7 +97,7 @@ class BlogController extends Controller
             'category_id' => 'required',
             'status' => 'required',
         ]);
-        
+
         $data = $request->all();
 
         // Generate blog_id unik

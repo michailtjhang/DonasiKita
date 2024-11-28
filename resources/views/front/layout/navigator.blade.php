@@ -13,19 +13,21 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ms-auto d-flex align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" aria-current="page" href="{{url('/home')}}">Home</a>
+                        <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" aria-current="page" href="{{url('/')}}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="{{url('/about')}}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Donation</a>
+                        <a class="nav-link @if (Request::segment(1) == 'donation') active @endif"
+                            href="{{ route('donation') }}">Donation</a>
+                    </li>
+                    <li class="nav-item @if (Request::segment(1) == 'event' || Request::segment(1) == 'events') active @endif">
+                        <a class="nav-link" href="{{ route('events') }}">Event</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('event') ? 'active' : '' }}" href="{{url('/event')}}">Event</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Blog & Article</a>
+                        <a class="nav-link @if (Request::segment(1) == 'blog' || Request::segment(1) == 'blogs') active @endif"
+                            href="{{ route('blog') }}">Blogs & Article</a>
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">

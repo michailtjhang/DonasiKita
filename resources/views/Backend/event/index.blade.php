@@ -32,6 +32,17 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th><input type="text" placeholder="Search Title" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Category" class="form-control form-control-sm">
+                            </th>
+                            <th><input type="text" placeholder="Search Status" class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Date" class="form-control form-control-sm"></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                     <tbody>
                     </tbody>
                 </table>
@@ -52,7 +63,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({
+            // Inisialisasi DataTable
+            var table = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ url()->current() }}",
@@ -81,6 +93,21 @@
                         name: 'action'
                     },
                 ]
+            });
+
+            // Tambahkan input search ke setiap kolom footer
+            $('#dataTable tfoot th').each(function(i) {
+                var title = $('#dataTable thead th').eq(i).text();
+                if ($(this).find('input').length) {
+                    $('input', this).on('keyup change', function() {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                .column(i)
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                }
             });
         });
     </script>
