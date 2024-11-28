@@ -111,7 +111,7 @@
         <div class="row">
             @foreach ($categories as $category)
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{{ route('category', $category->slug) }}" class="text-decoration-none">
+                    <a href="{{ route('events.category', $category->slug) }}" class="text-decoration-none">
                         <div class="card-category">
                             @if ($category->thumbnail && $category->thumbnail->file_path)
                                 <img src="{{ asset('storage/cover/' . $category->thumbnail->file_path) }}"

@@ -21,8 +21,10 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
 Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
 
-Route::get('/categories', [FrontCategoryController::class, 'index'])->name('categories');
-Route::get('/category/{slug}', [FrontCategoryController::class, 'show'])->name('category');
+Route::get('/blogs/categories', [FrontCategoryController::class, 'indexBlog'])->name('blogs.categories');
+Route::get('/events/categories', [FrontCategoryController::class, 'indexEvent'])->name('events.categories');
+Route::get('/blogs/category/{slug}', [FrontCategoryController::class, 'showBlog'])->name('blogs.category');
+Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEvent'])->name('events.category');
 
 Route::get('/events', [FrontEventController::class, 'index'])->name('events');
 Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');

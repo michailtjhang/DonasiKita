@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3">
         <div class="container d-flex align-items-center">
 
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="/images/logo-navbar.svg" alt="" srcset="" class="logo-brand img-fluid">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
