@@ -1,10 +1,10 @@
 @extends('front.layout.app')
 @section('content')
 <!-- Hero Section -->
-<div id="carouselExampleControls" class="carousel slide space-section vh-100  w-100 " data-bs-ride="carousel">
-    <div class="carousel-inner ">
+<div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
+    <div class="carousel-inner">
         <div class="carousel-item active">
-            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100  w-100 bg-skyline"
+            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
                 style="background-image: url('/images/hero-bg.svg');">
                 <div class="spacer-x">
                     <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
@@ -90,22 +90,29 @@
 
 <!-- Donate Content Section -->
 <section id="donate-content" class="bg-skyline space-section">
-    <div class="container-fluid d-flex justify-content-center bg-skyline px-3">
-        <div class="container bg-light shadow py-5 px-5 rounded-5 spacer" id="card-donate">
-            <div class="row justify-content-center align-items-center">
+    <div class="container d-flex justify-content-center bg-skyline ">
 
-                <div class="row d-flex justify-content-between align-items-center mb-4 px-0 mx-0">
-                    <div class="col">
-                        <h4>Kampanye berlangsung</h4>
-                    </div>
-                    <div class="col-auto">
-                        <a href="" class="btn border-primary text-primary rounded-pill">Show More</a>
-                    </div>
+        <div class="row  justify-content-center align-items-center">
+            <div class="row mx-2">
+                <h3 class="fw-bold">Donation</h3>
+                <div class="d-flex flex-wrap align-items-center pb-2">
+                    <!-- Paragraf -->
+                    <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-11">
+                        Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
+                    </p>
+                    <!-- Tombol -->
+                    <button class="btn rounded rounded-5 fw-light col-4  col-lg-1"
+                        style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
+                        See More
+                    </button>
                 </div>
+            </div>
 
-                <div class="row">
-                    <!-- Kartu pertama -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+            <div class="row">
+                <!-- Kartu pertama -->
+
+                <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                    <a href="{{url('/detail_donation')}}">
                         <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                             <img src="/images/donate/1.svg" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -127,10 +134,12 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
 
-                    <!-- Kartu kedua -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                <!-- Kartu kedua -->
+                <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                    <a href="{{url('/detail_donation')}}">
                         <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                             <img src="/images/donate/2.svg" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -152,10 +161,12 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
 
-                    <!-- Kartu ketiga -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                <!-- Kartu ketiga -->
+                <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                    <a href="{{url('/detail_donation')}}">
                         <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                             <img src="/images/donate/3.svg" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -177,10 +188,11 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
+
     </div>
 
 </section>
@@ -201,77 +213,86 @@
     <div class="container mx-auto bg-skyline pt-4 event-container" id="container-upcoming" style="padding: 0 !important;">
         <div class="row justify-content-center text-center py-0 my-0 gx-4" style="margin: 0 !important;">
             <!-- Kartu pertama -->
-            <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 ">
-                <div class="event-card rounded rounded-5">
-                    <img src="/images/event/1.svg" alt="Event Image" class="img-fluid overflow-hidden">
-                    <div class="event-card-spacer">
-                        <div class="event-date ms-2 mt-3">20 November</div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="event-title mb-3 fw-bold">Donasi untuk Palestina: Aksi Kemanusiaan</p>
-                        <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none">Edukasi</a> | Yayasan Literasi Nusantara
-                        </p>
-                        <p class="card-text  text-extra-small mb-3 opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="event-info mt-2 justify-content-between">
-                            <span><i class="fa fa-clock"></i> 10:00 - 12:00</span>
-                            <span><i class="fa fa-location-dot"></i> Live Streaming</span>
+            <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
+                <a class="text-light" href="{{url('/detail_event')}}">
+                    <div class="event-card rounded rounded-5">
+                        <img src="/images/event/1.svg" alt="Event Image" class="img-fluid overflow-hidden">
+                        <div class="">
+                            <div class="event-date">20 November</div>
+                        </div>
+                        <div class="event-details event-card-spacer">
+                            <p class="event-title mb-3 fw-bold">Donasi untuk Palestina: Aksi Kemanusiaan</p>
+                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                                04 Feb 25 | <a href="#" class="text-decoration-none text-light">Edukasi</a> | Yayasan Literasi Nusantara
+                            </p>
+                            <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
+                            </p>
+                            <div class="event-info justify-content-between">
+                                <span><i class="fa fa-clock"></i> 10:00 - 12:00</span>
+                                <span><i class="fa fa-location-dot"></i> Live Streaming</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
+
             <!-- Kartu kedua -->
-            <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 ">
-                <div class="event-card rounded rounded-5">
-                    <img src="/images/event/2.svg" alt="Event Image" class="img-fluid">
-                    <div class="event-card-spacer">
-                        <div class="event-date ms-2 mt-3">5 Desember</div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="event-title mb-3 fw-bold">Pendidikan untuk Semua: Galakan Gerakan Sosial</p>
-                        <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none">Edukasi</a> | Yayasan Literasi Nusantara
-                        </p>
-                        <p class="card-text  text-extra-small mb-3 opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="event-info mt-2 d-flex justify-content-between">
-                            <span><i class="fa fa-clock"></i> 14:00 - 17:00</span>
-                            <span><i class="fa fa-location-dot"></i> Jakarta (JCC)</span>
+            <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
+                <a class="text-light" href="{{url('/detail_event')}}">
+                    <div class="event-card rounded rounded-5">
+                        <img src="/images/event/2.svg" alt="Event Image" class="img-fluid">
+                        <div class="">
+                            <div class="event-date">5 Desember</div>
+                        </div>
+                        <div class="event-details event-card-spacer">
+                            <p class="event-title mb-3 fw-bold">Pendidikan untuk Semua: Galakan Gerakan Sosial</p>
+                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                                04 Feb 25 | <a href="#" class="text-decoration-none text-light">Edukasi</a> | Yayasan Literasi Nusantara
+                            </p>
+                            <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
+                            </p>
+                            <div class="event-info mt-2 d-flex justify-content-between">
+                                <span><i class="fa fa-clock"></i> 14:00 - 17:00</span>
+                                <span><i class="fa fa-location-dot"></i> Jakarta (JCC)</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <!-- Kartu ketiga -->
-            <div class="col-md-4 col-lg-4 d-flex justify-content-center mt-4 ">
-                <div class="event-card rounded rounded-5">
-                    <img src="/images/event/3.svg" alt="Event Image" class="img-fluid">
-                    <div class="event-card-spacer ">
-                        <div class="event-date ms-2 mt-3">15 Desember</div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="event-title fw-bold mb-3">Bazar Donasi Kemanusiaan: Peduli Gempa</p>
-                        <p class="card-text fw-thin mb-3 text-extra-small opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none">Edukasi</a> | Yayasan Literasi Nusantara
-                        </p>
-                        <p class="card-text  text-extra-small mb-3 opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="event-info mt-2 d-flex justify-content-between">
-                            <span><i class="fa fa-clock"></i> 09:00 - 17:00</span>
-                            <span><i class="fa fa-location-dot"></i> GSG, Jakarta</span>
+            <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
+                <a class="text-light" href="{{url('/detail_event')}}">
+                    <div class="event-card rounded rounded-5">
+                        <img src="/images/event/3.svg" alt="Event Image" class="img-fluid">
+                        <div class="">
+                            <div class="event-date">15 Desember</div>
                         </div>
+                        <div class="event-details event-card-spacer">
+                            <p class="event-title fw-bold mb-3">Bazar Donasi Kemanusiaan: Peduli Gempa</p>
+                            <p class="card-text fw-thin mb-3 text-extra-small opacity-75 p-0 m-0">
+                                04 Feb 25 | <a href="#" class="text-decoration-none text-light">Edukasi</a> | Yayasan Literasi Nusantara
+                            </p>
+                            <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
+                            </p>
+                            <div class="event-info mt-2 d-flex justify-content-between">
+                                <span><i class="fa fa-clock"></i> 09:00 - 17:00</span>
+                                <span><i class="fa fa-location-dot"></i> GSG, Jakarta</span>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="text-center bg-skyline pt-5 py-5">
-                <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                    <h3>See More Event</h3>
-                </button>
+                <a href="{{url('/event')}}">
+                    <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                        <h3>See More Event</h3>
+                    </button>
+                </a>
             </div>
         </div>
     </div>
@@ -286,7 +307,9 @@
             <h1 style="font-size: 60px;">Your help means a lot</h1>
             <p style="font-size: 41px;">donate or be a volunteer now!</p>
             <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</button>
-            <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
+            <a href="{{url('/event')}}">
+                <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
+            </a>
         </div>
     </div>
 </section>
@@ -294,70 +317,82 @@
 
 <!-- Blog Content Section -->
 <section id="blog-content" class="space-section">
-    <div class="container mt-5">
-        <h1 class="bolder-text text-dark text-center mb-5">Blog & Article</h1>
-        <div class="card shadow py-5 mb-5" id="card-donate">
+    <div class="container">
+        <h1 class="bolder-text text-dark text-center ">Blog & Article</h1>
+        <div class="pb-5 mb-5" id="card-donate">
             <div class="row justify-content-center align-items-center">
-
-                <div class="row d-flex justify-content-between align-items-center mb-4 px-5 mx-0">
-                    <div class="col">
-                        <h4>Blog terkini</h4>
-                    </div>
-                    <div class="col-auto">
-                        <a href="" class="btn border-primary text-primary rounded-pill">Show More</a>
+                <div class="row mx-2">
+                    <h3 class="fw-bold">Donation</h3>
+                    <div class="d-flex flex-wrap align-items-center pb-2">
+                        <!-- Paragraf -->
+                        <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-11">
+                            Jelajahi kisah inspiratif dan info seputar event donasi. Baca sekarang dan beri dukungan.
+                        </p>
+                        <!-- Tombol -->
+                        <button class="btn rounded rounded-5  fw-light col-4 col-lg-1"
+                            style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
+                            See More
+                        </button>
                     </div>
                 </div>
 
-                <div class="row w-100 gx-5">
+
+                <div class="row">
                     <!-- Kartu pertama -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 w-20 ">
-                        <div class="card rounded overflow-hidden shadow  h-100 d-flex flex-column">
-                            <img src="/images/donate/1.svg" class="card-img-top" alt="...">
-                            <div class="card-body blog-details-container d-flex flex-column justify-content-between">
-                                <b class="text-dark">Membangun Komunitas Peduli</b>
-                                <p class="card-text text-primary text-small">
-                                    Cara membangun komunitas untuk menciptakan perubahan sosial.
-                                </p>
-                                <div>
-                                    <a href="" class="text-primary text-small">Read this article</a>
-                                    <p class="text-primary text-small">04 25 Feb | Category | Author</p>
+                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3  ">
+                        <a href="{{url('/detail_blog')}}">
+                            <div class="card rounded rounded-5 overflow-hidden shadow  h-100 d-flex flex-column">
+                                <img src="/images/blog-details/4.svg" class="card-img-top" alt="...">
+                                <div class="card-body blog-details-container d-flex flex-column justify-content-between">
+                                    <b class="text-dark">Membangun Komunitas Peduli</b>
+                                    <p class="card-text text-primary text-small">
+                                        Cara membangun komunitas untuk menciptakan perubahan sosial.
+                                    </p>
+                                    <div>
+                                        <a href="" class="text-primary text-small">Read this article</a>
+                                        <p class="text-primary text-small">04 25 Feb | Category | Author</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- Kartu kedua -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 w-20 ">
-                        <div class="card rounded overflow-hidden shadow  h-100 d-flex flex-column">
-                            <img src="/images/donate/2.svg" class="card-img-top" alt="...">
-                            <div class="card-body blog-details-container d-flex flex-column justify-content-between">
-                                <b class="text-dark">Donasi Langsung Lebih Efektif</b>
-                                <p class="card-text text-primary text-small">
-                                    Kenapa donasi langsung lebih memberikan dampak nyata.
-                                </p>
-                                <div>
-                                    <a href="" class="text-primary text-small">Read this article</a>
-                                    <p class="text-primary text-small">04 25 Feb | Category | Author</p>
+                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3  ">
+                        <a href="{{url('/detail_blog')}}">
+                            <div class="card rounded rounded-5 overflow-hidden shadow  h-100 d-flex flex-column">
+                                <img src="/images/blog-details/5.svg" class="card-img-top" alt="...">
+                                <div class="card-body blog-details-container d-flex flex-column justify-content-between">
+                                    <b class="text-dark">Donasi Langsung Lebih Efektif</b>
+                                    <p class="card-text text-primary text-small">
+                                        Kenapa donasi langsung lebih memberikan dampak nyata.
+                                    </p>
+                                    <div>
+                                        <a href="" class="text-primary text-small">Read this article</a>
+                                        <p class="text-primary text-small">04 25 Feb | Category | Author</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- Kartu ketiga -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 w-20">
-                        <div class="card rounded overflow-hidden shadow  h-100 d-flex flex-column">
-                            <img src="/images/donate/3.svg" class="card-img-top" alt="...">
-                            <div class="card-body blog-details-container d-flex flex-column justify-content-between">
-                                <b class="text-dark">Alasan Melakukan Donasi</b>
-                                <p class="card-text text-primary text-small">
-                                    Mengapa setiap orang perlu berdonasi, bahkan sedikit.
-                                </p>
-                                <div>
-                                    <a href="" class="text-primary text-small">Read this article</a>
-                                    <p class="text-primary text-small">04 25 Feb | Category | Author</p>
+                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3 ">
+                        <a href="{{url('/detail_blog')}}">
+                            <div class="card rounded rounded-5 overflow-hidden shadow  h-100 d-flex flex-column">
+                                <img src="/images/blog-details/6.svg" class="card-img-top" alt="...">
+                                <div class="card-body blog-details-container d-flex flex-column justify-content-between">
+                                    <b class="text-dark">Alasan Melakukan Donasi</b>
+                                    <p class="card-text text-primary text-small">
+                                        Mengapa setiap orang perlu berdonasi, bahkan sedikit.
+                                    </p>
+                                    <div>
+                                        <a href="" class="text-primary text-small">Read this article</a>
+                                        <p class="text-primary text-small">04 25 Feb | Category | Author</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                 </div>

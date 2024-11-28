@@ -210,7 +210,7 @@
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
         <h1 class="hero-title2">Event Category</h1>
-        <p class="hero-subtitle2-event">Event > Category</p>
+        <p class="hero-subtitle2-event">Event > Category > Bencana</p>
     </div>
 </section>
 <!-- End Hero Section -->
@@ -231,15 +231,17 @@
 <!-- Kategori Event -->
 <div class="container mt-5">
     <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
-        <h2 class="fw-bold">Event Categories</h2>
-        <p class="text-muted">All Event Category</p>
+        <h2 class="fw-bold">Kategori</h2>
+        <p class="text-muted">Pilih kategori event yang ingin anda ikuti!</p>
+
+
         <!-- Wadah kartu -->
         <div id="card-container" class="row d-flex justify-content-center">
             <!-- Kartu akan dimuat di sini oleh JavaScript -->
         </div>
 
         <!-- Navigasi Slider -->
-        <div class="pagination-container  my-5 pb-5">
+        <div class="pagination-container my-5 pb-5">
             <button class="pagination-arrow" id="prev-page">&lt;</button>
             <div class="pagination-dots" id="pagination-dots"></div>
             <button class="pagination-arrow" id="next-page">&gt;</button>
@@ -259,65 +261,137 @@
 <script>
     // Data Kartu
     const cardsData = [{
-            date: "Hiburan",
-            title: "Beragam acara seni, musik, dan pertunjukan kreatif yang bertujuan menggalang dana untuk mereka yang membutuhkan.",
-            img: "/images/event/all-event-1.svg"
+            date: "12 Februari",
+            title: "Bantuan Korban Gempa",
+            category: "Bencana",
+            organizer: "Rizki",
+            time: "10:00 - 15:00",
+            location: "Sumba, Indonesia",
+            img: "/images/event/category-event-1.svg",
+            month: "12 Februari 25",
+            body: "Bantu kami membantu korban gempa dengan donasi Anda. Donasi Anda akan digunakan untuk.."
         },
         {
-            date: "Kemanusiaan",
-            title: "Memberikan bantuan untuk korban bencana, kecelakaan, dan kemanusiaan lainnya.",
-            img: "/images/event/all-event-2.svg"
+            date: "04 Februari",
+            title: "Pembantu Korban Banjir",
+            category: "Bencana",
+            organizer: "Nurul",
+            time: "07:00 - 18:00",
+            location: "Jakarta, Indonesia",
+            img: "/images/event/category-event-2.svg",
+            month: "04 Febr 25",
+            body: "Bantu kami membantu korban banjir dengan donasi Anda. Donasi Anda akan digunakan untuk membeli..."
         },
         {
-            date: "Sosial",
-            title: "Masyarakat yang membutuhkan dengan pengawasan anak, bantuan kesejahteraan, dan program kemanusiaan.",
-            img: "/images/event/all-event-3.svg"
+            date: "15 Maret",
+            title: "Bantuan Korban Kebakaran",
+            category: "Bencana",
+            organizer: "Muhammad Faisal",
+            time: "14:00 - 20:00",
+            location: "Lombok, Indonesia",
+            img: "/images/event/category-event-3.svg",
+            month: "15 Maret 25",
+            body: "Bantu kami membantu korban kebakaran dengan donasi Anda. Donasi Anda akan digunakan..."
         },
         {
-            date: "Kesehatan",
-            title: "Meningkatkan kesehatan masyarakat dengan pengobatan, vaksinasi, dan perawatan medis.",
-            img: "/images/event/all-event-4.svg"
+            date: "28 Mei",
+            title: "Pembantu Korban Tsunami",
+            category: "Bencana",
+            organizer: "Siti Nurul Ain",
+            time: "15:00 - 19:00",
+            location: "Sumatra, Indonesia",
+            img: "/images/event/category-event-4.svg",
+            month: "28 Mei 25",
+            body: "Bantu kami membantu korban tsunami dengan donasi Anda. Donasi Anda akan digunakan untuk..."
         },
         {
-            date: "Bencana",
-            title: "Membantu korban bencana dengan pengungsian, pemberian makanan, dan perawatan medis.",
-            img: "/images/event/all-event-5.svg"
+            date: "10 April",
+            title: "Bantuan Korban Erupsi Gunung Api",
+            category: "Bencana",
+            organizer: "Muhammad Rizki  ",
+            time: "14:00 - 20:00",
+            location: "Bali, Indonesia",
+            img: "/images/event/category-event-5.svg",
+            month: "10 April 25",
+            body: "Bantu kami membantu korban erupsi gunung api dengan donasi Anda. Donasi Anda akan digunakan..."
         },
         {
-            date: "Edukasi",
-            title: "Membantu anak-anak belajar dengan beasiswa, bantuan peralatan, dan program pendidikan.",
-            img: "/images/event/all-event-6.svg"
+            date: "15 Juni",
+            title: "Pembantu Korban Badai",
+            category: "Bencana",
+            organizer: "Nurul Izzati",
+            time: "14:00 - 20:00",
+            location: "Lombok, Indonesia",
+            img: "/images/event/category-event-6.svg",
+            month: "15 Juni 25",
+            body: "Bantu kami membantu korban badai dengan donasi Anda. Donasi Anda akan digunakan untuk membeli..."
         },
 
         {
-            date: "Hiburan",
-            title: "Beragam acara seni, musik, dan pertunjukan kreatif yang bertujuan menggalang dana untuk mereka yang membutuhkan.",
-            img: "/images/event/all-event-6.svg"
+            date: "12 Februari",
+            title: "Bantuan Korban Gempa",
+            category: "Bencana",
+            organizer: "Rizki",
+            time: "10:00 - 15:00",
+            location: "Sumba, Indonesia",
+            img: "/images/event/category-event-1.svg",
+            month: "12 Februari 25",
+            body: "Bantu kami membantu korban gempa dengan donasi Anda. Donasi Anda akan digunakan untuk.."
         },
         {
-            date: "Kemanusiaan",
-            title: "Memberikan bantuan untuk korban bencana, kecelakaan, dan kemanusiaan lainnya.",
-            img: "/images/event/all-event-5.svg"
+            date: "04 Februari",
+            title: "Pembantu Korban Banjir",
+            category: "Bencana",
+            organizer: "Nurul",
+            time: "07:00 - 18:00",
+            location: "Jakarta, Indonesia",
+            img: "/images/event/category-event-2.svg",
+            month: "04 Febr 25",
+            body: "Bantu kami membantu korban banjir dengan donasi Anda. Donasi Anda akan digunakan untuk membeli..."
         },
         {
-            date: "Sosial",
-            title: "Masyarakat yang membutuhkan dengan pengawasan anak, bantuan kesejahteraan, dan program kemanusiaan.",
-            img: "/images/event/all-event-4.svg"
+            date: "15 Maret",
+            title: "Bantuan Korban Kebakaran",
+            category: "Bencana",
+            organizer: "Muhammad Faisal",
+            time: "14:00 - 20:00",
+            location: "Lombok, Indonesia",
+            img: "/images/event/category-event-3.svg",
+            month: "15 Maret 25",
+            body: "Bantu kami membantu korban kebakaran dengan donasi Anda. Donasi Anda akan digunakan..."
         },
         {
-            date: "Kesehatan",
-            title: "Meningkatkan kesehatan masyarakat dengan pengobatan, vaksinasi, dan perawatan medis.",
-            img: "/images/event/all-event-4.svg"
+            date: "28 Mei",
+            title: "Pembantu Korban Tsunami",
+            category: "Bencana",
+            organizer: "Siti Nurul Ain",
+            time: "15:00 - 19:00",
+            location: "Sumatra, Indonesia",
+            img: "/images/event/category-event-4.svg",
+            month: "28 Mei 25",
+            body: "Bantu kami membantu korban tsunami dengan donasi Anda. Donasi Anda akan digunakan untuk..."
         },
         {
-            date: "Bencana",
-            title: "Membantu korban bencana dengan pengungsian, pemberian makanan, dan perawatan medis.",
-            img: "/images/event/all-event-5.svg"
+            date: "10 April",
+            title: "Bantuan Korban Erupsi Gunung Api",
+            category: "Bencana",
+            organizer: "Muhammad Rizki  ",
+            time: "14:00 - 20:00",
+            location: "Bali, Indonesia",
+            img: "/images/event/category-event-5.svg",
+            month: "10 April 25",
+            body: "Bantu kami membantu korban erupsi gunung api dengan donasi Anda. Donasi Anda akan digunakan..."
         },
         {
-            date: "Edukasi",
-            title: "Membantu anak-anak belajar dengan beasiswa, bantuan peralatan, dan program pendidikan.",
-            img: "/images/event/all-event-1.svg"
+            date: "15 Juni",
+            title: "Pembantu Korban Badai",
+            category: "Bencana",
+            organizer: "Nurul Izzati",
+            time: "14:00 - 20:00",
+            location: "Lombok, Indonesia",
+            img: "/images/event/category-event-6.svg",
+            month: "15 Juni 25",
+            body: "Bantu kami membantu korban badai dengan donasi Anda. Donasi Anda akan digunakan untuk membeli..."
         },
     ];
 
@@ -336,12 +410,27 @@
         visibleCards.forEach((card) => {
             cardContainer.innerHTML += `
                 <div class="col-md-4 d-flex justify-content-center mt-4">
-                <a class="text-light" href="{{url('/event_category_specific')}}">
+                <a class="text-light" href="{{url('/detail_event')}}">
                     <div class="event-card rounded rounded-5">
                         <img src="${card.img}" alt="Event Image" class="img-fluid">
                         <div class="event-date">${card.date}</div>
-                        <div class="event-details pb-3 px-4">
-                            <p class="event-title  mb-3 fw-bold" style="font-size:14px !important">${card.title}</p>
+                        <div class="event-details pb-4 px-4">
+                            <p class="event-title  mb-3fw-bold">${card.title}</p>
+                            <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                            ${card.month} | <a href="#" class="text-decoration-none text-light">${card.category}</a> | ${card.organizer}
+                            </p>
+                            <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                                ${card.body}
+                            </p>
+                            <div class="card-text text-extra-small d-flex justify-content-between">
+                                <div class="col-md-6">
+                                    <i class="fa-solid fa-clock"></i> ${card.time}<br>
+                                </div>
+                                <div class="col-md-6">
+                                    <i class="fa-solid fa-location-dot"></i> ${card.location}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     </a>
