@@ -83,12 +83,12 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'towards' => 'required|string|max:255',
-            'description' => 'required',
+            'title' => 'required|string|max:200',
+            'towards' => 'required|string|max:200',
+            'description' => 'required|max:2000',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
-            'description_need' => 'required',
+            'description_need' => 'required|max:2000',
         ]);
 
         $data = $request->all();
@@ -166,12 +166,12 @@ class DonationController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'towards' => 'required|string|max:255',
-            'description' => 'required',
+            'title' => 'required|string|max:200',
+            'towards' => 'required|string|max:200',
+            'description' => 'required|max:2000',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
-            'description_need' => 'required',
+            'description_need' => 'required|max:2000',
             'status' => 'required|in:ongoing,completed',
         ]);
 
