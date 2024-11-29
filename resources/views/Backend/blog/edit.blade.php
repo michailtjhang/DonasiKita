@@ -4,10 +4,10 @@
 @endsection
 @section('css')
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.css">
     <!-- CodeMirror -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/theme/monokai.css">
 @endsection
 @section('content')
     <div class="card">
@@ -142,14 +142,14 @@
 @endsection
 @section('js')
     <!-- bs-custom-file-input -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Summernote -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/css/css.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/css/css.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
     <!-- bs-custom-file-input -->
     <script>

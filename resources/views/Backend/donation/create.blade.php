@@ -5,18 +5,18 @@
 @section('css')
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet"
-        href="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- daterange picker -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.css">
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.css">
     <!-- CodeMirror -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/theme/monokai.css">
     <!-- SimpleMDE -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/simplemde/simplemde.min.css"> --}}
 @endsection
 @section('content')
     <div class="card">
@@ -134,17 +134,17 @@
 @section('js')
     <!-- tempusdominus-bootstrap-4 -->
     <script
-        src="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+        src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
     <!-- bs-custom-file-input -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Summernote -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/css/css.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/css/css.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
     <script>
         // bs-custom-file-input
