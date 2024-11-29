@@ -209,17 +209,20 @@
 <!-- End Hero Section -->
 
 <!-- Search Bar -->
-<section id="search-bar"
-    style="background-color: #eaf4fc; display: flex; justify-content: center; align-items: center; height:40vh">
-    <div class="search-container d-flex justify-content-center align-items-center">
-        <div class="search-box">
-            <input type="text" class="form-control" placeholder="ingin cari event apa hari ini?">
-            <button class="btn search-btn" type="button">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
+<form action="{{ route('blog') }}">
+    <section id="search-bar"
+        style="background-color: #eaf4fc; display: flex; justify-content: center; align-items: center; height:40vh">
+        <div class="search-container d-flex justify-content-center align-items-center">
+            <div class="search-box">
+                <input type="text" name="keyword" class="form-control" placeholder="ingin cari artikel apa hari ini?" value="{{ old('keyword') }}">
+                <button class="btn search-btn" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
+
 <!-- End Search Bar -->
 <div class="container mt-5">
 
@@ -251,6 +254,8 @@
         </div>
         @endforeach
     </div>
+
+    <!-- Navigasi Slider -->
     <div class="pagination-container my-5 pb-5">
         <button class="pagination-arrow" id="prev-page">&lt;</button>
         <div class="pagination-dots" id="pagination-dots">
@@ -260,8 +265,10 @@
         </div>
         <button class="pagination-arrow" id="next-page">&gt;</button>
     </div>
+    
 </div>
 @endsection
+
 @section('script')
 <script>
     document.querySelectorAll('.pagination-dot').forEach(function(dot) {

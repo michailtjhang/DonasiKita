@@ -41,18 +41,16 @@
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
                     <a href="" class="text-reset">
-                        <p><i class="fas fa-home me-3"></i>donasikita.maxy@gmail.com</p>
+                        <p><i class="fas fa-home me-3"></i> {{ $config['email'] }}</p>
                     </a>
                     <a href="" class="text-reset">
                         <p>
                             <i class="fas fa-envelope me-3"></i>
-                            Pakuwon Tower Lantai 26 Unit J, <br>
-                            Jln. Casablanca Raya kav 88 <br>
-                            Jakarta Selatan
+                            {{ $config['address'] }}
                         </p>
                     </a>
                     <a href="" class="text-reset">
-                        <p><i class="fas fa-phone me-3"></i> 08317-757-5201</p>
+                        <p><i class="fas fa-phone me-3"></i> {{ $config['phone'] }}</p>
                     </a>
                 </div>
                 <!-- Grid column -->
@@ -82,16 +80,16 @@
                         Social
                     </h6>
                     <div>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['facebook'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-facebook-f"></i>
                         </a>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['twitter'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-twitter"></i>
                         </a>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['youtube'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-youtube"></i>
                         </a>
-                        <a href="https://www.instagram.com/donasi__kita/?utm_source=ig_web_button_share_sheet" class="me-2 text-reset">
+                        <a href="{{ $config['instagram'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-instagram"></i>
                         </a>
                     </div>
@@ -103,8 +101,7 @@
             <!-- Grid row -->
         </div>
         <p class="text-small text-center text-secondary">
-            DonasiKita and Donasi Kita are trademarks or registered trademarks of DonasiKita in Indonesia. <br>© 2024
-            DonasiKita
+            {{ $config['footer'] }}
         </p>
     </section>
     <!-- Section: Links  -->

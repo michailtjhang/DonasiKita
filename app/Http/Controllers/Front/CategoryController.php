@@ -16,6 +16,7 @@ class CategoryController extends Controller
         $categories = Category::with('thumbnail')->latest()->paginate(6);
 
         return view('front.category.indexBlog', [
+            'page_title' => 'Categories Blog & Articles',
             'categories' => $categories,
         ]);
     }
@@ -25,6 +26,7 @@ class CategoryController extends Controller
         $categories = Category::with('thumbnail')->latest()->paginate(6);
 
         return view('front.category.indexEvent', [
+            'page_title' => 'Categories Events',
             'categories' => $categories,
         ]);
     }

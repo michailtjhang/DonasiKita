@@ -11,7 +11,7 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         return view('front.blog.index', [
-            'page_title' => 'Articles',
+            'page_title' => 'Articles & Blog',
             'articles' => Blog::with('category')
                 ->filter(request(['keyword', 'category']))
                 ->whereStatus(1)

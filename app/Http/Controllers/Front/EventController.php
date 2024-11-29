@@ -10,10 +10,13 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::with('category', 'thumbnail', 'detailEvent', 'location')->latest()->paginate(6);
+        $events = Event::with('category', 'thumbnail', 'detailEvent', 'location')
+            ->filter(request(['keyword', 'category']))
+            ->latest()
+            ->paginate(6);
 
         return view('front.event.index', [
-            'title' => 'Event',
+            'page_title' => 'Events',
             'events' => $events
         ]);
     }
@@ -23,7 +26,7 @@ class EventController extends Controller
         $event = Event::with('category', 'thumbnail', 'detailEvent', 'location')->whereSlug($slug)->firstOrFail();
 
         return view('front.event.show', [
-            'title' => $event->title,
+            'page_title' => $event->title,
             'event' => $event,
         ]);
     }

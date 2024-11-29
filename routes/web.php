@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
+use App\Http\Controllers\Front\DonationController as FrontDonationController;
 use App\Http\Controllers\Front\EventController as FrontEventController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -28,10 +29,13 @@ Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEven
 
 Route::get('/events', [FrontEventController::class, 'index'])->name('events');
 Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
+Route::post('/events/{slug}', [FrontEventController::class, 'store'])->name('events.store');
+
+Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
+Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
+Route::post('/donations/{slug}', [FrontDonationController::class, 'store'])->name('donations.store');
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
-
-Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
 Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
 

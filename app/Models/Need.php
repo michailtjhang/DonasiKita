@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,6 +12,9 @@ class Need extends Model
     use HasFactory, HasUlids;
 
     protected $keyType = 'string';
+    protected $casts = [
+        'days_left' => 'date',
+    ];
     protected $table = 'needs';
     protected $fillable = [
         'need_id',
@@ -21,7 +25,8 @@ class Need extends Model
         'description_need',
         'target_amount',
         'current_amount',
-        'status'
+        'status',
+        'days_left',
     ];
 
     public function donation()
@@ -32,5 +37,14 @@ class Need extends Model
     public function thumbnail()
     {
         return $this->hasOne(Thumbnail::class, 'need_id', 'need_id');
+    }
+
+    public function scopeFilter(Builder $query, array $filters): void
+    {
+        $query->when(
+            $filters['keyword'] ?? false,
+            fn ($query, $keyword) =>
+            $query->where('title', 'like', '%' . $keyword . '%')
+        );
     }
 }
