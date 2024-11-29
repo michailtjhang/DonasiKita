@@ -251,7 +251,7 @@ footer {
 .event-card {
     position: relative;
     overflow: hidden;
-    height: 450px;
+    height: 450px !important;
     width: 100%;
     padding: 0px;
     box-sizing: border-box;

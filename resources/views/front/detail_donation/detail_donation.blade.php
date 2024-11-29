@@ -95,25 +95,19 @@
 </style>
 @endsection
 @section('content')
-<!-- Hero Section -->
-<section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
-    <div class="hero-overlay2"></div>
-    <div class="hero-content2 text-left px-5 ms-5">
-        <h1 class="hero-title2">Detail Donation</h1>
-        <p class="hero-subtitle2">Donation Bantuan Kemanusiaan untuk Palestina</p>
-    </div>
-</section>
-<!-- End Hero Section -->
+<div class="space-section"></div>
 
 <section id="detail-donation" class="container my-5 pt-5">
     <div class="card shadow rounded-4">
         <div class="container pt-5 px-lg-5 px-md-4 px-3 mt-lg-4" style="padding-left: 2.225rem !important; padding-right: 2.225rem !important;">
-            <!-- Gambar -->
-            <img src="/images/donate/3.svg" alt="Donation Image" class="card-img-top img-fluid rounded">
 
-            <!-- Konten -->
             <div class="py-4">
                 <p class=" fw-bold h1">Bantuan Kemanusiaan untuk Palestina</p>
+
+                <!-- Gambar -->
+                <img src="/images/donate/3.svg" alt="Donation Image" class="card-img-top img-fluid rounded">
+
+                <!-- Konten -->
                 <!-- Target dan Total -->
                 <div class="row pt-4 align-items-center">
                     <div class="col-6">

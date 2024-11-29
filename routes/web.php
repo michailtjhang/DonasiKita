@@ -33,7 +33,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/donation', [HomeController::class, 'donation'])->name('donation');
 
-Route::get('/detail_donation', [HomeController::class, 'event'])->name('detail_donation');
+Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
 
 Route::get('/event_category_all', [HomeController::class, 'event_category_all'])->name('event_category_all');
 

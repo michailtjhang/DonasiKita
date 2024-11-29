@@ -234,7 +234,7 @@
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
                         <a href="{{ route('events.show', $item->slug) }}" class="text-light" href="{{ url('/detail_event') }}">
                             <div class="event-card rounded rounded-5">
-                                <img src="{{ asset('storage/cover/' . $item->thumbnail->file_path) }}" alt="{{ $item->title }}" class="img-fluid overflow-hidden">
+                                <img src="{{ asset('storage/cover/' . $item->thumbnail->file_path) }}" alt="{{ $item->title }}" class="img-fluid overflow-hidden" style="height: 450px !important;">
                                 <div class="">
                                     <div class="event-date">{{ $item->detailEvent->start->format('d M Y') }}</div>
                                 </div>
@@ -313,9 +313,10 @@
                         @foreach ($popular_articles as $item)
                             <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3  ">
                                 <a href="{{ route('blog.show', $item->slug) }}">
-                                    <div class="card rounded rounded-5 overflow-hidden shadow  h-100 d-flex flex-column">
+                                    <div class="card rounded rounded-5 overflow-hidden shadow w-100 d-flex flex-column">
+                                        {{-- acuan img blog --}}
                                         <img src="{{ asset('storage/cover/' . $item->thumbnail->file_path) }}"
-                                            class="card-img-top" alt="{{ $item->title }}">
+                                            class="card-img-top img-fluid blog-img" alt="{{ $item->title }}" style="height: 200px !important;">
                                         <div
                                             class="card-body blog-details-container d-flex flex-column justify-content-between">
                                             <b class="text-dark">{{ $item->title }}</b>

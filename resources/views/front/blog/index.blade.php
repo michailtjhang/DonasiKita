@@ -4,6 +4,60 @@
     <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
     <style>
         /* Adjust Card Styling */
+
+        .search-container {
+        width: 50%;
+        padding: 0 15px;
+    }
+
+    /* Search bar styling */
+    .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 50px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 100%;
+        max-width: 1200px;
+        /* Panjang maksimal (sesuai ukuran laptop) */
+        min-width: 300px;
+        /* Panjang minimal */
+        max-height: 400px;
+
+    }
+
+    /* Input styling */
+    .search-box input {
+        border: none;
+        outline: none;
+        padding: 15px 20px;
+        border-radius: 50px 0 0 50px;
+        flex: 1;
+        font-size: 16px;
+    }
+
+    /* Tombol pencarian */
+    .search-box .search-btn {
+        background-color: #4ca3dd;
+        /* Warna biru */
+        color: #fff;
+        border: none;
+        border-radius: 0 50px 50px 0;
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-box .search-btn:hover {
+        background-color: #3b8fc4;
+        /* Warna biru lebih gelap saat hover */
+    }
+
+    .search-box .search-btn i {
+        font-size: 20px;
+    }
+
         .donation-card {
             border-radius: 10px;
             background-color: #fff;
@@ -143,23 +197,24 @@
         </div>
     </section>
 
-    <div class="container my-4">
-        <form>
-            @if (request('category'))
-                <input type="hidden" name="category" value="{{ request('category') }}">
-            @endif
-            <div class="Searchbar d-flex align-items-center mx-auto shadow"
-                style="width: 600px; height: 50px; background: white; border-radius: 25px; overflow: hidden;">
-                <input type="text" name="keyword" value="{{ old('keyword') }}" class="form-control border-0"
-                    placeholder="Ingin search apa hari ini?"
-                    style="font-size: 16px; color: #B3B3B3; outline: none; flex: 1; padding-left: 20px;" autocomplete="off">
-                <button class="search-icon-container border-0" type="submit" 
-                    style="background: #6CB6DE; width: 90px; display: flex; align-items: center; justify-content: center;">
-                    <img src="{{ asset('images/donate/Vector.svg') }}" alt="Search Icon" style="width: 20px; height: 20px;">
+    <!-- Search Bar -->
+    <form>
+        @if (request('category'))
+            <input type="hidden" name="category" value="{{ request('category') }}">
+        @endif
+        <section id="search-bar"
+        style="background-color: #eaf4fc; display: flex; justify-content: center; align-items: center; height:40vh">
+        <div class="search-container d-flex justify-content-center align-items-center">
+            <div class="search-box">
+                <input type="text" name="keyword" value="{{ old('keyword') }}" class="form-control border-0" class="form-control" placeholder="ingin cari event apa hari ini?">
+                <button class="btn search-btn" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
             </div>
-        </form>
-    </div>
+        </div>
+        </section>
+    </form>
+    <!-- End Search Bar -->
 
     <section id="blog-cards" class="my-5">
         <div class="container">
