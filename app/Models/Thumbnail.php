@@ -15,6 +15,7 @@ class Thumbnail extends Model
         'need_id',
         'category_id',
         'file_path',
+        'id_file',
         'type'
     ];
 

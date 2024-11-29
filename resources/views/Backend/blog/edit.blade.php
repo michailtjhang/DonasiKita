@@ -87,7 +87,14 @@
                             </div>
 
                             <!-- Existing Image -->
-                            @if ($article->thumbnail && $article->thumbnail->file_path)
+                            @if ($article->thumbnail && $article->thumbnail->id_file)
+                                <div class="col-6">
+                                    <span class="d-block mb-2 text-muted">Existing:</span>
+                                    <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
+                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                        style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
+                                </div>
+                            @elseif ($article->thumbnail && $article->thumbnail->file_path)
                                 <div class="col-6">
                                     <span class="d-block mb-2 text-muted">Existing:</span>
                                     <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"

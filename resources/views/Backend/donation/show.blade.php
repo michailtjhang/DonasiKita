@@ -37,7 +37,12 @@
                     <tr>
                         <th>Image Cover</th>
                         <td>
-                            @if ($donation->thumbnail && $donation->thumbnail->file_path)
+                            @if ($donation->thumbnail && $donation->thumbnail->id_file)
+                                <a href="{{ $donation->thumbnail->file_path }}" target="_blank" rel="noopener noreferrer">
+                                    <x-cld-image public-id="{{ $donation->thumbnail->id_file }}" width="500"
+                                        alt="Cover Image" />
+                                </a>
+                            @elseif ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <a href="{{ asset('storage/cover/' . $donation->thumbnail->file_path) }}" target="_blank"
                                     rel="noopener noreferrer">
                                     <img src="{{ asset('storage/cover/' . $donation->thumbnail->file_path) }}"
