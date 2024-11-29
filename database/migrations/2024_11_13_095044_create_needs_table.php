@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('towards');
+            $table->date('days_left');
             $table->longText('description');
             $table->longText('description_need');
             $table->double('target_amount');

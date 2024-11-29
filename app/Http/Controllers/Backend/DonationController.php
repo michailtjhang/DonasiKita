@@ -89,6 +89,7 @@ class DonationController extends Controller
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
             'description_need' => 'required|max:2000',
+            'days_left' => 'required|date|min:1',
         ]);
 
         $data = $request->all();
@@ -108,6 +109,7 @@ class DonationController extends Controller
                 'description_need' => $data['description_need'],
                 'target_amount' => $data['amount'],
                 'towards' => $data['towards'],
+                'days_left' => $data['days_left'],
                 'status' => 'ongoing', // Default status
             ];
 
@@ -189,6 +191,7 @@ class DonationController extends Controller
             'amount' => 'required|numeric',
             'description_need' => 'required|max:2000',
             'status' => 'required|in:ongoing,completed',
+            'days_left' => 'required|date|min:1',
         ]);
 
         $need = Need::with('thumbnail')->findOrFail($id); // Ambil data Need Donasi dengan relasi terkait
@@ -245,6 +248,7 @@ class DonationController extends Controller
                 'description_need' => $data['description_need'],
                 'amount' => $data['amount'],
                 'towards' => $data['towards'],
+                'days_left' => $data['days_left'],
                 'status' => $data['status'] ?? $need->status, // Pertahankan status jika tidak ada
             ]);
 

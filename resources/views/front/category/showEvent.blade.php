@@ -231,7 +231,6 @@
 <div class="container mt-5">
 
     <!-- Event -->
-    @if ($events->count())
     <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
         <h2 class="fw-bold">Event</h2>
         <p class="text-muted">Menampilkan event kategori "{{ ucfirst($categories) }}"</p>
@@ -282,7 +281,7 @@
                 </div>
             </div>
             @empty
-            <p class="text-center font-weight-bold">Tidak ada event yang ditemukan.</p>
+            <p class="text-center mt-4 font-weight-bold">Tidak ada event yang ditemukan.</p>
             @endforelse
         </div>
 
@@ -296,7 +295,7 @@
             <button class="pagination-arrow" id="next-page">&gt;</button>
         </div>
     </div>
-    @endif
+    
 </div>
 @endsection
 @section('script')

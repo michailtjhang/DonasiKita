@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Blog extends Model
 {
     use HasFactory, HasUlids;
-
+    // set cast
+    protected $casts = [
+        'created_at' => 'date',
+    ];
     // set key type
     protected $keyType = 'string';
     // set table

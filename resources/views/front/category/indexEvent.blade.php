@@ -218,16 +218,18 @@
 <!-- End Hero Section -->
 
 <!-- Search Bar -->
-<section id="search-bar" style="background-color: #eaf4fc; display: flex; justify-content: center; align-items: center; height:40vh">
-    <div class="search-container d-flex justify-content-center align-items-center">
-        <div class="search-box">
-            <input type="text" class="form-control" placeholder="ingin cari event apa hari ini?">
-            <button class="btn search-btn" type="button">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
+<form action="{{ route('events') }}">
+    <section id="search-bar" style="background-color: #eaf4fc; display: flex; justify-content: center; align-items: center; height:40vh">
+        <div class="search-container d-flex justify-content-center align-items-center">
+            <div class="search-box">
+                <input type="text" class="form-control" name="keyword" placeholder="ingin cari event apa hari ini?">
+                <button class="btn search-btn" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
 <!-- End Search Bar -->
 
 <!-- Kategori Event -->
@@ -239,7 +241,7 @@
         <div id="card-container" class="row d-flex justify-content-between gx-2">
           @foreach ($categories as $category)
             <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 spacer-tablet">
-                <a href="{{ route('blogs.category', $category->slug) }}" class="text-decoration-none">
+                <a href="{{ route('events.category', $category->slug) }}" class="text-decoration-none">
                     <div class="event-card rounded rounded-5">
                         @if ($category->thumbnail && $category->thumbnail->file_path)
                         <img src="{{ asset('storage/cover/' . $category->thumbnail->file_path) }}"

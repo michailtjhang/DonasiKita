@@ -117,6 +117,6 @@ class AuthController extends Controller
     {
         // Logout user
         Auth::logout();
-        return redirect('/');
+        return back();
     }
 }

@@ -189,7 +189,6 @@
 
 <div class="container mt-5">
     <!-- Artikel -->
-    @if ($articles->count())
     <div class="container justify-content-center space-x">
         <h2 class="fw-bold">Artikel</h2>
         <p class="text-muted">Menampilkan artikel kategori "{{ ucfirst($categories) }}"</p>
@@ -237,7 +236,7 @@
             </div>
             <button class="pagination-arrow" id="next-page">&gt;</button>
         </div>
-        @endif
+        
     </div>
 </div>
 @endsection

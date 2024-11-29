@@ -100,16 +100,31 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="description">Description Towards</label>
-                    <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description') !!}</textarea>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="days_left">Deadline Date</label>
+                        <input type="date" name="days_left" id="days_left"
+                            class="form-control @error('days_left') is-invalid @enderror" value="{{ old('days_left') }}">
 
-                    @error('description')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        @error('days_left')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
+                    </div>
+
+                    <div class="form-group col-6">
+                        <label for="description">Description Towards</label>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description') !!}</textarea>
+
+                        @error('description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -133,8 +148,7 @@
 @endsection
 @section('js')
     <!-- tempusdominus-bootstrap-4 -->
-    <script
-        src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+    <script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
     <!-- bs-custom-file-input -->
     <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
