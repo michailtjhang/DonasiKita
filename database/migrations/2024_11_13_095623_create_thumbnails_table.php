@@ -18,6 +18,7 @@ return new class extends Migration
             $table->char('need_id', 5)->nullable(); // FK ke needs
             $table->integer('category_id')->nullable(); // FK ke categories
             $table->string('file_path', 255);
+            $table->string('id_file', 255)->nullable();
             $table->string('type', 50); // Image, Video
             $table->timestamps();
         });
