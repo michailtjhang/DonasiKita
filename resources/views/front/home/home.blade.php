@@ -1,4 +1,7 @@
 @extends('front.layout.app')
+<style>
+
+</style>
 @section('content')
     <!-- Hero Section -->
     <div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
@@ -124,7 +127,7 @@
                         <a href="{{ url('/detail_donation') }}">
                             <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                                 <img src="/images/donate/1.svg" class="card-img-top" alt="...">
-                                <div class="card-body">
+                                <div class="card-body px-4">
                                     <p class="card-text">Bantu Pendidikan Anak Pedalaman.</p>
                                     <p class="text-dark mb-2">
                                         <i class="fa fa-user"></i>
@@ -153,7 +156,7 @@
                         <a href="{{ url('/detail_donation') }}">
                             <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                                 <img src="/images/donate/2.svg" class="card-img-top" alt="...">
-                                <div class="card-body">
+                                <div class="card-body px-4">
                                     <p class="card-text">Aksi Bencana Alam untuk Korban Gempa</p>
                                     <p class="text-dark mb-2">
                                         <i class="fa fa-user"></i>
@@ -182,7 +185,7 @@
                         <a href="{{ url('/detail_donation') }}">
                             <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                                 <img src="/images/donate/3.svg" class="card-img-top" alt="...">
-                                <div class="card-body">
+                                <div class="card-body px-4">
                                     <p class="card-text">Bantuan Kemanusiaan untuk Palestina</p>
                                     <p class="text-dark mb-2">
                                         <i class="fa fa-user"></i>
@@ -318,7 +321,7 @@
                                         <img src="{{ asset('storage/cover/' . $item->thumbnail->file_path) }}"
                                             class="card-img-top img-fluid blog-img" alt="{{ $item->title }}" style="height: 200px !important;">
                                         <div
-                                            class="card-body blog-details-container d-flex flex-column justify-content-between">
+                                            class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
                                             <b class="text-dark">{{ $item->title }}</b>
                                             <p class="card-text text-primary text-small">
                                                 {{ Str::limit(strip_tags($item->content), 100, '...') }}

@@ -59,7 +59,6 @@
         }
 
         .donation-card {
-            border-radius: 10px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -71,13 +70,15 @@
 
         .card-img-top {
             height: 150px;
-            object-fit: cover;
+            object-fit:fill;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
             width: 100%;
             border-bottom: 1px solid #e0e0e0;
         }
 
         .card-body {
-            padding: 1rem;
+            padding:30px 25px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -294,7 +295,7 @@
             <div class="row" id="card-container">
                 @forelse ($articles as $article)
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100 shadow-sm">
+                        <div class="card rounded rounded-5 h-100 shadow-sm">
                             <a href="{{ route('blog.show', $article->slug) }}">
                                 @if ($article->thumbnail && $article->thumbnail->file_path)
                                     <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
@@ -334,7 +335,7 @@
             </div>
 
             <!-- Navigasi Slider -->
-            <div class="pagination-container my-5 pb-5">
+            <div class="pagination-container mb-5">
                 <button class="pagination-arrow" id="prev-page">&lt;</button>
                 <div class="pagination-dots" id="pagination-dots">
                     @for ($i = 1; $i <= $articles->lastPage(); $i++)

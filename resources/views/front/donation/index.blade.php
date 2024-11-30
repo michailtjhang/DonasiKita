@@ -58,7 +58,6 @@
         }
 
         .donation-card {
-            border-radius: 15px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -82,7 +81,7 @@
         }
 
         .card-body {
-            padding: 1rem;
+            padding: 25px 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -116,20 +115,40 @@
             color: #7d7d7d;
             text-align: left;
         }
-
-        /* Pagination Styling */
-        .pagination-wrapper {
+        /* Paginasi Container */
+        .pagination-container {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 10px;
+            align-items: center;
             margin-top: 20px;
+            gap: 10px;
         }
 
+        /* Tombol Panah */
+        .pagination-arrow {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            background-color: #bbddf0;
+            color: #0f3d56;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination-arrow:hover {
+            background-color: #a9cce3;
+        }
+
+        /* Titik-titik Paginasi */
         .pagination-dots {
             display: flex;
             gap: 8px;
-            align-items: center;
         }
 
         .pagination-dot {
@@ -149,23 +168,51 @@
             background-color: #85c1e9;
         }
 
-        .pagination-arrow {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: none;
-            background-color: #bbddf0;
-            color: #0f3d56;
+        .page-item .page-link {
+            color: #007bff;
+            /* Warna biru */
             font-size: 18px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            /* Ukuran font */
+            border: none;
+            background: none;
         }
 
-        .pagination-arrow:hover {
-            background-color: #a9cce3;
+        .page-item .page-link.active {
+            background-color: transparent;
+            font-weight: bold;
+        }
+
+        .page-link-dot {
+            font-size: 24px;
+            /* Membuat titik lebih besar */
+            line-height: 1;
+            color: #007bff;
+            pointer-events: none;
+            /* Nonaktifkan klik pada titik */
+        }
+
+        .page-item .page-link:hover {
+            text-decoration: none;
+        }
+
+        .page-link[aria-label="Previous"],
+        .page-link[aria-label="Next"] {
+            font-size: 20px;
+            /* Panah lebih besar */
+        }
+
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            height: 500px;
+            width: 100%;
+            min-width: 240px;
+            /* Menambahkan minimum width 200px */
+            max-width: 350px;
+            /* Menjaga lebar tidak lebih dari 350px */
+            padding: 0;
+            box-sizing: border-box;
+            margin: 0 auto;
         }
 
         /* Container Styling */
@@ -204,7 +251,7 @@
     <!-- End Search Bar -->
 
     <!-- Cards Section -->
-    <section id="donation-cards" class="space-section">
+    <section id="donation-cards" class="mb-5">
         <div class="container">
             <div class="container d-flex justify-content-between align-items-center">
                 <!-- Left Section: Title and Description -->
@@ -222,8 +269,8 @@
 
             <div class="row justify-content-center" id="card-container">
                 @forelse ($donations as $donation)
-                    <a href="{{ route('donations.show', $donation->id) }}" class="col-lg-4 col-md-6 mb-4">
-                        <div class="donation-card">
+                    <a href="{{ route('donations.show', $donation->id) }}" class="col-lg-4 col-md-6 mb-5">
+                        <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top"
                                     alt="{{ $donation->title }}" style="height: 200px !important;">
@@ -246,8 +293,8 @@
                                     {{ number_format($donation->target_amount, 0, ',', '.') }}</p>
                                 <div class="d-flex justify-content-between">
                                     <small class="text-muted">{{ $donation->donation->count() }} donatur</small>
-                                    <small
-                                        class="text-muted">{{ $donation->days_left->locale('id')->diffForHumans() ?? '0' }}</small>
+                                    {{-- <small
+                                        class="text-muted">{{ $donation->days_left->locale('id')->diffForHumans() ?? '0' }}</small> --}}
                                 </div>
                             </div>
                         </div>
@@ -256,18 +303,18 @@
                     <p class="text-center font-weight-bold mt-4">Tidak ada donasi yang ditemukan.</p>
                 @endforelse
 
+    
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <button class="pagination-arrow" id="prev-page">&lt;</button>
+                    <div class="pagination-dots" id="pagination-dots">
+                        @for ($i = 1; $i <= $donations->lastPage(); $i++)
+                            <span class="pagination-dot {{ $i == $donations->currentPage() ? 'active' : '' }}" data-page="{{ $i }}"></span>
+                            @endfor
+                    </div>
+                    <button class="pagination-arrow" id="next-page">&gt;</button>
+                </div>
             </div>
-
-            <!-- Pagination -->
-            {{-- <div class="pagination-container my-5 pb-5">
-            <button class="pagination-arrow" id="prev-page">&lt;</button>
-            <div class="pagination-dots" id="pagination-dots">
-                @for ($i = 1; $i <= $donations->lastPage(); $i++)
-                    <span class="pagination-dot {{ $i == $donations->currentPage() ? 'active' : '' }}" data-page="{{ $i }}"></span>
-                    @endfor
-            </div>
-            <button class="pagination-arrow" id="next-page">&gt;</button>
-        </div> --}}
         </div>
     </section>
 @endsection

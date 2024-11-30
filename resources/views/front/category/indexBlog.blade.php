@@ -39,8 +39,6 @@
         font-size: 16px;
         color: #2185BB;
         line-height: 1.5;
-        padding: 0 15px 15px;
-        text-align: left;
     }
 
     .categories-title {
@@ -56,6 +54,9 @@
         margin-bottom: 30px;
     }
 
+    .card-text-wrapper{
+        padding: 25px 25px;
+    }
     .search-container {
         width: 50%;
         padding: 0 15px;
@@ -247,8 +248,10 @@
                         <span>No cover image</span>
                     </div>
                     @endif
-                    <h3>{{ $category->name }}</h3>
-                    <p>{{ $category->description }}</p>
+                    <div class="card-text-wrapper">
+                        <h3>{{ $category->name }}</h3>
+                        <p class="text-center">{{ $category->description }}</p>
+                    </div>
                 </div>
             </a>
         </div>

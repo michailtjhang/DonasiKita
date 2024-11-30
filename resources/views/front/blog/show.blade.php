@@ -482,10 +482,10 @@
 <section class="th-blog-wrapper blog-details space-section">
     <div class="container">
         <div class="row">
+            <h2 class="bolder-text content-spacer">{{ $article->title }}</h2>
             <div class="col-xxl-8 col-lg-7">
                 <div class="th-blog blog-single">
                     <div class="mb-3">
-                        <h2 class="bolder-text content-spacer">{{ $article->title }}</h2>
                         @if ($article->thumbnail && $article->thumbnail->file_path)
                         <img class="img img-fluid rounded rounded-3"
                             src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
