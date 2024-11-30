@@ -24,7 +24,7 @@
     }
 
     .card-body {
-        padding: 1rem;
+        padding: 30px 25px;
         flex-grow: 1;
         display: flex;
         flex-direction: column;

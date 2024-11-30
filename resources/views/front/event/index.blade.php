@@ -223,8 +223,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <img src="/images/event/followed-event-1.svg" class="card-img-top" alt="Donasi Buku">
                         <div class="event-card-spacer">
-                            <div class="date-label bg-primary text-white event-date">
-                                28 Februari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    28 Februari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer event-card-spacer">
@@ -253,8 +255,10 @@
                         <div class="position-relative">
                             <img src="/images/event/followed-event-2.svg" class="card-img-top" alt="Donasi Buku">
                             <div class="event-card-spacer">
-                                <div class="date-label bg-primary text-white event-date">
-                                    02 Maret
+                                <div class="event-spacer">
+                                    <div class="date-label bg-primary text-white event-date">
+                                        02 Maret
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -282,8 +286,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/followed-event-3.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                10 Februari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    10 Februari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -309,8 +315,10 @@
                     {{-- <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4" style="scroll-snap-align: start; width: 300px;">
                 <div class="position-relative">
                     <img src="/images/event/followed-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                    <div class="date-label bg-primary text-white event-date">
-                        15 Maret
+                    <div class="event-spacer">
+                        <div class="date-label bg-primary text-white event-date">
+                            15 Maret
+                        </div>
                     </div>
                 </div>
                 <div class="event-details event-card-spacer">
@@ -337,8 +345,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event//followed-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                21 Januari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    21 Januari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -366,8 +376,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/followed-event-5.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                28 Februari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    28 Februari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -394,8 +406,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/followed-event-6.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                05 Maret
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    05 Maret
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -435,8 +449,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/history-event-1.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                15 Maret
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    15 Maret
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -465,8 +481,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/history-event-2.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                10 Maret
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    10 Maret
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -494,8 +512,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/history-event-3.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                30 Maret
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    30 Maret
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -523,8 +543,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/history-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                24 Februari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    24 Februari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -552,8 +574,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event//history-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                18 Februari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    18 Februari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -581,8 +605,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/history-event-5.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                10 Februari
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    10 Februari
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -609,8 +635,10 @@
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
                             <img src="/images/event/followed-event-6.svg" class="card-img-top" alt="Donasi Buku">
-                            <div class="date-label bg-primary text-white event-date">
-                                05 Maret
+                            <div class="event-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    05 Maret
+                                </div>
                             </div>
                         </div>
                         <div class="event-details event-card-spacer">
@@ -639,7 +667,7 @@
     <!-- End HistoryEvent -->
 
     <!-- Kategori Event -->
-    <div class="container-fluid spacer-x pt-2 space-section">
+    <div class="container-fluid spacer-x pt-2 mb-5">
         <div class="row justify-content-center  px-2  mx-2 ">
             <h2 class="fw-bold">Jelajahi dan Ikuti Beragam Acara Kebaikan</h2>
             <div class="d-flex justify-content-between align-items-center mt-3">
@@ -706,7 +734,7 @@
             </div>
 
             <!-- Navigasi Slider -->
-            <div class="pagination-container mt-5 pt-5">
+            <div class="pagination-container pt-5">
                 <button class="pagination-arrow" id="prev-page">&lt;</button>
                 <div class="pagination-dots" id="pagination-dots">
                     @for ($i = 1; $i <= $events->lastPage(); $i++)
