@@ -26,7 +26,8 @@
                             href="{{ route('donations') }}">Donation</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if (Request::segment(1) == 'events') active @endif" href="{{ route('events') }}">Event</a>
+                        <a class="nav-link @if (Request::segment(1) == 'events') active @endif"
+                            href="{{ route('events') }}">Event</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if (Request::segment(1) == 'blog' || Request::segment(1) == 'blogs') active @endif"
@@ -70,23 +71,25 @@
         </div>
     </nav>
 </section>
+
 <!-- End Navbar Section -->
+@Auth
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const dropbtn = document.querySelector('.dropbtn');
-        const dropdownContent = document.querySelector('.dropdown-content');
+            // Toggle dropdown visibility on button click
+            dropbtn.addEventListener('click', () => {
+                dropdownContent.classList.toggle('show');
+            });
 
-        // Toggle dropdown visibility on button click
-        dropbtn.addEventListener('click', () => {
-            dropdownContent.classList.toggle('show');
+            // Close dropdown if clicked outside
+            document.addEventListener('click', (event) => {
+                if (!dropbtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+                    dropdownContent.classList.remove('show');
+                }
+            });
         });
-
-        // Close dropdown if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!dropbtn.contains(event.target) && !dropdownContent.contains(event.target)) {
-                dropdownContent.classList.remove('show');
-            }
-        });
-    });
-</script>
+    </script>
+@endAuth

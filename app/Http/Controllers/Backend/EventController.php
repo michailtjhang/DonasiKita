@@ -99,7 +99,7 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'content' => 'required|max:2000',
+            'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
@@ -242,7 +242,7 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'content' => 'required|max:2000',
+            'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
