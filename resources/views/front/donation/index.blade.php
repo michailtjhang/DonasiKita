@@ -273,7 +273,7 @@
                         <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top"
-                                    alt="{{ $donation->title }}" style="height: 200px !important;">
+                                    alt="{{ $donation->title }}" style="height: 160px !important;">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                     style="height: 200px;">
