@@ -73,6 +73,7 @@
         font-size: 14px;
         padding: 8px 16px;
         cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
     .nominal-buttons button.active {
@@ -189,10 +190,20 @@
         margin-left: auto;
         margin-right: auto;
         display: block;
+        transition: background-color 0.3s ease;
     }
 
     .pay-button:hover {
         background: #2492cd;
+    }
+
+    .radio-button {
+        margin-left: auto;
+    }
+
+    .radio-button input {
+        cursor: pointer;
+        margin-left: 10px;
     }
 
     @media (max-width: 768px) {
@@ -244,7 +255,6 @@
         <h4>Pilih Bank</h4>
         <div class="dropdown-container">
             <div class="dropdown-selected" onclick="toggleDropdown()">
-                <!-- <img id="selected-bank-icon" src="#" *alt="#"*/> -->
                 <span id="selected-bank-name">Pilih Bank</span>
                 <i class="fa fa-chevron-down"></i>
             </div>
@@ -252,76 +262,69 @@
                 <div class="dropdown-option" onclick="selectBank('mandiri', 'Bank Mandiri', '/images/payment/mandiri.svg')">
                     <img src="/images/payment/mandiri.svg" alt="Bank Mandiri">
                     <span>Bank Mandiri - 1234567890987</span>
+                    <label class="radio-button"><input type="radio" name="bank" value="mandiri"> </label>
                 </div>
                 <div class="dropdown-option" onclick="selectBank('bca', 'Bank Central Asia (BCA)', '/images/payment/bca.svg')">
                     <img src="/images/payment/bca.svg" alt="Bank Central Asia (BCA)">
                     <span>Bank Central Asia (BCA) - 1234567890987 </span>
+                    <label class="radio-button"><input type="radio" name="bank" value="bca"> </label>
                 </div>
                 <div class="dropdown-option" onclick="selectBank('bni', 'Bank Negara Indonesia (BNI)', '/images/payment/bni.svg')">
                     <img src="/images/payment/bni.svg" alt="Bank Negara Indonesia (BNI)">
                     <span>Bank Negara Indonesia (BNI) - 1234567890987</span>
+                    <label class="radio-button"><input type="radio" name="bank" value="bni"> </label>
                 </div>
                 <div class="dropdown-option" onclick="selectBank('bri', 'Bank Rakyat Indonesia (BRI)', '/images/payment/bri.svg')">
                     <img src="/images/payment/bri.svg" alt="Bank Rakyat Indonesia (BRI)">
                     <span>Bank Rakyat Indonesia (BRI) - 1234567890987</span>
-                </div>
-                <div class="dropdown-option" onclick="selectBank('danamon', 'Bank Danamon', '/images/payment/danamon.svg')">
-                    <img src="/images/payment/danamon.svg" alt="Bank Danamon">
-                    <span>Bank Danamon - 1234567890987</span>
+                    <label class="radio-button"><input type="radio" name="bank" value="bri"> </label>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Total Donasi Section -->
+    <!-- Total Section -->
     <div class="total-section">
         <span>Total Donasi</span>
-        <span id="total-donation">Rp 0</span>
+        <span id="total-amount">Rp 0</span>
     </div>
 
-    <!-- Pay Button -->
-    <button class="pay-button">Lanjut Pembayaran</button>
+    <!-- Payment Button -->
+    <button class="pay-button">Bayar Sekarang</button>
 </div>
-@endsection
 
-@section('script')
 <script>
-    const nominalButtons = document.querySelectorAll('.nominal');
-    const customNominal = document.getElementById('custom-nominal');
-    const totalDonation = document.getElementById('total-donation');
-    const dropdownOptions = document.getElementById('dropdown-options');
-    const bankIcon = document.getElementById('selected-bank-icon');
-    const bankName = document.getElementById('selected-bank-name');
+    let selectedNominal = 0;
 
-    nominalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            nominalButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            customNominal.value = '';
-            totalDonation.textContent = 'Rp ' + button.getAttribute('data-value');
+    document.querySelectorAll('.nominal').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            selectedNominal = parseInt(this.getAttribute('data-value'));
+            document.getElementById('custom-nominal').value = ''; // Clear the custom input
+            updateTotal();
         });
     });
 
-    customNominal.addEventListener('input', () => {
-        nominalButtons.forEach(btn => btn.classList.remove('active'));
-        totalDonation.textContent = 'Rp ' + (customNominal.value || 0);
+    document.getElementById('custom-nominal').addEventListener('input', function() {
+        selectedNominal = parseInt(this.value) || 0;
+        document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
+        updateTotal();
     });
+
+    function updateTotal() {
+        document.getElementById('total-amount').textContent = `Rp ${selectedNominal.toLocaleString()}`;
+    }
 
     function toggleDropdown() {
-        dropdownOptions.classList.toggle('show');
+        const dropdown = document.getElementById('dropdown-options');
+        dropdown.classList.toggle('show');
     }
 
-    function selectBank(code, name, iconPath) {
-        bankIcon.src = iconPath;
-        bankName.textContent = name;
-        dropdownOptions.classList.remove('show');
+    function selectBank(bankId, bankName, bankLogo) {
+        document.getElementById('selected-bank-name').textContent = bankName;
+        const dropdown = document.getElementById('dropdown-options');
+        dropdown.classList.remove('show');
     }
-
-    // Close dropdown when clicked outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.dropdown-container')) {
-            dropdownOptions.classList.remove('show');
-        }
-    });
 </script>
 @endsection
