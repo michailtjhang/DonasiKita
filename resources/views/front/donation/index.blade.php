@@ -269,7 +269,7 @@
 
             <div class="row justify-content-center" id="card-container">
                 @forelse ($donations as $donation)
-                    <a href="{{ route('donations.show', $donation->id) }}" class="col-lg-4 col-md-6 mb-5">
+                    <a href="{{ route('donations.show', $donation->slug) }}" class="col-lg-4 col-md-6 mb-5">
                         <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top"
@@ -293,8 +293,8 @@
                                     {{ number_format($donation->target_amount, 0, ',', '.') }}</p>
                                 <div class="d-flex justify-content-between">
                                     <small class="text-muted">{{ $donation->donation->count() }} donatur</small>
-                                    {{-- <small
-                                        class="text-muted">{{ $donation->days_left->locale('id')->diffForHumans() ?? '0' }}</small> --}}
+                                    <small
+                                        class="text-muted">{{ $donation->days_left->locale('id')->diffForHumans() ?? '0' }}</small>
                                 </div>
                             </div>
                         </div>

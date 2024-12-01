@@ -31,8 +31,9 @@
 
             @include('_message')
 
-            <form action="{{ route('donation.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('donation.update', $donation->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="row">
 
@@ -129,7 +130,7 @@
                         <label for="days_left">Deadline Date</label>
                         <input type="date" name="days_left" id="days_left"
                             class="form-control @error('days_left') is-invalid @enderror"
-                            value="{{ old('days_left', $donation->days_left) }}">
+                            value="{{ old('days_left', optional($donation->days_left)->format('Y-m-d')) }}">
 
                         @error('days_left')
                             <div class="invalid-feedback">
@@ -138,7 +139,7 @@
                         @enderror
 
                     </div>
-
+                    
                     <div class="form-group col-6">
                         <label for="description">Description Towards</label>
                         <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description', $donation->description) !!}</textarea>

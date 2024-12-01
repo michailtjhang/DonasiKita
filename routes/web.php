@@ -34,16 +34,11 @@ Route::post('/events/{slug}', [FrontEventController::class, 'store'])->name('eve
 Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
 Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
 Route::post('/donations/{slug}', [FrontDonationController::class, 'store'])->name('donations.store');
+Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
+Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
+Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
-
-Route::get('/detail_donation', [HomeController::class, 'detail_donation'])->name('detail_donation');
-
-Route::get('/event_category_all', [HomeController::class, 'event_category_all'])->name('event_category_all');
-
-Route::get('/event_category_specific', [HomeController::class, 'event_category_specific'])->name('event_category_specific');
-
-Route::get('/detail_event', [HomeController::class, 'detail_event'])->name('detail_event');
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
@@ -57,10 +52,6 @@ Route::get('/confirmationbarang', function () {
     return view('front.payment.confirmationbarang');
 });
 
-Route::get('/blog_categories_specific', function () {
-    return view('front.blog_categories.blog_categories_specific');
-});
-
 Route::get('/transfer_guest', function () {
     return view('front.payment_transfer.transfer_guest');
 });
@@ -71,10 +62,6 @@ Route::get('/transfer_login', function () {
 
 Route::get('/confirmationtransfer', function () {
     return view('front.payment_transfer.confirmationtransfer');
-});
-
-Route::get('/verify-email', function () {
-    return view('Auth.verify-email');
 });
 
 

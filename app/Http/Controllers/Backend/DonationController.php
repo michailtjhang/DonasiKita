@@ -88,7 +88,7 @@ class DonationController extends Controller
             'description' => 'required|max:2000',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
-            'description_need' => 'required|max:2000',
+            'description_need' => 'required|max:5000',
             'days_left' => 'required|date|min:1',
         ]);
 
@@ -187,11 +187,10 @@ class DonationController extends Controller
             'title' => 'required|string|max:200',
             'towards' => 'required|string|max:200',
             'description' => 'required|max:2000',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
-            'description_need' => 'required|max:2000',
-            'status' => 'required|in:ongoing,completed',
-            'days_left' => 'required|date|min:1',
+            'description_need' => 'required|max:5000',
+            'days_left' => 'required|date',
         ]);
 
         $need = Need::with('thumbnail')->findOrFail($id); // Ambil data Need Donasi dengan relasi terkait
@@ -249,10 +248,9 @@ class DonationController extends Controller
                 'amount' => $data['amount'],
                 'towards' => $data['towards'],
                 'days_left' => $data['days_left'],
-                'status' => $data['status'] ?? $need->status, // Pertahankan status jika tidak ada
             ]);
 
-            return redirect()->route('event.index')->with('success', 'Data updated successfully');
+            return redirect()->route('donation.index')->with('success', 'Data updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to update data: ' . $e->getMessage());
         }
