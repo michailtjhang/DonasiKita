@@ -276,7 +276,7 @@
                                     alt="{{ $donation->title }}" style="height: 160px !important;">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                    style="height: 200px;">
+                                    style="height: 160px;">
                                     <span>No cover image</span>
                                 </div>
                             @endif
@@ -325,7 +325,7 @@
                 var page = this.getAttribute('data-page');
                 // Pindahkan halaman sesuai nomor halaman yang diklik
                 // Anda bisa memanfaatkan AJAX atau navigasi normal di sini
-                window.location.href = `?page=${page}`;
+                window.location.href = ?page=${page};
             });
         });
 
@@ -336,7 +336,7 @@
                 currentPage.previousElementSibling.classList.add('active');
                 // Pindahkan halaman ke halaman sebelumnya
                 var prevPage = currentPage.previousElementSibling.getAttribute('data-page');
-                window.location.href = `?page=${prevPage}`;
+                window.location.href = ?page=${prevPage};
             }
         });
 
@@ -347,7 +347,7 @@
                 currentPage.nextElementSibling.classList.add('active');
                 // Pindahkan halaman ke halaman berikutnya
                 var nextPage = currentPage.nextElementSibling.getAttribute('data-page');
-                window.location.href = `?page=${nextPage}`;
+                window.location.href = ?page=${nextPage};
             }
         });
     </script>
