@@ -1,12 +1,12 @@
 <!-- Footer -->
-<footer class="text-center text-lg-start bg-body-tertiary text-white bg-footer pt-4 pb-2">
+<footer class="text-center text-lg-start bg-body-tertiary text-white bg-footer pt-4 pb-2 px-3">
     <!-- Section: Links  -->
     <section class="">
         <div class="container text-center text-md-start mt-5">
             <!-- Grid row -->
             <div class="row mt-3">
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 text-center">
+                <div class="col-md-12 col-lg-3 col-xl-3 mb-4 text-center">
                     <!-- Content -->
                     <img src="/images/logo-footer.svg" alt="" style="width: 100px;">
                     <p>
@@ -16,7 +16,7 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-6 col-lg-2 col-xl-2 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Navigation
@@ -37,28 +37,26 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <div class="col-md-6 col-lg-3 col-xl-3 mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
                     <a href="" class="text-reset">
-                        <p><i class="fas fa-home me-3"></i>donasikita.maxy@gmail.com</p>
+                        <p><i class="fas fa-home me-3"></i> {{ $config['email'] }}</p>
                     </a>
                     <a href="" class="text-reset">
                         <p>
                             <i class="fas fa-envelope me-3"></i>
-                            Pakuwon Tower Lantai 26 Unit J, <br>
-                            Jln. Casablanca Raya kav 88 <br>
-                            Jakarta Selatan
+                            {{ $config['address'] }}
                         </p>
                     </a>
                     <a href="" class="text-reset">
-                        <p><i class="fas fa-phone me-3"></i> 08317-757-5201</p>
+                        <p><i class="fas fa-phone me-3"></i> {{ $config['phone'] }}</p>
                     </a>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-6 col-lg-2 col-xl-2 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Learn More
@@ -76,22 +74,22 @@
                         <a href="#!" class="text-reset">Terms of Services</a>
                     </p>
                 </div>
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-6 col-lg-2 col-xl-2 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Social
                     </h6>
                     <div>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['facebook'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-facebook-f"></i>
                         </a>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['twitter'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-twitter"></i>
                         </a>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['youtube'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-youtube"></i>
                         </a>
-                        <a href="" class="me-2 text-reset">
+                        <a href="{{ $config['instagram'] }}" class="me-2 text-reset">
                             <i class="fab rounded fa-instagram"></i>
                         </a>
                     </div>
@@ -103,8 +101,7 @@
             <!-- Grid row -->
         </div>
         <p class="text-small text-center text-secondary">
-            DonasiKita and Donasi Kita are trademarks or registered trademarks of DonasiKita in Indonesia. <br>© 2024
-            DonasiKita
+            {{ $config['footer'] }}
         </p>
     </section>
     <!-- Section: Links  -->

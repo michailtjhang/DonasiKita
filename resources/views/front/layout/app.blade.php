@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donasi Kita</title>
+    @yield('seoMeta')
+
+    <title>{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="/css/bootsrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <!-- ======================== Icon ========================= -->
+    <link rel="icon" type="image/x-svg" href="{{ asset('img/icon.svg') }}">
     {{-- FontAwesome 6 CSS --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     {{-- Poppins Font CSS --}}

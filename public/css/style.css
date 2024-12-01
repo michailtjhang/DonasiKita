@@ -17,21 +17,40 @@ body {
 a {
     text-decoration: none;
 }
+/* Track scrollbar */
+::-webkit-scrollbar-track {
+    background: #bbddf0; /* Warna trek */
+    border-radius: 10px;
+}
+
+/* Handle scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #6ab7e9; /* Warna pegangan */
+    border-radius: 10px;
+}
+
+/* Hover effect untuk scrollbar */
+::-webkit-scrollbar-thumb:hover {
+    background: #4ca6d6; /* Warna pegangan saat dihover */
+}
+/* Gaya umum untuk scrollbar */
+::-webkit-scrollbar {
+    height: 10px; /* Tinggi scrollbar horizontal */
+    width: 10px; /* Lebar scrollbar vertikal */
+    background: #e8f5fc; /* Warna latar belakang scrollbar */
+    border-radius: 10px;
+}
 .bg-aqua {
     background-color: var(--aqua-color);
 }
 .bg-primary {
     background-color: var(--primary-color) !important;
 }
-.bg-skyline {
-    background-color: var(--skyline-color);
-}
-
 .bg-dark {
     background-color: var(--dark-color) !important;
 }
-.text-justify {
-    text-align: justify;
+.bg-skyline {
+    background-color: var(--skyline-color);
 }
 
 .text-aqua {
@@ -62,6 +81,9 @@ a {
 .text-extra-small {
     font-size: var(--font-size-extra-small);
 }
+.text-justify {
+    text-align: justify;
+}
 
 .space-section {
     margin-bottom: 200px;
@@ -82,7 +104,6 @@ footer {
     color: var(--dark-color);
 }
 .avatar {
-    vertical-align: middle;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -97,6 +118,40 @@ footer {
     background-color: var(--aqua-color);
     border: 0px;
 }
+
+.dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+/* Show the dropdown content when class 'show' is added */
+.dropdown-content.show {
+    display: block;
+}
+
 /* Memperbesar ukuran avatar */
 .avatar {
     width: 50px;
@@ -108,11 +163,9 @@ footer {
 .profile-dropdown {
     width: 250px;
     align-content: center;
-    transform: translateX(-30%);
+    transform: translateX(-50%);
 }
-.spacer-pagination {
-    margin-bottom: 100px;
-}
+
 .dropdown-divider {
     border-top: 3px solid var(--aqua-color); /* Atur ketebalan dan warna garis */
     margin: 10px 0; /* Jarak atas dan bawah */
@@ -198,14 +251,14 @@ footer {
 .event-card {
     position: relative;
     overflow: hidden;
-    height: 450px;
+    height: 450px !important;
     width: 100%;
     padding: 0px;
     box-sizing: border-box;
     margin: 0;
 }
 .event-card-spacer {
-    padding: 50px 20px !important;
+    padding: 30px 25px !important;
 }
 
 .event-card-short {
@@ -213,23 +266,9 @@ footer {
     overflow: hidden;
     height: 300px;
     width: 300px;
-    padding: 0;
+    padding: 0px;
     box-sizing: border-box;
     margin: 0 auto;
-}
-
-.p-25 {
-    padding-top: 25px !important;
-    padding-bottom: 25px !important;
-}
-
-.container-200 {
-    padding-left: 200px !important;
-    padding-right: 200px !important;
-}
-
-.gap-10 {
-    gap: 10px;
 }
 
 .event-card img {
@@ -240,24 +279,20 @@ footer {
 }
 .event-date {
     position: absolute;
-    top: 10px;
-    left: 15px;
+    top: 30px;
+    left: 30px;
     background-color: #26547c;
     color: white;
-    padding: 5px 15px;
-    margin-left: 10px;
+    padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
     font-size: 24px;
 }
-.mb-25px {
-    margin-bottom: 25px;
-}
+
 .event-details {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 15px;
     color: white;
     background: linear-gradient(
         0deg,
@@ -275,6 +310,8 @@ footer {
     font-size: 1.25rem;
     font-weight: bold;
     margin: 0;
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .event-info {
@@ -286,6 +323,11 @@ footer {
 
 .event-info i {
     font-size: 0.875rem;
+}
+
+.card-title {
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .banner {
@@ -367,11 +409,12 @@ footer {
 .spacer-x {
     width: 80%;
 }
+
 .spacer-x-v2 {
     width: 93%;
 }
-.blog-details-container {
-    padding: 20px 30px;
+.profile-center {
+    transform: translateX(-30%);
 }
 /* responsive */
 @media (max-width: 576px) {
@@ -382,7 +425,7 @@ footer {
         max-width: 250px;
     }
     .leader-image {
-        width: 45%;
+        width: 90%;
     }
     .hero-title2 {
         font-size: 2rem;
@@ -390,15 +433,21 @@ footer {
     .hero-subtitle2 {
         font-size: 1rem;
     }
+    .btn-custom {
+        margin: 10px 5px;
+    }
+    .profile-center {
+        transform: translateX(0);
+    }
 }
 
 @media (max-width: 768px) {
     .about-image {
         max-width: 300px;
     }
-    #upcoming-content {
+    /* #upcoming-content {
         max-width: 300px;
-    }
+    } */
     .banner-content h1 {
         font-size: 30px !important;
     }
@@ -410,6 +459,24 @@ footer {
     }
     .banner-content button {
         font-size: 30px !important;
+    }
+
+    .event-card {
+        height: 100%;
+        width: 450px;
+    }
+    .event-card-spacer {
+        padding: 20px 20px !important;
+    }
+
+    .leader-image {
+        width: 90%;
+    }
+    .sm-margin {
+        margin-bottom: 10px;
+    }
+    .profile-center {
+        transform: translateX(0);
     }
 }
 
@@ -427,9 +494,18 @@ footer {
         background-image: url("../images/content/invtiation2.svg");
     }
     .leader-image {
-        width: 35%;
+        width: 90%;
     }
     .event-date {
         font-size: 15pt !important;
+    }
+    .md-margin-extra {
+        margin-bottom: 50px;
+    }
+    .profile-center {
+        transform: translateX(0%);
+    }
+    .profile-dropdown {
+        transform: translateX(-35%);
     }
 }

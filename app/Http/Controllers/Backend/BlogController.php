@@ -32,7 +32,7 @@ class BlogController extends Controller
 
         // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
-            $blogs = Blog::where('user_id', auth()->user()->id)->get();
+            $blogs = Blog::get();
 
             // Tampilkan data blog
             return DataTables::of($blogs)
@@ -93,7 +93,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'content' => 'required',
+            'content' => 'required|min:10|max:10000',
             'category_id' => 'required',
             'status' => 'required',
         ]);
@@ -107,28 +107,44 @@ class BlogController extends Controller
 
         $data['blog_id'] = $blogId;
 
-        // upload image
-        $file = $request->file('img'); // get file
-        $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
-        $file->move(storage_path('app/public/cover'), $filename); // path file
+        try {
+            // Tambahkan slug dan views
+            $data['slug'] = Str::slug($data['title']);
+            $data['views'] = 0;
+            $data['user_id'] = auth()->user()->id;
 
-        // Tambahkan slug dan views
-        $data['slug'] = Str::slug($data['title']);
-        $data['views'] = 0;
-        $data['user_id'] = auth()->user()->id;
+            // Simpan data ke tabel Blog
+            $blog = Blog::create($data);
 
-        // Simpan data ke tabel Blog
-        $blog = Blog::create($data);
+            // upload image
+            // $file = $request->file('img'); // get file
+            // $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
+            // $file->move(storage_path('app/public/cover'), $filename); // path file
 
-        // Tambahkan data thumbnail 
-        $dataThumbnail['file_path'] = $filename;
-        $dataThumbnail['type'] = 'Image';
-        $dataThumbnail['blog_id'] = $blog->blog_id;
+            // Upload image ke Cloudinary
+            $file = $request->file('img');
+            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                'folder' => 'cover',
+                'use_filename' => true,
+                'unique_filename' => true,
+            ]);
 
-        // Simpan data ke tabel Thumbnail
-        Thumbnail::create($dataThumbnail);
+            // Simpan URL dan Public ID dari Cloudinary
+            $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+            $publicId = $cloudinaryResponse->getPublicId();
 
-        return redirect()->route('article.index')->with('success', 'Data added successfully');
+            // Simpan data Thumbnail ke tabel Thumbnail
+            Thumbnail::create([
+                'file_path' => $cloudinaryUrl,
+                'id_file' => $publicId,
+                'type' => 'Image',
+                'blog_id' => $blog->blog_id,
+            ]);
+
+            return redirect()->route('article.index')->with('success', 'Data added successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to add data: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -167,7 +183,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'content' => 'required',
+            'content' => 'required|min:10|max:10000',
             'category_id' => 'required',
             'status' => 'required',
         ]);
@@ -175,45 +191,62 @@ class BlogController extends Controller
         $data = $request->all();
         $blog = Blog::findOrFail($id); // Pastikan blog ditemukan
 
-        // Cek apakah ada file baru yang diupload
-        if ($request->hasFile('img')) {
-            $file = $request->file('img');
-            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(storage_path('app/public/cover'), $filename);
+        try {
+            // Cek apakah ada file baru yang diupload
+            if ($request->hasFile('img')) {
+                $file = $request->file('img');
 
-            // Hapus file lama jika ada
-            if (!empty($blog->thumbnail->file_path)) {
-                $oldFilePath = storage_path('app/public/cover/' . $blog->thumbnail->file_path);
-                if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath);
+                // // Upload file baru
+                // $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                // $file->move(storage_path('app/public/cover'), $filename);
+
+                // // Hapus file lama jika ada
+                // if (!empty($blog->thumbnail->file_path)) {
+                //     $oldFilePath = storage_path('app/public/cover/' . $blog->thumbnail->file_path);
+                //     if (file_exists($oldFilePath)) {
+                //         unlink($oldFilePath);
+                //     }
+                // }
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                    'folder' => 'cover',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Hapus file lama dari Cloudinary jika ada
+                if (!empty($blog->thumbnail->id_file)) {
+                    cloudinary()->destroy($blog->thumbnail->id_file);
                 }
+
+                // Update data Thumbnail
+                $blog->thumbnail->update([
+                    'file_path' => $cloudinaryUrl,
+                    'id_file' => $publicId,
+                    'type' => 'Image',
+                ]);
             }
 
-            // Update nama file ke $data
-            $data['img'] = $filename;
+            // Update slug
+            $data['slug'] = Str::slug($data['title']);
 
-            // Update data thumbnail
-            $blog->thumbnail->update([
-                'file_path' => $filename,
-                'type' => 'Image',
+            // Update data blog
+            $blog->update([
+                'title' => $data['title'],
+                'slug' => $data['slug'],
+                'content' => $data['content'],
+                'category_id' => $data['category_id'],
+                'status' => $data['status'],
             ]);
-        } else {
-            $data['img'] = $blog->thumbnail->file_path; // Pertahankan file lama
+
+            return redirect()->route('article.index')->with('success', 'Data updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error updating data: ' . $e->getMessage());
         }
-
-        // Update slug
-        $data['slug'] = Str::slug($data['title']);
-
-        // Update data blog
-        $blog->update([
-            'title' => $data['title'],
-            'slug' => $data['slug'],
-            'content' => $data['content'],
-            'category_id' => $data['category_id'],
-            'status' => $data['status'],
-        ]);
-
-        return redirect()->route('article.index')->with('success', 'Data updated successfully');
     }
 
     /**
@@ -251,24 +284,40 @@ class BlogController extends Controller
             'file' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Ambil file dari request
-        $file = $request->file('file');
+        try {
+            // Ambil file dari request
+            $file = $request->file('file');
 
-        // Tentukan folder tujuan
-        $destinationPath = public_path('storage/uploads');
+            // // Tentukan folder tujuan
+            // $destinationPath = public_path('storage/uploads');
 
-        // Buat folder jika belum ada
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0755, true);
+            // // Buat folder jika belum ada
+            // if (!file_exists($destinationPath)) {
+            //     mkdir($destinationPath, 0755, true);
+            // }
+
+            // // Pindahkan file ke folder tujuan
+            // $fileName = time() . '_' . $file->getClientOriginalName();
+            // $file->move($destinationPath, $fileName);
+
+            // // Buat URL file
+            // $url = asset('storage/uploads/' . $fileName);
+
+            // Upload file ke Cloudinary
+            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                'folder' => 'uploads',
+                'use_filename' => true,
+                'unique_filename' => true,
+            ]);
+
+            // Dapatkan URL aman dari Cloudinary
+            $url = $cloudinaryResponse->getSecurePath();
+
+            return response()->json($url);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to upload image: ' . $e->getMessage(),
+            ], 500);
         }
-
-        // Pindahkan file ke folder tujuan
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move($destinationPath, $fileName);
-
-        // Buat URL file
-        $url = asset('storage/uploads/' . $fileName);
-
-        return response()->json($url);
     }
 }

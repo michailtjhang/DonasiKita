@@ -17,9 +17,9 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->integer('capacity_participants');
-            $table->text('description_participants');
+            $table->longText('description_participants');
             $table->integer('capacity_volunteers')->default(0);
-            $table->text('description_volunteers')->nullable();
+            $table->longText('description_volunteers')->nullable();
             $table->boolean('requires_volunteers')->default(false);
             $table->timestamps();
         });

@@ -5,18 +5,18 @@
 @section('css')
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet"
-        href="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- daterange picker -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.css">
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.css">
     <!-- CodeMirror -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/theme/monokai.css">
     <!-- SimpleMDE -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/simplemde/simplemde.min.css"> --}}
 @endsection
 @section('content')
     <div class="card">
@@ -31,8 +31,9 @@
 
             @include('_message')
 
-            <form action="{{ route('donation.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('donation.update', $donation->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="row">
 
@@ -91,7 +92,14 @@
                             </div>
 
                             <!-- Existing Image -->
-                            @if ($donation->thumbnail && $donation->thumbnail->file_path)
+                            @if ($donation->thumbnail && $donation->thumbnail->id_file)
+                                <div class="col-6">
+                                    <span class="d-block mb-2 text-muted">Existing:</span>
+                                    <x-cld-image public-id="{{ $donation->thumbnail->id_file }}"
+                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                        style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
+                                </div>
+                            @elseif ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <div class="col-6">
                                     <span class="d-block mb-2 text-muted">Existing:</span>
                                     <img src="{{ asset('storage/cover/' . $donation->thumbnail->file_path) }}"
@@ -117,21 +125,38 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="description">Description Towards</label>
-                    <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description', $donation->description) !!}</textarea>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="days_left">Deadline Date</label>
+                        <input type="date" name="days_left" id="days_left"
+                            class="form-control @error('days_left') is-invalid @enderror"
+                            value="{{ old('days_left', optional($donation->days_left)->format('Y-m-d')) }}">
 
-                    @error('description')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        @error('days_left')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
+                    </div>
+                    
+                    <div class="form-group col-6">
+                        <label for="description">Description Towards</label>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description', $donation->description) !!}</textarea>
+
+                        @error('description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="description_need">Description Towards Needs</label>
-                    <textarea id="summernote" name="description_need" class="form-control @error('description_need') is-invalid @enderror">
+                    <textarea id="summernote" name="description_need"
+                        class="form-control @error('description_need') is-invalid @enderror">
                         {!! old('description_need', $donation->description_need) !!}
                     </textarea>
 
@@ -150,18 +175,17 @@
 @endsection
 @section('js')
     <!-- tempusdominus-bootstrap-4 -->
-    <script
-        src="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+    <script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
     <!-- bs-custom-file-input -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Summernote -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/css/css.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/css/css.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
     <script>
         // bs-custom-file-input

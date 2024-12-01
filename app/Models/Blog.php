@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Blog extends Model
 {
     use HasFactory, HasUlids;
-
+    // set cast
+    protected $casts = [
+        'created_at' => 'date',
+    ];
     // set key type
     protected $keyType = 'string';
     // set table
@@ -41,5 +45,23 @@ class Blog extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function scopeFilter(Builder $query, array $filters): void
+    {
+        $query->when(
+            $filters['keyword'] ?? false,
+            fn ($query, $keyword) =>
+            $query->where('title', 'like', '%' . $keyword . '%')
+        );
+
+        $query->when(
+            $filters['category'] ?? false,
+            fn ($query, $category) =>
+            $query->whereHas(
+                'category',
+                fn ($query) =>
+                $query->where('slug', $category))
+        );
     }
 }

@@ -29,11 +29,11 @@ class DonationController extends Controller
         $data['PermissionAdd'] = PermissionRole::getPermission('Add Blog', Auth::user()->role_id);
         $data['PermissionEdit'] = PermissionRole::getPermission('Edit Blog', Auth::user()->role_id);
         $data['PermissionShow'] = PermissionRole::getPermission('View Blog', Auth::user()->role_id);
-        
-         // Jika request adalah Ajax untuk DataTables
-         if (request()->ajax()) {
+
+        // Jika request adalah Ajax untuk DataTables
+        if (request()->ajax()) {
             $donation = Need::get();
-            
+
             return DataTables::of($donation)
                 ->addIndexColumn()
                 ->addColumn('status', function ($donation) {
@@ -83,12 +83,13 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'towards' => 'required|string|max:255',
-            'description' => 'required',
+            'title' => 'required|string|max:200',
+            'towards' => 'required|string|max:200',
+            'description' => 'required|max:2000',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
-            'description_need' => 'required',
+            'description_need' => 'required|max:5000',
+            'days_left' => 'required|date|min:1',
         ]);
 
         $data = $request->all();
@@ -98,35 +99,52 @@ class DonationController extends Controller
             $donateNeedId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
         } while (Need::where('need_id', $donateNeedId)->exists()); // Pastikan unik
 
-        // Tambahkan slug dan status
-        $needData = [
-            'need_id' => $donateNeedId,
-            'title' => $data['title'],
-            'slug' => Str::slug($data['title']),
-            'description' => $data['description'],
-            'description_need' => $data['description_need'],
-            'target_amount' => $data['amount'],
-            'towards' => $data['towards'],
-            'status' => 'ongoing', // Default status
-        ];
+        try {
+            // Tambahkan slug dan status
+            $needData = [
+                'need_id' => $donateNeedId,
+                'title' => $data['title'],
+                'slug' => Str::slug($data['title']),
+                'description' => $data['description'],
+                'description_need' => $data['description_need'],
+                'target_amount' => $data['amount'],
+                'towards' => $data['towards'],
+                'days_left' => $data['days_left'],
+                'status' => 'ongoing', // Default status
+            ];
 
-        // Simpan data ke tabel `needs`
-        $need = Need::create($needData);
+            // Simpan data ke tabel `needs`
+            $need = Need::create($needData);
 
-        // upload image
-        $file = $request->file('img'); // get file
-        $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
-        $file->move(storage_path('app/public/cover'), $filename); // path file
+            // // upload image
+            // $file = $request->file('img'); // get file
+            // $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
+            // $file->move(storage_path('app/public/cover'), $filename); // path file
 
-        // Tambahkan data thumbnail 
-        $dataThumbnail['file_path'] = $filename;
-        $dataThumbnail['type'] = 'Image';
-        $dataThumbnail['need_id'] = $need->need_id;
+            // Upload image ke Cloudinary
+            $file = $request->file('img');
+            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                'folder' => 'cover',
+                'use_filename' => true,
+                'unique_filename' => true,
+            ]);
 
-        // Simpan data ke tabel Thumbnail
-        Thumbnail::create($dataThumbnail);
+            // Simpan URL dan Public ID dari Cloudinary
+            $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+            $publicId = $cloudinaryResponse->getPublicId();
 
-        return redirect()->route('donation.index')->with('success', 'Data added successfully');
+            // Simpan data Thumbnail ke tabel Thumbnail
+            Thumbnail::create([
+                'file_path' => $cloudinaryUrl,
+                'id_file' => $publicId,
+                'type' => 'Image',
+                'need_id' => $need->need_id,
+            ]);
+
+            return redirect()->route('donation.index')->with('success', 'Data added successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to add data');
+        }
     }
 
     /**
@@ -166,57 +184,76 @@ class DonationController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'towards' => 'required|string|max:255',
-            'description' => 'required',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'title' => 'required|string|max:200',
+            'towards' => 'required|string|max:200',
+            'description' => 'required|max:2000',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'amount' => 'required|numeric',
-            'description_need' => 'required',
-            'status' => 'required|in:ongoing,completed',
+            'description_need' => 'required|max:5000',
+            'days_left' => 'required|date',
         ]);
 
         $need = Need::with('thumbnail')->findOrFail($id); // Ambil data Need Donasi dengan relasi terkait
         $data = $request->all();
 
-        // Update file gambar jika ada file baru yang diupload
-        if ($request->hasFile('img')) {
-            $file = $request->file('img');
-            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(storage_path('app/public/cover'), $filename);
+        try {
+            // Update file gambar jika ada file baru yang diupload
+            if ($request->hasFile('img')) {
+                $file = $request->file('img');
 
-            // Hapus file lama jika ada
-            if ($need->thumbnail && $need->thumbnail->file_path) {
-                $oldFilePath = storage_path('app/public/cover/' . $need->thumbnail->file_path);
-                if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath);
+                // // Upload file ke folder public
+                // $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                // $file->move(storage_path('app/public/cover'), $filename);
+
+                // // Hapus file lama jika ada
+                // if ($need->thumbnail && $need->thumbnail->file_path) {
+                //     $oldFilePath = storage_path('app/public/cover/' . $need->thumbnail->file_path);
+                //     if (file_exists($oldFilePath)) {
+                //         unlink($oldFilePath);
+                //     }
+                // }
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                    'folder' => 'cover',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Hapus file lama dari Cloudinary jika ada
+                if (!empty($need->thumbnail->id_file)) {
+                    cloudinary()->destroy($need->thumbnail->id_file);
                 }
+
+                // Update data Thumbnail
+                $need->thumbnail->update([
+                    'file_path' => $cloudinaryUrl,
+                    'id_file' => $publicId,
+                    'type' => 'Image',
+                ]);
             }
 
-            // Update atau buat thumbnail baru
-            $need->thumbnail()->updateOrCreate(
-                ['need_id' => $need->event_id],
-                [
-                    'file_path' => $filename,
-                    'type' => 'Image',
-                ]
-            );
+            // Update slug
+            $data['slug'] = Str::slug($data['title']);
+
+            // Update data `needs Donasi` 
+            $need->update([
+                'title' => $data['title'],
+                'slug' => $data['slug'],
+                'description' => $data['description'],
+                'description_need' => $data['description_need'],
+                'amount' => $data['amount'],
+                'towards' => $data['towards'],
+                'days_left' => $data['days_left'],
+            ]);
+
+            return redirect()->route('donation.index')->with('success', 'Data updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update data: ' . $e->getMessage());
         }
-
-        // Update slug
-        $data['slug'] = Str::slug($data['title']);
-
-        // Update data `needs Donasi` 
-        $need->update([
-            'title' => $data['title'],
-            'slug' => $data['slug'],
-            'description' => $data['description'],
-            'description_need' => $data['description_need'],
-            'amount' => $data['amount'],
-            'towards' => $data['towards'],
-            'status' => $data['status'] ?? $need->status, // Pertahankan status jika tidak ada
-        ]);
-
-        return redirect()->route('event.index')->with('success', 'Data updated successfully');
     }
 
     /**

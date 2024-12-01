@@ -5,18 +5,18 @@
 @section('css')
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet"
-        href="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- daterange picker -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.css">
     <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.css">
     <!-- CodeMirror -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/codemirror/theme/monokai.css">
     <!-- SimpleMDE -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/simplemde/simplemde.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/simplemde/simplemde.min.css"> --}}
 @endsection
 @section('content')
     <div class="card">
@@ -73,43 +73,64 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="col-6 form-group">
-                        <label for="img">Image Cover</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
-                                name="img" id="img" onchange="previewImage(event)">
-                            <label class="custom-file-label" for="img">Choose file</label>
+                <div class="form-group">
+                    <label for="img">Image Cover</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input @error('img') is-invalid @enderror" name="img"
+                            id="img" onchange="previewImage(event)">
+                        <label class="custom-file-label" for="img">Choose file</label>
+                    </div>
+
+                    @error('img')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                    <!-- Row for Preview and Existing Image -->
+                    <div class="row mt-3 text-center">
+                        <!-- Preview Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Preview:</span>
+                            <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail shadow-sm border"
+                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
 
-                        @error('img')
-                            <div class="invalid-feedback d-block">
+                        <!-- Existing Image -->
+                        @if ($event->thumbnail && $event->thumbnail->id_file)
+                            <div class="col-6">
+                                <span class="d-block mb-2 text-muted">Existing:</span>
+                                <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                    class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                    style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
+                            </div>
+                        @elseif ($event->thumbnail && $event->thumbnail->file_path)
+                            <div class="col-6">
+                                <span class="d-block mb-2 text-muted">Existing:</span>
+                                <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
+                                    class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                    style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Organizer -->
+                    <div class="form-group col-6">
+                        <label for="organizer">Organizer</label>
+                        <input type="text" name="organizer" id="organizer"
+                            class="form-control @error('organizer') is-invalid @enderror"
+                            placeholder="Please Enter Organizer" value="{{ old('organizer', $event->organizer) }}">
+
+                        @error('organizer')
+                            <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
-
-                        <!-- Row for Preview and Existing Image -->
-                        <div class="row mt-3 text-center">
-                            <!-- Preview Image -->
-                            <div class="col-6">
-                                <span class="d-block mb-2 text-muted">Preview:</span>
-                                <img id="imgPreview" src="" alt="Preview Image"
-                                    class="img-thumbnail shadow-sm border"
-                                    style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
-                            </div>
-
-                            <!-- Existing Image -->
-                            @if ($event->thumbnail && $event->thumbnail->file_path)
-                                <div class="col-6">
-                                    <span class="d-block mb-2 text-muted">Existing:</span>
-                                    <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
-                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                        style="max-height: 150px; max-width: 100%; object-fit: cover;">
-                                </div>
-                            @endif
-                        </div>
                     </div>
 
+                    <!-- Status Event -->
                     <div class="col-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
@@ -175,7 +196,8 @@
                         <label for="participant">Capacity Participant</label>
                         <input type="text" id="participant" name="participant"
                             class="form-control @error('participant') is-invalid @enderror"
-                            placeholder="Please Enter Participant" value="{{ old('participant', $event->detailEvent->capacity_participants) }}">
+                            placeholder="Please Enter Participant"
+                            value="{{ old('participant', $event->detailEvent->capacity_participants) }}">
 
                         @error('participant')
                             <div class="invalid-feedback">
@@ -203,7 +225,8 @@
                         <label for="Volunteer">Capacity Volunteer</label>
                         <input type="text" id="Volunteer" name="volunteer"
                             class="form-control @error('volunteer') is-invalid @enderror"
-                            placeholder="Please Enter Volunteer" value="{{ old('volunteer', $event->detailEvent->capacity_volunteers) }}
+                            placeholder="Please Enter Volunteer"
+                            value="{{ old('volunteer', $event->detailEvent->capacity_volunteers) }}
 
                         @error('volunteer')
                             <div class="invalid-feedback">
@@ -212,7 +235,8 @@
                         @enderror
                     </div>
 
-                    <div class="col-6 form-group">
+                    <div class="col-6
+                            form-group">
                         <label for="description_volunteer">Description Volunteer</label>
                         <textarea type="text" id="description_volunteer" name="volunteer_description"
                             class="form-control @error('volunteer_description') is-invalid @enderror">{{ old('volunteer_description', $event->detailEvent->description_volunteers) }}</textarea>
@@ -263,24 +287,24 @@
 @endsection
 @section('js')
     <!-- moment -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/moment/moment.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
     <!-- tempusdominus-bootstrap-4 -->
     <script
-        src="{{ asset('assets/vendor/adminlte') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+        src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
     <!-- date-range-picker -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Bootstrap Switch -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <!-- bs-custom-file-input -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Summernote -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- CodeMirror -->
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/codemirror.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/css/css.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/xml/xml.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/codemirror.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/css/css.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
     <!-- sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

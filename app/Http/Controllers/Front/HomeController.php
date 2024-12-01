@@ -17,15 +17,177 @@ class HomeController extends Controller
     }
     public function donation()
     {
-        return view('front.donation.donation');
-    }
-    public function event()
-    {
-        return view('front.event.event');
-    }
-    public function blog()
-    {
-        return view('front.blog.blog');
+        $donations =
+            [
+                [
+                    'title' => 'Bantu Pendidikan Anak Pedalaman',
+                    'category' => 'Yayasan Anak Nusantara',
+                    'target' => 'Rp 50.000.000',
+                    'collected' => 'Rp 5.550.000',
+                    'donors' => '285 Donatur',
+                    'daysLeft' => '50 Hari Lagi',
+                    'img' => '/images/donate/1.svg'
+                ],
+                [
+                    'title' => 'Aksi Bencana Alam untuk Korban Gempa',
+                    'category' => 'Komunitas Peduli Sesama',
+                    'target' => 'Rp 100.000.000',
+                    'collected' => 'Rp 10.050.000',
+                    'donors' => '598 Donatur',
+                    'daysLeft' => '41 Hari Lagi',
+                    'img' => '/images/donate/2.svg'
+                ],
+                [
+                    'title' => 'Bantuan Kemanusiaan untuk Palestina',
+                    'category' => 'Yayasan Peduli Palestina',
+                    'target' => 'Rp 200.000.000',
+                    'collected' => 'Rp 70.000.000',
+                    'donors' => '1.088 Donatur',
+                    'daysLeft' => '57 Hari Lagi',
+                    'img' => '/images/donate/3.svg'
+                ],
+                [
+                    'title' => 'Renovasi Masjid di Pelosok Negeri',
+                    'category' => 'Yayasan Cahaya Iman',
+                    'target' => 'Rp 150.000.000',
+                    'collected' => 'Rp 37.500.000',
+                    'donors' => '320 Donatur',
+                    'daysLeft' => '32 Hari Lagi',
+                    'img' => '/images/donate/4.svg'
+                ],
+                [
+                    'title' => 'Operasi Gratis untuk Penderita Bibir Sumbing',
+                    'category' => 'Komunitas Senyuman Baru',
+                    'target' => 'Rp 400.000.000',
+                    'collected' => 'Rp 100.000.000',
+                    'donors' => '190 Donatur',
+                    'daysLeft' => '44 Hari Lagi',
+                    'img' => '/images/donate/5.svg'
+                ],
+                [
+                    'title' => 'Bantu Petani Lokal di Masa Sulit',
+                    'category' => 'Lembaga Petani Sejahtera',
+                    'target' => 'Rp 120.000.000',
+                    'collected' => 'Rp 30.000.000',
+                    'donors' => '160 Donatur',
+                    'daysLeft' => '30 Hari Lagi',
+                    'img' => '/images/donate/6.svg'
+                ],
+                [
+                    'title' => 'Kursi Roda untuk Penyandang Disabilitas',
+                    'category' => 'Yayasan Sahabat Difabel',
+                    'target' => 'Rp 50.000.000',
+                    'collected' => 'Rp 12.500.000',
+                    'donors' => '50 Donatur',
+                    'daysLeft' => '28 Hari Lagi',
+                    'img' => '/images/donate/7.svg'
+                ],
+                [
+                    'title' => 'Air Bersih untuk Daerah Terdampak Kekeringan',
+                    'category' => 'Lembaga Air untuk Kehidupan',
+                    'target' => 'Rp 300.000.000',
+                    'collected' => 'Rp 75.000.000',
+                    'donors' => '300 Donatur',
+                    'daysLeft' => '40 Hari Lagi',
+                    'img' => '/images/donate/8.svg'
+                ],
+                [
+                    'title' => 'Makanan untuk Anak Yatim',
+                    'category' => 'Komunitas Kasih Anak Yatim',
+                    'target' => 'Rp 100.000.000',
+                    'collected' => 'Rp 25.000.000',
+                    'donors' => '92 Donatur',
+                    'daysLeft' => '22 Hari Lagi',
+                    'img' => '/images/donate/9.svg'
+                ],
+                [
+                    'title' => 'Bantu Pendidikan Anak Pedalaman',
+                    'category' => 'Yayasan Anak Nusantara',
+                    'target' => 'Rp 50.000.000',
+                    'collected' => 'Rp 5.550.000',
+                    'donors' => '285 Donatur',
+                    'daysLeft' => '50 Hari Lagi',
+                    'img' => '/images/donate/1.svg'
+                ],
+                [
+                    'title' => 'Aksi Bencana Alam untuk Korban Gempa',
+                    'category' => 'Komunitas Peduli Sesama',
+                    'target' => 'Rp 100.000.000',
+                    'collected' => 'Rp 10.050.000',
+                    'donors' => '598 Donatur',
+                    'daysLeft' => '41 Hari Lagi',
+                    'img' => '/images/donate/2.svg'
+                ],
+                [
+                    'title' => 'Bantuan Kemanusiaan untuk Palestina',
+                    'category' => 'Yayasan Peduli Palestina',
+                    'target' => 'Rp 200.000.000',
+                    'collected' => 'Rp 70.000.000',
+                    'donors' => '1.088 Donatur',
+                    'daysLeft' => '57 Hari Lagi',
+                    'img' => '/images/donate/3.svg'
+                ],
+                [
+                    'title' => 'Renovasi Masjid di Pelosok Negeri',
+                    'category' => 'Yayasan Cahaya Iman',
+                    'target' => 'Rp 150.000.000',
+                    'collected' => 'Rp 37.500.000',
+                    'donors' => '320 Donatur',
+                    'daysLeft' => '32 Hari Lagi',
+                    'img' => '/images/donate/4.svg'
+                ],
+                [
+                    'title' => 'Operasi Gratis untuk Penderita Bibir Sumbing',
+                    'category' => 'Komunitas Senyuman Baru',
+                    'target' => 'Rp 400.000.000',
+                    'collected' => 'Rp 100.000.000',
+                    'donors' => '190 Donatur',
+                    'daysLeft' => '44 Hari Lagi',
+                    'img' => '/images/donate/5.svg'
+                ],
+                [
+                    'title' => 'Bantu Petani Lokal di Masa Sulit',
+                    'category' => 'Lembaga Petani Sejahtera',
+                    'target' => 'Rp 120.000.000',
+                    'collected' => 'Rp 30.000.000',
+                    'donors' => '160 Donatur',
+                    'daysLeft' => '30 Hari Lagi',
+                    'img' => '/images/donate/6.svg'
+                ],
+                [
+                    'title' => 'Kursi Roda untuk Penyandang Disabilitas',
+                    'category' => 'Yayasan Sahabat Difabel',
+                    'target' => 'Rp 50.000.000',
+                    'collected' => 'Rp 12.500.000',
+                    'donors' => '50 Donatur',
+                    'daysLeft' => '28 Hari Lagi',
+                    'img' => '/images/donate/7.svg'
+                ],
+                [
+                    'title' => 'Air Bersih untuk Daerah Terdampak Kekeringan',
+                    'category' => 'Lembaga Air untuk Kehidupan',
+                    'target' => 'Rp 300.000.000',
+                    'collected' => 'Rp 75.000.000',
+                    'donors' => '300 Donatur',
+                    'daysLeft' => '40 Hari Lagi',
+                    'img' => '/images/donate/8.svg'
+                ],
+                [
+                    'title' => 'Makanan untuk Anak Yatim',
+                    'category' => 'Komunitas Kasih Anak Yatim',
+                    'target' => 'Rp 100.000.000',
+                    'collected' => 'Rp 25.000.000',
+                    'donors' => '92 Donatur',
+                    'daysLeft' => '22 Hari Lagi',
+                    'img' => '/images/donate/9.svg'
+                ]
+            ];
+        foreach ($donations as &$donation) {
+            $donation['target'] = (int) str_replace(['Rp', '.', ','], '', $donation['target']);
+            $donation['collected'] = (int) str_replace(['Rp', '.', ','], '', $donation['collected']);
+        }
+
+        return view('front.donation.donation', compact('donations'));
     }
     public function detail_event()
     {
@@ -43,10 +205,6 @@ class HomeController extends Controller
     {
         return view('front.detail_donation.detail_donation');
     }
-    public function categories()
-    {
-        return view('front.blog_categories.categories');
-    }
     public function blog_categories_specific()
     {
         return view('front.blog_categories.blog_categories_specific');
@@ -62,9 +220,5 @@ class HomeController extends Controller
     public function confirmationtransfer()
     {
         return view('front.payment_transfer.confirmationtransfer');
-    }
-    public function detail_blog()
-    {
-        return view('front.detail_blog.detail_blog');
     }
 }

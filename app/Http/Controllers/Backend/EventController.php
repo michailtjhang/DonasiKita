@@ -35,7 +35,7 @@ class EventController extends Controller
 
         // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
-            $events = Event::where('user_id', auth()->user()->id)->get();
+            $events = Event::get();
             return DataTables::of($events)
                 ->addIndexColumn()
                 ->addColumn('category_id', function ($events) {
@@ -99,13 +99,14 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'content' => 'required',
+            'content' => 'required|max:5000',
+            'organizer' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
-            'participant_description' => 'required|string|max:200',
+            'participant_description' => 'required|string|max:500',
             'volunteer' => 'nullable|integer|min:0',
-            'volunteer_description' => 'nullable|string|max:200',
+            'volunteer_description' => 'nullable|string|max:500',
             'location' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -119,64 +120,81 @@ class EventController extends Controller
             $eventId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
         } while (Event::where('event_id', $eventId)->exists()); // Pastikan unik
 
-        // Tambahkan slug dan views
-        $eventData = [
-            'event_id' => $eventId,
-            'title' => $data['title'],
-            'slug' => Str::slug($data['title']),
-            'description' => $data['content'],
-            'user_id' => auth()->user()->id,
-            'category_id' => $data['category_id'],
-            'status' => 'upcoming', // Default status
-        ];
+        try {
+            // Tambahkan slug dan views
+            $eventData = [
+                'event_id' => $eventId,
+                'title' => $data['title'],
+                'slug' => Str::slug($data['title']),
+                'description' => $data['content'],
+                'organizer' => $data['organizer'],
+                'user_id' => auth()->user()->id,
+                'category_id' => $data['category_id'],
+                'status' => 'upcoming', // Default status
+            ];
 
-        // Simpan data ke tabel Blog
-        $event = Event::create($eventData);
+            // Simpan data ke tabel Blog
+            $event = Event::create($eventData);
 
-        // Proses tanggal dari input 'date'
-        $dateRange = explode(' - ', $data['date']);
+            // Proses tanggal dari input 'date'
+            $dateRange = explode(' - ', $data['date']);
 
-        // Data untuk tabel `detail_events`
-        $detailData = [
-            'event_id' => $event->event_id, // id dari event
-            'start' => Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[0])),
-            'end' => Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[1])),
-            'capacity_participants' => $data['participant'],
-            'description_participants' => $data['participant_description'] ?? '',
-            'requires_volunteers' => $data['when_volunteer'],
-        ];
+            // Data untuk tabel `detail_events`
+            $detailData = [
+                'event_id' => $event->event_id, // id dari event
+                'start' => Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[0])),
+                'end' => Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[1])),
+                'capacity_participants' => $data['participant'],
+                'description_participants' => $data['participant_description'] ?? '',
+                'requires_volunteers' => $data['when_volunteer'],
+            ];
 
-        if (!empty($data['volunteer'])) {
-            $detailData['capacity_volunteers'] = $data['volunteer'];
-            $detailData['description_volunteers'] = $data['volunteer_description'] ?? '';
+            if (!empty($data['volunteer'])) {
+                $detailData['capacity_volunteers'] = $data['volunteer'];
+                $detailData['description_volunteers'] = $data['volunteer_description'] ?? '';
+            }
+
+            // Simpan ke tabel `detail_events`
+            DetailEvent::create($detailData);
+
+            // // upload image
+            // $file = $request->file('img'); // get file
+            // $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
+            // $file->move(storage_path('app/public/cover'), $filename); // path file
+
+            // Upload image ke Cloudinary
+            $file = $request->file('img');
+            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                'folder' => 'cover',
+                'use_filename' => true,
+                'unique_filename' => true,
+            ]);
+
+            // Simpan URL dan Public ID dari Cloudinary
+            $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+            $publicId = $cloudinaryResponse->getPublicId();
+
+            // Simpan data Thumbnail ke tabel Thumbnail
+            Thumbnail::create([
+                'file_path' => $cloudinaryUrl,
+                'id_file' => $publicId,
+                'type' => 'Image',
+                'event_id' => $event->event_id,
+            ]);
+
+            // Tambahkan data location
+            $datalocation['name_location'] = $data['location'];
+            $datalocation['latitude'] = $data['latitude'];
+            $datalocation['longitude'] = $data['longitude'];
+            $datalocation['event_id'] = $event->event_id;
+
+            // Simpan data ke tabel Locations
+            Locations::create($datalocation);
+
+            return redirect()->route('event.index')->with('success', 'Data added successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to add data: ' . $e->getMessage());
         }
-
-        // Simpan ke tabel `detail_events`
-        DetailEvent::create($detailData);
-
-        // upload image
-        $file = $request->file('img'); // get file
-        $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
-        $file->move(storage_path('app/public/cover'), $filename); // path file
-
-        // Tambahkan data thumbnail 
-        $dataThumbnail['file_path'] = $filename;
-        $dataThumbnail['type'] = 'Image';
-        $dataThumbnail['event_id'] = $event->event_id;
-
-        // Simpan data ke tabel Thumbnail
-        Thumbnail::create($dataThumbnail);
-
-        // Tambahkan data location
-        $datalocation['name_location'] = $data['location'];
-        $datalocation['latitude'] = $data['latitude'];
-        $datalocation['longitude'] = $data['longitude'];
-        $datalocation['event_id'] = $event->event_id;
-
-        // Simpan data ke tabel Locations
-        Locations::create($datalocation);
-
-        return redirect()->route('event.index')->with('success', 'Data added successfully');
     }
 
     /**
@@ -224,13 +242,14 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'content' => 'required',
+            'content' => 'required|max:5000',
+            'organizer' => 'required|string|max:255',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
-            'participant_description' => 'required|string|max:200',
+            'participant_description' => 'required|string|max:500',
             'volunteer' => 'nullable|integer|min:0',
-            'volunteer_description' => 'nullable|string|max:200',
+            'volunteer_description' => 'nullable|string|max:500',
             'location' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -241,75 +260,95 @@ class EventController extends Controller
         $event = Event::with('thumbnail', 'location', 'detailEvent')->findOrFail($id); // Ambil event dengan relasi terkait
         $data = $request->all();
 
-        // Update file gambar jika ada file baru yang diupload
-        if ($request->hasFile('img')) {
-            $file = $request->file('img');
-            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(storage_path('app/public/cover'), $filename);
+        try {
+            // Update file gambar jika ada file baru yang diupload
+            if ($request->hasFile('img')) {
+                $file = $request->file('img');
 
-            // Hapus file lama jika ada
-            if ($event->thumbnail && $event->thumbnail->file_path) {
-                $oldFilePath = storage_path('app/public/cover/' . $event->thumbnail->file_path);
-                if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath);
+                // // Upload file
+                // $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                // $file->move(storage_path('app/public/cover'), $filename);
+
+                // // Hapus file lama jika ada
+                // if ($event->thumbnail && $event->thumbnail->file_path) {
+                //     $oldFilePath = storage_path('app/public/cover/' . $event->thumbnail->file_path);
+                //     if (file_exists($oldFilePath)) {
+                //         unlink($oldFilePath);
+                //     }
+                // }
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                    'folder' => 'cover',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Hapus file lama dari Cloudinary jika ada
+                if (!empty($event->thumbnail->id_file)) {
+                    cloudinary()->destroy($event->thumbnail->id_file);
                 }
+
+                // Update data Thumbnail
+                $event->thumbnail->update([
+                    'file_path' => $cloudinaryUrl,
+                    'id_file' => $publicId,
+                    'type' => 'Image',
+                ]);
             }
 
-            // Update atau buat thumbnail baru
-            $event->thumbnail()->updateOrCreate(
-                ['event_id' => $event->event_id],
+            // Update slug
+            $data['slug'] = Str::slug($data['title']);
+
+            // Jika ada input 'volunteer'
+            $data['capacity_volunteers'] = $data['volunteer'] ?? 0;
+
+            // Proses tanggal dari input 'date'
+            $dateRange = explode(' - ', $data['date']);
+            $data['start'] = Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[0]));
+            $data['end'] = Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[1]));
+
+            // Update data event
+            $event->update([
+                'title' => $data['title'],
+                'slug' => $data['slug'],
+                'description' => $data['content'],
+                'organizer' => $data['organizer'],
+                'category_id' => $data['category_id'],
+                'status' => $data['status'] ?? $event->status, // Pertahankan status jika tidak ada
+            ]);
+
+            // Update Detail Event (Tabel detail_events)
+            $event->detailEvent()->updateOrCreate(
+                ['event_id' => $event->event_id], // Gunakan event_id yang sesuai
                 [
-                    'file_path' => $filename,
-                    'type' => 'Image',
+                    'start' => $data['start'],
+                    'end' => $data['end'],
+                    'capacity_participants' => $data['participant'],
+                    'description_participants' => $data['participant_description'],
+                    'capacity_volunteers' => $data['volunteer'] ?? 0,
+                    'description_volunteers' => $data['volunteer_description'] ?? '',
+                    'requires_volunteers' => $data['requires_volunteers'],
                 ]
             );
+
+            // Update lokasi
+            $event->location()->updateOrCreate(
+                ['event_id' => $event->event_id],
+                [
+                    'name_location' => $data['location'],
+                    'latitude' => $data['latitude'],
+                    'longitude' => $data['longitude'],
+                ]
+            );
+
+            return redirect()->route('event.index')->with('success', 'Data updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error updating data: ' . $e->getMessage());
         }
-
-        // Update slug
-        $data['slug'] = Str::slug($data['title']);
-
-        // Jika ada input 'volunteer'
-        $data['capacity_volunteers'] = $data['volunteer'] ?? 0;
-
-        // Proses tanggal dari input 'date'
-        $dateRange = explode(' - ', $data['date']);
-        $data['start'] = Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[0]));
-        $data['end'] = Carbon::createFromFormat('m/d/Y h:i A', trim($dateRange[1]));
-
-        // Update data event
-        $event->update([
-            'title' => $data['title'],
-            'slug' => $data['slug'],
-            'description' => $data['content'],
-            'category_id' => $data['category_id'],
-            'status' => $data['status'] ?? $event->status, // Pertahankan status jika tidak ada
-        ]);
-
-        // Update Detail Event (Tabel detail_events)
-        $event->detailEvent()->updateOrCreate(
-            ['event_id' => $event->event_id], // Gunakan event_id yang sesuai
-            [
-                'start' => $data['start'],
-                'end' => $data['end'],
-                'capacity_participants' => $data['participant'],
-                'description_participants' => $data['participant_description'],
-                'capacity_volunteers' => $data['volunteer'] ?? 0,
-                'description_volunteers' => $data['volunteer_description'] ?? '',
-                'requires_volunteers' => $data['requires_volunteers'],
-            ]
-        );
-
-        // Update lokasi
-        $event->location()->updateOrCreate(
-            ['event_id' => $event->event_id],
-            [
-                'name_location' => $data['location'],
-                'latitude' => $data['latitude'],
-                'longitude' => $data['longitude'],
-            ]
-        );
-
-        return redirect()->route('event.index')->with('success', 'Data updated successfully');
     }
 
     /**
