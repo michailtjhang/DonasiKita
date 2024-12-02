@@ -249,7 +249,7 @@
                                     <x-cld-image public-id="{{ $category->thumbnail->id_file }}"
                                         class="card-img-top img-fluid" />
                                 @elseif ($category->thumbnail && $category->thumbnail->file_path)
-                                    <img src="{{ asset('storage/cover/' . $category->thumbnail->file_path) }}"
+                                    <img src="{{ $category->thumbnail->file_path }}"
                                         alt="{{ $category->name }}" class="img-fluid">
                                 @else
                                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light"

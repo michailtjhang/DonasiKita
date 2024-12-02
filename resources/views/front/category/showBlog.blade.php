@@ -201,7 +201,7 @@
                                     <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
                                         class="card-img-top img-fluid" />
                                 @elseif ($article->thumbnail && $article->thumbnail->file_path)
-                                    <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
+                                    <img src="{{ $article->thumbnail->file_path }}"
                                         class="card-img-top" alt="{{ $article->title }}">
                                 @else
                                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
