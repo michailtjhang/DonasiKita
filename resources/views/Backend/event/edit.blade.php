@@ -135,9 +135,9 @@
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
                             name="status">
-                            <option value="" hidden>-- UpComming --</option>
-                            <option value="1" {{ $event->status == 'ongoing' ? 'selected' : '' }}>Ongoing</option>
-                            <option value="2" {{ $event->status == 'finished' ? 'selected' : '' }}>Finished</option>
+                            <option hidden>-- UpComming --</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="finished">Finished</option>
                         </select>
 
                         @error('status')
@@ -226,7 +226,7 @@
                         <input type="text" id="Volunteer" name="volunteer"
                             class="form-control @error('volunteer') is-invalid @enderror"
                             placeholder="Please Enter Volunteer"
-                            value="{{ old('volunteer', $event->detailEvent->capacity_volunteers) }}
+                            value="{{ old('volunteer', $event->detailEvent->$event->detailEvent->capacity_volunteers ?? 0) }}">
 
                         @error('volunteer')
                             <div class="invalid-feedback">
@@ -289,8 +289,7 @@
     <!-- moment -->
     <script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
     <!-- tempusdominus-bootstrap-4 -->
-    <script
-        src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+    <script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
     <!-- date-range-picker -->
     <script src="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.js"></script>
@@ -402,9 +401,9 @@
                 timePicker: true,
                 timePickerIncrement: 30,
                 locale: {
-                    format: 'MM/DD/YYYY hh:mm A'
+                    format: 'MM/DD/YYYY hh:mm A' // This should match the format you're passing from the controller
                 }
-            })
+            });
         });
     </script>
 
