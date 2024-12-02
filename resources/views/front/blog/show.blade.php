@@ -489,8 +489,7 @@
                             @if ($article->thumbnail && $article->thumbnail->id_file)
                                 <x-cld-image public-id="{{ $article->thumbnail->id_file }}" class="card-img-top img-fluid" />
                             @elseif ($article->thumbnail && $article->thumbnail->file_path)
-                                <img class="img img-fluid rounded rounded-3"
-                                    src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
+                                <img class="img img-fluid rounded rounded-3" src="{{ $article->thumbnail->file_path }}"
                                     alt="{{ $article->title }}">
                             @else
                                 <span>No cover image available</span>
