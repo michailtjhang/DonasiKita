@@ -1,4 +1,7 @@
 @extends('front.layout.app')
+@section('seoMeta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('style')
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -39,6 +42,12 @@
             border-radius: 8px 8px 0 0;
         }
 
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
         #map-content {
             visibility: hidden;
             /* Initially hidden */
@@ -61,7 +70,10 @@
     <section id="detail-donation" class="container">
         <div class=" rounded-4 ">
             <p class="card-title fw-bold text-dark my-4 h1">{{ $event->title }}</p>
-            @if ($event->thumbnail && $event->thumbnail->file_path)
+            @if ($event->thumbnail && $event->thumbnail->id_file)
+                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                        class="card-img-top img-fluid" />
+            @elseif ($event->thumbnail && $event->thumbnail->file_path)
                 <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}" alt="{{ $event->title }}"
                     class="card-img-top img-fluid rounded">
             @else
@@ -97,15 +109,16 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="fw-bold pt-2 pb-5 h3">Peserta</p>
                                 <span style="font-size: 0.9rem;"
-                                    class="pt-5 mt-1">150/{{ $event->detailEvent->capacity_participants }} Peserta
+                                    class="pt-5 mt-1">{{ $partisipan['peserta']->count() }}/{{ $event->detailEvent->capacity_participants }}
+                                    Peserta
                                     Mendaftar</span>
                             </div>
 
                             <!-- Progress Bar -->
                             <div class="progress " style="height: 3px; background-color: #bbddf0;">
                                 <div class="progress-bar " role="progressbar"
-                                    style="width: 15%; background-color: #2492CD; " aria-valuenow="150" aria-valuemin="0"
-                                    aria-valuemax="1000">
+                                    style="width: {{ ($partisipan['peserta']->count() * 100) / $event->detailEvent->capacity_participants }}%; background-color: #2492CD; "
+                                    aria-valuenow="150" aria-valuemin="0" aria-valuemax="1000">
 
                                 </div>
                             </div>
@@ -127,15 +140,16 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <p class="fw-bold pt-2 pb-5 h3">Peserta Volunteer</p>
                                     <span style="font-size: 0.9rem;"
-                                        class="pt-5 mt-1">10/{{ $event->detailEvent->capacity_volunteer ?? 0 }} Sukarelawan
+                                        class="pt-5 mt-1">{{ $partisipan['sukarelawan']->count() }}/{{ $event->detailEvent->capacity_volunteer ?? 0 }}
+                                        Sukarelawan
                                         Mendaftar</span>
                                 </div>
 
                                 <!-- Progress Bar -->
                                 <div class="progress " style="height: 3px; background-color: #bbddf0;">
                                     <div class="progress-bar " role="progressbar"
-                                        style="width: 15%; background-color: #2492CD; " aria-valuenow="150"
-                                        aria-valuemin="0" aria-valuemax="1000">
+                                        style="width: {{ ($partisipan['sukarelawan']->count() * 100) / $event->detailEvent->capacity_volunteer }}%; background-color: #2492CD; "
+                                        aria-valuenow="150" aria-valuemin="0" aria-valuemax="1000">
 
                                     </div>
                                 </div>
@@ -173,7 +187,7 @@
     <div class="container my-5">
         <div class="row g-1 px-lg-5 mx-lg-4 justify-content-center">
             <!-- Share Button -->
-            <div class="col-12 col-md-4 d-flex justify-content-center mb-3 mb-md-0 mb-lg-0">
+            <div class="col-12 @auth col-md-4 @endauth d-flex justify-content-center mb-3 mb-md-0 mb-lg-0">
                 <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center"
                     style="background-color: #bbddf0;">
                     <h1 class="d-flex align-items-center mb-0" style="font-size: 1.5rem; color: #0f3d56;">
@@ -182,12 +196,20 @@
                 </button>
             </div>
             <!-- Join Now Button -->
-            <div class="col-12 col-md-8 d-flex justify-content-center">
-                <button id="donateNowBtn"
-                    class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center">
-                    <h1 class="mb-0" style="font-size: 1.5rem;">Join Now</h1>
-                </button>
-            </div>
+            @Auth
+                <div class="col-12 col-md-8 d-flex justify-content-center">
+                    @if ($userJoined)
+                        <button class="btn btn-success w-100 py-4 d-flex justify-content-center align-items-center" disabled>
+                            <h1 class="mb-0" style="font-size: 1.5rem;">Berhasil Join</h1>
+                        </button>
+                    @else
+                        <button id="donateNowBtn"
+                            class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center">
+                            <h1 class="mb-0" style="font-size: 1.5rem;">Join Now</h1>
+                        </button>
+                    @endif
+                </div>
+            @endAuth
         </div>
     </div>
 
@@ -269,54 +291,136 @@
                         },
                         didOpen: () => {
                             const pesertaBtn = document.getElementById('pesertaBtn');
-                            if (pesertaBtn) {
-                                pesertaBtn.addEventListener('click', () => {
-                                    Swal.fire('Anda memilih Peserta!');
-                                });
-                            }
-
                             const sukarelawanBtn = document.getElementById('sukarelawanBtn');
-                            if (sukarelawanBtn) {
-                                sukarelawanBtn.addEventListener('click', () => {
-                                    Swal.fire('Anda memilih Sukarelawan!');
+
+                            // Disable all buttons and show loading when clicked
+                            const handleButtonClick = (buttonId, status) => {
+                                document.querySelectorAll('button').forEach(btn => btn
+                                    .disabled = true);
+
+                                Swal.fire({
+                                    title: 'Processing...',
+                                    allowOutsideClick: false,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
                                 });
+
+                                // Simulate a server request
+                                fetch('{{ route('events.join') }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({
+                                            event_id: '{{ $event->event_id }}',
+                                            status: status
+                                        })
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        Swal.close();
+                                        if (data.success) {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Berhasil!',
+                                                text: `Anda telah bergabung sebagai ${status}.`,
+                                                confirmButtonText: 'OK'
+                                            }).then(() => {
+                                                // Reload halaman untuk memperbarui tombol
+                                                window.location.reload();
+                                            });
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Gagal',
+                                                text: data.message ||
+                                                    'Terjadi kesalahan.'
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        Swal.close();
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: 'Terjadi kesalahan. Silakan coba lagi.'
+                                        });
+                                    });
+                            };
+
+                            // Event listeners for buttons
+                            if (pesertaBtn) {
+                                pesertaBtn.addEventListener('click', () => handleButtonClick(
+                                    'pesertaBtn', 'peserta'));
+                            }
+                            if (sukarelawanBtn) {
+                                sukarelawanBtn.addEventListener('click', () =>
+                                    handleButtonClick('sukarelawanBtn', 'sukarelawan'));
                             }
                         }
                     });
                 });
             }
         });
+
+        function sendJoinRequest(eventId, role) {
+            fetch("{{ route('events.join') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        event_id: eventId,
+                        role: role
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Ubah tombol menjadi "Berhasil Join"
+                        const joinButton = document.getElementById('donateNowBtn');
+                        joinButton.innerHTML = `
+                            <h1 class="mb-0" style="font-size: 1.5rem;">Berhasil Join</h1>
+                        `;
+                        joinButton.classList.add('btn-success');
+                        joinButton.classList.remove('btn-primary');
+                        joinButton.disabled = true;
+
+                        // Tampilkan notifikasi berhasil
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: data.message,
+                            confirmButtonText: 'OK',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Terjadi kesalahan, silakan coba lagi.',
+                            confirmButtonText: 'OK',
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan, silakan coba lagi.',
+                        confirmButtonText: 'OK',
+                    });
+                });
+        }
     </script>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <script>
-        // Event Listener untuk tombol Peserta
-        document.getElementById('btnPeserta').addEventListener('click', function() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: 'Anda telah bergabung sebagai Peserta.',
-                confirmButtonText: 'OK',
-                timer: 3000,
-                timerProgressBar: true
-            });
-        });
-
-        // Event Listener untuk tombol Sukarelawan
-        document.getElementById('btnSukarelawan').addEventListener('click', function() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: 'Anda telah bergabung sebagai Sukarelawan.',
-                confirmButtonText: 'OK',
-                timer: 3000,
-                timerProgressBar: true
-            });
-        });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Inisialisasi Leaflet Map dengan lokasi Jakarta Selatan

@@ -70,7 +70,7 @@
 
         .card-img-top {
             height: 150px;
-            object-fit:fill;
+            object-fit: fill;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
             width: 100%;
@@ -78,7 +78,7 @@
         }
 
         .card-body {
-            padding:30px 25px;
+            padding: 30px 25px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -297,7 +297,10 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card rounded rounded-5 h-100 shadow-sm">
                             <a href="{{ route('blog.show', $article->slug) }}">
-                                @if ($article->thumbnail && $article->thumbnail->file_path)
+                                @if ($article->thumbnail && $article->thumbnail->id_file)
+                                    <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
+                                        class="card-img-top img-fluid" />
+                                @elseif ($article->thumbnail && $article->thumbnail->file_path)
                                     <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
                                         class="card-img-top img-fluid" alt="{{ $article->title }}">
                                 @else
@@ -317,7 +320,8 @@
                                 <p class="card-text text-muted">{{ Str::limit(strip_tags($article->content), 100, '...') }}
                                 </p>
                                 <div class="d-flex flex-wrap gap-1 align-items-center mt-3">
-                                    <small class="text-muted">{{ $article->created_at->locale('id')->diffForHumans() }}</small>
+                                    <small
+                                        class="text-muted">{{ $article->created_at->locale('id')->diffForHumans() }}</small>
                                     <span class="text-muted mx-1">|</span>
                                     <a href="/blogs?category={{ $article->category->slug }}"
                                         class="text-muted text-decoration-none">
