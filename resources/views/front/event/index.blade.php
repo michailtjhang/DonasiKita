@@ -225,10 +225,13 @@
                                 style="scroll-snap-align: start; width: 300px;">
                                 <!-- Thumbnail -->
                                 @if ($event->thumbnail && $event->thumbnail->id_file)
-                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}" class="card-img-top img-fluid" />
+                                    <a href="{{ route('event.show', $event->id) }}">
+                                        <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                            class="card-img-top img-fluid" />
+                                    </a>
                                 @elseif ($event->thumbnail && $event->thumbnail->file_path)
                                     <a href="{{ route('events.show', $event->slug) }}">
-                                        <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
+                                        <img src="{{ $event->thumbnail->file_path }}"
                                             class="card-img-top" alt="Donasi Buku">
                                     </a>
                                 @else
@@ -298,11 +301,15 @@
                                 <div class="position-relative">
                                     <!-- Thumbnail -->
                                     @if ($event->thumbnail && $event->thumbnail->id_file)
-                                        <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                                            class="card-img-top img-fluid" />
+                                        <a href="{{ route('event.show', $event->id) }}">
+                                            <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                                class="card-img-top img-fluid" />
+                                        </a>
                                     @elseif ($event->thumbnail && $event->thumbnail->file_path)
-                                        <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
-                                            class="card-img-top" alt="{{ $event->title }}">
+                                        <a href="{{ route('event.show', $event->id) }}">
+                                            <img src="{{ $event->thumbnail->file_path }}"
+                                                class="card-img-top" alt="{{ $event->title }}">
+                                        </a>
                                     @else
                                         <div class="card-img-top" style="background-color: #f0f0f0;">
                                             <span>No cover image</span>
@@ -367,12 +374,14 @@
                         <div class="event-card rounded rounded-5">
                             <!-- Thumbnail -->
                             @if ($event->thumbnail && $event->thumbnail->id_file)
-                                <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                                    class="card-img-top img-fluid" />
+                                <a href="{{ route('events.show', $event->slug) }}">
+                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                        class="card-img-top img-fluid" />
+                                </a>
                             @elseif ($event->thumbnail && $event->thumbnail->file_path)
                                 <a href="{{ route('events.show', $event->slug) }}">
-                                    <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
-                                        alt="{{ $event->title }}" class="img-fluid overflow-hidden">
+                                    <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
+                                        class="img-fluid overflow-hidden">
                                 </a>
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"

@@ -226,11 +226,15 @@ class EventController extends Controller
             return back()->with('error', 'Event already finished');
         }
 
+        // Make sure the start and end fields are Carbon instances
+        $startDate = Carbon::parse($event->detailEvent->start)->format('m/d/Y h:i A');
+        $endDate = Carbon::parse($event->detailEvent->end)->format('m/d/Y h:i A');
+
         return view('Backend.event.edit', [
             'page_title' => 'Edit Event',
             'event' => $event,
             'categories' => Category::get(),
-            'date' => Carbon::parse($event->start)->format('m/d/Y h:i A') . ' - ' . Carbon::parse($event->end)->format('m/d/Y h:i A'),
+            'date' => $startDate . ' - ' . $endDate, // Passing formatted date range
         ]);
     }
 
@@ -244,7 +248,7 @@ class EventController extends Controller
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
             'participant_description' => 'required|string|max:500',
@@ -253,8 +257,8 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'requires_volunteers' => 'required|boolean',
-            'status' => 'required|in:ongoing,completed',
+            'when_volunteer' => 'required|boolean',
+            'status' => 'required|string|in:ongoing,finished',
         ]);
 
         $event = Event::with('thumbnail', 'location', 'detailEvent')->findOrFail($id); // Ambil event dengan relasi terkait
@@ -331,7 +335,7 @@ class EventController extends Controller
                     'description_participants' => $data['participant_description'],
                     'capacity_volunteers' => $data['volunteer'] ?? 0,
                     'description_volunteers' => $data['volunteer_description'] ?? '',
-                    'requires_volunteers' => $data['requires_volunteers'],
+                    'requires_volunteers' => $data['when_volunteer'],
                 ]
             );
 

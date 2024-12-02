@@ -71,10 +71,9 @@
         <div class=" rounded-4 ">
             <p class="card-title fw-bold text-dark my-4 h1">{{ $event->title }}</p>
             @if ($event->thumbnail && $event->thumbnail->id_file)
-                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
+                <x-cld-image public-id="{{ $event->thumbnail->id_file }}" class="card-img-top img-fluid" />
             @elseif ($event->thumbnail && $event->thumbnail->file_path)
-                <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}" alt="{{ $event->title }}"
+                <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
                     class="card-img-top img-fluid rounded">
             @else
                 <span class="d-block mb-2 text-muted">{{ $event->title }}</span>
@@ -123,11 +122,12 @@
                                 </div>
                             </div>
                             <p class="h3 pt-3">
-                                {{ $event->detailEvent->description_participants }} Peserta
+                                {{ $event->detailEvent->description_participants }}
                             </p>
                             <br>
                             <ul class="h3">
-                                <li class="mb-1"><strong>Location: </strong>{{ $event->location->name_location ?? 'TBA' }}
+                                <li class="mb-1"><strong>Location:
+                                    </strong>{{ $event->location->name_location ?? 'TBA' }}
                                 </li>
                                 <li class="mb-1"><strong>Jam:
                                     </strong>{{ $event->detailEvent->start->format('H:i') ?? 'TBA' }}–{{ $event->detailEvent->end->format('H:i') ?? 'TBA' }}
@@ -140,7 +140,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <p class="fw-bold pt-2 pb-5 h3">Peserta Volunteer</p>
                                     <span style="font-size: 0.9rem;"
-                                        class="pt-5 mt-1">{{ $partisipan['sukarelawan']->count() }}/{{ $event->detailEvent->capacity_volunteer ?? 0 }}
+                                        class="pt-5 mt-1">{{ $partisipan['sukarelawan']->count() }}/{{ $event->detailEvent->capacity_volunteers ?? 0 }}
                                         Sukarelawan
                                         Mendaftar</span>
                                 </div>
@@ -148,18 +148,13 @@
                                 <!-- Progress Bar -->
                                 <div class="progress " style="height: 3px; background-color: #bbddf0;">
                                     <div class="progress-bar " role="progressbar"
-                                        style="width: {{ ($partisipan['sukarelawan']->count() * 100) / $event->detailEvent->capacity_volunteer }}%; background-color: #2492CD; "
+                                        style="width: {{ ($partisipan['sukarelawan']->count() * 100) / $event->detailEvent->capacity_volunteers }}%; background-color: #2492CD; "
                                         aria-valuenow="150" aria-valuemin="0" aria-valuemax="1000">
 
                                     </div>
                                 </div>
                                 <p class="h3 pt-3">
-                                    Jadilah Sukarelawan dalam event kemanusiaan ini! Ayo berkontribusi dengan tenaga dan
-                                    waktu
-                                    untuk mendukung misi kemanusiaan di lokasi yang telah ditentukan.
-                                    <br>
-                                    <br>
-                                    <strong>Yang Di Butuhkan:</strong> Tenaga Kerja, Pembagian Brosur, Koordinasi Acara
+                                    {{ $event->detailEvent->description_volunteers }}
                                 </p>
                                 <br>
                                 <ul class="h3">
