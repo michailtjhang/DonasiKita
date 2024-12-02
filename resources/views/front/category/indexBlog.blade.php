@@ -238,9 +238,9 @@
         <!-- Kartu Kategori -->
         <div class="row">
             @foreach ($categories as $category)
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4" >
                     <a href="{{ route('blogs.category', $category->slug) }}" class="text-decoration-none">
-                        <div class="card-category rounded rounded-5">
+                        <div class="card-category rounded rounded-5" >
                             @if ($category->thumbnail && $category->thumbnail->id_file)
                                     <x-cld-image public-id="{{ $category->thumbnail->id_file }}"
                                         class="card-img-top img-fluid" />
@@ -253,9 +253,14 @@
                                     <span>No cover image</span>
                                 </div>
                             @endif
-                            <div class="card-text-wrapper">
-                                <h3>{{ $category->name }}</h3>
-                                <p class="text-center">{{ $category->description }}</p>
+                            <div class="card-text-wrapper" >
+                                <h3 style="text-align: left !important">{{ $category->name }}</h3>
+                                <p class="" style="text-align: left !important">{{ $category->description }}</p>
+                            </div>
+                            <div class="d-flex w-100 justify-content-center mb-3 pb-3">
+                                <a href="{{ route('blog.show', $category->slug) }}" class="btn blog-btn">
+                                    Read More
+                                </a>
                             </div>
                         </div>
                     </a>

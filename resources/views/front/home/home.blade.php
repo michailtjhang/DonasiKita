@@ -4,89 +4,85 @@
 </style>
 @section('content')
     <!-- Hero Section -->
-    <div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero-bg.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
-                        <p class="lead">Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero/2.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Darutat Gunung Lewotobi</h1>
-                        <p class="lead">Bersama membantu korban yang terdampak bencana alam ini</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero/3.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Banjir di Desa Rawajaya</h1>
-                        <p class="lead">Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero/4.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Tanah Longsor di Desa Kertajaya</h1>
-                        <p class="lead">Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
+<div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+            style="background-image: url('/images/hero-bg.svg'); background-size: fill !important; background-position: center !important; background-repeat: no-repeat !important; height:100vh !important">
+                <div class="spacer-x" style="transform: translateY(20%) !important; ">
+                    <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
+                    <p class="lead">Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas</p>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                            <h3>Bantu Sekarang</h3>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        <div class="carousel-item =">
+            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                style="background-image: url('/images/hero/2.svg');">
+                <div class="spacer-x">
+                    <h1 class="hero-title bolder-text display-4">Darutat Gunung Lewotobi</h1>
+                    <p class="lead">Bersama membantu korban yang terdampak bencana alam ini</p>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                            <h3>Bantu Sekarang</h3>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                style="background-image: url('/images/hero/3.svg');">
+                <div class="spacer-x">
+                    <h1 class="hero-title bolder-text display-4">Banjir di Desa Rawajaya</h1>
+                    <p class="lead">Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda</p>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                            <h3>Bantu Sekarang</h3>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                style="background-image: url('/images/hero/4.svg');">
+                <div class="spacer-x">
+                    <h1 class="hero-title bolder-text display-4">Tanah Longsor di Desa Kertajaya</h1>
+                    <p class="lead">Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan</p>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                            <h3>Bantu Sekarang</h3>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
     <!-- End Hero Section -->
     <!-- About Content Section -->
     <section id="about-content" class="space-section">
         <div class="container-fluid py-5 justify-content-center text-center bg-skyline">
-            <h1 class="bolder-text text-dark">Kamu Adalah Harapan Lainnya</h1>
+            <h1 class="bolder-text text-dark" style="margin-bottom: 50px"> Kamu Adalah Harapan Lainnya</h1>
             <div class="row mx-auto text-wrap" style="width:80%;">
                 <div class="col-lg-6 col-12">
                     <img src="/images/content/about.svg" class="about-image img-fluid" alt="">
                 </div>
-                <div class="col-lg-6 col-12 text-dark d-flex align-items-center px-5">
-                    <p>
+                <div class="col-lg-6 col-12 text-dark d-flex  px-5">
+                    <p style="font-size: 26px; text-align:left">
                         <span class="fw-bold">DonasiKita </span>meyakinkan Anda untuk menjadi bagian dari perubahan positif
                         melalui platform donasi yang transparan, aman, dan terpercaya. Dengan menghubungkan donatur dengan
                         beragam program bantuan, kami berkomitmen untuk memperkuat solidaritas sosial serta memberdayakan
@@ -120,13 +116,13 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row ">
 
                     @foreach ($last_donations as $item)
                     <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
                         <a href="{{ route('donations.show', $item->slug) }}">
                             <div class="card rounded rounded-5 overflow-hidden shadow card-item">
-                                <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="...">
+                                <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="..." style="object-fit: cover !important;">
                                 <div class="card-body px-4">
                                     <p class="card-text">{{ $item->title }}</p>
                                     <p class="text-dark mb-2">
@@ -162,17 +158,37 @@
 
     <!-- Quote Content Section -->
     <section id="quote-content" class="space-section">
-        <div class="container-fluid py-5 justify-content-center text-center bg-skyline spacer-x">
-            <h1 class="bolder-text text-dark mb-3">Qoutes</h1>
-            <p class="text-dark text-large">"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain." <br> <span
-                    class="fw-bold mt-3">-Rasulullah SAW-</span></p>
+        <div class="container-fluid d-flex justify-content-center align-items-center text-center bg-skyline vw-100"
+            style="background-image: url('/images/quotes.svg'); height: 400px; background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <p class="text-light m-0" style="font-size: 35px; text-shadow: 2px 2px #000;">
+                "Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain." <br>
+                <span class="fw-bold mt-3">-Rasulullah SAW-</span>
+            </p>
         </div>
     </section>
+    
     <!-- End Quote Content Section -->
 
     <!-- Blog Upcoming Event -->
     <section id="upcoming-content" class="space-section container-fluid bg-skyline w-100">
-        <h1 class="bolder-text text-dark text-center bg-skyline">Join Our Upcoming Event</h1>
+        <div class="container">
+            <div class="row justify-content-between align-items-center mx-auto">
+                <div class="col-6 d-flex justify-content-start">
+                    <h1 class="bolder-text text-dark text-start">Join Our Upcoming Event</h1>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <a href="{{ route('events') }}">
+                        <button class="btn rounded rounded-5 fw-light" id="button-event"
+                            style="border: 2px solid #1a3a4f; color: #1a3a4f;padding: 10px 20px;">
+                            <h3>See More </h3>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+
+
         <div class="container mx-auto bg-skyline pt-4 event-container" id="container-upcoming"
             style="padding: 0 !important;">
             <div class="row justify-content-center text-center py-0 my-0 gx-4" style="margin: 0 !important;">
@@ -181,38 +197,33 @@
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
                         <a href="{{ route('events.show', $item->slug) }}" class="text-light" href="{{ url('/detail_event') }}">
                             <div class="event-card rounded rounded-5">
+                                
                                 <img src="{{ $item->thumbnail->file_path }}" alt="{{ $item->title }}" class="img-fluid overflow-hidden" style="height: 450px !important;">
                                 <div class="">
                                     <div class="event-date">{{ $item->detailEvent->start->format('d M Y') }}</div>
                                 </div>
+                                
                                 <div class="event-details event-card-spacer">
                                     <p class="event-title mb-3 fw-bold">{{ $item->title }}</p>
-                                    <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                                    <div class="event-info d-flex card-desc mb-3 justify-content-between">
+                                        <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} - {{ $item->detailEvent->end->format('H:i') }}</span>
+                                        <span><i class="fa fa-location-dot"></i> {{ $item->location->name_location }}</span>
+                                    </div>
+                                    <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
                                         {{ $item->detailEvent->start->format('d M Y') }} | <a href="#" class="text-decoration-none text-light">{{ $item->category->name }}</a>
                                         |
                                         {{ $item->user->name ?? 'Anonim' }}
                                     </p>
-                                    <p class="card-text  text-extra-small mb-3 opacity-75 small">
+                                    <p class="card-text  text-extra-small  card-desc  small">
                                         {{ Str::limit(strip_tags($item->description), 100, '...') }}
                                     </p>
-                                    <div class="event-info justify-content-between">
-                                        <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} - {{ $item->detailEvent->end->format('H:i') }}</span>
-                                        <span><i class="fa fa-location-dot"></i> {{ $item->location->name_location }}</span>
-                                    </div>
+
                                 </div>
                             </div>
                         </a>
                     </div>
                 @endforeach
 
-                <div class="text-center bg-skyline pt-5 py-5">
-                    <a href="{{ route('events') }}">
-                        <button class="btn btn-primary" id="button-event"
-                            style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                            <h3>See More Event</h3>
-                        </button>
-                    </a>
-                </div>
             </div>
         </div>
     </section>
@@ -225,9 +236,9 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</button>
+                <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Donate</button>
                 <a href="{{ url('/event') }}">
-                    <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
+                    <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Sukarelawan</button>
                 </a>
             </div>
         </div>
@@ -266,16 +277,19 @@
                                             class="card-img-top img-fluid blog-img" alt="{{ $item->title }}" style="height: 200px !important;">
                                         <div
                                             class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
-                                            <b class="text-dark">{{ $item->title }}</b>
-                                            <p class="card-text text-primary text-small">
+                                            <b class="text-dark" >{{ $item->title }}</b>
+                                            <p class="card-text text-primary text-small mt-3">
                                                 {{ Str::limit(strip_tags($item->content), 100, '...') }}
                                             </p>
-                                            <div>
-                                                <a href="{{ route('blog.show', $item->slug) }}"
-                                                    class="text-primary text-small">Read this article</a>
-                                                <p class="text-primary text-small">
+                                            <div class="text-primary text-small">
+
                                                     {{ $item->created_at->format('d M Y') }} | {{ $item->category->name }}
                                                     | {{ $item->user->name ?? 'Anonim' }}</p>
+                                            </div>
+                                            <div class="d-flex w-100 justify-content-center">
+                                                <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn">
+                                                    Read More
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

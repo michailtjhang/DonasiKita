@@ -211,17 +211,22 @@
                                 @endif
                             </a>
                             <div class="card-body">
-                                <h5 class="card-title">
+                                <h5 class="card-titlem b-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
                                         class="text-dark text-decoration-none">{{ $article->title }}</a>
                                 </h5>
-                                <p class="card-text">{{ Str::limit($article->category->description, 100, '...') }}</p>
-                                <div class="card-buttons">
+                                <p class="card-text mb-3">{{ Str::limit($article->category->description, 100, '...') }}</p>
+                                <div class="card-buttons mb-3">
                                     <button>{{ $article->created_at->format('d M Y') }}</button>
                                     <span class="divider">|</span>
                                     <button>{{ $article->category->name }}</button>
                                     <span class="divider">|</span>
                                     <button>{{ $article->writer }}</button>
+                                </div>
+                                <div class="d-flex w-100 justify-content-center mb-3">
+                                    <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
+                                        Read More
+                                    </a>
                                 </div>
                             </div>
                         </div>

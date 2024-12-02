@@ -249,16 +249,7 @@
                                 </div>
                                 <div class="event-details event-card-spacer event-card-spacer">
                                     <p class="card-title fw-bold h4">Donasi Buku untuk Pendidikan</p>
-                                    <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                                        {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} | | <a
-                                            href="{{ route('events.category', $event->category->slug) }}"
-                                            class="text-decoration-none text-white">{{ $event->category->name }}</a> |
-                                        {{ $event->organizer ?? 'Anonymous' }}
-                                    </p>
-                                    <p class="card-text text-extra-small opacity-75 small">
-                                        {{ Str::limit(strip_tags($event->description), 50, '...') }}
-                                    </p>
-                                    <div class="card-text text-extra-small d-flex justify-content-between">
+                                    <div class="event-info card-desc text-extra-small d-flex justify-content-between">
                                         <div class="col-md-6">
                                             <i class="fa-solid fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
                                             {{ $event->detailEvent->end->format('H:i') }}
@@ -269,6 +260,16 @@
                                             {{ $event->location->name_location ?? 'TBA' }}
                                         </div>
                                     </div>
+                                    <p class="card-text  fw-thin text-extra-small  p-0 m-0">
+                                        {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} | | <a
+                                            href="{{ route('events.category', $event->category->slug) }}"
+                                            class="text-decoration-none text-white">{{ $event->category->name }}</a> |
+                                        {{ $event->organizer ?? 'Anonymous' }}
+                                    </p>
+                                    <p class="card-text  text-extra-small  small">
+                                        {{ Str::limit(strip_tags($event->description), 50, '...') }}
+                                    </p>
+ 
                                 </div>
                             </div>
                         @else
@@ -321,26 +322,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card-text  text-extra-small d-flex justify-content-between">
+                                    <div class="col-md-6">
+                                        <i class="fa-solid fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
+                                        {{ $event->detailEvent->end->format('H:i') }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        {{ $event->location->name_location ?? 'TBA' }}
+                                    </div>
+                                </div>
                                 <div class="event-details event-card-spacer">
                                     <p class="card-title fw-bold h4">{{ $event->title }}</p>
-                                    <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
+                                    <p class="card-text  fw-thin text-extra-small  p-0 m-0">
                                         {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} |
                                         {{ $event->category->name ?? 'Uncategorized' }} |
                                         {{ $event->organizer ?? 'Anonymous' }}
                                     </p>
-                                    <p class="card-text text-extra-small opacity-75 small">
+                                    <p class="card-text  text-extra-small  small">
                                         {{ Str::limit(strip_tags($event->description), 50, '...') }}
                                     </p>
-                                    <div class="card-text text-extra-small d-flex justify-content-between">
-                                        <div class="col-md-6">
-                                            <i class="fa-solid fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
-                                            {{ $event->detailEvent->end->format('H:i') }}
-                                        </div>
-                                        <div class="col-md-6">
-                                            <i class="fa-solid fa-location-dot"></i>
-                                            {{ $event->location->name_location ?? 'TBA' }}
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         @else
@@ -401,26 +403,26 @@
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
                                 <p class="event-title fw-bold">{{ $event->title }}</p>
-
+                                <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
+                                    <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
+                                        {{ $event->detailEvent->end->format('H:i') }}</span>
+                                    <span><i class="fa fa-location-dot"></i>
+                                        {{ $event->location->name_location ?? 'TBA' }}</span>
+                                </div>
                                 <!-- Metadata -->
-                                <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
+                                <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
                                     {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} |
                                     {{ $event->category->name ?? 'Uncategorized' }} |
                                     {{ $event->organizer ?? 'Anonymous' }}
                                 </p>
 
                                 <!-- Description -->
-                                <p class="card-text text-extra-small mb-3 opacity-75 small">
+                                <p class="card-text  card-desc text-extra-small   small">
                                     {{ Str::limit(strip_tags($event->description), 100, '...') }}
                                 </p>
 
                                 <!-- Time and Location -->
-                                <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short">
-                                    <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
-                                        {{ $event->detailEvent->end->format('H:i') }}</span>
-                                    <span><i class="fa fa-location-dot"></i>
-                                        {{ $event->location->name_location ?? 'TBA' }}</span>
-                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -238,52 +238,58 @@
             <!-- Card Container -->
             <div id="card-container" class="row d-flex justify-content-center gx-2">
                 @forelse ($events as $event)
-                    <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4">
+                    <div class="col-md-6 col-lg-4 d-flex justify-content-center mt-4">
                         <div class="event-card rounded rounded-5">
-                            <!-- Event Image -->
-                            <a href="{{ route('events.show', $event->slug) }}">
-                                @if ($event->thumbnail && $event->thumbnail->id_file)
+                            <!-- Thumbnail -->
+                            @if ($event->thumbnail && $event->thumbnail->id_file)
+                                <a href="{{ route('events.show', $event->slug) }}">
                                     <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
                                         class="card-img-top img-fluid" />
-                                @elseif ($event->thumbnail && $event->thumbnail->file_path)
-                                    <img src="{{ $event->thumbnail->file_path }}"
-                                        alt="Event Image" class="img-fluid">
-                                @else
-                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                        style="height: 200px;">
-                                        <span>No Image Available</span>
-                                    </div>
-                                @endif
-                            </a>
-
-                            <div class="event-date">{{ $event->detailEvent->start->format('d F') }}</div>
-                            <div class="event-details pb-4 px-4">
-                                <p class="event-title  mb-3fw-bold">{{ $event->title }}</p>
-                                <p class="card-text fw-thin text-extra-small mb-3 opacity-75 p-0 m-0">
-                                    {{ $event->detailEvent->start->format('d F Y') }} |
-                                    <a href="#" class="text-decoration-none">{{ $event->category->name }}</a> |
-                                    {{ $event->organizer }}
-                                </p>
-                                <p class="card-text  text-extra-small mb-3 opacity-75 small">
-                                    @if ($event->detail_event)
-                                        {{ $event->detail_event }}
-                                    @else
-                                        No description available.
-                                    @endif
-                                </p>
-                                <div class="card-text text-extra-small d-flex justify-content-between">
-                                    <div class="col-md-6">
-                                        <i class="fa-solid fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
-                                        {{ $event->detailEvent->end->format('H:i') }}<br>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        {{ $event->location->name_location ?? 'Unknown Location' }}
-                                    </div>
+                                </a>
+                            @elseif ($event->thumbnail && $event->thumbnail->file_path)
+                                <a href="{{ route('events.show', $event->slug) }}">
+                                    <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
+                                        class="img-fluid overflow-hidden">
+                                </a>
+                            @else
+                                <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                    style="height: 200px;">
+                                    <p class="text-muted">Thumbnail Tidak Tersedia</p>
                                 </div>
+                            @endif
 
+                            <!-- Date -->
+                            <div class="event-card-spacer">
+                                <div class="event-date ms-2 mt-3">
+                                    {{ $event->detailEvent->start->format('d M') ?? 'TBA' }}
+                                </div>
                             </div>
 
+                            <!-- Details -->
+                            <div class="event-details event-card-spacer">
+                                <!-- Title -->
+                                <p class="event-title fw-bold">{{ $event->title }}</p>
+                                <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
+                                    <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
+                                        {{ $event->detailEvent->end->format('H:i') }}</span>
+                                    <span><i class="fa fa-location-dot"></i>
+                                        {{ $event->location->name_location ?? 'TBA' }}</span>
+                                </div>
+                                <!-- Metadata -->
+                                <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
+                                    {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} |
+                                    {{ $event->category->name ?? 'Uncategorized' }} |
+                                    {{ $event->organizer ?? 'Anonymous' }}
+                                </p>
+
+                                <!-- Description -->
+                                <p class="card-text  card-desc text-extra-small   small">
+                                    {{ Str::limit(strip_tags($event->description), 100, '...') }}
+                                </p>
+
+                                <!-- Time and Location -->
+
+                            </div>
                         </div>
                     </div>
                 @empty
