@@ -224,7 +224,9 @@
                             <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
                                 style="scroll-snap-align: start; width: 300px;">
                                 <!-- Thumbnail -->
-                                @if ($event->thumbnail && $event->thumbnail->file_path)
+                                @if ($event->thumbnail && $event->thumbnail->id_file)
+                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}" class="card-img-top img-fluid" />
+                                @elseif ($event->thumbnail && $event->thumbnail->file_path)
                                     <a href="{{ route('events.show', $event->slug) }}">
                                         <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
                                             class="card-img-top" alt="Donasi Buku">
@@ -294,8 +296,18 @@
                             <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
                                 style="scroll-snap-align: start; width: 300px;">
                                 <div class="position-relative">
-                                    <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
-                                        class="card-img-top" alt="{{ $event->title }}">
+                                    <!-- Thumbnail -->
+                                    @if ($event->thumbnail && $event->thumbnail->id_file)
+                                        <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                            class="card-img-top img-fluid" />
+                                    @elseif ($event->thumbnail && $event->thumbnail->file_path)
+                                        <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
+                                            class="card-img-top" alt="{{ $event->title }}">
+                                    @else
+                                        <div class="card-img-top" style="background-color: #f0f0f0;">
+                                            <span>No cover image</span>
+                                        </div>
+                                    @endif
                                     <div class="event-spacer">
                                         <div class="date-label bg-primary text-white event-date">
                                             {{ $event->detailEvent->start->format('d M') ?? 'TBA' }}
@@ -354,7 +366,10 @@
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center mt-4">
                         <div class="event-card rounded rounded-5">
                             <!-- Thumbnail -->
-                            @if ($event->thumbnail && $event->thumbnail->file_path)
+                            @if ($event->thumbnail && $event->thumbnail->id_file)
+                                <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                    class="card-img-top img-fluid" />
+                            @elseif ($event->thumbnail && $event->thumbnail->file_path)
                                 <a href="{{ route('events.show', $event->slug) }}">
                                     <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
                                         alt="{{ $event->title }}" class="img-fluid overflow-hidden">

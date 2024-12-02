@@ -70,7 +70,10 @@
     <section id="detail-donation" class="container">
         <div class=" rounded-4 ">
             <p class="card-title fw-bold text-dark my-4 h1">{{ $event->title }}</p>
-            @if ($event->thumbnail && $event->thumbnail->file_path)
+            @if ($event->thumbnail && $event->thumbnail->id_file)
+                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                        class="card-img-top img-fluid" />
+            @elseif ($event->thumbnail && $event->thumbnail->file_path)
                 <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}" alt="{{ $event->title }}"
                     class="card-img-top img-fluid rounded">
             @else
