@@ -19,7 +19,7 @@ class RoleController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Role', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Ambil izin Add
@@ -44,7 +44,7 @@ class RoleController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Add Role', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Ambil data
@@ -64,7 +64,7 @@ class RoleController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Add Role', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Validasi
@@ -101,7 +101,7 @@ class RoleController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Edit Role', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Ambil data

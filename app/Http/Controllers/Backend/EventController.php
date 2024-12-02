@@ -25,7 +25,7 @@ class EventController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Event', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Cek masing-masing izin untuk Add, Edit, dan Delete
@@ -85,6 +85,12 @@ class EventController extends Controller
      */
     public function create()
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         return view('Backend.event.create', [
             'categories' => Category::get(),
             'page_title' => 'Create Event',
@@ -96,6 +102,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -202,6 +214,12 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('View Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         // Cari event berdasarkan ID
         $event = Event::with(['category', 'thumbnail', 'location'])->findOrFail($id);
 
@@ -221,6 +239,12 @@ class EventController extends Controller
      */
     public function edit(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         $event = Event::find($id);
         if ($event->whereStatus('finished')->exists()) {
             return back()->with('error', 'Event already finished');
@@ -243,6 +267,12 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',

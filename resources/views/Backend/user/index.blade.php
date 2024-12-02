@@ -110,7 +110,13 @@
                         },
                     @endif
                 ],
-                dom: '<"d-flex justify-content-between align-items-center"<"btn-tambah"B><"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>',
+                dom: @if (!empty($data['PermissionAdd']))
+                    // Jika PermissionAdd tersedia, tombol tambah muncul di kiri
+                    '<"d-flex justify-content-between align-items-center"<"btn-tambah"B><"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>'
+                @else
+                    // Jika PermissionAdd tidak tersedia, search berada di posisi tombol
+                    '<"d-flex justify-content-between align-items-center"<"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>'
+                @endif ,
                 buttons: [
                     @if (!empty($data['PermissionAdd']))
                         {
