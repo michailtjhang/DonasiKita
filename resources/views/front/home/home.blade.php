@@ -113,101 +113,45 @@
                             Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
                         </p>
                         <!-- Tombol -->
-                        <button class="btn rounded rounded-5 fw-light col-4  col-lg-1"
+                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4  col-lg-1"
                             style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                             See More
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <div class="row">
-                    <!-- Kartu pertama -->
 
+                    @foreach ($last_donations as $item)
                     <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
-                        <a href="{{ url('/detail_donation') }}">
+                        <a href="{{ route('donations.show', $item->slug) }}">
                             <div class="card rounded rounded-5 overflow-hidden shadow card-item">
-                                <img src="/images/donate/1.svg" class="card-img-top" alt="...">
+                                <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="...">
                                 <div class="card-body px-4">
-                                    <p class="card-text">Bantu Pendidikan Anak Pedalaman.</p>
+                                    <p class="card-text">{{ $item->title }}</p>
                                     <p class="text-dark mb-2">
                                         <i class="fa fa-user"></i>
-                                        Yayasan Anak Nusantara
+                                        {{ $item->towards ?? 'Anonim' }}
                                     </p>
                                     <p class="text-primary text-small mb-0">
                                         Target
                                     <div class="progress" style="height: 10px;">
                                         <div class="progress-bar progress-bar-animated" role="progressbar"
-                                            style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                            style="width: {{ (str_replace(['Rp', '.', ','], '', $item->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $item->target_amount))) * 100 }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                         </div>
                                     </div>
                                     </p>
                                     <p class="text-medium mt-2">
-                                        Rp 9.550.000/ <span class="fw-bold">Rp 50.000.000</span>
+                                        Rp {{ number_format($item->donation->sum('amount'), 0, ',', '.') }}/ <span class="fw-bold">Rp {{ number_format($item->target_amount, 0, ',', '.') }}</span>
                                         <br>
-                                    <p class="text-small">285 donatur</p>
+                                    <p class="text-small">{{ $item->donation->count() }} donatur</p>
                                     </p>
                                 </div>
                             </div>
                         </a>
                     </div>
+                    @endforeach
 
-                    <!-- Kartu kedua -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
-                        <a href="{{ url('/detail_donation') }}">
-                            <div class="card rounded rounded-5 overflow-hidden shadow card-item">
-                                <img src="/images/donate/2.svg" class="card-img-top" alt="...">
-                                <div class="card-body px-4">
-                                    <p class="card-text">Aksi Bencana Alam untuk Korban Gempa</p>
-                                    <p class="text-dark mb-2">
-                                        <i class="fa fa-user"></i>
-                                        Komunitas Peduli Sesama
-                                    </p>
-                                    <p class="text-primary text-small mb-0">
-                                        Target
-                                    <div class="progress" style="height: 10px;">
-                                        <div class="progress-bar progress-bar-animated" role="progressbar"
-                                            style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-                                            aria-valuemax="100"></div>
-                                    </div>
-                                    </p>
-                                    <p class="text-medium mt-2">
-                                        Rp 10.050.000/ <span class="fw-bold">Rp 100.000.000</span>
-                                        <br>
-                                    <p class="text-small">598 donatur</p>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Kartu ketiga -->
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
-                        <a href="{{ url('/detail_donation') }}">
-                            <div class="card rounded rounded-5 overflow-hidden shadow card-item">
-                                <img src="/images/donate/3.svg" class="card-img-top" alt="...">
-                                <div class="card-body px-4">
-                                    <p class="card-text">Bantuan Kemanusiaan untuk Palestina</p>
-                                    <p class="text-dark mb-2">
-                                        <i class="fa fa-user"></i>
-                                        Yayasan Peduli Palestina
-                                    </p>
-                                    <p class="text-primary text-small mb-0">
-                                        Target
-                                    <div class="progress" style="height: 10px;">
-                                        <div class="progress-bar progress-bar-animated" role="progressbar"
-                                            style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-                                            aria-valuemax="100"></div>
-                                    </div>
-                                    </p>
-                                    <p class="text-medium mt-2">
-                                        Rp 70.000.000/ <span class="fw-bold">Rp 200.000.000</span>
-                                        <br>
-                                    <p class="text-small">1.908 donatur</p>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
 
@@ -237,7 +181,7 @@
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
                         <a href="{{ route('events.show', $item->slug) }}" class="text-light" href="{{ url('/detail_event') }}">
                             <div class="event-card rounded rounded-5">
-                                <img src="{{ asset('storage/cover/' . $item->thumbnail->file_path) }}" alt="{{ $item->title }}" class="img-fluid overflow-hidden" style="height: 450px !important;">
+                                <img src="{{ $item->thumbnail->file_path }}" alt="{{ $item->title }}" class="img-fluid overflow-hidden" style="height: 450px !important;">
                                 <div class="">
                                     <div class="event-date">{{ $item->detailEvent->start->format('d M Y') }}</div>
                                 </div>
@@ -313,12 +257,12 @@
 
 
                     <div class="row">
-                        @foreach ($popular_articles as $item)
+                        @foreach ($last_articles as $item)
                             <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3  ">
                                 <a href="{{ route('blog.show', $item->slug) }}">
                                     <div class="card rounded rounded-5 overflow-hidden shadow w-100 d-flex flex-column">
                                         {{-- acuan img blog --}}
-                                        <img src="{{ asset('storage/cover/' . $item->thumbnail->file_path) }}"
+                                        <img src="{{ $item->thumbnail->file_path }}"
                                             class="card-img-top img-fluid blog-img" alt="{{ $item->title }}" style="height: 200px !important;">
                                         <div
                                             class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
