@@ -369,14 +369,15 @@ footer {
     padding: 15px 25px;
 }
 .blog-btn {
-    background-color: #0d2063; /* Warna biru gelap */
-    color: #fff; /* Warna teks putih */
-    border-radius: 10px; /* Membulatkan sudut */
-    padding: 5px 110px; 
-    font-size: 16px; /* Ukuran font */
-    text-decoration: none; /* Hilangkan garis bawah */
+    background-color: #0d2063;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px; /* Ubah padding agar lebih proporsional */
+    font-size: 16px;
+    text-decoration: none;
     display: block;
     text-align: center;
+    width: 100%; /* Memastikan tombol memenuhi lebar elemen induk */
 }
 .bg-footer {
     background: rgb(9, 38, 53) !important;
