@@ -15,7 +15,7 @@ class DashboardController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Dashboard', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
         
         return view('Backend.dashboard', [

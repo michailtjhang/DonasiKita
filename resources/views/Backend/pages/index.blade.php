@@ -33,10 +33,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Date Events</th>
+                            <th>Name Pages</th>
                             @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
                                 <th>Aksi</th>
                             @endif
@@ -45,11 +42,8 @@
                     <tfoot>
                         <tr>
                             <th></th>
-                            <th><input type="text" placeholder="Search Title" class="form-control form-control-sm"></th>
-                            <th><input type="text" placeholder="Search Category" class="form-control form-control-sm">
+                            <th><input type="text" placeholder="Search Name Pages" class="form-control form-control-sm">
                             </th>
-                            <th><input type="text" placeholder="Search Status" class="form-control form-control-sm"></th>
-                            <th><input type="text" placeholder="Search Date" class="form-control form-control-sm"></th>
                             @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
                                 <th></th>
                             @endif
@@ -86,22 +80,10 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'title',
-                        name: 'title'
+                        data: 'name',
+                        name: 'name'
                     },
-                    {
-                        data: 'category_id',
-                        name: 'category_id'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status'
-                    },
-                    {
-                        data: 'date',
-                        name: 'date'
-                    },
-                    @if (!empty($data['PermissionEdit']) || !empty($data['PermissionShow']))
+                    @if (!empty($data['PermissionEdit']))
                         {
                             data: 'action',
                             name: 'action',
@@ -110,24 +92,10 @@
                         },
                     @endif
                 ],
-                dom: @if (!empty($data['PermissionAdd']))
-                    // Jika PermissionAdd tersedia, tombol tambah muncul di kiri
-                    '<"d-flex justify-content-between align-items-center"<"btn-tambah"B><"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>'
-                @else
+                dom:
                     // Jika PermissionAdd tidak tersedia, search berada di posisi tombol
-                    '<"d-flex justify-content-between align-items-center"<"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>'
-                @endif ,
-                buttons: [
-                    @if (!empty($data['PermissionAdd']))
-                        {
-                            text: '<i class="fas fa-plus"></i> Tambah',
-                            className: 'btn btn-success btn-sm',
-                            action: function() {
-                                window.location.href = "{{ route('event.create') }}";
-                            }
-                        }
-                    @endif
-                ],
+                    '<"d-flex justify-content-between align-items-center"<"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>',
+                buttons: [],
                 language: {
                     lengthMenu: "_MENU_ entries per page",
                     info: "Showing _START_ to _END_ of _TOTAL_ entries",
