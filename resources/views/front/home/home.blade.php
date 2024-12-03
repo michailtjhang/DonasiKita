@@ -4,74 +4,78 @@
 </style>
 @section('content')
     <!-- Hero Section -->
-<div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-            style="background-image: url('/images/hero-bg.svg'); background-size: fill !important; background-position: center !important; background-repeat: no-repeat !important; height:100vh !important">
-                <div class="spacer-x" style="transform: translateY(20%) !important; ">
-                    <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
-                    <p class="lead">Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas</p>
-                    <div class="text-center">
-                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                            <h3>Bantu Sekarang</h3>
-                        </button>
+    <div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                    style="background-image: url('/images/hero-bg.svg'); background-size: fill !important; background-position: center !important; background-repeat: no-repeat !important; height:100vh !important">
+                    <div class="spacer-x" style="transform: translateY(20%) !important; ">
+                        <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
+                        <p class="lead">Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas</p>
+                        <div class="text-center">
+                            <button class="btn btn-primary" id="button-event"
+                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                                <h3>Bantu Sekarang</h3>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item =">
+                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                    style="background-image: url('/images/hero/2.svg');">
+                    <div class="spacer-x">
+                        <h1 class="hero-title bolder-text display-4">Darutat Gunung Lewotobi</h1>
+                        <p class="lead">Bersama membantu korban yang terdampak bencana alam ini</p>
+                        <div class="text-center">
+                            <button class="btn btn-primary" id="button-event"
+                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                                <h3>Bantu Sekarang</h3>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                    style="background-image: url('/images/hero/3.svg');">
+                    <div class="spacer-x">
+                        <h1 class="hero-title bolder-text display-4">Banjir di Desa Rawajaya</h1>
+                        <p class="lead">Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda</p>
+                        <div class="text-center">
+                            <button class="btn btn-primary" id="button-event"
+                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                                <h3>Bantu Sekarang</h3>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
+                    style="background-image: url('/images/hero/4.svg');">
+                    <div class="spacer-x">
+                        <h1 class="hero-title bolder-text display-4">Tanah Longsor di Desa Kertajaya</h1>
+                        <p class="lead">Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan</p>
+                        <div class="text-center">
+                            <button class="btn btn-primary" id="button-event"
+                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
+                                <h3>Bantu Sekarang</h3>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="carousel-item =">
-            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                style="background-image: url('/images/hero/2.svg');">
-                <div class="spacer-x">
-                    <h1 class="hero-title bolder-text display-4">Darutat Gunung Lewotobi</h1>
-                    <p class="lead">Bersama membantu korban yang terdampak bencana alam ini</p>
-                    <div class="text-center">
-                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                            <h3>Bantu Sekarang</h3>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                style="background-image: url('/images/hero/3.svg');">
-                <div class="spacer-x">
-                    <h1 class="hero-title bolder-text display-4">Banjir di Desa Rawajaya</h1>
-                    <p class="lead">Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda</p>
-                    <div class="text-center">
-                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                            <h3>Bantu Sekarang</h3>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                style="background-image: url('/images/hero/4.svg');">
-                <div class="spacer-x">
-                    <h1 class="hero-title bolder-text display-4">Tanah Longsor di Desa Kertajaya</h1>
-                    <p class="lead">Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan</p>
-                    <div class="text-center">
-                        <button class="btn btn-primary" id="button-event" style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                            <h3>Bantu Sekarang</h3>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
     <!-- End Hero Section -->
     <!-- About Content Section -->
     <section id="about-content" class="space-section">
@@ -119,33 +123,44 @@
                 <div class="row ">
 
                     @foreach ($last_donations as $item)
-                    <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
-                        <a href="{{ route('donations.show', $item->slug) }}">
-                            <div class="card rounded rounded-5 overflow-hidden shadow card-item">
-                                <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="..." style="object-fit: cover !important;">
-                                <div class="card-body px-4">
-                                    <p class="card-text">{{ $item->title }}</p>
-                                    <p class="text-dark mb-2">
-                                        <i class="fa fa-user"></i>
-                                        {{ $item->towards ?? 'Anonim' }}
-                                    </p>
-                                    <p class="text-primary text-small mb-0">
-                                        Target
-                                    <div class="progress" style="height: 10px;">
-                                        <div class="progress-bar progress-bar-animated" role="progressbar"
-                                            style="width: {{ (str_replace(['Rp', '.', ','], '', $item->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $item->target_amount))) * 100 }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                            <a href="{{ route('donations.show', $item->slug) }}">
+                                <div class="card rounded rounded-5 overflow-hidden shadow card-item">
+                                    @if ($item->thumbnail && $item->thumbnail->file_path)
+                                        <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="..."
+                                            style="object-fit: cover !important;">
+                                    @else
+                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                            style="height: 160px;">
+                                            <span>No cover image</span>
                                         </div>
+                                    @endif
+                                    <div class="card-body px-4">
+                                        <p class="card-text">{{ $item->title }}</p>
+                                        <p class="text-dark mb-2">
+                                            <i class="fa fa-user"></i>
+                                            {{ $item->towards ?? 'Anonim' }}
+                                        </p>
+                                        <p class="text-primary text-small mb-0">
+                                            Target
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar progress-bar-animated" role="progressbar"
+                                                style="width: {{ (str_replace(['Rp', '.', ','], '', $item->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $item->target_amount))) * 100 }}%;"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                        </p>
+                                        <p class="text-medium mt-2">
+                                            Rp {{ number_format($item->donation->sum('amount'), 0, ',', '.') }}/ <span
+                                                class="fw-bold">Rp
+                                                {{ number_format($item->target_amount, 0, ',', '.') }}</span>
+                                            <br>
+                                        <p class="text-small">{{ $item->donation->count() }} donatur</p>
+                                        </p>
                                     </div>
-                                    </p>
-                                    <p class="text-medium mt-2">
-                                        Rp {{ number_format($item->donation->sum('amount'), 0, ',', '.') }}/ <span class="fw-bold">Rp {{ number_format($item->target_amount, 0, ',', '.') }}</span>
-                                        <br>
-                                    <p class="text-small">{{ $item->donation->count() }} donatur</p>
-                                    </p>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
                     @endforeach
 
                 </div>
@@ -166,7 +181,7 @@
             </p>
         </div>
     </section>
-    
+
     <!-- End Quote Content Section -->
 
     <!-- Blog Upcoming Event -->
@@ -177,16 +192,14 @@
                     <h1 class="bolder-text text-dark text-start">Join Our Upcoming Event</h1>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <a href="{{ route('events') }}">
-                        <button class="btn rounded rounded-5 fw-light" id="button-event"
-                            style="border: 2px solid #1a3a4f; color: #1a3a4f;padding: 10px 20px;">
-                            <h3>See More </h3>
-                        </button>
+                    <a href="{{ route('events') }}" class="btn rounded rounded-5 fw-light" id="button-event"
+                        style="border: 2px solid #1a3a4f; color: #1a3a4f;padding: 10px 20px;">
+                        See More
                     </a>
                 </div>
             </div>
         </div>
-        
+
 
 
         <div class="container mx-auto bg-skyline pt-4 event-container" id="container-upcoming"
@@ -195,22 +208,34 @@
 
                 @foreach ($last_events as $item)
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
-                        <a href="{{ route('events.show', $item->slug) }}" class="text-light" href="{{ url('/detail_event') }}">
+                        <a href="{{ route('events.show', $item->slug) }}" class="text-light"
+                            href="{{ url('/detail_event') }}">
                             <div class="event-card rounded rounded-5">
-                                
-                                <img src="{{ $item->thumbnail->file_path }}" alt="{{ $item->title }}" class="img-fluid overflow-hidden" style="height: 450px !important;">
+
+                                @if ($item->thumbnail && $item->thumbnail->file_path)
+                                    <img src="{{ $item->thumbnail->file_path }}" alt="{{ $item->title }}"
+                                        class="img-fluid overflow-hidden" style="height: 450px !important;">
+                                @else
+                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                        style="height: 450px;">
+                                        <span>No cover image</span>
+                                    </div>
+                                @endif
                                 <div class="">
                                     <div class="event-date">{{ $item->detailEvent->start->format('d M Y') }}</div>
                                 </div>
-                                
+
                                 <div class="event-details event-card-spacer">
                                     <p class="event-title mb-3 fw-bold">{{ $item->title }}</p>
                                     <div class="event-info d-flex card-desc mb-3 justify-content-between">
-                                        <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} - {{ $item->detailEvent->end->format('H:i') }}</span>
-                                        <span><i class="fa fa-location-dot"></i> {{ $item->location->name_location }}</span>
+                                        <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} -
+                                            {{ $item->detailEvent->end->format('H:i') }}</span>
+                                        <span><i class="fa fa-location-dot"></i>
+                                            {{ $item->location->name_location }}</span>
                                     </div>
                                     <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
-                                        {{ $item->detailEvent->start->format('d M Y') }} | <a href="#" class="text-decoration-none text-light">{{ $item->category->name }}</a>
+                                        {{ $item->detailEvent->start->format('d M Y') }} | <a href="#"
+                                            class="text-decoration-none text-light">{{ $item->category->name }}</a>
                                         |
                                         {{ $item->user->name ?? 'Anonim' }}
                                     </p>
@@ -270,30 +295,40 @@
                     <div class="row">
                         @foreach ($last_articles as $item)
                             <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3  ">
-                                <a href="{{ route('blog.show', $item->slug) }}">
-                                    <div class="card rounded rounded-5 overflow-hidden shadow w-100 d-flex flex-column">
-                                        {{-- acuan img blog --}}
-                                        <img src="{{ $item->thumbnail->file_path }}"
-                                            class="card-img-top img-fluid blog-img" alt="{{ $item->title }}" style="height: 200px !important;">
-                                        <div
-                                            class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
-                                            <b class="text-dark" >{{ $item->title }}</b>
-                                            <p class="card-text text-primary text-small mt-3">
-                                                {{ Str::limit(strip_tags($item->content), 100, '...') }}
-                                            </p>
-                                            <div class="text-primary text-small">
+                                <div class="card rounded rounded-5 overflow-hidden shadow w-100 d-flex flex-column">
+                                    {{-- acuan img blog --}}
+                                    @if ($item->thumbnail && $item->thumbnail->file_path)
+                                        <a href="{{ route('blog.show', $item->slug) }}">
+                                            <img src="{{ $item->thumbnail->file_path }}"
+                                                class="card-img-top img-fluid blog-img" alt="{{ $item->title }}"
+                                                style="height: 200px !important;">
+                                        </a>
+                                    @else
+                                        <a href="{{ route('blog.show', $item->slug) }}">
+                                            <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                                style="height: 200px;">
+                                                <span>No cover image</span>
+                                            </div>
+                                        </a>
+                                    @endif
+                                    <div
+                                        class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
+                                        <b class="text-dark">{{ $item->title }}</b>
+                                        <p class="card-text text-primary text-small mt-3">
+                                            {{ Str::limit(strip_tags($item->content), 100, '...') }}
+                                        </p>
+                                        <div class="text-primary text-small">
 
-                                                    {{ $item->created_at->format('d M Y') }} | {{ $item->category->name }}
-                                                    | {{ $item->user->name ?? 'Anonim' }}</p>
-                                            </div>
-                                            <div class="d-flex w-100 justify-content-center">
-                                                <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn">
-                                                    Read More
-                                                </a>
-                                            </div>
+                                            {{ $item->created_at->format('d M Y') }} | {{ $item->category->name }}
+                                            | {{ $item->user->name ?? 'Anonim' }}</p>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-center">
+                                            <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn">
+                                                Read More
+                                            </a>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         @endforeach
 
