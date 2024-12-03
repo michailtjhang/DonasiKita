@@ -40,16 +40,25 @@
                 <div class="col-md-6 col-lg-3 col-xl-3 mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
+                    
                     <a href="" class="text-reset">
-                        <p><i class="fas fa-home me-3"></i> {{ $config['email'] }}</p>
+                        <p><i class="fas fa-envelope me-3"></i> {{ $config['email'] }}</p>
                     </a>
-                    <a href="" class="text-reset">
-                        <p>
-                            <i class="fas fa-envelope me-3"></i>
-                            {{ $config['address'] }}
-                        </p>
-                    </a>
-                    <a href="" class="text-reset">
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- Kolom Kiri -->
+                        <div class="me-3">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    
+                        <!-- Kolom Kanan -->
+                        <div>
+                            <p class="mb-0">
+                                {{ $config['address'] }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <a href="" class="text-reset py-3 my-3">
                         <p><i class="fas fa-phone me-3"></i> {{ $config['phone'] }}</p>
                     </a>
                 </div>

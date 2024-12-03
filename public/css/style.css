@@ -324,7 +324,9 @@ footer {
 .event-info i {
     font-size: 0.875rem;
 }
-
+.card-desc {
+    font-size: 0.875rem;
+}
 .card-title {
     text-decoration: none;
     color: #ffffff;
@@ -358,15 +360,24 @@ footer {
     margin-bottom: 20px;
 }
 .btn-custom {
-    background-color: #007bff;
+    background-color: #50a8d7;
     color: white;
     font-weight: bold;
     margin: 0 10px;
     border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
+    border-radius: 6px;
+    padding: 15px 25px;
 }
-
+.blog-btn {
+    background-color: #0d2063; /* Warna biru gelap */
+    color: #fff; /* Warna teks putih */
+    border-radius: 10px; /* Membulatkan sudut */
+    padding: 5px 110px; 
+    font-size: 16px; /* Ukuran font */
+    text-decoration: none; /* Hilangkan garis bawah */
+    display: block;
+    text-align: center;
+}
 .bg-footer {
     background: rgb(9, 38, 53) !important;
 }
