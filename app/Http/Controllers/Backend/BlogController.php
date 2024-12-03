@@ -22,7 +22,7 @@ class BlogController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Blog & Article', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Cek masing-masing izin untuk Add, Edit, dan Delete
@@ -81,6 +81,12 @@ class BlogController extends Controller
 
     public function create()
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Blog', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         return view('Backend.blog.create', [
             'categories' => Category::get(),
             'page_title' => 'Create Blog Article',
@@ -89,6 +95,12 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Blog', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         // Validasi
         $request->validate([
             'title' => 'required',
@@ -152,6 +164,12 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('View Blog', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         // Cari artikel berdasarkan ID
         $Blog = Blog::with(['category', 'thumbnail'])->findOrFail($id);
 
@@ -167,6 +185,12 @@ class BlogController extends Controller
      */
     public function edit(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Blog', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         return view('Backend.blog.edit', [
             'page_title' => 'Edit Article',
             'article' => Blog::find($id),
@@ -179,6 +203,12 @@ class BlogController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Blog', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+        
         // Validasi data
         $request->validate([
             'title' => 'required',

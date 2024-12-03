@@ -21,7 +21,7 @@ class UserController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Cek masing-masing izin untuk Add, Edit, dan Delete
@@ -76,7 +76,7 @@ class UserController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Add User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Ambil data
@@ -95,7 +95,7 @@ class UserController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Add User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Validasi
@@ -146,7 +146,7 @@ class UserController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Edit User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Ambil data
@@ -166,7 +166,7 @@ class UserController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Edit User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Validasi
@@ -205,7 +205,7 @@ class UserController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Delete User', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Hapus user

@@ -20,15 +20,15 @@ class DonationController extends Controller
     public function index()
     {
         // Ambil izin berdasarkan role pengguna
-        $PermissionRole = PermissionRole::getPermission('Blog & Article', Auth::user()->role_id);
+        $PermissionRole = PermissionRole::getPermission('Donation', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Cek masing-masing izin untuk Add, Edit, dan Delete
-        $data['PermissionAdd'] = PermissionRole::getPermission('Add Blog', Auth::user()->role_id);
-        $data['PermissionEdit'] = PermissionRole::getPermission('Edit Blog', Auth::user()->role_id);
-        $data['PermissionShow'] = PermissionRole::getPermission('View Blog', Auth::user()->role_id);
+        $data['PermissionAdd'] = PermissionRole::getPermission('Add Donation', Auth::user()->role_id);
+        $data['PermissionEdit'] = PermissionRole::getPermission('Edit Donation', Auth::user()->role_id);
+        $data['PermissionShow'] = PermissionRole::getPermission('View Donation', Auth::user()->role_id);
 
         // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
@@ -72,6 +72,12 @@ class DonationController extends Controller
      */
     public function create()
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Donation', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         return view('Backend.donation.create', [
             'page_title' => 'Create Donation',
         ]);
@@ -82,6 +88,12 @@ class DonationController extends Controller
      */
     public function store(Request $request)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Donation', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         $request->validate([
             'title' => 'required|string|max:200',
             'towards' => 'required|string|max:200',
@@ -152,6 +164,12 @@ class DonationController extends Controller
      */
     public function show(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('View Donation', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         // Cari event berdasarkan ID
         $need = Need::findOrFail($id);
 
@@ -167,6 +185,12 @@ class DonationController extends Controller
      */
     public function edit(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Donation', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         $need = Need::with('thumbnail')->find($id);
         if ($need->whereStatus('completed')->exists()) {
             return back()->with('error', 'Donation already completed and cannot be edited');
@@ -183,6 +207,12 @@ class DonationController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Donation', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+        
         $request->validate([
             'title' => 'required|string|max:200',
             'towards' => 'required|string|max:200',
