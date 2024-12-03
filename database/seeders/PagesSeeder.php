@@ -62,11 +62,6 @@ class PagesSeeder extends Seeder
                             'name' => 'Dika Saputra',
                             'position' => 'Head of Technology',
                             'image' => '/images/about/dika.svg'
-                        ],
-                        [
-                            'name' => 'Nina Amalia',
-                            'position' => 'Head of Communications',
-                            'image' => '/images/about/nina.svg'
                         ]
                     ]
                 ]),
@@ -76,7 +71,54 @@ class PagesSeeder extends Seeder
             [
                 'id' => '01j8kkdk3abh0a671dr5rqkshy',
                 'name' => 'home',
-                'content' => json_encode([]),  // Tambahkan data kosong untuk kolom content
+                'content' => json_encode([
+                    'hero_section' => [
+                        'carousel' => [
+                            [
+                                'title' => 'Bantu anak kurang gizi',
+                                'subtitle' => 'Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas',
+                                'image' => '/images/hero-bg.svg',
+                                'button_text' => 'Bantu Sekarang'
+                            ],
+                            [
+                                'title' => 'Darurat Gunung Lewotobi',
+                                'subtitle' => 'Bersama membantu korban yang terdampak bencana alam ini',
+                                'image' => '/images/hero/2.svg',
+                                'button_text' => 'Bantu Sekarang'
+                            ],
+                            [
+                                'title' => 'Banjir di Desa Rawajaya',
+                                'subtitle' => 'Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda',
+                                'image' => '/images/hero/3.svg',
+                                'button_text' => 'Bantu Sekarang'
+                            ],
+                            [
+                                'title' => 'Tanah Longsor di Desa Kertajaya',
+                                'subtitle' => 'Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan',
+                                'image' => '/images/hero/4.svg',
+                                'button_text' => 'Bantu Sekarang'
+                            ]
+                        ]
+                    ],
+                    'about_section' => [
+                        'title' => 'Kamu Adalah Harapan Lainnya',
+                        'description' => '<span class="fw-bold">DonasiKita</span> meyakinkan Anda untuk menjadi bagian dari perubahan positif melalui platform donasi yang transparan, aman, dan terpercaya...',
+                        'image' => '/images/content/about.svg'
+                    ],
+                    'quote_section' => [
+                        'quote' => '"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain."',
+                        'author' => 'Rasulullah SAW',
+                        'background_image' => '/images/quotes.svg'
+                    ],
+                    'invitation_section' => [
+                        'title' => 'Your help means a lot',
+                        'description' => 'donate or be a volunteer now!',
+                        'buttons' => [
+                            ['text' => 'Donate', 'link' => '/donate'],
+                            ['text' => 'Sukarelawan', 'link' => '/event']
+                        ]
+                    ]
+                ]),  // Tambahkan data kosong untuk kolom content
                 'created_at' => '2024-09-24 20:25:55',
                 'updated_at' => '2024-09-24 20:25:55'
             ]

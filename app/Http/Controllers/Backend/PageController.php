@@ -66,19 +66,44 @@ class PageController extends Controller
         if (empty($PermissionRole)) {
             return back();
         }
-
-        $page = pages::where('name', $page)->firstOrFail();
+        // Ambil halaman berdasarkan nama
+        $page = Pages::where('name', $page)->firstOrFail();
         $content = json_decode($page->content, true);
+        
+        // Periksa jika section yang diminta ada
+        if (!isset($content[$section])) {
+            // Jika section tidak ada dalam konten, berikan nilai default atau kosong
+            $sectionData = [];
+        } else {
+            // Jika ada, ambil data dari section tersebut
+            $sectionData = $content[$section];
+        }
 
-        // Ambil data sesuai section
-        $sectionData = $content[$section] ?? [];
-
-        return view('backend.pages.edit-section', [
-            'page_title' => 'Edit Section: ' . ucfirst($section) . ' (' . ucfirst($page->name) . ')',
-            'page' => $page,
-            'section' => $section,
-            'sectionData' => $sectionData,
-        ]);
+        // Kondisi untuk memilih view berdasarkan nama page
+        if ($page->name == 'home') {
+            return view('backend.pages.edit-home-section', [
+                'page_title' => 'Edit Section: ' . ucfirst($section) . ' (' . ucfirst($page->name) . ')',
+                'page' => $page,
+                'section' => $section,
+                'sectionData' => $sectionData,
+            ]);
+        } elseif ($page->name == 'about') {
+            return view('backend.pages.edit-about-section', [
+                'page_title' => 'Edit Section: ' . ucfirst($section) . ' (' . ucfirst($page->name) . ')',
+                'page' => $page,
+                'section' => $section,
+                'sectionData' => $sectionData,
+            ]);
+        }
+        // Tambahkan kondisi lain untuk halaman lain jika perlu
+        else {
+            return view('backend.pages.edit-section', [
+                'page_title' => 'Edit Section: ' . ucfirst($section) . ' (' . ucfirst($page->name) . ')',
+                'page' => $page,
+                'section' => $section,
+                'sectionData' => $sectionData,
+            ]);
+        }
     }
 
     public function updateSection(Request $request, $page, $section)
@@ -88,12 +113,20 @@ class PageController extends Controller
         if (empty($PermissionRole)) {
             return back();
         }
+        dd($request->all(), $page, $section);
 
         $page = Pages::where('name', $page)->firstOrFail();
         $content = json_decode($page->content, true);
 
-        // Update data section
-        $content[$section] = $request->all();
+        // Jika section adalah team_section, lakukan penyesuaian array anggota tim
+        if ($section === 'team_section') {
+            $team = $request->input('team', []);
+            $content[$section] = array_filter($team, function ($member) {
+                return !empty($member['name']); // Hanya anggota yang memiliki nama
+            });
+        } else {
+            $content[$section] = $request->all();
+        }
 
         $page->content = json_encode($content);
         $page->save();
