@@ -311,15 +311,15 @@
                                 @endif
                             </a>
                             <div class="card-body d-flex flex-column justify-content-between">
-                                <h5 class="card-title">
+                                <h5 class="card-title mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
                                         class="text-dark text-decoration-none">
                                         {{ $article->title }}
                                     </a>
                                 </h5>
-                                <p class="card-text text-muted">{{ Str::limit(strip_tags($article->content), 100, '...') }}
+                                <p class="card-text text-muted mb-3">{{ Str::limit(strip_tags($article->content), 100, '...') }}
                                 </p>
-                                <div class="d-flex flex-wrap gap-1 align-items-center mt-3">
+                                <div class="d-flex flex-wrap  align-items-center mt-3">
                                     <small
                                         class="text-muted">{{ $article->created_at->locale('id')->diffForHumans() }}</small>
                                     <span class="text-muted mx-1">|</span>
@@ -329,6 +329,11 @@
                                     </a>
                                     <span class="text-muted mx-1">|</span>
                                     <small class="text-muted">Oleh {{ $article->user->name ?? 'Anonim' }}</small>
+                                </div>
+                                <div class="d-flex w-100 justify-content-center ">
+                                    <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
+                                        Read More
+                                    </a>
                                 </div>
                             </div>
                         </div>
