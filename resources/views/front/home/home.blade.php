@@ -1,6 +1,65 @@
 @extends('front.layout.app')
 <style>
+    .accordion-button::after {
+        content: '';
+        display: inline-block;
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+        background-image: url('/images/button_faq.svg') !important;
+        /* Path ke ikon Anda */
+        background-size: 100% !important;
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: transform 0.3s ease;
+    }
 
+    /* Rotasi ketika accordion dibuka */
+    .accordion-button:not(.collapsed)::after {
+        transform: rotate(90deg) !important;
+    }
+
+    .accordion-rounded {
+        border-radius: 15px !important;
+        overflow: hidden;
+    }
+
+    .accordion-header {
+
+        border-radius: 30px !important;
+    }
+
+    /* Styling tambahan */
+    .accordion-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .accordion-button:focus,
+    .accordion-button:not(.collapsed) {
+        background-color: transparent !important;
+        /* Pastikan tidak berubah saat fokus atau aktif */
+        color: inherit !important;
+        /* Warna teks tetap */
+        box-shadow: none !important;
+        /* Hilangkan efek outline */
+    }
+
+    .accordion-body-custom {
+        background-color: #f8fcff;
+        color: #0f3d56;
+        /* border: 1px solid #0f3d56;
+    border-radius: 5px; */
+    }
+
+    .accordion-teks-custom {
+        color: #0f3d56 !important;
+    }
+
+    /* .accordion-button:hover {
+    color: #084298;
+} */
 </style>
 @section('content')
     <!-- Hero Section -->
@@ -8,8 +67,8 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero-bg.svg'); background-size: fill !important; background-position: center !important; background-repeat: no-repeat !important; height:100vh !important">
-                    <div class="spacer-x" style="transform: translateY(20%) !important; ">
+                    style="background-image: url('/images/hero-bg.svg');">
+                    <div class="spacer-x">
                         <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
                         <p class="lead">Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas</p>
                         <div class="text-center">
@@ -173,7 +232,7 @@
 
     <!-- Quote Content Section -->
     <section id="quote-content" class="space-section">
-        <div class="container-fluid d-flex justify-content-center align-items-center text-center bg-skyline vw-100"
+        <div class="container-fluid d-flex justify-content-center align-items-center text-center bg-skyline"
             style="background-image: url('/images/quotes.svg'); height: 400px; background-size: cover; background-position: center; background-repeat: no-repeat;">
             <p class="text-light m-0" style="font-size: 35px; text-shadow: 2px 2px #000;">
                 "Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain." <br>
@@ -211,7 +270,6 @@
                         <a href="{{ route('events.show', $item->slug) }}" class="text-light"
                             href="{{ url('/detail_event') }}">
                             <div class="event-card rounded rounded-5">
-
                                 @if ($item->thumbnail && $item->thumbnail->file_path)
                                     <img src="{{ $item->thumbnail->file_path }}" alt="{{ $item->title }}"
                                         class="img-fluid overflow-hidden" style="height: 450px !important;">
@@ -322,8 +380,8 @@
                                             {{ $item->created_at->format('d M Y') }} | {{ $item->category->name }}
                                             | {{ $item->user->name ?? 'Anonim' }}</p>
                                         </div>
-                                        <div class="d-flex w-100 justify-content-center">
-                                            <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn">
+                                        <div class="d-flex w-100">
+                                            <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn w-100">
                                                 Read More
                                             </a>
                                         </div>
@@ -338,4 +396,106 @@
         </div>
     </section>
     <!-- End Blog Content Section -->
+
+    <!-- FAQ Content Section -->
+    <section id="accodrion" class="space-section">
+        <h1 class="bolder-text text-dark text-center mb-5 ">Frequently Asked Question</h1>
+        <div class="container">
+            <div class="row">
+                <!-- Kolom Kiri: Gambar -->
+                <div class="col-lg-6 col-12 d-flex justify-content-center mb-5">
+                    <img src="{{ url('/images/faq.svg') }}" alt="" class="img img-fluid">
+                </div>
+                <!-- Kolom Kanan: Accordion -->
+                <div class="col-lg-6 col-12 p-4">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item accordion-rounded   mb-3">
+                            <h2 class="accordion-header accordion-rounded" id="headingOne">
+                                <button class="accordion-button fw-bold collapsed fw-bold accordion-teks-custom"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                    aria-expanded="false" aria-controls="collapseOne">
+                                    <span style="color: #0f3d56">Apa itu DonasiKita?</span>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse  accordion-body-custom collapse"
+                                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body ">
+                                    <span style="color: #0f3d56">DonasiKita adalah platform digital yang memudahkan siapa
+                                        saja untuk berdonasi dan berkontribusi dalam berbagai proyek kemanusiaan, seperti
+                                        pendidikan, kesehatan, bencana alam, dan lainnya.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item accordion-rounded   mb-3">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button fw-bold collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    Bagaimana cara membuat akun di DonasiKita?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <span style="color: #0f3d56">Klik tombol "Daftar," isi data pribadi Anda, dan ikuti
+                                        langkah-langkah pendaftaran yang sederhana.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item accordion-rounded   mb-3">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button fw-bold collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    Bagaimana cara berdonasi di DonasiKita?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <span style="color: #0f3d56">Anda bisa memilih proyek yang ingin didukung, klik tombol
+                                        "Donasi Sekarang," masukkan jumlah donasi, dan pilih metode pembayaran yang
+                                        tersedia.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item accordion-rounded   mb-3">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button fw-bold collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    Apakah ada batas minimum untuk berdonasi?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <span style="color: #0f3d56">Ya, batas minimum donasi adalah Rp10.000 untuk memudahkan
+                                        semua orang berpartisipasi.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item accordion-rounded   mb-3">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button fw-bold collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false"
+                                    aria-controls="collapseFive">
+                                    Apakah DonasiKita aman?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <span style="color: #0f3d56">DonasiKita menggunakan sistem keamanan yang terpercaya dan
+                                        memastikan setiap donasi tercatat serta disalurkan sesuai tujuan. </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content Section -->
 @endsection

@@ -117,6 +117,30 @@ class PagesSeeder extends Seeder
                             ['text' => 'Donate', 'link' => '/donate'],
                             ['text' => 'Sukarelawan', 'link' => '/event']
                         ]
+                    ],
+                    'faq_section' => [
+                        'faq' => [
+                            [
+                                'questions' => 'Apa itu DonasiKita?',
+                                'answers' => 'DonasiKita adalah platform digital yang memudahkan siapa saja untuk berdonasi dan berkontribusi dalam berbagai proyek kemanusiaan, seperti pendidikan, kesehatan, bencana alam, dan lainnya.'
+                            ],
+                            [
+                                'questions' => 'Bagaimana cara membuat akun di DonasiKita?',
+                                'answers' => 'Klik tombol "Daftar," isi data pribadi Anda, dan ikuti langkah-langkah pendaftaran yang sederhana.'
+                            ],
+                            [
+                                'questions' => 'Bagaimana cara berdonasi di DonasiKita?',
+                                'answers' => 'Anda bisa memilih proyek yang ingin didukung, klik tombol "Donasi Sekarang," masukkan jumlah donasi, dan pilih metode pembayaran yang tersedia.'
+                            ],
+                            [
+                                'questions' => 'Apakah ada batas minimum untuk berdonasi?',
+                                'answers' => 'Ya, batas minimum donasi adalah Rp10.000 untuk memudahkan semua orang berpartisipasi.'
+                            ],
+                            [
+                                'questions' => 'Apakah DonasiKita aman?',
+                                'answers' => 'Ya, DonasiKita menggunakan teknologi keamanan terbaru dan memastikan setiap donasi tercatat serta disalurkan sesuai tujuan.'
+                            ]
+                        ]
                     ]
                 ]),  // Tambahkan data kosong untuk kolom content
                 'created_at' => '2024-09-24 20:25:55',
