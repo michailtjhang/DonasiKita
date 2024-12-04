@@ -28,6 +28,7 @@
                 $PermissionArticle = App\Models\PermissionRole::getPermission('Blog & Article', Auth::user()->role_id);
                 $PermissionEvent = App\Models\PermissionRole::getPermission('Event', Auth::user()->role_id);
                 $PermissionDonation = App\Models\PermissionRole::getPermission('Donation', Auth::user()->role_id);
+                $PermissionPage = App\Models\PermissionRole::getPermission('Pages', Auth::user()->role_id);
             @endphp
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
@@ -65,13 +66,15 @@
                         </a>
                     </li>
                 @endif
-
+                
+                @if (!empty($PermissionPage))
                 <li class="nav-item">
-                    <a href="" class="nav-link @if (Request::segment(2) == 'website') active @endif">
+                    <a href="{{ route('pages.index') }}" class="nav-link @if (Request::segment(2) == 'pages') active @endif">
                         <i class="fas fa-globe nav-icon"></i>
                         <p>Webiste</p>
                     </a>
                 </li>
+                @endif
 
                 @if (!empty($PermissionArticle))
                     <li class="nav-item">

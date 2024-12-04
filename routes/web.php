@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
@@ -13,9 +14,9 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
-use App\Http\Controllers\Front\EventController as FrontEventController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -90,10 +91,12 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
     Route::prefix('admin')->group(function () {
 
-        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
 
         Route::resource('role', RoleController::class);
         Route::resource('user', UserController::class);
+
         Route::resource('config', ConfigController::class)
             ->only(['index', 'update']);
         Route::resource('category', CategoryController::class)
@@ -105,6 +108,14 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
         Route::resource('donation', DonationController::class)
             ->only(['index', 'create', 'store', 'edit', 'update', 'show']);
 
-        Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])->name('article.uploadImage');
+        Route::get('pages', [PageController::class, 'index'])
+            ->name('pages.index');
+        Route::get('pages/{page}/edit/{section}', [PageController::class, 'editSection'])
+            ->name('pages.edit.section');
+        Route::put('pages/{page}/update/{section}', [PageController::class, 'updateSection'])
+            ->name('pages.update.section');
+
+        Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])
+            ->name('article.uploadImage');
     });
 });

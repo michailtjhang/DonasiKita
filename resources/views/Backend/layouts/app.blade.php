@@ -120,7 +120,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 1.0.0
             </div>
-            <strong>Copyright &copy; 2024 <a href="https://github.com/michailtjhang">Michail</a>.</strong> All rights
+            <strong>Copyright &copy; 2024 <a href="{{ url('/') }}">{{ config('app.name') }}</a>.</strong> All rights
             reserved.
         </footer>
     </div>

@@ -25,7 +25,7 @@ class EventController extends Controller
         // Ambil izin berdasarkan role pengguna
         $PermissionRole = PermissionRole::getPermission('Event', Auth::user()->role_id);
         if (empty($PermissionRole)) {
-            abort(404);
+            return back();
         }
 
         // Cek masing-masing izin untuk Add, Edit, dan Delete
@@ -85,6 +85,12 @@ class EventController extends Controller
      */
     public function create()
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         return view('Backend.event.create', [
             'categories' => Category::get(),
             'page_title' => 'Create Event',
@@ -96,6 +102,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Add Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -202,6 +214,12 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('View Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         // Cari event berdasarkan ID
         $event = Event::with(['category', 'thumbnail', 'location'])->findOrFail($id);
 
@@ -221,16 +239,26 @@ class EventController extends Controller
      */
     public function edit(string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+
         $event = Event::find($id);
         if ($event->whereStatus('finished')->exists()) {
             return back()->with('error', 'Event already finished');
         }
 
+        // Make sure the start and end fields are Carbon instances
+        $startDate = Carbon::parse($event->detailEvent->start)->format('m/d/Y h:i A');
+        $endDate = Carbon::parse($event->detailEvent->end)->format('m/d/Y h:i A');
+
         return view('Backend.event.edit', [
             'page_title' => 'Edit Event',
             'event' => $event,
             'categories' => Category::get(),
-            'date' => Carbon::parse($event->start)->format('m/d/Y h:i A') . ' - ' . Carbon::parse($event->end)->format('m/d/Y h:i A'),
+            'date' => $startDate . ' - ' . $endDate, // Passing formatted date range
         ]);
     }
 
@@ -239,12 +267,18 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Ambil izin berdasarkan role pengguna
+        $PermissionRole = PermissionRole::getPermission('Edit Event', Auth::user()->role_id);
+        if (empty($PermissionRole)) {
+            return back();
+        }
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
             'participant_description' => 'required|string|max:500',
@@ -253,8 +287,8 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'requires_volunteers' => 'required|boolean',
-            'status' => 'required|in:ongoing,completed',
+            'when_volunteer' => 'required|boolean',
+            'status' => 'required|string|in:ongoing,finished',
         ]);
 
         $event = Event::with('thumbnail', 'location', 'detailEvent')->findOrFail($id); // Ambil event dengan relasi terkait
@@ -331,7 +365,7 @@ class EventController extends Controller
                     'description_participants' => $data['participant_description'],
                     'capacity_volunteers' => $data['volunteer'] ?? 0,
                     'description_volunteers' => $data['volunteer_description'] ?? '',
-                    'requires_volunteers' => $data['requires_volunteers'],
+                    'requires_volunteers' => $data['when_volunteer'],
                 ]
             );
 
