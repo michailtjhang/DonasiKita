@@ -68,6 +68,9 @@ Route::get('/confirmationtransfer', function () {
     return view('front.payment_transfer.confirmationtransfer');
 });
 
+Route::get('/profile', function () {
+    return view('front.profile.profile');
+});
 
 Route::post('/confirmationbarang', function () {
     // Tambahkan logika backend untuk menangani data yang dikirim (opsional)
