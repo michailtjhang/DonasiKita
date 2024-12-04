@@ -44,7 +44,13 @@ class AuthController extends Controller
         if ($user) {
             // Cek password
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
-                // Jika password benar
+                // Jika user belum memverifikasi email
+                if (Auth::user()->email_verified_at === null) {
+                    // Redirect ke halaman verifikasi email
+                    return redirect()->route('verification.notice');
+                }
+
+                // Jika email sudah terverifikasi
                 if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
                     return redirect()->intended('admin/dashboard');
                 } else {
@@ -105,9 +111,6 @@ class AuthController extends Controller
         // Kirim verifikasi email
         event(new Registered($user));
         $user->sendEmailVerificationNotification();
-
-        // Login user
-        Auth::login($user);
 
         // Redirect ke halaman dashboard
         return redirect('/login')->with('success', 'Registration successful! Please verify your email.');
