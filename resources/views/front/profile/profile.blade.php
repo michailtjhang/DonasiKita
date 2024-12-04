@@ -316,6 +316,16 @@
         <label for="email">Email</label>
         <input type="email" id="email" value="johndoe@example.com" />
 
+    <div class="mb-0">
+    <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter your password">
+            <button class="btn btn-secondary" type="button" id="togglePassword">
+                <i class="fas fa-eye" id="toggleIcon"></i>
+            </button>
+        </div>
+    </div>
+
         <!-- Button Section -->
         <div class="button-container">
             <button class="save-changes-button">Save Changes</button>
@@ -330,9 +340,16 @@
     <div class="popup-content">
         <h3>Edit Profile Picture</h3>
         <div class="popup-buttons">
-            <button onclick="editProfilePicture()">Edit Picture</button>
+            <!-- Button untuk memunculkan form input file -->
+            <button onclick="showFileInput()">Change Picture</button>
             <button onclick="removeProfilePicture()">Remove Picture</button>
             <button onclick="closeProfilePicturePopup()">Cancel</button>
+        </div>
+
+        <!-- Form Input File (Sembunyi pada awalnya) -->
+        <div id="fileInputContainer" style="display: none; padding-top: 10px;">
+            <input type="file" id="profilePictureInput" accept="image/*" style="margin-top: 10px;">
+            <button onclick="uploadProfilePicture()" style="margin-top: 10px;">Upload</button>
         </div>
     </div>
 </div>
@@ -557,5 +574,39 @@
         // Anda bisa menambahkan logika untuk menghapus gambar disini
         closeProfilePicturePopup();
     }
+
+    document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            // Toggle the type attribute
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        });
+
+        // Fungsi untuk membuka form input file saat tombol "Change Picture" diklik
+function showFileInput() {
+    document.getElementById("fileInputContainer").style.display = "block"; // Menampilkan input file
+}
+
+// Fungsi untuk mengupload gambar profil
+function uploadProfilePicture() {
+    const fileInput = document.getElementById("profilePictureInput");
+    if (fileInput.files && fileInput.files[0]) {
+        // Lakukan upload gambar sesuai dengan file yang dipilih
+        alert("Gambar profil berhasil di-upload.");
+        closeProfilePicturePopup(); // Tutup pop-up setelah upload
+    } else {
+        alert("Pilih gambar terlebih dahulu.");
+    }
+}
+
 </script>
 @endsection
