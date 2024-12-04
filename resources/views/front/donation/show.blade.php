@@ -106,7 +106,15 @@
                     <p class=" fw-bold h1">{{ $donation->title }}</p>
 
                     <!-- Gambar -->
-                    <img src="/images/donate/3.svg" alt="Donation Image" class="card-img-top img-fluid rounded">
+                    @if ($donation->thumbnail && $donation->thumbnail->file_path)
+                        <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top img-fluid rounded"
+                            alt="{{ $donation->title }}">
+                    @else
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                            style="height: 200px;">
+                            <span>No cover image</span>
+                        </div>
+                    @endif
 
                     <!-- Konten -->
                     <!-- Target dan Total -->

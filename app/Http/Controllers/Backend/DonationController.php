@@ -245,7 +245,7 @@ class DonationController extends Controller
                 'slug' => $data['slug'],
                 'description' => $data['description'],
                 'description_need' => $data['description_need'],
-                'amount' => $data['amount'],
+                'target_amount' => $data['amount'],
                 'towards' => $data['towards'],
                 'days_left' => $data['days_left'],
             ]);

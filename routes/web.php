@@ -29,7 +29,7 @@ Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEven
 
 Route::get('/events', [FrontEventController::class, 'index'])->name('events');
 Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
-Route::post('/events/{slug}', [FrontEventController::class, 'store'])->name('events.store');
+Route::post('/events/join', [FrontEventController::class, 'join'])->name('events.join');
 
 Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
 Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
