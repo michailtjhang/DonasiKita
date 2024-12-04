@@ -223,9 +223,11 @@
 @endsection
 
 @section('content')
+<div class="space-section"></div>
+
 <div class="container my-5">
     <!-- Info Section -->
-    <div class="info-section">
+    <div class="info-section my-5">
         <img src="/images/donate/vector_blue.svg" alt="Icon">
         <div class="info-title">Bantuan Kemanusiaan untuk Palestina</div>
     </div>
