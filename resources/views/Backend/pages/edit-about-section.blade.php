@@ -96,7 +96,7 @@
                                         <!-- Existing Image -->
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ asset($team['image']) }}" class="img-thumbnail shadow-sm border"
+                                            <img src="{{ $team['image'] ?? asset($team['image']) }}" class="img-thumbnail shadow-sm border"
                                                 alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>

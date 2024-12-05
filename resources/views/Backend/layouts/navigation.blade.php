@@ -47,10 +47,43 @@
                 @endif
 
                 <li class="nav-item">
-                    <a href="" class="nav-link @if (Request::segment(2) == 'laporan') active @endif">
-                        <i class="fas fa-chart-line nav-icon"></i>
-                        <p>Laporan</p>
+                    <a href="#" class="nav-link @if (Request::segment(2) == 'report') active @endif">
+                        <i class="fas fa-chart-pie nav-icon"></i>
+                        <p>
+                            Report
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('reports.donations') }}"
+                                class="nav-link @if (Request::segment(3) == 'donations') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Report Donation</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('reports.donations.verification') }}"
+                                class="nav-link @if (Request::segment(3) == 'donations') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Donation Verification</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('reports.event.participants') }}"
+                                class="nav-link @if (Request::segment(3) == 'event') active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Report Event</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 @if (!empty($PermissionDonation) || !empty($PermissionArticle) || !empty($PermissionEvent))
@@ -66,14 +99,15 @@
                         </a>
                     </li>
                 @endif
-                
+
                 @if (!empty($PermissionPage))
-                <li class="nav-item">
-                    <a href="{{ route('pages.index') }}" class="nav-link @if (Request::segment(2) == 'pages') active @endif">
-                        <i class="fas fa-globe nav-icon"></i>
-                        <p>Webiste</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('pages.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'pages') active @endif">
+                            <i class="fas fa-globe nav-icon"></i>
+                            <p>Webiste</p>
+                        </a>
+                    </li>
                 @endif
 
                 @if (!empty($PermissionArticle))

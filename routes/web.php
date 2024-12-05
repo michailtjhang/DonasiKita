@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\ArticleController;
 use App\Http\Controllers\Backend\ConfigController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -41,7 +42,6 @@ Route::group(['middleware' => 'verifiedEmail'], function () {
     Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
     Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
     Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
-
 });
 
 Route::get('/donasibarang_login', function () {
@@ -99,6 +99,21 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
+
+        // Route laporan
+        Route::prefix('reports')->group(function () {
+            Route::get('donations/verification', [ReportController::class, 'donationVerification'])
+                ->name('reports.donations.verification'); // Verifikasi transfer dana
+
+            Route::get('donations', [ReportController::class, 'donations'])
+                ->name('reports.donations'); // Laporan donasi
+
+            Route::get('donations/export/{format}', [ReportController::class, 'exportDonations'])
+                ->name('reports.donations.export'); // Export laporan donasi (PDF/Excel)
+
+            Route::get('event-participants', [ReportController::class, 'eventParticipants'])
+                ->name('reports.event.participants'); // Laporan peserta/volunteer
+        });
 
         Route::resource('role', RoleController::class);
         Route::resource('user', UserController::class);
