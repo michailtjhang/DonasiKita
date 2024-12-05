@@ -39,6 +39,13 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="button_{{ $key }}">Button Link</label>
+                                        <input type="text" name="carousel[{{ $key }}][button_link]"
+                                            id="button_{{ $key }}" value="{{ $carousel['button_link'] }}"
+                                            class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="carousel_image_{{ $key }}">Image</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input"
@@ -50,9 +57,6 @@
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-danger mb-4"
-                                        onclick="removeCarouselItem({{ $key }})">Remove</button>
-
                                     <div class="row mt-3 text-center">
                                         <!-- Preview Image -->
                                         <div class="col-6">
@@ -63,22 +67,17 @@
                                         </div>
 
                                         <!-- Existing Image -->
-                                        {{-- @if ($event->thumbnail && $event->thumbnail->id_file)
-                                                <div class="col-6">
-                                                    <span class="d-block mb-2 text-muted">Existing:</span>
-                                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                                        style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
-                                                </div>
-                                            @else --}}
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ asset($carousel['image']) }}"
+                                            <img src="{{ $carousel['image'] ?? asset($carousel['image']) }}"
                                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>
-                                        {{-- @endif --}}
                                     </div>
+
+
+                                    <button type="button" class="btn btn-danger mb-4"
+                                        onclick="removeCarouselItem({{ $key }})">Remove</button>
                                 </div>
                             @endforeach
 
@@ -102,8 +101,28 @@
 
                     <div class="form-group">
                         <label for="about_image">About Section Image</label>
-                        <input type="text" name="image" id="about_image" value="{{ $sectionData['image'] ?? '' }}"
-                            class="form-control">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="about_image"
+                                onchange="previewImage(event)">
+                            <label class="custom-file-label" for="about_image">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 text-center">
+                        <!-- Preview Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Preview:</span>
+                            <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail shadow-sm border"
+                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Existing Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Existing:</span>
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) }}"
+                                class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
                     </div>
                 @elseif($section === 'quote_section')
                     <div class="form-group">
@@ -145,22 +164,24 @@
                         <div class="row">
 
                             @foreach ($sectionData['faq'] ?? [] as $key => $faq)
-                                <h5>Faq Item {{ $key + 1 }}</h5>
+                                <div class="col-md-4">
+                                    <h5>Faq Item {{ $key + 1 }}</h5>
 
-                                <div class="form-group">
-                                    <label for="questions_{{ $key }}">Questions</label>
-                                    <input type="text" name="questions[{{ $key }}]"
-                                        id="questions_{{ $key }}" value="{{ $faq['questions'] ?? '' }}"
-                                        class="form-control">
+                                    <div class="form-group">
+                                        <label for="questions_{{ $key }}">Questions</label>
+                                        <input type="text" name="questions[{{ $key }}]"
+                                            id="questions_{{ $key }}" value="{{ $faq['questions'] ?? '' }}"
+                                            class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="answers_{{ $key }}">Answers</label>
+                                        <textarea name="answers[{{ $key }}]" id="answers_{{ $key }}" class="form-control">{{ $faq['answers'] ?? '' }}</textarea>
+                                    </div>
+
+                                    <button type="button" class="btn btn-danger mb-4"
+                                        onclick="removeFaqItem({{ $key }})">Remove</button>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="answers_{{ $key }}">Answers</label>
-                                    <textarea name="answers[{{ $key }}]" id="answers_{{ $key }}" class="form-control">{{ $faq['answers'] ?? '' }}</textarea>
-                                </div>
-
-                                <button type="button" class="btn btn-danger mb-4"
-                                    onclick="removeFaqItem({{ $key }})">Remove</button>
                             @endforeach
 
                         </div>
@@ -288,6 +309,25 @@
                 for (let i = index; i < faqIndex; i++) {
                     document.querySelector(`#questions_${i}`).id = `questions_${i}`;
                     document.querySelector(`#answers_${i}`).id = `answers_${i}`;
+                }
+            }
+        </script>
+    @else
+        <!-- Image Preview -->
+        <script>
+            function previewImage(event) {
+                const input = event.target;
+                const preview = document.getElementById('imgPreview');
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block'; // Tampilkan gambar setelah berhasil di-load
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    preview.style.display = 'none'; // Sembunyikan jika tidak ada file
                 }
             }
         </script>
