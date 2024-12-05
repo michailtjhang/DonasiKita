@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id(); // Primary Key
+            $table->string('user_id'); // FK ke users
             $table->string('cloudinary_public_id'); // ID file di Cloudinary
             $table->string('cloudinary_url'); // URL file di Cloudinary
             $table->string('type')->nullable(); // Jenis media (e.g., 'image', 'video')
-            $table->timestamps();
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\ArticleController;
+use App\Http\Controllers\Front\ProfileController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -42,6 +43,8 @@ Route::group(['middleware' => 'verifiedEmail'], function () {
     Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
     Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
     Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
+
+    Route::resource('profile', ProfileController::class);
 });
 
 Route::get('/donasibarang_login', function () {
@@ -66,10 +69,6 @@ Route::get('/transfer_login', function () {
 
 Route::get('/confirmationtransfer', function () {
     return view('front.payment_transfer.confirmationtransfer');
-});
-
-Route::get('/profile', function () {
-    return view('front.profile.profile');
 });
 
 Route::post('/confirmationbarang', function () {
