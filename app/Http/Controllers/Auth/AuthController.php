@@ -68,6 +68,14 @@ class AuthController extends Controller
 
     public function register()
     {
+        if (!empty(Auth::check())) {
+            if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
+                return redirect()->intended('admin/dashboard');
+            } else {
+                return redirect()->intended('login');
+            }
+        }
+
         return view('Auth.register');
     }
 
@@ -77,7 +85,8 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required',
         ], [
             'name.required' => 'Name is required',
             'email.required' => 'Email is required',
@@ -85,6 +94,8 @@ class AuthController extends Controller
             'email.unique' => 'Email already exists',
             'password.required' => 'Password is required',
             'password.min' => 'Password must be at least 8 characters',
+            'password.confirmed' => 'Password confirmation does not match',
+            'password_confirmation.required' => 'Password confirmation is required',
         ]);
 
         // Cari user terakhir
@@ -111,6 +122,9 @@ class AuthController extends Controller
         // Kirim verifikasi email
         event(new Registered($user));
         $user->sendEmailVerificationNotification();
+
+        // Login user
+        Auth::login($user);
 
         // Redirect ke halaman dashboard
         return redirect('/login')->with('success', 'Registration successful! Please verify your email.');

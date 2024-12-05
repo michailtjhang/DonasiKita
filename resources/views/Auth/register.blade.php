@@ -162,11 +162,17 @@
                 <div class="mb-3">
                     <label for="confirm-password" class="form-label">Confirm Password</label>
                     <div class="input-group">
-                        <input type="password" name="password_confirmation" class="form-control" id="confirm-password"
+                        <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" id="confirm-password"
                             placeholder="Confirm your password">
                         <button class="btn btn-secondary" type="button" id="toggleConfirmPassword">
                             <i class="fas fa-eye" id="toggleConfirmIcon"></i>
                         </button>
+
+                        @error('password_confirmation')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
 
