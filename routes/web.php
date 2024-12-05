@@ -21,6 +21,7 @@ use App\Http\Controllers\Front\DonationController as FrontDonationController;
 Route::group(['middleware' => 'verifiedEmail'], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
 
     Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
     Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
@@ -41,7 +42,6 @@ Route::group(['middleware' => 'verifiedEmail'], function () {
     Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
     Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
 
-    Route::get('/about', [HomeController::class, 'about'])->name('about');
 });
 
 Route::get('/donasibarang_login', function () {
