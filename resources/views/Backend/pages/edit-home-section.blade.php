@@ -40,13 +40,45 @@
 
                                     <div class="form-group">
                                         <label for="carousel_image_{{ $key }}">Image</label>
-                                        <input type="text" name="carousel[{{ $key }}][image]"
-                                            id="carousel_image_{{ $key }}" value="{{ $carousel['image'] }}"
-                                            class="form-control">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"
+                                                name="carousel[{{ $key }}][image]"
+                                                id="carousel_image_{{ $key }}"
+                                                onchange="previewImage(event, {{ $key }})">
+                                            <label class="custom-file-label"
+                                                for="carousel_image_{{ $key }}">Choose file</label>
+                                        </div>
                                     </div>
 
                                     <button type="button" class="btn btn-danger mb-4"
                                         onclick="removeCarouselItem({{ $key }})">Remove</button>
+
+                                    <div class="row mt-3 text-center">
+                                        <!-- Preview Image -->
+                                        <div class="col-6">
+                                            <span class="d-block mb-2 text-muted">Preview:</span>
+                                            <img id="imgPreview_{{ $key }}" src="" alt="Preview Image"
+                                                class="img-thumbnail shadow-sm border"
+                                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                                        </div>
+
+                                        <!-- Existing Image -->
+                                        {{-- @if ($event->thumbnail && $event->thumbnail->id_file)
+                                                <div class="col-6">
+                                                    <span class="d-block mb-2 text-muted">Existing:</span>
+                                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                                        style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
+                                                </div>
+                                            @else --}}
+                                        <div class="col-6">
+                                            <span class="d-block mb-2 text-muted">Existing:</span>
+                                            <img src="{{ asset($carousel['image']) }}"
+                                                class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                                style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                        </div>
+                                        {{-- @endif --}}
+                                    </div>
                                 </div>
                             @endforeach
 
@@ -56,7 +88,6 @@
                     <!-- Button to add a new carousel item -->
                     <button type="button" class="btn btn-primary mt-3" onclick="addCarouselItem()">Add Carousel
                         Item</button>
-
                 @elseif($section === 'about_section')
                     <div class="form-group">
                         <label for="about_title">About Section Title</label>
@@ -74,7 +105,6 @@
                         <input type="text" name="image" id="about_image" value="{{ $sectionData['image'] ?? '' }}"
                             class="form-control">
                     </div>
-
                 @elseif($section === 'quote_section')
                     <div class="form-group">
                         <label for="quote">Quote</label>
@@ -93,7 +123,6 @@
                         <input type="text" name="background_image" id="background_image"
                             value="{{ $sectionData['background_image'] ?? '' }}" class="form-control">
                     </div>
-
                 @elseif($section === 'invitation_section')
                     <div class="form-group">
                         <label for="invitation_title">Invitation Title</label>
@@ -111,7 +140,6 @@
                         <input type="text" name="buttons" id="invitation_buttons"
                             value="{{ json_encode($sectionData['buttons'] ?? []) }}" class="form-control">
                     </div>
-
                 @elseif($section === 'faq_section')
                     <div class="faq-container">
                         <div class="row">
@@ -134,14 +162,17 @@
                                 <button type="button" class="btn btn-danger mb-4"
                                     onclick="removeFaqItem({{ $key }})">Remove</button>
                             @endforeach
-                            
+
                         </div>
                     </div>
                     <!-- Button to add a new carousel item -->
                     <button type="button" class="btn btn-primary mt-3" onclick="addFaqItem()">Add New Faq</button>
                 @endif
 
-                <button type="submit" class="btn btn-success mt-3">Save</button>
+                <div class="col d-flex justify-content-between align-items-center mt-3">
+                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
             </form>
         </div>
     </div>
@@ -149,6 +180,26 @@
 
 @section('js')
     @if ($section === 'hero_section')
+        <!-- bs-custom-file-input -->
+        <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+        <!-- Image Preview -->
+        <script>
+            function previewImage(event, index) {
+                const input = event.target;
+                const preview = document.getElementById(`imgPreview_${index}`);
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+
         <script>
             let carouselIndex = {{ count($sectionData['carousel'] ?? []) }};
             let carouselCounter = {{ count($sectionData['carousel'] ?? []) }}; // Hitung carousel yang sudah ada

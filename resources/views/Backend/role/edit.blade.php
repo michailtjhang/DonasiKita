@@ -69,7 +69,10 @@
 
                 </div>
 
-                <button type="submit" class="btn btn-warning">Ubah</button>
+                <div class="col d-flex justify-content-between align-items-center mt-3">
+                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
             </form>
         </div>
     </div>
