@@ -58,8 +58,9 @@
 
         </div>
 
+        <!-- Cards Articles -->
         <div class="row">
-            <div class="col-lg-6 col-6">
+            <div class="col-lg-4 col-4">
                 <h4>Latest Articles</h4>
                 <table class="table table-bordered">
                     <thead>
@@ -89,8 +90,9 @@
                 </table>
             </div>
 
-            <div class="col-lg-6 col-6">
-                <h4>Popular Articles</h4>
+            <!-- Cards Events -->
+            <div class="col-lg-4 col-4">
+                <h4>Latest Events</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -102,14 +104,43 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($popular_article as $row)
+                        @foreach ($last_event as $row)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $row->title }}</td>
                                 <td>{{ $row->category->name }}</td>
                                 <td>{{ $row->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('article.show', $row->id) }}" class="btn btn-secondary btn-sm">
+                                    <a href="{{ route('event.show', $row->id) }}" class="btn btn-secondary btn-sm">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cards Donations -->
+            <div class="col-lg-4 col-4">
+                <h4>Latest Donations</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Title</th>
+                            <th>Days Left</th>
+                            <th style="width: 40px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($last_donation as $row)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $row->title }}</td>
+                                <td>{{ $row->days_left->locale('id')->diffForHumans() }}</td>
+                                <td>
+                                    <a href="{{ route('donation.show', $row->id) }}" class="btn btn-secondary btn-sm">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </td>

@@ -46,6 +46,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
+    public function media()
+    {
+        return $this->hasOne(Media::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

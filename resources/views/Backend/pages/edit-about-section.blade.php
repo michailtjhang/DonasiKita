@@ -76,9 +76,30 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="team_image_{{ $key }}">Image</label>
-                                        <input type="text" name="team[{{ $key }}][image]"
-                                            id="team_image_{{ $key }}" value="{{ $team['image'] }}"
-                                            class="form-control">
+                                        <div class="custom-file">
+                                            <input type="file" name="team[{{ $key }}][image]"
+                                                id="team_image_{{ $key }}" class="form-control"
+                                                onchange="previewTeamImage(event, {{ $key }})">
+                                            <label class="custom-file-label" for="team_image_{{ $key }}">Choose
+                                                file</label>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 text-center">
+                                        <!-- Preview Image -->
+                                        <div class="col-6">
+                                            <span class="d-block mb-2 text-muted">Preview:</span>
+                                            <img id="teamImagePreview_{{ $key }}" src=""
+                                                alt="Preview Image" class="img-thumbnail shadow-sm border"
+                                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                                        </div>
+
+                                        <!-- Existing Image -->
+                                        <div class="col-6">
+                                            <span class="d-block mb-2 text-muted">Existing:</span>
+                                            <img src="{{ $team['image'] ?? asset($team['image']) }}" class="img-thumbnail shadow-sm border"
+                                                alt="Existing Image"
+                                                style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                        </div>
                                     </div>
                                     <button type="button" class="btn btn-danger mb-4"
                                         onclick="removeTeamMember({{ $key }})">Remove</button>
@@ -88,10 +109,12 @@
                     </div>
 
                     <!-- Button to add a new team member -->
-                    <button type="button" class="btn btn-primary mt-3" onclick="addTeamMember()">Add Team Member</button>
+                    <button type="button" class="btn btn-primary" onclick="addTeamMember()">Add Team Member</button>
                 @endif
-
-                <button type="submit" class="btn btn-success mt-3">Save</button>
+                    <div class="col d-flex justify-content-between align-items-center mt-3">
+                        <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
             </form>
         </div>
     </div>
@@ -99,6 +122,23 @@
 
 @section('js')
     @if ($section === 'team_section')
+        <!-- bs-custom-file-input -->
+        <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+        <script>
+            function previewTeamImage(event, index) {
+                const input = event.target;
+                const preview = document.getElementById(`teamImagePreview_${index}`);
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
         <script>
             let teamIndex = {{ count($sectionData) }};
             let teamCounter = {{ count($sectionData) }}; // Hitung anggota yang sudah ada

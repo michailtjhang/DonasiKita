@@ -17,18 +17,6 @@ class EventController extends Controller
             ->latest()
             ->paginate(6);
 
-        $eventHasJoin = EventRegistration::where('user_id', auth()->id())->pluck('event_id')->toArray();
-
-        $events->each(function ($event) use ($eventHasJoin) {
-            $event->hasJoin = in_array($event->event_id, $eventHasJoin);
-            // Optionally, you can classify by the current date
-            if ($event->detailEvent->end < now()) {
-                $event->isPast = true;  // Past event
-            } else {
-                $event->isPast = false; // Ongoing event
-            }
-        });
-
         return view('front.event.index', [
             'page_title' => 'Events',
             'events' => $events

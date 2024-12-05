@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Media;
 use App\Models\pages;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
@@ -69,7 +70,7 @@ class PageController extends Controller
         // Ambil halaman berdasarkan nama
         $page = Pages::where('name', $page)->firstOrFail();
         $content = json_decode($page->content, true);
-        
+
         // Periksa jika section yang diminta ada
         if (!isset($content[$section])) {
             // Jika section tidak ada dalam konten, berikan nilai default atau kosong
@@ -108,26 +109,159 @@ class PageController extends Controller
 
     public function updateSection(Request $request, $page, $section)
     {
-        // Ambil izin berdasarkan role pengguna
+        // Periksa izin pengguna
         $PermissionRole = PermissionRole::getPermission('Edit page', Auth::user()->role_id);
         if (empty($PermissionRole)) {
             return back();
         }
-        dd($request->all(), $page, $section);
 
+        // Ambil data halaman
         $page = Pages::where('name', $page)->firstOrFail();
         $content = json_decode($page->content, true);
 
-        // Jika section adalah team_section, lakukan penyesuaian array anggota tim
-        if ($section === 'team_section') {
+        // Penanganan khusus berdasarkan section
+        if ($section === 'hero_section') {
+            $carousel = $request->input('carousel', []);
+
+            if (empty($carousel)) {
+                $content[$section] = $request->all();
+            } else {
+                foreach ($carousel as $key => $item) {
+                    if ($request->hasFile("carousel.$key.image")) {
+                        // Hapus gambar lama jika ada
+                        if (!empty($carousel[$key]['image'])) {
+                            $publicId = Media::where('cloudinary_url', $carousel[$key]['image'])->value('cloudinary_public_id');
+                            if ($publicId) {
+                                cloudinary()->destroy($publicId);
+                                Media::where('cloudinary_public_id', $publicId)->delete();
+                            }
+                        }
+
+                        // Unggah gambar baru ke Cloudinary
+                        $file = $request->file("carousel.$key.image");
+                        $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                            'folder' => 'image_pages/hero',
+                            'use_filename' => true,
+                            'unique_filename' => true,
+                        ]);
+
+                        // Dapatkan URL dan Public ID dari Cloudinary
+                        $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                        $publicId = $cloudinaryResponse->getPublicId();
+
+                        // Simpan informasi gambar ke item
+                        $carousel[$key]['image'] = $cloudinaryUrl;
+
+                        // Simpan metadata gambar ke tabel media (opsional)
+                        Media::create([
+                            'cloudinary_public_id' => $publicId,
+                            'cloudinary_url' => $cloudinaryUrl,
+                            'type' => 'image',
+                        ]);
+                    }
+                }
+
+                // Perbarui data carousel di konten
+                $content[$section]['carousel'] = $carousel;
+            }
+        } elseif ($section === 'team_section') {
             $team = $request->input('team', []);
-            $content[$section] = array_filter($team, function ($member) {
-                return !empty($member['name']); // Hanya anggota yang memiliki nama
-            });
+
+            foreach ($team as $key => $member) {
+                if ($request->hasFile("team.$key.image")) {
+                    // Hapus gambar lama jika ada
+                    if (!empty($team[$key]['image'])) {
+                        $publicId = Media::where('cloudinary_url', $team[$key]['image'])->value('cloudinary_public_id');
+                        if ($publicId) {
+                            cloudinary()->destroy($publicId);
+                            Media::where('cloudinary_public_id', $publicId)->delete();
+                        }
+                    }
+
+                    // Unggah gambar baru ke Cloudinary
+                    $file = $request->file("team.$key.image");
+                    $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                        'folder' => 'image_pages/team',
+                        'use_filename' => true,
+                        'unique_filename' => true,
+                    ]);
+
+                    // Dapatkan URL dan Public ID dari Cloudinary
+                    $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                    $publicId = $cloudinaryResponse->getPublicId();
+
+                    // Simpan URL ke dalam data anggota tim
+                    $team[$key]['image'] = $cloudinaryUrl;
+
+                    // Simpan metadata gambar ke tabel media (opsional)
+                    Media::create([
+                        'cloudinary_public_id' => $publicId,
+                        'cloudinary_url' => $cloudinaryUrl,
+                        'type' => 'image',
+                    ]);
+                }
+            }
+
+            $content[$section] = $team;
+        } elseif ($section === 'faq_section') {
+            // Ambil data pertanyaan dan jawaban dari request
+            $questions = $request->input('questions', []);
+            $answers = $request->input('answers', []);
+
+            // Gabungkan pertanyaan dan jawaban menjadi satu array dengan struktur yang benar
+            $faq = [];
+            foreach ($questions as $key => $question) {
+                $faq[] = [
+                    'questions' => $question ?? '',
+                    'answers' => $answers[$key] ?? '',
+                ];
+            }
+
+            // Simpan data FAQ ke konten
+            $content[$section]['faq'] = $faq;
+        } elseif (in_array($section, ['founder_section', 'company_section', 'about_section', 'quote_section'])) {
+            if ($request->hasFile('image')) {
+                // Hapus gambar lama jika ada
+                if (!empty($content[$section]['image'])) {
+                    $publicId = Media::where('cloudinary_url', $content[$section]['image'])->value('cloudinary_public_id');
+                    if ($publicId) {
+                        cloudinary()->destroy($publicId);
+                        Media::where('cloudinary_public_id', $publicId)->delete();
+                    }
+                }
+
+                // Unggah gambar baru ke Cloudinary
+                $file = $request->file('image');
+                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                    'folder' => "image_pages/$section",
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                $content[$section]['image'] = $cloudinaryUrl;
+
+                // Simpan metadata gambar ke tabel media (opsional)
+                Media::create([
+                    'cloudinary_public_id' => $publicId,
+                    'cloudinary_url' => $cloudinaryUrl,
+                    'type' => 'image',
+                ]);
+            }
+
+            // Perbarui data lainnya
+            $content[$section]['name'] = $request->input('name', $content[$section]['name'] ?? '');
+            $content[$section]['description'] = $request->input('description', $content[$section]['description'] ?? '');
+            $content[$section]['position'] = $request->input('position', $content[$section]['position'] ?? '');
+            $content[$section]['title'] = $request->input('title', $content[$section]['title'] ?? '');
         } else {
+            // Default update untuk section lain
             $content[$section] = $request->all();
         }
-
+        dd($content, 'content');
+        // Simpan perubahan ke database
         $page->content = json_encode($content);
         $page->save();
 
