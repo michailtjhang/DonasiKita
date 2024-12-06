@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Buglinjo\LaravelWebp\Facades\Webp;
 
 class ProfileController extends Controller
 {
@@ -89,8 +90,27 @@ class ProfileController extends Controller
 
                 $file = $request->file('profile_image');
 
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
+
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
+
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
+
                 // Upload image baru ke Cloudinary
-                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
                     'folder' => 'profile',
                     'use_filename' => true,
                     'unique_filename' => true,
@@ -98,6 +118,11 @@ class ProfileController extends Controller
 
                 $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
                 $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
 
                 // Hapus file lama dari Cloudinary jika ada
                 if (!empty($users->media->cloudinary_public_id)) {
@@ -142,8 +167,10 @@ class ProfileController extends Controller
 
             // Hapus data media dari database
             $user->media()->delete();
-        }
 
-        return response()->json(['message' => 'Profile picture removed successfully.']);
+            return response()->json(['message' => 'Profile picture removed successfully.']);
+        } else {
+            return response()->json(['error' => 'No profile picture found.'], 404);
+        }
     }
 }

@@ -701,7 +701,9 @@
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                throw new Error("Failed to remove profile picture");
+                                return response.json().then(error => {
+                                    throw new Error(error.error || "Failed to remove profile picture");
+                                });
                             }
                         })
                         .then(data => {
@@ -719,7 +721,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Gagal',
-                                text: 'Terjadi kesalahan saat menghapus foto profil.',
+                                text: error.message || 'Terjadi kesalahan saat menghapus foto profil.',
                             });
                         });
                 }
