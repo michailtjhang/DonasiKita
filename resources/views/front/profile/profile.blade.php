@@ -316,10 +316,12 @@
             <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
                 alt="Profile Image" class="profile-image" />
         </div>
-
+        
         <!-- Profile Form Section -->
         <div class="form-container">
+        
             @include('_message')
+            
             <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -361,6 +363,7 @@
                 </div>
 
             </form>
+
         </div>
     </div>
 
@@ -701,7 +704,9 @@
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                throw new Error("Failed to remove profile picture");
+                                return response.json().then(error => {
+                                    throw new Error(error.error || "Failed to remove profile picture");
+                                });
                             }
                         })
                         .then(data => {
@@ -719,7 +724,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Gagal',
-                                text: 'Terjadi kesalahan saat menghapus foto profil.',
+                                text: error.message || 'Terjadi kesalahan saat menghapus foto profil.',
                             });
                         });
                 }

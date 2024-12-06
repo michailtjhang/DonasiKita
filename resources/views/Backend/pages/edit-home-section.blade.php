@@ -139,8 +139,29 @@
 
                     <div class="form-group">
                         <label for="background_image">Background Image</label>
-                        <input type="text" name="background_image" id="background_image"
-                            value="{{ $sectionData['background_image'] ?? '' }}" class="form-control">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image"
+                                id="background_image" onchange="previewImage(event)">
+                            <label class="custom-file-label" for="background_image">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 text-center">
+                        <!-- Preview Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Preview:</span>
+                            <img id="imgPreview" src="" alt="Preview Image"
+                                class="img-thumbnail shadow-sm border"
+                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Existing Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Existing:</span>
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['background_image']) }}"
+                                class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
                     </div>
                 @elseif($section === 'invitation_section')
                     <div class="form-group">
@@ -312,7 +333,10 @@
                 }
             }
         </script>
-    @else
+    @elseif($section === 'about_section' || $section === 'quote_section')
+        <!-- bs-custom-file-input -->
+        <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
         <!-- Image Preview -->
         <script>
             function previewImage(event) {

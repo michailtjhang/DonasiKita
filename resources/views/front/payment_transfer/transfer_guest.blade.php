@@ -7,8 +7,8 @@
         font-family: 'Poppins', sans-serif;
     }
 
-    .container {
-        margin-top: 100px;
+    .container-form {
+        margin-top: 50px;
         margin-bottom: 50px;
     }
 
@@ -223,11 +223,12 @@
 @endsection
 
 @section('content')
-<div class="space-section"></div>
 
-<div class="container my-5">
+<!-- <div class="space-section"></div> -->
+
+<div class="container-form py-1">
     <!-- Info Section -->
-    <div class="info-section my-5">
+    <div class="info-section">
         <img src="/images/donate/vector_blue.svg" alt="Icon">
         <div class="info-title">Bantuan Kemanusiaan untuk Palestina</div>
     </div>
@@ -292,7 +293,7 @@
     </div>
 
     <!-- Payment Button -->
-    <button class="pay-button">Bayar Sekarang</button>
+    <button class="pay-button my-5">Bayar Sekarang</button>
 </div>
 
 <script>

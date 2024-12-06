@@ -38,8 +38,28 @@
                     </div>
                     <div class="form-group">
                         <label for="logo">Logo</label>
-                        <input type="text" name="logo" id="logo" value="{{ $sectionData['logo'] ?? '' }}"
-                            class="form-control">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="logo"
+                                onchange="previewImage(event)">
+                            <label class="custom-file-label" for="logo">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 text-center">
+                        <!-- Preview Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Preview:</span>
+                            <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail shadow-sm border"
+                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Existing Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Existing:</span>
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['logo']) }}"
+                                class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
                     </div>
                 @elseif($section === 'founder_section')
                     <div class="form-group">
@@ -54,8 +74,28 @@
                     </div>
                     <div class="form-group">
                         <label for="image">Image</label>
-                        <input type="text" name="image" id="image" value="{{ $sectionData['image'] ?? '' }}"
-                            class="form-control">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="about_image"
+                                onchange="previewImage(event)">
+                            <label class="custom-file-label" for="about_image">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 text-center">
+                        <!-- Preview Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Preview:</span>
+                            <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail shadow-sm border"
+                                style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Existing Image -->
+                        <div class="col-6">
+                            <span class="d-block mb-2 text-muted">Existing:</span>
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) }}"
+                                class="img-thumbnail shadow-sm border" alt="Existing Image"
+                                style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                        </div>
                     </div>
                 @elseif($section === 'team_section')
                     <div class="team-container">
@@ -96,8 +136,8 @@
                                         <!-- Existing Image -->
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ $team['image'] ?? asset($team['image']) }}" class="img-thumbnail shadow-sm border"
-                                                alt="Existing Image"
+                                            <img src="{{ $team['image'] ?? asset($team['image']) }}"
+                                                class="img-thumbnail shadow-sm border" alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>
                                     </div>
@@ -111,10 +151,10 @@
                     <!-- Button to add a new team member -->
                     <button type="button" class="btn btn-primary" onclick="addTeamMember()">Add Team Member</button>
                 @endif
-                    <div class="col d-flex justify-content-between align-items-center mt-3">
-                        <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
-                        <button type="submit" class="btn btn-success">Save</button>
-                    </div>
+                <div class="col d-flex justify-content-between align-items-center mt-3">
+                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
             </form>
         </div>
     </div>
@@ -180,6 +220,28 @@
             function removeTeamMember(index) {
                 const member = document.querySelector(`#team_name_${index}`).closest('.col-md-4');
                 member.remove();
+            }
+        </script>
+    @elseif ($section === 'company_section' || $section === 'founder_section')
+        <!-- bs-custom-file-input -->
+        <script src="https://adminlte.io/themes/v3/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+        <!-- Image Preview -->
+        <script>
+            function previewImage(event) {
+                const input = event.target;
+                const preview = document.getElementById('imgPreview');
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block'; // Tampilkan gambar setelah berhasil di-load
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    preview.style.display = 'none'; // Sembunyikan jika tidak ada file
+                }
             }
         </script>
     @endif

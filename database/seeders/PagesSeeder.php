@@ -25,7 +25,7 @@ class PagesSeeder extends Seeder
                     'company_section' => [
                         'name' => 'DonasiKita Foundation',
                         'description' => 'DonasiKita Foundation adalah organisasi nirlaba yang bertujuan mempermudah proses donasi bagi masyarakat dengan menyediakan platform aman dan transparan. Kami mendukung berbagai kampanye kemanusiaan dan sosial, membantu para donatur memberikan dampak positif bagi yang membutuhkan di seluruh Indonesia dan dunia.',
-                        'logo' => '/images/about/logo.svg'
+                        'image' => '/images/about/logo.svg'
                     ],
                     'founder_section' => [
                         'name' => 'Rian Pratama',
@@ -108,7 +108,7 @@ class PagesSeeder extends Seeder
                     'quote_section' => [
                         'quote' => '"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain."',
                         'author' => 'Rasulullah SAW',
-                        'background_image' => '/images/quotes.svg'
+                        'image' => '/images/quotes.svg'
                     ],
                     'invitation_section' => [
                         'title' => 'Your help means a lot',

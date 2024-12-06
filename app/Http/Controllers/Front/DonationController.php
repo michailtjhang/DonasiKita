@@ -13,7 +13,7 @@ class DonationController extends Controller
         $donations = Need::with(['donation', 'thumbnail'])
             ->filter(request(['keyword']))
             ->latest()
-            ->paginate(8);
+            ->paginate(9); // 9 item per halaman
 
         return view('front.donation.index', [
             'page_title' => 'Donations',
