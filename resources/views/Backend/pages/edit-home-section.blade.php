@@ -310,11 +310,11 @@
                     <h5>Faq Item ${faqIndex + 1}</h5>
                     <div class="form-group">
                         <label for="questions_${faqIndex}">Questions</label>
-                        <input type="text" name="faq[${faqIndex}][questions]" id="questions_${faqIndex}" class="form-control">
+                        <input type="text" name="questions[${faqIndex}]" id="questions_${faqIndex}" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="answers_${faqIndex}">Answers</label>
-                        <textarea name="faq[${faqIndex}][answers]" id="answers_${faqIndex}" class="form-control"></textarea>
+                        <textarea name="answers[${faqIndex}]" id="answers_${faqIndex}" class="form-control"></textarea>
                     </div>
                     <button type="button" class="btn btn-danger mt-2" onclick="removeFaqItem(${faqIndex})">Remove</button>
                 `;

@@ -370,8 +370,8 @@
                 <div class="col-lg-6 col-12 p-4">
                     <div class="accordion" id="accordionExample">
                         @foreach($content['faq_section']['faq'] as $index => $faq)
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading{{ $index }}">
+                        <div class="accordion-item accordion-rounded mb-3">
+                            <h2 class="accordion-header accordion-rounded" id="heading{{ $index }}">
                                 <button class="accordion-button {{ $index !== 0 ? 'collapsed' : '' }}" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $index }}">
                                     <B>{{ $faq['questions'] }}</B>

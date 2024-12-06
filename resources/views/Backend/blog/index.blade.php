@@ -133,7 +133,7 @@
                             text: '<i class="fas fa-plus"></i> Tambah',
                             className: 'btn btn-success btn-sm',
                             action: function() {
-                                window.location.href = "{{ route('user.create') }}";
+                                window.location.href = "{{ route('blog.create') }}";
                             }
                         }
                     @endif
