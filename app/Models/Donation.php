@@ -20,7 +20,9 @@ class Donation extends Model
         'name',
         'amount',
         'payment_method',
-        'status'
+        'status',
+        'receipt_id',
+        'note',
     ];
 
     public function user()
@@ -31,5 +33,10 @@ class Donation extends Model
     public function need()
     {
         return $this->belongsTo(Need::class, 'need_id');
+    }
+
+    public function receipt()
+    {
+        return $this->belongsTo(PaymentReceipts::class, 'receipt_id');
     }
 }

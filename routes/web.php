@@ -9,7 +9,9 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\ArticleController;
+use App\Http\Controllers\Front\ProfileController;
 use App\Http\Controllers\Backend\ConfigController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DonationController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -18,28 +20,32 @@ use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
 
-Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::group(['middleware' => 'verifiedEmail'], function () {
+    Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
-Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/blogs/categories', [FrontCategoryController::class, 'indexBlog'])->name('blogs.categories');
-Route::get('/events/categories', [FrontCategoryController::class, 'indexEvent'])->name('events.categories');
-Route::get('/blogs/category/{slug}', [FrontCategoryController::class, 'showBlog'])->name('blogs.category');
-Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEvent'])->name('events.category');
+    Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
+    Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
 
-Route::get('/events', [FrontEventController::class, 'index'])->name('events');
-Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
-Route::post('/events/join', [FrontEventController::class, 'join'])->name('events.join');
+    Route::get('/blogs/categories', [FrontCategoryController::class, 'indexBlog'])->name('blogs.categories');
+    Route::get('/events/categories', [FrontCategoryController::class, 'indexEvent'])->name('events.categories');
+    Route::get('/blogs/category/{slug}', [FrontCategoryController::class, 'showBlog'])->name('blogs.category');
+    Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEvent'])->name('events.category');
 
-Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
-Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
-Route::post('/donations/{slug}', [FrontDonationController::class, 'store'])->name('donations.store');
-Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
-Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
-Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
+    Route::get('/events', [FrontEventController::class, 'index'])->name('events');
+    Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
+    Route::post('/events/join', [FrontEventController::class, 'join'])->name('events.join');
 
-Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
+    Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
+    Route::post('/donations/{slug}', [FrontDonationController::class, 'store'])->name('donations.store');
+    Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
+    Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
+    Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
+
+    Route::resource('profile', ProfileController::class);
+});
 
 Route::get('/donasibarang_login', function () {
     return view('front.payment.donasibarang_login');
@@ -63,10 +69,6 @@ Route::get('/transfer_login', function () {
 
 Route::get('/confirmationtransfer', function () {
     return view('front.payment_transfer.confirmationtransfer');
-});
-
-Route::get('/profile', function () {
-    return view('front.profile.profile');
 });
 
 Route::post('/confirmationbarang', function () {
@@ -96,6 +98,21 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
+
+        // Route laporan
+        Route::prefix('reports')->group(function () {
+            Route::get('donations/verification', [ReportController::class, 'donationVerification'])
+                ->name('reports.donations.verification'); // Verifikasi transfer dana
+
+            Route::get('donations', [ReportController::class, 'donations'])
+                ->name('reports.donations'); // Laporan donasi
+
+            Route::get('donations/export/{format}', [ReportController::class, 'exportDonations'])
+                ->name('reports.donations.export'); // Export laporan donasi (PDF/Excel)
+
+            Route::get('event-participants', [ReportController::class, 'eventParticipants'])
+                ->name('reports.event.participants'); // Laporan peserta/volunteer
+        });
 
         Route::resource('role', RoleController::class);
         Route::resource('user', UserController::class);

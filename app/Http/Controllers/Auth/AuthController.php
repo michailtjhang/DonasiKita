@@ -15,10 +15,10 @@ class AuthController extends Controller
     {
         // Check if user is already logged in
         if (!empty(Auth::check())) {
-            if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
-                return redirect()->intended('admin/dashboard');
-            } else {
+            if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
                 return redirect()->intended('/');
+            } else {
+                return redirect()->intended('admin/dashboard');
             }
         }
 
@@ -44,11 +44,17 @@ class AuthController extends Controller
         if ($user) {
             // Cek password
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
-                // Jika password benar
-                if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
-                    return redirect()->intended('admin/dashboard');
-                } else {
+                // Jika user belum memverifikasi email
+                if (Auth::user()->email_verified_at === null) {
+                    // Redirect ke halaman verifikasi email
+                    return redirect()->route('verification.notice');
+                }
+
+                // Jika email sudah terverifikasi
+                if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
                     return redirect()->intended('/');
+                } else {
+                    return redirect()->intended('admin/dashboard');
                 }
             } else {
                 // Jika password salah
@@ -62,6 +68,14 @@ class AuthController extends Controller
 
     public function register()
     {
+        if (!empty(Auth::check())) {
+            if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
+                return redirect()->intended('login');
+            } else {
+                return redirect()->intended('admin/dashboard');
+            }
+        }
+
         return view('Auth.register');
     }
 
@@ -71,7 +85,8 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required',
         ], [
             'name.required' => 'Name is required',
             'email.required' => 'Email is required',
@@ -79,6 +94,8 @@ class AuthController extends Controller
             'email.unique' => 'Email already exists',
             'password.required' => 'Password is required',
             'password.min' => 'Password must be at least 8 characters',
+            'password.confirmed' => 'Password confirmation does not match',
+            'password_confirmation.required' => 'Password confirmation is required',
         ]);
 
         // Cari user terakhir

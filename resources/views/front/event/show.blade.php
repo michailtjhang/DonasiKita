@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
+    <!-- Custom CSS Swal Alert -->
+    @if (!auth()->check())
+        // Periksa jika pengguna belum login
+        <style>
+            /* Custom styling untuk tombol */
+            .btn-confirm {
+                background-color: #007bff;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                margin-right: 15px;
+                /* Jarak ke tombol "Batal" */
+            }
+
+            .btn-cancel {
+                background-color: #6c757d;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+            }
+
+            /* Custom styling untuk container tombol */
+            .custom-actions {
+                justify-content: center;
+                /* Posisikan tombol di tengah */
+                gap: 15px;
+                /* Tambahkan jarak antar tombol */
+            }
+        </style>
+    @endif
+
     <!-- Custom CSS -->
     <style>
         .custom-tabs {
@@ -182,7 +213,7 @@
     <div class="container my-5">
         <div class="row g-1 px-lg-5 mx-lg-4 justify-content-center">
             <!-- Share Button -->
-            <div class="col-12 @auth col-md-4 @endauth d-flex justify-content-center mb-3 mb-md-0 mb-lg-0">
+            <div class="col-12 col-md-4  d-flex justify-content-center mb-3 mb-md-0 mb-lg-0">
                 <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center"
                     style="background-color: #bbddf0;">
                     <h1 class="d-flex align-items-center mb-0" style="font-size: 1.5rem; color: #0f3d56;">
@@ -191,20 +222,18 @@
                 </button>
             </div>
             <!-- Join Now Button -->
-            @Auth
-                <div class="col-12 col-md-8 d-flex justify-content-center">
-                    @if ($userJoined)
-                        <button class="btn btn-success w-100 py-4 d-flex justify-content-center align-items-center" disabled>
-                            <h1 class="mb-0" style="font-size: 1.5rem;">Berhasil Join</h1>
-                        </button>
-                    @else
-                        <button id="donateNowBtn"
-                            class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center">
-                            <h1 class="mb-0" style="font-size: 1.5rem;">Join Now</h1>
-                        </button>
-                    @endif
-                </div>
-            @endAuth
+            <div class="col-12 col-md-8 d-flex justify-content-center">
+                @if ($userJoined)
+                    <button class="btn btn-success w-100 py-4 d-flex justify-content-center align-items-center" disabled>
+                        <h1 class="mb-0" style="font-size: 1.5rem;">Berhasil Join</h1>
+                    </button>
+                @else
+                    <button id="donateNowBtn"
+                        class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center">
+                        <h1 class="mb-0" style="font-size: 1.5rem;">Join Now</h1>
+                    </button>
+                @endif
+            </div>
         </div>
     </div>
 
@@ -266,150 +295,111 @@
             const donateNowBtn = document.getElementById('donateNowBtn');
             if (donateNowBtn) {
                 donateNowBtn.addEventListener('click', () => {
-                    let volunteerButton = '';
-                    @if ($event->detailEvent->requires_volunteers == true)
-                        volunteerButton = `
-                    <button id="sukarelawanBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-                        Sukarelawan
-                    </button>`;
-                    @endif
+                    @if (!auth()->check()) // Periksa jika pengguna belum login
+                        Swal.fire({
+                            title: 'Login Diperlukan',
+                            text: 'Anda harus login terlebih dahulu untuk bisa Join Event.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Login Sekarang',
+                            cancelButtonText: 'Batal',
+                            customClass: {
+                                confirmButton: 'btn btn-primary',
+                                cancelButton: 'btn btn-secondary',
+                                actions: 'custom-actions'
+                            },
+                            buttonsStyling: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href =
+                                    "{{ route('login') }}"; // Redirect ke halaman login
+                            }
+                        });
+                    @else
+                        // Proses join jika pengguna sudah login
+                        let volunteerButton = '';
+                        @if ($event->detailEvent->requires_volunteers == true)
+                            volunteerButton = `
+                            <button id="sukarelawanBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
+                                Sukarelawan
+                            </button>`;
+                        @endif
 
-                    Swal.fire({
-                        title: '<strong>Gabung Sebagai</strong>',
-                        html: `
-                    <button id="pesertaBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-                        Peserta
-                    </button>` + volunteerButton,
-                        showConfirmButton: false,
-                        customClass: {
-                            popup: 'custom-swal-popup'
-                        },
-                        didOpen: () => {
-                            const pesertaBtn = document.getElementById('pesertaBtn');
-                            const sukarelawanBtn = document.getElementById('sukarelawanBtn');
+                        Swal.fire({
+                            title: '<strong>Gabung Sebagai</strong>',
+                            html: `
+                            <button id="pesertaBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
+                                Peserta
+                            </button>` + volunteerButton,
+                            showConfirmButton: false,
+                            customClass: {
+                                popup: 'custom-swal-popup'
+                            },
+                            didOpen: () => {
+                                const pesertaBtn = document.getElementById('pesertaBtn');
+                                const sukarelawanBtn = document.getElementById(
+                                    'sukarelawanBtn');
 
-                            // Disable all buttons and show loading when clicked
-                            const handleButtonClick = (buttonId, status) => {
-                                document.querySelectorAll('button').forEach(btn => btn
-                                    .disabled = true);
+                                // Handle button click
+                                const handleButtonClick = (status) => {
+                                    Swal.fire({
+                                        title: 'Processing...',
+                                        allowOutsideClick: false,
+                                        didOpen: () => Swal.showLoading()
+                                    });
 
-                                Swal.fire({
-                                    title: 'Processing...',
-                                    allowOutsideClick: false,
-                                    didOpen: () => {
-                                        Swal.showLoading();
-                                    }
-                                });
-
-                                // Simulate a server request
-                                fetch('{{ route('events.join') }}', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                        },
-                                        body: JSON.stringify({
-                                            event_id: '{{ $event->event_id }}',
-                                            status: status
+                                    fetch('{{ route('events.join') }}', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            },
+                                            body: JSON.stringify({
+                                                event_id: '{{ $event->event_id }}',
+                                                status: status
+                                            })
                                         })
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        Swal.close();
-                                        if (data.success) {
-                                            Swal.fire({
-                                                icon: 'success',
-                                                title: 'Berhasil!',
-                                                text: `Anda telah bergabung sebagai ${status}.`,
-                                                confirmButtonText: 'OK'
-                                            }).then(() => {
-                                                // Reload halaman untuk memperbarui tombol
-                                                window.location.reload();
-                                            });
-                                        } else {
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            Swal.close();
+                                            if (data.success) {
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Berhasil!',
+                                                    text: `Anda telah bergabung sebagai ${status}.`,
+                                                    confirmButtonText: 'OK'
+                                                }).then(() => {
+                                                    window.location.reload();
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Gagal',
+                                                    text: data.message ||
+                                                        'Terjadi kesalahan.'
+                                                });
+                                            }
+                                        })
+                                        .catch(() => {
+                                            Swal.close();
                                             Swal.fire({
                                                 icon: 'error',
                                                 title: 'Gagal',
-                                                text: data.message ||
-                                                    'Terjadi kesalahan.'
+                                                text: 'Terjadi kesalahan. Silakan coba lagi.'
                                             });
-                                        }
-                                    })
-                                    .catch(error => {
-                                        Swal.close();
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Gagal',
-                                            text: 'Terjadi kesalahan. Silakan coba lagi.'
                                         });
-                                    });
-                            };
+                                };
 
-                            // Event listeners for buttons
-                            if (pesertaBtn) {
-                                pesertaBtn.addEventListener('click', () => handleButtonClick(
-                                    'pesertaBtn', 'peserta'));
+                                if (pesertaBtn) pesertaBtn.addEventListener('click', () =>
+                                    handleButtonClick('peserta'));
+                                if (sukarelawanBtn) sukarelawanBtn.addEventListener('click',
+                                    () => handleButtonClick('sukarelawan'));
                             }
-                            if (sukarelawanBtn) {
-                                sukarelawanBtn.addEventListener('click', () =>
-                                    handleButtonClick('sukarelawanBtn', 'sukarelawan'));
-                            }
-                        }
-                    });
+                        });
+                    @endif
                 });
             }
         });
-
-        function sendJoinRequest(eventId, role) {
-            fetch("{{ route('events.join') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        event_id: eventId,
-                        role: role
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Ubah tombol menjadi "Berhasil Join"
-                        const joinButton = document.getElementById('donateNowBtn');
-                        joinButton.innerHTML = `
-                            <h1 class="mb-0" style="font-size: 1.5rem;">Berhasil Join</h1>
-                        `;
-                        joinButton.classList.add('btn-success');
-                        joinButton.classList.remove('btn-primary');
-                        joinButton.disabled = true;
-
-                        // Tampilkan notifikasi berhasil
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: data.message,
-                            confirmButtonText: 'OK',
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Terjadi kesalahan, silakan coba lagi.',
-                            confirmButtonText: 'OK',
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Terjadi kesalahan, silakan coba lagi.',
-                        confirmButtonText: 'OK',
-                    });
-                });
-        }
     </script>
 
     <!-- Leaflet JS -->

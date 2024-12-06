@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\AdminUserMiddleware;
+use App\Http\Middleware\VerifyEmailMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -14,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'useradmin' => AdminUserMiddleware::class,
+            'verifiedEmail' => VerifyEmailMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

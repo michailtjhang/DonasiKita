@@ -25,7 +25,7 @@ class PagesSeeder extends Seeder
                     'company_section' => [
                         'name' => 'DonasiKita Foundation',
                         'description' => 'DonasiKita Foundation adalah organisasi nirlaba yang bertujuan mempermudah proses donasi bagi masyarakat dengan menyediakan platform aman dan transparan. Kami mendukung berbagai kampanye kemanusiaan dan sosial, membantu para donatur memberikan dampak positif bagi yang membutuhkan di seluruh Indonesia dan dunia.',
-                        'logo' => '/images/about/logo.svg'
+                        'image' => '/images/about/logo.svg'
                     ],
                     'founder_section' => [
                         'name' => 'Rian Pratama',
@@ -78,25 +78,25 @@ class PagesSeeder extends Seeder
                                 'title' => 'Bantu anak kurang gizi',
                                 'subtitle' => 'Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas',
                                 'image' => '/images/hero-bg.svg',
-                                'button_text' => 'Bantu Sekarang'
+                                'button_link' => 'Bantu Sekarang'
                             ],
                             [
                                 'title' => 'Darurat Gunung Lewotobi',
                                 'subtitle' => 'Bersama membantu korban yang terdampak bencana alam ini',
                                 'image' => '/images/hero/2.svg',
-                                'button_text' => 'Bantu Sekarang'
+                                'button_link' => 'Bantu Sekarang'
                             ],
                             [
                                 'title' => 'Banjir di Desa Rawajaya',
                                 'subtitle' => 'Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda',
                                 'image' => '/images/hero/3.svg',
-                                'button_text' => 'Bantu Sekarang'
+                                'button_link' => 'Bantu Sekarang'
                             ],
                             [
                                 'title' => 'Tanah Longsor di Desa Kertajaya',
                                 'subtitle' => 'Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan',
                                 'image' => '/images/hero/4.svg',
-                                'button_text' => 'Bantu Sekarang'
+                                'button_link' => 'Bantu Sekarang'
                             ]
                         ]
                     ],
@@ -108,7 +108,7 @@ class PagesSeeder extends Seeder
                     'quote_section' => [
                         'quote' => '"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain."',
                         'author' => 'Rasulullah SAW',
-                        'background_image' => '/images/quotes.svg'
+                        'image' => '/images/quotes.svg'
                     ],
                     'invitation_section' => [
                         'title' => 'Your help means a lot',
@@ -116,6 +116,30 @@ class PagesSeeder extends Seeder
                         'buttons' => [
                             ['text' => 'Donate', 'link' => '/donate'],
                             ['text' => 'Sukarelawan', 'link' => '/event']
+                        ]
+                    ],
+                    'faq_section' => [
+                        'faq' => [
+                            [
+                                'questions' => 'Apa itu DonasiKita?',
+                                'answers' => 'DonasiKita adalah platform digital yang memudahkan siapa saja untuk berdonasi dan berkontribusi dalam berbagai proyek kemanusiaan, seperti pendidikan, kesehatan, bencana alam, dan lainnya.'
+                            ],
+                            [
+                                'questions' => 'Bagaimana cara membuat akun di DonasiKita?',
+                                'answers' => 'Klik tombol "Daftar," isi data pribadi Anda, dan ikuti langkah-langkah pendaftaran yang sederhana.'
+                            ],
+                            [
+                                'questions' => 'Bagaimana cara berdonasi di DonasiKita?',
+                                'answers' => 'Anda bisa memilih proyek yang ingin didukung, klik tombol "Donasi Sekarang," masukkan jumlah donasi, dan pilih metode pembayaran yang tersedia.'
+                            ],
+                            [
+                                'questions' => 'Apakah ada batas minimum untuk berdonasi?',
+                                'answers' => 'Ya, batas minimum donasi adalah Rp10.000 untuk memudahkan semua orang berpartisipasi.'
+                            ],
+                            [
+                                'questions' => 'Apakah DonasiKita aman?',
+                                'answers' => 'Ya, DonasiKita menggunakan teknologi keamanan terbaru dan memastikan setiap donasi tercatat serta disalurkan sesuai tujuan.'
+                            ]
                         ]
                     ]
                 ]),  // Tambahkan data kosong untuk kolom content

@@ -49,7 +49,7 @@
                                     </div>
                                     <hr class="dropdown-divider">
                                     <div class="text-center px-2 mb-3">
-                                        <a href="{{ route('logout') }}" class="btn btn-primary w-100">See Profile</a>
+                                        <a href="{{ route('profile.index') }}" class="btn btn-primary w-100">See Profile</a>
                                     </div>
                                     <div class="text-center px-2">
                                         <a href="{{ route('logout') }}" class="btn btn-primary w-100">Logout Account</a>
