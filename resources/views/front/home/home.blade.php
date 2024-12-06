@@ -63,78 +63,38 @@
 </style>
 @section('content')
     <!-- Hero Section -->
-    <div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero-bg.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Bantu anak kurang gizi</h1>
-                        <p class="lead">Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
+        <div id="carouselExampleControls" class="carousel slide space-section" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($content['hero_section']['carousel'] as $key => $item)
+                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                        <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100"
+                            style="background-image: url('{{ $item['image'] }}');">
+                            <div class="spacer-x">
+                                <h1 class="hero-title bolder-text display-4">{{ $item['title'] }}</h1>
+                                <p class="lead">{{ $item['subtitle'] }}</p>
+                                <div class="text-center">
+                                    <a href="{{ $item['button_link'] }}" class="btn btn-primary"
+                                        style="margin: 6px; padding: 10px 20px;">
+                                        <h3>Bantu Sekarang</h3>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
-            <div class="carousel-item =">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero/2.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Darutat Gunung Lewotobi</h1>
-                        <p class="lead">Bersama membantu korban yang terdampak bencana alam ini</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero/3.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Banjir di Desa Rawajaya</h1>
-                        <p class="lead">Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100 bg-skyline"
-                    style="background-image: url('/images/hero/4.svg');">
-                    <div class="spacer-x">
-                        <h1 class="hero-title bolder-text display-4">Tanah Longsor di Desa Kertajaya</h1>
-                        <p class="lead">Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan</p>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="button-event"
-                                style="background: rgb(33,133,187) !important; margin: 6px; font-weight: lighter;padding: 10px 20px;">
-                                <h3>Bantu Sekarang</h3>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+
     <!-- End Hero Section -->
     <!-- About Content Section -->
     <section id="about-content" class="space-section">
@@ -409,88 +369,22 @@
                 <!-- Kolom Kanan: Accordion -->
                 <div class="col-lg-6 col-12 p-4">
                     <div class="accordion" id="accordionExample">
-                        <div class="accordion-item accordion-rounded   mb-3">
-                            <h2 class="accordion-header accordion-rounded" id="headingOne">
-                                <button class="accordion-button fw-bold collapsed fw-bold accordion-teks-custom"
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                    aria-expanded="false" aria-controls="collapseOne">
-                                    <span style="color: #0f3d56">Apa itu DonasiKita?</span>
+                        @foreach($content['faq_section']['faq'] as $index => $faq)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ $index }}">
+                                <button class="accordion-button {{ $index !== 0 ? 'collapsed' : '' }}" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $index }}">
+                                    <B>{{ $faq['questions'] }}</B>
                                 </button>
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse  accordion-body-custom collapse"
-                                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body ">
-                                    <span style="color: #0f3d56">DonasiKita adalah platform digital yang memudahkan siapa
-                                        saja untuk berdonasi dan berkontribusi dalam berbagai proyek kemanusiaan, seperti
-                                        pendidikan, kesehatan, bencana alam, dan lainnya.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item accordion-rounded   mb-3">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button fw-bold collapsed" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
-                                    aria-controls="collapseTwo">
-                                    Bagaimana cara membuat akun di DonasiKita?
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                data-bs-parent="#accordionExample">
+                            <div id="collapse{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
+                                aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <span style="color: #0f3d56">Klik tombol "Daftar," isi data pribadi Anda, dan ikuti
-                                        langkah-langkah pendaftaran yang sederhana.</span>
+                                    {{ $faq['answers'] }}
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item accordion-rounded   mb-3">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button fw-bold collapsed" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
-                                    Bagaimana cara berdonasi di DonasiKita?
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <span style="color: #0f3d56">Anda bisa memilih proyek yang ingin didukung, klik tombol
-                                        "Donasi Sekarang," masukkan jumlah donasi, dan pilih metode pembayaran yang
-                                        tersedia.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item accordion-rounded   mb-3">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button fw-bold collapsed" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false"
-                                    aria-controls="collapseFour">
-                                    Apakah ada batas minimum untuk berdonasi?
-                                </button>
-                            </h2>
-                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <span style="color: #0f3d56">Ya, batas minimum donasi adalah Rp10.000 untuk memudahkan
-                                        semua orang berpartisipasi.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item accordion-rounded   mb-3">
-                            <h2 class="accordion-header" id="headingFive">
-                                <button class="accordion-button fw-bold collapsed" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false"
-                                    aria-controls="collapseFive">
-                                    Apakah DonasiKita aman?
-                                </button>
-                            </h2>
-                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <span style="color: #0f3d56">DonasiKita menggunakan sistem keamanan yang terpercaya dan
-                                        memastikan setiap donasi tercatat serta disalurkan sesuai tujuan. </span>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

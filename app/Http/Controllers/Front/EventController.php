@@ -14,8 +14,7 @@ class EventController extends Controller
     {
         $events = Event::with('category', 'thumbnail', 'detailEvent', 'location')
             ->filter(request(['keyword', 'category']))
-            ->latest()
-            ->paginate(6);
+            ->latest();
 
         return view('front.event.index', [
             'page_title' => 'Events',
