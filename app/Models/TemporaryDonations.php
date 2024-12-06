@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Donation extends Model
+class TemporaryDonations extends Model
 {
     use HasFactory, HasUlids;
 
     protected $keyType = 'string';
-    protected $table = 'donations';
+    protected $table = 'temporary_donations';
     protected $fillable = [
-        'donation_id',
+        'temp_id',
         'user_id',
         'need_id',
         'email',
@@ -21,9 +21,6 @@ class Donation extends Model
         'amount',
         'bank',
         'status',
-        'sender_name',
-        'receipt_id',
-        'note',
     ];
 
     public function user()
@@ -34,10 +31,5 @@ class Donation extends Model
     public function need()
     {
         return $this->belongsTo(Need::class, 'need_id');
-    }
-
-    public function receipt()
-    {
-        return $this->belongsTo(PaymentReceipts::class, 'receipt_id');
     }
 }
