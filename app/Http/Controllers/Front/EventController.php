@@ -14,7 +14,8 @@ class EventController extends Controller
     {
         $events = Event::with('category', 'thumbnail', 'detailEvent', 'location')
             ->filter(request(['keyword', 'category']))
-            ->latest();
+            ->latest()
+            ->paginate(9); // 9 item per halaman
 
         return view('front.event.index', [
             'page_title' => 'Events',
