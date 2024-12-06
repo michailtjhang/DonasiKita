@@ -301,7 +301,7 @@
 @section('script')
     <script>
         var data = @json($events);
-        console.log(data)
+        
         document.querySelectorAll('.pagination-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
                 var page = this.getAttribute('data-page');
