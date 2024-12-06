@@ -15,10 +15,10 @@ class AuthController extends Controller
     {
         // Check if user is already logged in
         if (!empty(Auth::check())) {
-            if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
-                return redirect()->intended('admin/dashboard');
-            } else {
+            if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
                 return redirect()->intended('/');
+            } else {
+                return redirect()->intended('admin/dashboard');
             }
         }
 
@@ -51,10 +51,10 @@ class AuthController extends Controller
                 }
 
                 // Jika email sudah terverifikasi
-                if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
-                    return redirect()->intended('admin/dashboard');
-                } else {
+                if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
                     return redirect()->intended('/');
+                } else {
+                    return redirect()->intended('admin/dashboard');
                 }
             } else {
                 // Jika password salah
@@ -69,10 +69,10 @@ class AuthController extends Controller
     public function register()
     {
         if (!empty(Auth::check())) {
-            if (Auth::user()->role_id == '01j8kkd0j357ddxkdq75etr7q2') {
-                return redirect()->intended('admin/dashboard');
-            } else {
+            if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
                 return redirect()->intended('login');
+            } else {
+                return redirect()->intended('admin/dashboard');
             }
         }
 

@@ -9,6 +9,7 @@ use App\Models\PermissionRole;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Buglinjo\LaravelWebp\Facades\Webp;
 
 class PageController extends Controller
 {
@@ -127,38 +128,9 @@ class PageController extends Controller
                 $content[$section] = $request->all();
             } else {
                 foreach ($carousel as $key => $item) {
-                    if ($request->hasFile("carousel.$key.image")) {
-                        // Hapus gambar lama jika ada
-                        if (!empty($carousel[$key]['image'])) {
-                            $publicId = Media::where('cloudinary_url', $carousel[$key]['image'])->value('cloudinary_public_id');
-                            if ($publicId) {
-                                cloudinary()->destroy($publicId);
-                                Media::where('cloudinary_public_id', $publicId)->delete();
-                            }
-                        }
-
-                        // Unggah gambar baru ke Cloudinary
-                        $file = $request->file("carousel.$key.image");
-                        $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
-                            'folder' => 'image_pages/hero',
-                            'use_filename' => true,
-                            'unique_filename' => true,
-                        ]);
-
-                        // Dapatkan URL dan Public ID dari Cloudinary
-                        $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
-                        $publicId = $cloudinaryResponse->getPublicId();
-
-                        // Simpan informasi gambar ke item
-                        $carousel[$key]['image'] = $cloudinaryUrl;
-
-                        // Simpan metadata gambar ke tabel media (opsional)
-                        Media::create([
-                            'cloudinary_public_id' => $publicId,
-                            'cloudinary_url' => $cloudinaryUrl,
-                            'type' => 'image',
-                        ]);
-                    }
+                    $carousel[$key]['image'] = $request->hasFile("carousel.$key.image")
+                        ? $this->processImage($request->file("carousel.$key.image"), $content['hero_section']['carousel'][$key]['image'] ?? null)
+                        : ($content['hero_section']['carousel'][$key]['image'] ?? '/images/about/leader.svg');
                 }
 
                 // Perbarui data carousel di konten
@@ -168,38 +140,9 @@ class PageController extends Controller
             $team = $request->input('team', []);
 
             foreach ($team as $key => $member) {
-                if ($request->hasFile("team.$key.image")) {
-                    // Hapus gambar lama jika ada
-                    if (!empty($team[$key]['image'])) {
-                        $publicId = Media::where('cloudinary_url', $team[$key]['image'])->value('cloudinary_public_id');
-                        if ($publicId) {
-                            cloudinary()->destroy($publicId);
-                            Media::where('cloudinary_public_id', $publicId)->delete();
-                        }
-                    }
-
-                    // Unggah gambar baru ke Cloudinary
-                    $file = $request->file("team.$key.image");
-                    $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
-                        'folder' => 'image_pages/team',
-                        'use_filename' => true,
-                        'unique_filename' => true,
-                    ]);
-
-                    // Dapatkan URL dan Public ID dari Cloudinary
-                    $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
-                    $publicId = $cloudinaryResponse->getPublicId();
-
-                    // Simpan URL ke dalam data anggota tim
-                    $team[$key]['image'] = $cloudinaryUrl;
-
-                    // Simpan metadata gambar ke tabel media (opsional)
-                    Media::create([
-                        'cloudinary_public_id' => $publicId,
-                        'cloudinary_url' => $cloudinaryUrl,
-                        'type' => 'image',
-                    ]);
-                }
+                $team[$key]['image'] = $request->hasFile("team.$key.image")
+                    ? $this->processImage($request->file("team.$key.image"), $content['team_section'][$key]['image'] ?? null)
+                    : ($content['team_section'][$key]['image'] ?? '/images/about/dika.svg');
             }
 
             $content[$section] = $team;
@@ -221,34 +164,10 @@ class PageController extends Controller
             $content[$section]['faq'] = $faq;
         } elseif (in_array($section, ['founder_section', 'company_section', 'about_section', 'quote_section'])) {
             if ($request->hasFile('image')) {
-                // Hapus gambar lama jika ada
-                if (!empty($content[$section]['image'])) {
-                    $publicId = Media::where('cloudinary_url', $content[$section]['image'])->value('cloudinary_public_id');
-                    if ($publicId) {
-                        cloudinary()->destroy($publicId);
-                        Media::where('cloudinary_public_id', $publicId)->delete();
-                    }
-                }
-
-                // Unggah gambar baru ke Cloudinary
-                $file = $request->file('image');
-                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
-                    'folder' => "image_pages/$section",
-                    'use_filename' => true,
-                    'unique_filename' => true,
-                ]);
-
-                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
-                $publicId = $cloudinaryResponse->getPublicId();
-
-                $content[$section]['image'] = $cloudinaryUrl;
-
-                // Simpan metadata gambar ke tabel media (opsional)
-                Media::create([
-                    'cloudinary_public_id' => $publicId,
-                    'cloudinary_url' => $cloudinaryUrl,
-                    'type' => 'image',
-                ]);
+                $content[$section]['image'] = $this->processImage($request->file('image'), $content[$section]['image'] ?? null);
+            } else {
+                // Gunakan gambar lama atau fallback ke gambar default
+                $content[$section]['image'] = $content[$section]['image'] ?? '/images/about/dika.svg';
             }
 
             // Perbarui data lainnya
@@ -260,11 +179,66 @@ class PageController extends Controller
             // Default update untuk section lain
             $content[$section] = $request->all();
         }
-        dd($content, 'content');
         // Simpan perubahan ke database
         $page->content = json_encode($content);
         $page->save();
 
         return redirect()->route('pages.index')->with('success', 'Section updated successfully');
+    }
+
+    private function processImage($file, $oldImage = null)
+    {
+        // Hapus gambar lama jika ada
+        if (!empty($oldImage)) {
+            $publicId = Media::where('cloudinary_url', $oldImage)->value('cloudinary_public_id');
+            if ($publicId) {
+                cloudinary()->destroy($publicId);
+                Media::where('cloudinary_public_id', $publicId)->delete();
+            }
+        }
+
+        // Nama file WebP
+        $webpFileName = time() . '.webp';
+
+        // Path folder tujuan
+        $tempFolder = public_path('temp');
+
+        // Pastikan folder `temp` ada, jika tidak, buat folder
+        if (!file_exists($tempFolder)) {
+            mkdir($tempFolder, 0755, true);
+        }
+
+        // Path tujuan penyimpanan sementara file WebP
+        $webpPath = $tempFolder . '/' . $webpFileName;
+
+        // Konversi gambar ke WebP
+        WebP::make($file)
+            ->quality(65) // Atur kualitas gambar (opsional)
+            ->save($webpPath);
+
+        $cloudinaryResponse = cloudinary()->upload($webpPath, [
+            'folder' => 'image_pages/team',
+            'use_filename' => true,
+            'unique_filename' => true,
+        ]);
+
+        // Dapatkan URL dari Cloudinary
+        $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+        $cloudinaryPublicId = $cloudinaryResponse->getPublicId();
+
+        // Langsung hapus file sementara setelah upload
+        if (file_exists($webpPath)) {
+            unlink($webpPath); // Hapus file
+        }
+
+        // Simpan metadata gambar ke tabel media (opsional)
+        Media::create([
+            'cloudinary_public_id' => $cloudinaryPublicId,
+            'cloudinary_url' => $cloudinaryUrl,
+            'type' => 'image',
+        ]);
+
+        // Kembalikan URL gambar baru
+        return $cloudinaryUrl;
     }
 }

@@ -12,8 +12,7 @@ class DonationController extends Controller
     {
         $donations = Need::with(['donation', 'thumbnail'])
             ->filter(request(['keyword']))
-            ->latest()
-            ->paginate(8);
+            ->latest();
 
         return view('front.donation.index', [
             'page_title' => 'Donations',

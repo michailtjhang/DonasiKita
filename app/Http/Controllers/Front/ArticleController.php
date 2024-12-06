@@ -15,8 +15,7 @@ class ArticleController extends Controller
             'articles' => Blog::with('category')
                 ->filter(request(['keyword', 'category']))
                 ->whereStatus(1)
-                ->latest()
-                ->paginate(8),
+                ->latest(),
         ]);
     }
 
