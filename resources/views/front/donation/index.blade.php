@@ -320,6 +320,8 @@
 @endsection
 @section('script')
     <script>
+        var data = @json($donations);
+
         document.querySelectorAll('.pagination-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
                 var page = this.getAttribute('data-page');
