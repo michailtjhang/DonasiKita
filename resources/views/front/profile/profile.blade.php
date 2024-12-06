@@ -316,10 +316,12 @@
             <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
                 alt="Profile Image" class="profile-image" />
         </div>
-
+        
         <!-- Profile Form Section -->
         <div class="form-container">
+        
             @include('_message')
+            
             <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -361,6 +363,7 @@
                 </div>
 
             </form>
+
         </div>
     </div>
 
