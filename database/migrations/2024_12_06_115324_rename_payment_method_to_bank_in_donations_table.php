@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('donations', function (Blueprint $table) {
-            $table->uuid('receipt_id')->nullable()->after('status'); // ID unik untuk bukti pembayaran
-            $table->text('note')->nullable()->after('receipt_id'); // Catatan opsional
+            $table->renameColumn('payment_method', 'bank');
+            $table->string('sender_name')->after('bank');
         });
     }
 
@@ -23,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('donations', function (Blueprint $table) {
-            $table->dropColumn(['receipt_id', 'note']);
+            $table->renameColumn('bank', 'payment_method');
+            $table->dropColumn('sender_name');
         });
     }
 };

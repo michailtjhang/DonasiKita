@@ -226,8 +226,6 @@
 @endsection
 
 @section('content')
-    <!-- <div class="space-section"></div> -->
-
     <div class="container-form py-1">
         <!-- Info Section -->
         <div class="info-section">
@@ -235,27 +233,37 @@
             <div class="info-title">Bantuan Kemanusiaan untuk Palestina</div>
         </div>
 
-        <form action="{{ route('donations.confirm', $donation->slug) }}" method="POST" id="confirmationForm">
+        <form action="{{ route('donations.store.amount', $donation->slug) }}" method="POST" id="confirmationForm">
             @csrf
             <!-- Nominal Donasi Section -->
             <div class="form-section">
                 <h4>Nominal Donasi</h4>
                 <div class="nominal-buttons">
-                    <button class="nominal" data-value="10000">Rp 10.000</button>
-                    <button class="nominal" data-value="30000">Rp 30.000</button>
-                    <button class="nominal" data-value="50000">Rp 50.000</button>
-                    <button class="nominal" data-value="100000">Rp 100.000</button>
+                    <button class="nominal" type="button" data-value="10000">Rp 10.000</button>
+                    <button class="nominal" type="button" data-value="30000">Rp 30.000</button>
+                    <button class="nominal" type="button" data-value="50000">Rp 50.000</button>
+                    <button class="nominal" type="button" data-value="100000">Rp 100.000</button>
                 </div>
-                <input type="text" id="custom-nominal" class="input-field" placeholder="Input donasi minimal Rp 1.000">
+                <input type="text" id="custom-nominal" name="amount" class="input-field"
+                    placeholder="Input donasi minimal Rp 10.000" value="{{ old('amount') }}">
+                @error('amount')
+                    <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                @enderror
             </div>
 
             @guest
                 <!-- Data Diri Section -->
                 <div class="form-section">
                     <h4>Identitas Kamu</h4>
-                    <input type="text" class="input-field" placeholder="Nama Lengkap">
-                    <input type="email" class="input-field" placeholder="Email">
-                    <input type="text" class="input-field" placeholder="No Telepon">
+                    <input type="text" class="input-field" name="name" placeholder="Nama Lengkap"
+                        value="{{ old('name') }}">
+                    @error('name')
+                        <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                    @enderror
+                    <input type="email" class="input-field" name="email" placeholder="Email" value="{{ old('email') }}">
+                    @error('email')
+                        <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                    @enderror
                 </div>
             @endguest
 
@@ -272,28 +280,35 @@
                             onclick="selectBank('mandiri', 'Bank Mandiri', '/images/payment/mandiri.svg')">
                             <img src="/images/payment/mandiri.svg" alt="Bank Mandiri">
                             <span>Bank Mandiri - 1234567890987</span>
-                            <label class="radio-button"><input type="radio" name="bank" value="mandiri"> </label>
+                            <label class="radio-button"><input type="radio" name="bank" value="mandiri"
+                                    {{ old('bank') == 'mandiri' ? 'checked' : '' }}> </label>
                         </div>
                         <div class="dropdown-option"
                             onclick="selectBank('bca', 'Bank Central Asia (BCA)', '/images/payment/bca.svg')">
                             <img src="/images/payment/bca.svg" alt="Bank Central Asia (BCA)">
-                            <span>Bank Central Asia (BCA) - 1234567890987 </span>
-                            <label class="radio-button"><input type="radio" name="bank" value="bca"> </label>
+                            <span>Bank Central Asia (BCA) - 1234567890987</span>
+                            <label class="radio-button"><input type="radio" name="bank" value="bca"
+                                    {{ old('bank') == 'bca' ? 'checked' : '' }}> </label>
                         </div>
                         <div class="dropdown-option"
                             onclick="selectBank('bni', 'Bank Negara Indonesia (BNI)', '/images/payment/bni.svg')">
                             <img src="/images/payment/bni.svg" alt="Bank Negara Indonesia (BNI)">
                             <span>Bank Negara Indonesia (BNI) - 1234567890987</span>
-                            <label class="radio-button"><input type="radio" name="bank" value="bni"> </label>
+                            <label class="radio-button"><input type="radio" name="bank" value="bni"
+                                    {{ old('bank') == 'bni' ? 'checked' : '' }}> </label>
                         </div>
                         <div class="dropdown-option"
                             onclick="selectBank('bri', 'Bank Rakyat Indonesia (BRI)', '/images/payment/bri.svg')">
                             <img src="/images/payment/bri.svg" alt="Bank Rakyat Indonesia (BRI)">
                             <span>Bank Rakyat Indonesia (BRI) - 1234567890987</span>
-                            <label class="radio-button"><input type="radio" name="bank" value="bri"> </label>
+                            <label class="radio-button"><input type="radio" name="bank" value="bri"
+                                    {{ old('bank') == 'bri' ? 'checked' : '' }}> </label>
                         </div>
                     </div>
                 </div>
+                @error('bank')
+                    <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                @enderror
             </div>
 
             <!-- Total Section -->
@@ -303,42 +318,74 @@
             </div>
 
             <!-- Payment Button -->
-            <button class="pay-button my-5">Bayar Sekarang</button>
+            <button class="pay-button my-5" type="submit">Bayar Sekarang</button>
         </form>
     </div>
+@endsection
 
+@section('script')
     <script>
         let selectedNominal = 0;
+        let transferFee = 0;
+        const bankFees = {
+            mandiri: 4000,
+            bca: 4500,
+            bni: 3000,
+            bri: 3500
+        };
 
+        // Event listener untuk tombol nominal
         document.querySelectorAll('.nominal').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah refresh halaman
                 document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+
                 selectedNominal = parseInt(this.getAttribute('data-value'));
-                document.getElementById('custom-nominal').value = ''; // Clear the custom input
+                document.getElementById('custom-nominal').value = selectedNominal; // Isi input field
                 updateTotal();
             });
         });
 
+        // Event listener untuk input manual nominal
         document.getElementById('custom-nominal').addEventListener('input', function() {
-            selectedNominal = parseInt(this.value) || 0;
-            document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
-            updateTotal();
+            const value = parseInt(this.value) || 0;
+            if (value >= 10000) { // Validasi minimal Rp 10.000
+                selectedNominal = value;
+                document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
+                updateTotal();
+            } else {
+                selectedNominal = 0;
+                updateTotal();
+            }
         });
 
-        function updateTotal() {
-            document.getElementById('total-amount').textContent = `Rp ${selectedNominal.toLocaleString()}`;
+        // Event listener untuk dropdown pilihan bank
+        function selectBank(bankId, bankName, bankLogo) {
+            document.getElementById('selected-bank-name').textContent = bankName;
+            transferFee = bankFees[bankId] || 0; // Ambil biaya transfer berdasarkan bank yang dipilih
+            updateTotal();
+
+            // Tutup dropdown
+            const dropdown = document.getElementById('dropdown-options');
+            dropdown.classList.remove('show');
         }
 
+        // Fungsi untuk memperbarui total donasi
+        function updateTotal() {
+            const totalAmount = selectedNominal + transferFee;
+            const totalAmountElement = document.getElementById('total-amount');
+            totalAmountElement.innerHTML = `
+            <span>Total Donasi:</span>
+            <span>Rp ${totalAmount.toLocaleString()}</span>
+            <div style="font-size: 10px; color: #6c757d;">(Termasuk biaya transfer Rp ${transferFee.toLocaleString()})</div>
+        `;
+        }
+
+        // Fungsi untuk menampilkan/menyembunyikan dropdown
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-options');
             dropdown.classList.toggle('show');
-        }
-
-        function selectBank(bankId, bankName, bankLogo) {
-            document.getElementById('selected-bank-name').textContent = bankName;
-            const dropdown = document.getElementById('dropdown-options');
-            dropdown.classList.remove('show');
         }
     </script>
 @endsection

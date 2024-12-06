@@ -39,7 +39,7 @@ Route::group(['middleware' => 'verifiedEmail'], function () {
 
     Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
     Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
-    Route::post('/donations/{slug}', [FrontDonationController::class, 'store'])->name('donations.store');
+    Route::post('/donations/{slug}/donation-amount', [FrontDonationController::class, 'storeTemporaryAmount'])->name('donations.store.amount');
     Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
     Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
     Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
