@@ -329,7 +329,7 @@
         <!-- Button Section -->
         <div class="button-container">
             <button class="save-changes-button">Save Changes</button>
-            <button class="change-password-button">Change Password</button>
+            <!-- <button class="change-password-button">Change Password</button> -->
             <button class="logout-button">Logout</button>
         </div>
     </div>
