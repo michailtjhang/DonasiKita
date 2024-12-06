@@ -224,10 +224,16 @@ class PageController extends Controller
 
         // Dapatkan URL dari Cloudinary
         $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+        $cloudinaryPublicId = $cloudinaryResponse->getPublicId();
+
+        // Langsung hapus file sementara setelah upload
+        if (file_exists($webpPath)) {
+            unlink($webpPath); // Hapus file
+        }
 
         // Simpan metadata gambar ke tabel media (opsional)
         Media::create([
-            'cloudinary_public_id' => $cloudinaryResponse->getPublicId(),
+            'cloudinary_public_id' => $cloudinaryPublicId,
             'cloudinary_url' => $cloudinaryUrl,
             'type' => 'image',
         ]);
