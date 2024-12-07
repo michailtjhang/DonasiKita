@@ -22,8 +22,7 @@ class Donation extends Model
         'bank',
         'status',
         'sender_name',
-        'receipt_id',
-        'note',
+        'tracking_number',
     ];
 
     public function user()

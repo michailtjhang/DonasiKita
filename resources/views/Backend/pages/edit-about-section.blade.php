@@ -56,7 +56,7 @@
                         <!-- Existing Image -->
                         <div class="col-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
-                            <img src="{{ $sectionData['image'] ?? asset($sectionData['logo']) }}"
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['logo']) ?? '' }}"
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
@@ -92,7 +92,7 @@
                         <!-- Existing Image -->
                         <div class="col-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
-                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) }}"
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) ?? '' }}"
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
@@ -105,13 +105,13 @@
                                     <div class="form-group">
                                         <label for="team_name_{{ $key }}">Team Member Name</label>
                                         <input type="text" name="team[{{ $key }}][name]"
-                                            id="team_name_{{ $key }}" value="{{ $team['name'] }}"
+                                            id="team_name_{{ $key }}" value="{{ $team['name'] ?? '' }}"
                                             class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="team_position_{{ $key }}">Position</label>
                                         <input type="text" name="team[{{ $key }}][position]"
-                                            id="team_position_{{ $key }}" value="{{ $team['position'] }}"
+                                            id="team_position_{{ $key }}" value="{{ $team['position'] ?? '' }}"
                                             class="form-control">
                                     </div>
                                     <div class="form-group">
@@ -136,7 +136,7 @@
                                         <!-- Existing Image -->
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ $team['image'] ?? asset($team['image']) }}"
+                                            <img src="{{ $team['image'] ?? asset($team['image']) ?? '' }}"
                                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>
@@ -209,10 +209,19 @@
                 </div>
                 <div class="form-group">
                     <label for="team_image_${teamIndex}">Image</label>
-                    <input type="text" name="team[${teamIndex}][image]" id="team_image_${teamIndex}" class="form-control">
+                    <div class="custom-file">
+                        <input type="file" name="team[${teamIndex}][image]" id="team_image_${teamIndex}" class="custom-file-input" onchange="previewTeamImage(event, ${teamIndex})">
+                        <label class="custom-file-label" for="team_image_${teamIndex}">Choose file</label>
+                    </div>
+                </div>
+                <div class="row mt-3 text-center">
+                    <div class="col-6">
+                        <span class="d-block mb-2 text-muted">Preview:</span>
+                        <img id="teamImagePreview_${teamIndex}" src="" alt="Preview Image" class="img-thumbnail shadow-sm border" style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                    </div>
                 </div>
                 <button type="button" class="btn btn-danger mt-2" onclick="removeTeamMember(${teamIndex})">Remove</button>
-            `;
+                `;
                 row.appendChild(formGroup); // Menambahkan anggota ke baris yang sesuai
                 teamIndex++;
             }

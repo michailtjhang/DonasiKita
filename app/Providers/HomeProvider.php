@@ -25,13 +25,6 @@ class HomeProvider extends ServiceProvider
         // View Config In Home 
         View::composer('front.home.home', function ($view) {
             $configKey = [
-                'title_home',
-                'caption',
-                'subtitle_home',
-                'heading_home',
-                'description_heading_home',
-                'quotes_home_section',
-                'author_quotes_home_section',
                 'meta_title',
                 'meta_description',
                 'meta_keywords',
@@ -44,6 +37,13 @@ class HomeProvider extends ServiceProvider
             $config = Config::whereIn('name', $configKey)->pluck('value', 'name');
 
             $view->with('config', $config);
+            $view->with('content', $content);
+        });
+
+        View::composer('front.about.about', function ($view) {
+            $page = Pages::where('name', 'about')->firstOrFail();
+            $content = json_decode($page->content, true);
+            
             $view->with('content', $content);
         });
     }
