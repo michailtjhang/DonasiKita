@@ -327,7 +327,7 @@
                 var page = this.getAttribute('data-page');
                 // Pindahkan halaman sesuai nomor halaman yang diklik
                 // Anda bisa memanfaatkan AJAX atau navigasi normal di sini
-                window.location.href = ?page=${page};
+                window.location.href = `?page=${page}`;
             });
         });
 
@@ -338,7 +338,7 @@
                 currentPage.previousElementSibling.classList.add('active');
                 // Pindahkan halaman ke halaman sebelumnya
                 var prevPage = currentPage.previousElementSibling.getAttribute('data-page');
-                window.location.href = ?page=${prevPage};
+                window.location.href = `?page=${prevPage}`;
             }
         });
 
@@ -349,7 +349,7 @@
                 currentPage.nextElementSibling.classList.add('active');
                 // Pindahkan halaman ke halaman berikutnya
                 var nextPage = currentPage.nextElementSibling.getAttribute('data-page');
-                window.location.href = ?page=${nextPage};
+                window.location.href = `?page=${nextPage}`;
             }
         });
     </script>

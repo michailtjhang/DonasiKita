@@ -164,7 +164,7 @@
 <!-- Company Leader Section -->
 <section id="company-leader" class="space-section container align-items-center justify-content-center text-center w-100 vw-100">
     <h1 class="bolder-text text-dark text-center mb-4">Pendiri Lembaga</h1>
-    <img src="/images/about/leader.svg" class="img leader-image rounded-3 rounded img-about" alt="">
+    <img src="/images/about/leader.svg" class="img leader-image rounded rounded-5 img-about" alt="">
     <p class="fw-bold text-dark text-center text-large mt-4">Rian Pratama</p>
     <p class="text-dark text-center text-large">Founder & CEO</p>
 </section>
