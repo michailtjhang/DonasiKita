@@ -210,7 +210,8 @@
     <div class="profile-container my-5 pt-5">
         <!-- Profile Image Section -->
         <div class="profile-image-container" onclick="openProfilePicturePopup()">
-            <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Image" class="profile-image">
+            <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
+                alt="Profile Image" class="profile-image">
         </div>
 
         <!-- Profile Form Section -->
@@ -759,7 +760,12 @@
         // Fungsi untuk mengupload gambar profil
         function uploadProfilePicture() {
             const fileInput = document.getElementById("profilePictureInput");
+            const uploadButton = document.querySelector("button[onclick='uploadProfilePicture()']");
             const file = fileInput.files[0];
+
+            // Menonaktifkan tombol "Upload" dan menutup pop-up saat upload dimulai
+            uploadButton.disabled = true; // Menonaktifkan tombol upload
+            closeProfilePicturePopup(); // Menutup pop-up segera setelah tombol "Upload" diklik
 
             if (file) {
                 const formData = new FormData();
@@ -797,6 +803,9 @@
                             text: 'Terjadi kesalahan saat mengupload gambar.',
                         });
                         console.error(error);
+                    })
+                    .finally(() => {
+                        uploadButton.disabled = false; // Mengaktifkan kembali tombol upload
                     });
             } else {
                 Swal.fire({
@@ -804,6 +813,7 @@
                     title: 'Pilih Gambar',
                     text: 'Harap pilih gambar terlebih dahulu.',
                 });
+                uploadButton.disabled = false; // Mengaktifkan kembali tombol upload jika file tidak dipilih
             }
         }
     </script>

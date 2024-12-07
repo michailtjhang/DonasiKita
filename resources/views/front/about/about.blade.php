@@ -138,8 +138,8 @@
 <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
-        <h1 class="hero-title2">About Page</h1>
-        <p class="hero-subtitle2">Halaman About Us DonasiKita Foundation menjelaskan misi kami sebagai platform donasi yang aman, transparan, dan berdampak, serta memperkenalkan tim yang bekerja di baliknya.</p>
+        <h1 class="hero-title2">{{ $content['hero_section']['title'] }}</h1>
+        <p class="hero-subtitle2">{{ $content['hero_section']['subtitle'] }}</p>
     </div>
 </section>
 <!-- End Hero Section -->
@@ -151,9 +151,9 @@
                 <img src="/images/about/logo.svg" class="about-image img-fluid" alt="">
             </div>
             <div class="col-lg-6 col-12 text-dark align-items-center px-5">
-                <h3 class="bolder-text text-dark mb-3">DonasiKita Foundation</h3>
+                <h3 class="bolder-text text-dark mb-3">{{ $content['company_section']['name'] }}</h3>
                 <p>
-                    DonasiKita Foundation adalah organisasi nirlaba yang bertujuan mempermudah proses donasi bagi masyarakat dengan menyediakan platform aman dan transparan. Kami mendukung berbagai kampanye kemanusiaan dan sosial, membantu para donatur memberikan dampak positif bagi yang membutuhkan di seluruh Indonesia dan dunia.
+                    {!! $content['company_section']['description'] !!}
                 </p>
             </div>
         </div>
@@ -164,9 +164,9 @@
 <!-- Company Leader Section -->
 <section id="company-leader" class="space-section container align-items-center justify-content-center text-center w-100 vw-100">
     <h1 class="bolder-text text-dark text-center mb-4">Pendiri Lembaga</h1>
-    <img src="/images/about/leader.svg" class="img leader-image rounded rounded-5 img-about" alt="">
-    <p class="fw-bold text-dark text-center text-large mt-4">Rian Pratama</p>
-    <p class="text-dark text-center text-large">Founder & CEO</p>
+    <img src="{{ $content['founder_section']['image'] }}" class="img leader-image rounded rounded-5 img-about" alt="">
+    <p class="fw-bold text-dark text-center text-large mt-4">{{ $content['founder_section']['name'] }}</p>
+    <p class="text-dark text-center text-large">{{ $content['founder_section']['position'] }}</p>
 </section>
 <!-- End Company Leader Section -->
 
@@ -178,91 +178,22 @@
         <div class="container-slide swiper">
             <div class="slider-wrapper">
                 <div class="card-box swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/lestari.svg"
-                                class="img img-fluid"
-                                alt="Lestari Dewi" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Lestari Dewi</h5>
-                            <p class="text-dark">Chief Operating Officer</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/andi.svg"
-                                class="img img-fluid"
-                                alt="Andi Wijaya" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Andi Wijaya</h5>
-                            <p class="text-dark">Chief Financial Officer</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/leader.svg"
-                                class="img img-fluid"
-                                alt="Maya Puspita" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Maya Puspita</h5>
-                            <p class="text-dark">Head of Marketing</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/ridwan.svg"
-                                class="img img-fluid"
-                                alt="Ridwan Santoso" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Ridwan Santoso</h5>
-                            <p class="text-dark">Head of Partnerships</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/fitri.svg"
-                                class="img img-fluid"
-                                alt="Fitri Rahmawati" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Fitri Rahmawati</h5>
-                            <p class="text-dark">Head of Community</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/dika.svg"
-                                class="img img-fluid"
-                                alt="Dika Saputra" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Dika Saputra</h5>
-                            <p class="text-dark">Head of Technology</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="content-img">
-                            <img
-                                src="/images/about/nina.svg"
-                                class="img img-fluid"
-                                alt="Nina Amalia" />
-                        </div>
-                        <div class="content-box">
-                            <h5 class="text-dark fw-bold">Nina Amalia</h5>
-                            <p class="text-dark">Head of Communications</p>
-                        </div>
-                    </div>
 
+                    @foreach($content['team_section'] as $team)
+                    <div class="swiper-slide">
+                        <div class="content-img">
+                            <img
+                                src="{{ $team['image'] }}"
+                                class="img img-fluid"
+                                alt="{{ $team['name'] }}" />
+                        </div>
+                        <div class="content-box">
+                            <h5 class="text-dark fw-bold">{{ $team['name'] }}</h5>
+                            <p class="text-dark">{{ $team['position'] }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                    
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-slide-button swiper-button-prev"></div>
@@ -279,8 +210,8 @@
         <div class="banner-content">
             <h1 style="font-size: 60px;">Your help means a lot</h1>
             <p style="font-size: 41px;">donate or be a volunteer now!</p>
-            <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</button>
-            <a href="{{url('/event')}}">
+            <a href="{{url('/donations')}}" class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</a>
+            <a href="{{url('/events')}}">
                 <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
             </a>
         </div>

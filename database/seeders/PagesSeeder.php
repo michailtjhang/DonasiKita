@@ -110,14 +110,6 @@ class PagesSeeder extends Seeder
                         'author' => 'Rasulullah SAW',
                         'image' => '/images/quotes.svg'
                     ],
-                    'invitation_section' => [
-                        'title' => 'Your help means a lot',
-                        'description' => 'donate or be a volunteer now!',
-                        'buttons' => [
-                            ['text' => 'Donate', 'link' => '/donate'],
-                            ['text' => 'Sukarelawan', 'link' => '/event']
-                        ]
-                    ],
                     'faq_section' => [
                         'faq' => [
                             [

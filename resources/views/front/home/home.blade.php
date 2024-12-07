@@ -99,19 +99,14 @@
     <!-- About Content Section -->
     <section id="about-content" class="space-section">
         <div class="container-fluid py-5 justify-content-center text-center bg-skyline">
-            <h1 class="bolder-text text-dark" style="margin-bottom: 50px"> Kamu Adalah Harapan Lainnya</h1>
+            <h1 class="bolder-text text-dark" style="margin-bottom: 50px">{{ $content['about_section']['title'] }}</h1>
             <div class="row mx-auto text-wrap" style="width:80%;">
                 <div class="col-lg-6 col-12">
-                    <img src="/images/content/about.svg" class="about-image img-fluid" alt="">
+                    <img src="{{ $content['about_section']['image'] }}" class="about-image img-fluid" alt="">
                 </div>
                 <div class="col-lg-6 col-12 text-dark d-flex  px-5">
                     <p style="font-size: 26px; text-align:left">
-                        <span class="fw-bold">DonasiKita </span>meyakinkan Anda untuk menjadi bagian dari perubahan positif
-                        melalui platform donasi yang transparan, aman, dan terpercaya. Dengan menghubungkan donatur dengan
-                        beragam program bantuan, kami berkomitmen untuk memperkuat solidaritas sosial serta memberdayakan
-                        komunitas yang membutuhkan di seluruh Indonesia. Bersama, kita dapat menciptakan masa depan yang
-                        lebih peduli, inklusif, dan berdaya, di mana setiap kontribusi kecil membawa dampak besar bagi
-                        mereka yang membutuhkan uluran tangan kita.
+                        {!! $content['about_section']['description'] !!}
                     </p>
                 </div>
             </div>
@@ -193,10 +188,10 @@
     <!-- Quote Content Section -->
     <section id="quote-content" class="space-section">
         <div class="container-fluid d-flex justify-content-center align-items-center text-center bg-skyline"
-            style="background-image: url('/images/quotes.svg'); height: 400px; background-size: cover; background-position: center; background-repeat: no-repeat;">
+            style="background-image: url('{{ $content['quote_section']['image'] }}'); height: 400px; background-size: cover; background-position: center; background-repeat: no-repeat;">
             <p class="text-light m-0" style="font-size: 35px; text-shadow: 2px 2px #000;">
-                "Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain." <br>
-                <span class="fw-bold mt-3">-Rasulullah SAW-</span>
+                {{ $content['quote_section']['quote'] }}<br>
+                <span class="fw-bold mt-3">- {{ $content['quote_section']['author'] }} -</span>
             </p>
         </div>
     </section>
@@ -279,8 +274,8 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Donate</button>
-                <a href="{{ url('/event') }}">
+                <a href="{{ url('/donations') }}" class="btn btn-custom" id="button-event" style="font-size: 30px;">Donate</a>
+                <a href="{{ url('/events') }}">
                     <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Sukarelawan</button>
                 </a>
             </div>

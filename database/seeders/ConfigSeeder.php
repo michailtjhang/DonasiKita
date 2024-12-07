@@ -23,34 +23,6 @@ class ConfigSeeder extends Seeder
                 'value' => 'DonasiKita'
             ],
             [
-                'name' => 'title_home',
-                'value' => 'Charity Platform'
-            ],
-            [
-                'name' => 'caption',
-                'value' => 'Bersama Kami Membangun, Bersama Kami Mengubah'
-            ],
-            [
-                'name' => 'subtitle_home',
-                'value' => 'Berbagai, Berkontribusi, Berubah.'
-            ],
-            [
-                'name' => 'heading_home',
-                'value' => 'Kamu Adalah Harapan Lainnya'
-            ],
-            [
-                'name' => 'description_heading_home',
-                'value' => 'DonasiKita meyakinkan Anda untuk menjadi bagian dari perubahan positif melalui platform donasi yang transparan, aman, dan terpercaya. Dengan menghubungkan donatur dengan beragam program bantuan, kami berkomitmen untuk memperkuat solidaritas sosial serta memberdayakan komunitas yang membutuhkan di seluruh Indonesia. Bersama, kita dapat menciptakan masa depan yang lebih peduli, inklusif, dan berdaya, di mana setiap kontribusi kecil membawa dampak besar bagi mereka yang membutuhkan uluran tangan kita.'
-            ],
-            [
-                'name' => 'quotes_home_section',
-                'value' => '"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain."'
-            ],
-            [
-                'name' => 'author_quotes_home_section',
-                'value' => 'Rasulullah SAW'
-            ],
-            [
                 'name' => 'meta_title',
                 'value' => 'DonasiKita'
             ],
