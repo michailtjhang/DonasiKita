@@ -272,8 +272,8 @@
                     <a href="{{ route('donations.show', $donation->slug) }}" class="col-lg-4 col-md-6 mb-5">
                         <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
-                                <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top"
-                                    alt="{{ $donation->title }}" style="height: 160px !important;">
+                                <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top img-fluid blog-img"
+                                    alt="{{ $donation->title }}" style="object-fit: cover !important; height: 160px !important;">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                     style="height: 160px;">

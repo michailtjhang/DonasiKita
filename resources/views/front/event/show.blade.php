@@ -102,15 +102,15 @@
         <div class=" rounded-4 ">
             <p class="card-title fw-bold text-dark my-4 h1">{{ $event->title }}</p>
             @if ($event->thumbnail && $event->thumbnail->id_file)
-                <x-cld-image public-id="{{ $event->thumbnail->id_file }}" class="card-img-top img-fluid" />
+                <x-cld-image public-id="{{ $event->thumbnail->id_file }}" class="card-img-top img-fluid rounded rounded-3"/>
             @elseif ($event->thumbnail && $event->thumbnail->file_path)
                 <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
-                    class="card-img-top img-fluid rounded">
+                    class="card-img-top img-fluid rounded rounded-3">
             @else
                 <span class="d-block mb-2 text-muted">{{ $event->title }}</span>
             @endif
 
-            <p class="h4">
+            <p class="h4 mt-5">
                 {!! $event->description !!}
             </p>
 
@@ -211,7 +211,7 @@
 
     <!-- Button Share and Donate -->
     <div class="container my-5">
-        <div class="row g-1 px-lg-5 mx-lg-4 justify-content-center">
+        <div class="row g-1 justify-content-center">
             <!-- Share Button -->
             <div class="col-12 col-md-4  d-flex justify-content-center mb-3 mb-md-0 mb-lg-0">
                 <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center"

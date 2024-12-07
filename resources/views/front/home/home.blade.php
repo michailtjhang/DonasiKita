@@ -57,6 +57,11 @@
         color: #0f3d56 !important;
     }
 
+    #accordion img {
+        height: 300px; /* Tetapkan tinggi maksimum */
+        object-fit: contain; /* Menjaga proporsi gambar */
+    }
+
     /* .accordion-button:hover {
     color: #084298;
 } */
@@ -105,7 +110,7 @@
                     <img src="{{ $content['about_section']['image'] }}" class="about-image img-fluid" alt="">
                 </div>
                 <div class="col-lg-6 col-12 text-dark d-flex  px-5">
-                    <p style="font-size: 26px; text-align:left">
+                    <p class="text-large-responsive" style="text-align:left">
                         {!! $content['about_section']['description'] !!}
                     </p>
                 </div>
@@ -141,8 +146,8 @@
                             <a href="{{ route('donations.show', $item->slug) }}">
                                 <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                                     @if ($item->thumbnail && $item->thumbnail->file_path)
-                                        <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="..."
-                                            style="object-fit: cover !important;">
+                                        <img src="{{ $item->thumbnail->file_path }}" class="card-img-top img-fluid blog-img" alt="..."
+                                            style="object-fit: cover !important; height: 200px !important;">
                                     @else
                                         <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                             style="height: 160px;">
@@ -314,7 +319,7 @@
                                         <a href="{{ route('blog.show', $item->slug) }}">
                                             <img src="{{ $item->thumbnail->file_path }}"
                                                 class="card-img-top img-fluid blog-img" alt="{{ $item->title }}"
-                                                style="height: 200px !important;">
+                                                style="height: 200px !important; object-fit: cover !important;">
                                         </a>
                                     @else
                                         <a href="{{ route('blog.show', $item->slug) }}">
@@ -356,9 +361,9 @@
     <section id="accodrion" class="space-section">
         <h1 class="bolder-text text-dark text-center mb-5 ">Frequently Asked Question</h1>
         <div class="container">
-            <div class="row">
+            <div class="row d-flex align-items-stretch">
                 <!-- Kolom Kiri: Gambar -->
-                <div class="col-lg-6 col-12 d-flex justify-content-center mb-5">
+                <div class="col-lg-6 col-12 text-center justify-content-center mb-5">
                     <img src="{{ url('/images/faq.svg') }}" alt="" class="img img-fluid">
                 </div>
                 <!-- Kolom Kanan: Accordion -->

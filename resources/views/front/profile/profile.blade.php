@@ -88,14 +88,6 @@
         }
 
         /* Form Container */
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 600px;
-        }
-
         .form-container input {
             padding: 10px;
             font-size: 16px;
@@ -207,59 +199,67 @@
 @section('content')
     <div class="space-section"></div>
 
-    <div class="profile-container my-5 pt-5">
-        <!-- Profile Image Section -->
-        <div class="profile-image-container" onclick="openProfilePicturePopup()">
-            <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
-                alt="Profile Image" class="profile-image">
-        </div>
-
-        <!-- Profile Form Section -->
-        <div class="form-container">
-
-            @include('_message')
-
-            <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <label for="name">Nama</label>
-                <input type="text" id="name" name="name" value="{{ auth()->user()->name }}"
-                    class="@error('name') is-invalid @enderror" />
-
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ auth()->user()->email }}"
-                    class="@error('email') is-invalid @enderror" />
-
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-
-                <div class="mb-2">
-                    <label for="password" class="form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                            id="password" placeholder="Enter your password">
-                        <button class="btn btn-secondary" type="button" id="togglePassword">
-                            <i class="fas fa-eye" id="toggleIcon"></i>
-                        </button>
-
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+    <div class="d-flex justify-content-center align-items-center mx-lg-5 px-md-5  mx-md-5 px-2  mx-2">
+        <div class="card rounded rounded-5 spacer-x p-5 my-5 pt-5">
+            <div class="row g-4">
+                <!-- Profile Image Section -->
+                <div class="col-lg-4 text-center" onclick="openProfilePicturePopup()">
+                    <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
+                        alt="Profile Image" class="profile-image img img-fluid rounded-circle">
                 </div>
-
-                <!-- Button Section -->
-                <div class="button-container">
-                    <button type="submit" class="save-changes-button">Save Changes</button>
-                    <a href="{{ route('logout') }}" class="logout-button">Logout</a>
+    
+                <!-- Profile Form Section -->
+                <div class="col-lg-8">
+                    @include('_message')
+    
+                    <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST" class="needs-validation">
+                        @csrf
+                        @method('PUT')
+    
+                        <!-- Nama -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama</label>
+                            <input type="text" id="name" name="name" value="{{ auth()->user()->name }}"
+                                class="form-control @error('name') is-invalid @enderror" required />
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+    
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" value="{{ auth()->user()->email }}"
+                                class="form-control @error('email') is-invalid @enderror" required />
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+    
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror" id="password"
+                                    placeholder="Enter your password">
+                                <button class="btn btn-secondary" type="button" id="togglePassword">
+                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                </button>
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+    
+                        <!-- Buttons -->
+                        <div class="d-flex">
+                            <button type="submit" class="save-changes-button me-2">Save Changes</button>
+                            <a href="{{ route('logout') }}" class="logout-button">Logout</a>
+                        </div>
+                    </form>
                 </div>
-
-            </form>
+            </div>
         </div>
     </div>
 

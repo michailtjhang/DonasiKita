@@ -69,8 +69,8 @@
         }
 
         .card-img-top {
-            height: 150px;
-            object-fit: fill;
+            height: 180px;
+            object-fit: cover;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
             width: 100%;
@@ -299,10 +299,10 @@
                             <a href="{{ route('blog.show', $article->slug) }}">
                                 @if ($article->thumbnail && $article->thumbnail->id_file)
                                     <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
+                                        class="card-img-top img-fluid blog-img" />
                                 @elseif ($article->thumbnail && $article->thumbnail->file_path)
                                     <img src="{{ $article->thumbnail->file_path }}"
-                                        class="card-img-top img-fluid" alt="{{ $article->title }}">
+                                    class="card-img-top img-fluid blog-img" alt="{{ $article->title }}">
                                 @else
                                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                         style="height: 200px;">
