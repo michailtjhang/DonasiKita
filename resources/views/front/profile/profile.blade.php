@@ -1,7 +1,4 @@
 @extends('front.layout.app')
-@section('seoMeta')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
 
 @section('style')
 <style>
@@ -187,17 +184,12 @@
             max-width: 90%;
             /* Ukuran maksimal pada layar kecil */
         }
+    }
 
-        /* Profile Image Container */
-        .profile-image-container {
-            width: 200px;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 50%;
-            margin-right: 20px;
-            cursor: pointer;
-            /* Menambahkan cursor pointer untuk menunjukkan interaksi */
+    @media (max-width: 480px) {
+        .search-box {
+            max-width: 100%;
+            /* Full width untuk layar sangat kecil */
         }
     }
     
@@ -205,103 +197,59 @@
 @endsection
 
 @section('content')
-    <div class="space-section"></div>
+<div class="space-section"></div>
 
-    <div class="profile-container my-5 pt-5">
-        <!-- Profile Image Section -->
-        <div class="profile-image-container" onclick="openProfilePicturePopup()">
-            <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
-                alt="Profile Image" class="profile-image" />
-        </div>
-        
-        <!-- Profile Form Section -->
-        <div class="form-container">
-        
-            @include('_message')
-            
-            <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <label for="name">Nama</label>
-                <input type="text" id="name" name="name" value="{{ auth()->user()->name }}"
-                    class="@error('name') is-invalid @enderror" />
+<div class="profile-container my-5 pt-5">
+    <!-- Profile Image Section -->
+    <div class="profile-image-container" onclick="openProfilePicturePopup()">
+        <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Image" class="profile-image">
+    </div>
 
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+    <!-- Profile Form Section -->
+    <div class="form-container">
+        <label for="name">Nama</label>
+        <input type="text" id="name" value="John Doe" />
 
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ auth()->user()->email }}"
-                    class="@error('email') is-invalid @enderror" />
+        <label for="email">Email</label>
+        <input type="email" id="email" value="johndoe@example.com" />
 
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-
-                <div class="mb-2">
-                    <label for="password" class="form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                            id="password" placeholder="Enter your password">
-                        <button class="btn btn-secondary" type="button" id="togglePassword">
-                            <i class="fas fa-eye" id="toggleIcon"></i>
-                        </button>
-
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Button Section -->
-                <div class="button-container">
-                    <button type="submit" class="save-changes-button">Save Changes</button>
-                    <a href="{{ route('logout') }}" class="logout-button">Logout</a>
-                </div>
-
-            </form>
-
+    <div class="mb-0">
+    <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter your password">
+            <button class="btn btn-secondary" type="button" id="togglePassword">
+                <i class="fas fa-eye" id="toggleIcon"></i>
+            </button>
         </div>
     </div>
 
-    <!-- Popup Modal untuk Edit Profile Picture -->
-    <div id="profilePicturePopup" class="popup-overlay">
-        <div class="popup-content">
-            <h3>Edit Profile Picture</h3>
-            <div class="popup-buttons">
-                <!-- Button untuk memunculkan form input file -->
-                <button onclick="showFileInput()">Change Picture</button>
-                <button onclick="removeProfilePicture()">Remove Picture</button>
-                <button onclick="closeProfilePicturePopup()">Cancel</button>
-            </div>
-
-            <!-- Form Input File (Sembunyi pada awalnya) -->
-            <div id="fileInputContainer" style="display: none; padding-top: 10px;">
-                <input type="file" id="profilePictureInput" accept="image/*" style="margin-top: 10px;">
-                <button onclick="uploadProfilePicture()" style="margin-top: 10px;">Upload</button>
-            </div>
+        <!-- Button Section -->
+        <div class="button-container">
+            <button class="save-changes-button">Save Changes</button>
+            <!-- <button class="change-password-button">Change Password</button> -->
+            <button class="logout-button">Logout</button>
         </div>
     </div>
+</div>
 
-    <!-- Current Event -->
-    <div class="container mt-5">
-        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2 ">
-            <h2 class="fw-bold">Event yang sedang diikuti</h2>
-            <p class="text-muted">Selesaikan event untuk membantu saudara kita</p>
-            <!-- Wadah kartu untuk Current Event -->
-            <div id="current-card-container" class="row d-flex justify-content-center">
-                <!-- Kartu akan dimuat di sini oleh JavaScript -->
-            </div>
+<!-- Popup Modal untuk Edit Profile Picture -->
+<div id="profilePicturePopup" class="popup-overlay">
+    <div class="popup-content">
+        <h3>Edit Profile Picture</h3>
+        <div class="popup-buttons">
+            <!-- Button untuk memunculkan form input file -->
+            <button onclick="showFileInput()">Change Picture</button>
+            <button onclick="removeProfilePicture()">Remove Picture</button>
+            <button onclick="closeProfilePicturePopup()">Cancel</button>
+        </div>
 
-            <!-- Navigasi Slider -->
-            <div class="pagination-container  my-5 pb-5">
-                <button class="pagination-arrow" id="prev-page">&lt;</button>
-                <div class="pagination-dots" id="pagination-dots"></div>
-                <button class="pagination-arrow" id="next-page">&gt;</button>
-            </div>
+        <!-- Form Input File (Sembunyi pada awalnya) -->
+        <div id="fileInputContainer" style="display: none; padding-top: 10px;">
+            <input type="file" id="profilePictureInput" accept="image/*" style="margin-top: 10px;">
+            <button onclick="uploadProfilePicture()" style="margin-top: 10px;">Upload</button>
         </div>
     </div>
-    <!-- End Current Event -->
+</div>
 
 <!-- Followed Event -->
 <section id="folowed-event" class="container pt-2 mb-5">
@@ -714,7 +662,32 @@
 
 @section('script')
 <script>
-        document.getElementById('togglePassword').addEventListener('click', function() {
+
+     // Fungsi untuk membuka Pop-up
+     function openProfilePicturePopup() {
+        document.getElementById("profilePicturePopup").style.display = "flex"; // Menampilkan pop-up
+    }
+
+    // Fungsi untuk menutup Pop-up
+    function closeProfilePicturePopup() {
+        document.getElementById("profilePicturePopup").style.display = "none"; // Menyembunyikan pop-up
+    }
+
+    // Fungsi untuk mengedit gambar profil
+    function editProfilePicture() {
+        alert("Fitur untuk mengedit gambar profil belum tersedia."); 
+        // Anda bisa menambahkan logika upload gambar baru disini
+        closeProfilePicturePopup();
+    }
+
+    // Fungsi untuk menghapus gambar profil
+    function removeProfilePicture() {
+        alert("Gambar profil telah dihapus.");
+        // Anda bisa menambahkan logika untuk menghapus gambar disini
+        closeProfilePicturePopup();
+    }
+
+    document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
 
@@ -731,116 +704,21 @@
         });
 
         // Fungsi untuk membuka form input file saat tombol "Change Picture" diklik
-        function showFileInput() {
-            document.getElementById("fileInputContainer").style.display = "block"; // Menampilkan input file
-        }
-    </script>
+function showFileInput() {
+    document.getElementById("fileInputContainer").style.display = "block"; // Menampilkan input file
+}
 
-    <script>
-        // Fungsi untuk mengupload gambar profil
-        function uploadProfilePicture() {
-            const fileInput = document.getElementById("profilePictureInput");
-            const file = fileInput.files[0];
+// Fungsi untuk mengupload gambar profil
+function uploadProfilePicture() {
+    const fileInput = document.getElementById("profilePictureInput");
+    if (fileInput.files && fileInput.files[0]) {
+        // Lakukan upload gambar sesuai dengan file yang dipilih
+        alert("Gambar profil berhasil di-upload.");
+        closeProfilePicturePopup(); // Tutup pop-up setelah upload
+    } else {
+        alert("Pilih gambar terlebih dahulu.");
+    }
+}
 
-            if (file) {
-                const formData = new FormData();
-                formData.append("profile_image", file); // Sesuaikan nama field dengan controller
-                formData.append("_method", "PUT"); // Laravel membutuhkan metode PUT
-                formData.append("_token", document.querySelector('meta[name="csrf-token"]').content); // CSRF token
-
-                const url = "{{ route('profile.update', auth()->user()->id) }}"; // Route untuk update
-
-                fetch(url, {
-                        method: "POST", // Gunakan POST karena PUT dikirim dengan "_method"
-                        body: formData,
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            throw new Error("Upload failed");
-                        }
-                    })
-                    .then(data => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: 'Gambar profil berhasil di-upload.',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            location.reload(); // Refresh halaman setelah notifikasi ditutup
-                        });
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Terjadi kesalahan saat mengupload gambar.',
-                        });
-                        console.error(error);
-                    });
-            } else {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Pilih Gambar',
-                    text: 'Harap pilih gambar terlebih dahulu.',
-                });
-            }
-        }
-    </script>
-
-    <script>
-        function removeProfilePicture() {
-            // Konfirmasi sebelum menghapus
-            Swal.fire({
-                title: 'Yakin ingin menghapus foto profil?',
-                text: "Tindakan ini tidak dapat dibatalkan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const url = "{{ route('profile.destroy', auth()->user()->id) }}"; // Route untuk destroy
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
-                    fetch(url, {
-                            method: "DELETE", // Gunakan metode DELETE
-                            headers: {
-                                "X-CSRF-TOKEN": csrfToken // CSRF token
-                            }
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                return response.json().then(error => {
-                                    throw new Error(error.error || "Failed to remove profile picture");
-                                });
-                            }
-                        })
-                        .then(data => {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Foto profil berhasil dihapus.',
-                                confirmButtonText: 'OK'
-                            }).then(() => {
-                                location.reload(); // Refresh halaman setelah berhasil
-                            });
-                        })
-                        .catch(error => {
-                            console.error(error);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal',
-                                text: error.message || 'Terjadi kesalahan saat menghapus foto profil.',
-                            });
-                        });
-                }
-            });
-        }
-    </script>
+</script>
 @endsection
