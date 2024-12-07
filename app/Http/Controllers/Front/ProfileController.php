@@ -19,9 +19,9 @@ class ProfileController extends Controller
     public function index()
     {
         if (!empty(Auth::check())) {
-            $profile = User::findOrFail(Auth::user()->id);
+            // $profile = User::findOrFail(Auth::user()->id);
             return view('front.profile.profile', [
-                'profile' => $profile,
+                // 'profile' => $profile,
                 'page_title' => 'Profile',
             ]);
         } else {
