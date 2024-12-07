@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\TemporaryDonations;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Buglinjo\LaravelWebp\Facades\Webp;
 
 class DonationController extends Controller
 {
@@ -49,7 +50,7 @@ class DonationController extends Controller
     public function storeTemporaryAmount(Request $request, String $slug)
     {
         $need = Need::whereSlug($slug)->firstOrFail();
-        
+
         // Generate temp_id unik
         do {
             $donateNeedId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
@@ -94,7 +95,12 @@ class DonationController extends Controller
             ]);
         }
 
-        return redirect()->route('donations.amount', ['id' => $temporaryDonation->id]);
+        return view('front.donation.confirmAmount', [
+            'page_title' => $need->title,
+            'donation' => $need,
+            'amount' => $data['amount'],
+            'id' => $donateNeedId
+        ]);
     }
 
 
@@ -109,25 +115,162 @@ class DonationController extends Controller
         ]);
     }
 
-    public function confirm(Request $request, String $slug)
+    public function confirmAmount(Request $request, String $slug, String $id)
     {
-        // dd($request->all());
+        dd($request->all(), $slug, $id);
         $donation = Need::with(['donation', 'thumbnail'])->whereSlug($slug)->firstOrFail();
+        $temporaryDonation = TemporaryDonations::where('id', $id)->firstOrFail();
 
-        if ($request->amount) {
-            return view('front.donation.confirmAmount', [
-                'page_title' => $donation->title,
-                'donation' => $donation,
-                'amount' => $request->amount,
+        // Generate donateNeedId unik
+        do {
+            $donateNeedId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
+        } while (Donation::where('donation_id', $donateNeedId)->exists()); // Pastikan unik
+
+        try {
+            if (Auth::check()) {
+                $request->validate([
+                    'nama_rekening' => 'required|string|max:50',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                ]);
+                $data = $request->all();
+
+                $donation = Donation::create([
+                    'donation_id' => $donateNeedId,
+                    'amount' => $temporaryDonation->amount,
+                    'need_id' => $donation->need_id,
+                    'user_id' => Auth::user()->id,
+                    'bank' => $temporaryDonation->bank,
+                    'email' => Auth::user()->email,
+                    'name' => Auth::user()->name,
+                    'sender_name' => $data['nama_rekening'],
+                    'status' => 'pending',
+                ]);
+
+                $file = $request->file('bukti_foto');
+
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
+
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
+
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
+                    'folder' => 'bukti_foto',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
+
+                $donation->receipt()->create([
+                    'donation_id' => $donateNeedId,
+                    'cloudinary_public_id' => $publicId,
+                    'cloudinary_url' => $cloudinaryUrl,
+                    'uploaded_at' => now(),
+                ]);
+
+                $temporaryDonation->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Donation success',
+                ]);
+            } else {
+                $request->validate([
+                    'nomor_resi' => 'required|numeric|min:1000',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'name' => 'nullable|string|max:30',
+                    'email' => 'nullable|email|max:30',
+                ]);
+                $data = $request->all();
+
+                $donation = Donation::create([
+                    'donation_id' => $donateNeedId,
+                    'amount' => $temporaryDonation->amount,
+                    'need_id' => $donation->need_id,
+                    'user_id' => null,
+                    'bank' => $temporaryDonation->bank,
+                    'email' => $data['email'],
+                    'name' => $data['name'],
+                    'sender_name' => $data['name'],
+                    'status' => 'pending',
+                ]);
+
+                $file = $request->file('bukti_foto');
+
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
+
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
+
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
+                    'folder' => 'bukti_foto',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
+
+                $donation->receipt()->create([
+                    'donation_id' => $donateNeedId,
+                    'cloudinary_public_id' => $publicId,
+                    'cloudinary_url' => $cloudinaryUrl,
+                    'uploaded_at' => now(),
+                ]);
+
+                $temporaryDonation->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Donation success',
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
             ]);
-        } else if ($request->item) {
-            return view('front.donation.confirmItem', [
-                'page_title' => $donation->title,
-                'donation' => $donation,
-                'amount' => $request->amount,
-            ]);
-        } else {
-            return back()->with('error', 'Something went wrong');
         }
     }
 }

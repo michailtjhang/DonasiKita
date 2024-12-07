@@ -25,24 +25,36 @@ Route::group(['middleware' => 'verifiedEmail'], function () {
 
     Route::get('/about', [HomeController::class, 'about'])->name('about');
 
+    // Route Blog
     Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
     Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
 
+    // Route Category
     Route::get('/blogs/categories', [FrontCategoryController::class, 'indexBlog'])->name('blogs.categories');
     Route::get('/events/categories', [FrontCategoryController::class, 'indexEvent'])->name('events.categories');
     Route::get('/blogs/category/{slug}', [FrontCategoryController::class, 'showBlog'])->name('blogs.category');
     Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEvent'])->name('events.category');
 
+    // Route Event
     Route::get('/events', [FrontEventController::class, 'index'])->name('events');
     Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
     Route::post('/events/join', [FrontEventController::class, 'join'])->name('events.join');
 
+    // Route Donation
     Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
     Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
-    Route::post('/donations/{slug}/donation-amount', [FrontDonationController::class, 'storeTemporaryAmount'])->name('donations.store.amount');
+
+    // Route Form Donation Uang
     Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
+    Route::post('/donations/{slug}/donation-amount', [FrontDonationController::class, 'storeTemporaryAmount'])->name('donations.store.amount');
+
+    // Route Form Donation Barang
     Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
-    Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
+    Route::post('/donations/{slug}/donation-item', [FrontDonationController::class, 'storeTemporaryItem'])->name('donations.store.item');
+
+    // Route Konfirmasi (Barang dan Uang) dengan bukti pembayaran ddan resi
+    Route::post('/donations/{slug}/confirm-amount', [FrontDonationController::class, 'confirmAmount'])->name('donations.confirm-amount');
+    Route::post('/donations/{slug}/confirm-item', [FrontDonationController::class, 'confirmItem'])->name('donations.confirm-item');
 
     Route::resource('profile', ProfileController::class);
 });

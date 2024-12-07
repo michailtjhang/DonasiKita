@@ -319,7 +319,7 @@
                                 </h5>
                                 <p class="card-text text-muted mb-3">{{ Str::limit(strip_tags($article->content), 100, '...') }}
                                 </p>
-                                <div class="d-flex flex-wrap  align-items-center mt-3">
+                                <div class="d-flex flex-wrap  align-items-center mt-2">
                                     <small
                                         class="text-muted">{{ $article->created_at->locale('id')->diffForHumans() }}</small>
                                     <span class="text-muted mx-1">|</span>
@@ -330,7 +330,7 @@
                                     <span class="text-muted mx-1">|</span>
                                     <small class="text-muted">Oleh {{ $article->user->name ?? 'Anonim' }}</small>
                                 </div>
-                                <div class="d-flex w-100 justify-content-center ">
+                                <div class="d-flex w-100 justify-content-center mt-2">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
                                         Read More
                                     </a>
