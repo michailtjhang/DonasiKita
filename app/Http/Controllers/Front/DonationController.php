@@ -17,8 +17,23 @@ class DonationController extends Controller
     {
         $donations = Need::with(['donation', 'thumbnail'])
             ->filter(request(['keyword']))
+            ->where('days_left', '>', now())
             ->latest()
             ->paginate(9); // 9 item per halaman
+
+        // Hitung total donasi yang disetujui untuk setiap "Need"
+        $donations->getCollection()->transform(function ($donation) {
+            $donation->total_donated = Donation::where('need_id', $donation->need_id)
+                ->where('status', 'approved')
+                ->sum('amount');
+            $donation->donator_count = Donation::where('need_id', $donation->need_id)
+                ->where('status', 'approved')
+                ->count(); // Hitung jumlah donatur (status disetujui)
+            return $donation;
+        });
+
+        // Debug untuk memverifikasi hasil
+        // dd($donations);
 
         return view('front.donation.index', [
             'page_title' => 'Donations',
@@ -29,10 +44,14 @@ class DonationController extends Controller
     public function show(String $slug)
     {
         $donation = Need::with(['donation', 'thumbnail'])->whereSlug($slug)->firstOrFail();
+        $amoutDonated = Donation::where('need_id', $donation->need_id)->where('status', 'approved')->sum('amount');
+        $donatorCount = Donation::where('need_id', $donation->need_id)->where('status', 'approved')->count();
 
         return view('front.donation.show', [
             'page_title' => $donation->title,
             'donation' => $donation,
+            'amoutDonated' => $amoutDonated,
+            'donatorCount' => $donatorCount
         ]);
     }
 
@@ -73,12 +92,18 @@ class DonationController extends Controller
                 'name' => Auth::user()->name,
                 'status' => 'pending',
             ]);
+
+            return view('front.donation.confirmAmount', [
+                'page_title' => $need->title,
+                'donation' => $need,
+                'id' => $temporaryDonation->temp_id
+            ]);
         } else {
             $request->validate([
                 'amount' => 'required|numeric|min:1000',
                 'bank' => 'required|string|max:50',
-                'name' => 'nullable|string|max:30',
-                'email' => 'nullable|email|max:30',
+                'name' => 'required|string|max:30',
+                'email' => 'required|email|max:30',
             ]);
 
             $data = $request->all();
@@ -98,8 +123,64 @@ class DonationController extends Controller
         return view('front.donation.confirmAmount', [
             'page_title' => $need->title,
             'donation' => $need,
-            'amount' => $data['amount'],
-            'id' => $donateNeedId
+            'id' => $temporaryDonation->temp_id
+        ]);
+    }
+
+    public function storeTemporaryItem(Request $request, String $slug)
+    {
+        $need = Need::whereSlug($slug)->firstOrFail();
+
+        // Generate temp_id unik
+        do {
+            $donateNeedId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
+        } while (TemporaryDonations::where('temp_id', $donateNeedId)->exists()); // Pastikan unik
+
+        if (Auth::check()) {
+            $request->validate([
+                'deskripsi_barang' => 'required|string|max:150',
+            ]);
+            $data = $request->all();
+
+            $temporaryDonation = TemporaryDonations::create([
+                'temp_id' => $donateNeedId,
+                'user_id' => Auth::user()->id,
+                'need_id' => $need->need_id,
+                'description_item' => $data['deskripsi_barang'],
+                'email' => Auth::user()->email,
+                'name' => Auth::user()->name,
+                'status' => 'pending',
+            ]);
+
+            return view('front.donation.confirmItem', [
+                'page_title' => $need->title,
+                'donation' => $need,
+                'id' => $temporaryDonation->temp_id
+            ]);
+        } else {
+            $request->validate([
+                'deskripsi_barang' => 'required|string|max:150',
+                'name' => 'required|string|max:30',
+                'email' => 'required|email|max:30',
+            ]);
+
+            $data = $request->all();
+
+            // Data diri untuk guest
+            $temporaryDonation = TemporaryDonations::create([
+                'temp_id' => $donateNeedId,
+                'need_id' => $need->need_id,
+                'description_item' => $data['deskripsi_barang'],
+                'email' => $data['email'],
+                'name' => $data['name'],
+                'status' => 'pending',
+            ]);
+        }
+
+        return view('front.donation.confirmItem', [
+            'page_title' => $need->title,
+            'donation' => $need,
+            'id' => $temporaryDonation->temp_id
         ]);
     }
 
@@ -115,11 +196,10 @@ class DonationController extends Controller
         ]);
     }
 
-    public function confirmAmount(Request $request, String $slug, String $id)
+    public function confirmAmount(Request $request, String $slug, $temp_id)
     {
-        dd($request->all(), $slug, $id);
         $donation = Need::with(['donation', 'thumbnail'])->whereSlug($slug)->firstOrFail();
-        $temporaryDonation = TemporaryDonations::where('id', $id)->firstOrFail();
+        $temporaryDonation = TemporaryDonations::where('temp_id', $temp_id)->firstOrFail();
 
         // Generate donateNeedId unik
         do {
@@ -133,6 +213,7 @@ class DonationController extends Controller
                     'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
                 ]);
                 $data = $request->all();
+
 
                 $donation = Donation::create([
                     'donation_id' => $donateNeedId,
@@ -193,14 +274,12 @@ class DonationController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Donation success',
+                    'message' => 'Bukti Donation success',
                 ]);
             } else {
                 $request->validate([
-                    'nomor_resi' => 'required|numeric|min:1000',
+                    'nama_rekening' => 'required|string|max:50',
                     'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-                    'name' => 'nullable|string|max:30',
-                    'email' => 'nullable|email|max:30',
                 ]);
                 $data = $request->all();
 
@@ -210,9 +289,9 @@ class DonationController extends Controller
                     'need_id' => $donation->need_id,
                     'user_id' => null,
                     'bank' => $temporaryDonation->bank,
-                    'email' => $data['email'],
-                    'name' => $data['name'],
-                    'sender_name' => $data['name'],
+                    'email' => $temporaryDonation->email,
+                    'name' => $temporaryDonation->name,
+                    'sender_name' => $data['nama_rekening'],
                     'status' => 'pending',
                 ]);
 
@@ -263,7 +342,162 @@ class DonationController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Donation success',
+                    'message' => 'Bukti Donation success',
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function confirmItem(Request $request, String $slug, $temp_id)
+    {
+        $donation = Need::with(['donation', 'thumbnail'])->whereSlug($slug)->firstOrFail();
+        $temporaryDonation = TemporaryDonations::where('temp_id', $temp_id)->firstOrFail();
+
+        // Generate donateNeedId unik
+        do {
+            $donateNeedId = strtoupper(Str::random(5)); // Membuat 5 karakter acak
+        } while (Donation::where('donation_id', $donateNeedId)->exists()); // Pastikan unik
+
+        try {
+            if (Auth::check()) {
+                $request->validate([
+                    'nomor_resi' => 'required|string|max:50',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                ]);
+                $data = $request->all();
+
+
+                $donation = Donation::create([
+                    'donation_id' => $donateNeedId,
+                    'need_id' => $donation->need_id,
+                    'user_id' => Auth::user()->id,
+                    'description_item' => $temporaryDonation->description_item,
+                    'email' => Auth::user()->email,
+                    'name' => Auth::user()->name,
+                    'tracking_number' => $data['nomor_resi'],
+                    'status' => 'pending',
+                ]);
+
+                $file = $request->file('bukti_foto');
+
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
+
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
+
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
+                    'folder' => 'bukti_foto',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
+
+                $donation->receipt()->create([
+                    'donation_id' => $donateNeedId,
+                    'cloudinary_public_id' => $publicId,
+                    'cloudinary_url' => $cloudinaryUrl,
+                    'uploaded_at' => now(),
+                ]);
+
+                $temporaryDonation->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Bukti Donation success',
+                ]);
+            } else {
+                $request->validate([
+                    'nomor_resi' => 'required|string|max:50',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                ]);
+                $data = $request->all();
+
+                $donation = Donation::create([
+                    'donation_id' => $donateNeedId,
+                    'need_id' => $donation->need_id,
+                    'user_id' => null,
+                    'description_item' => $temporaryDonation->description_item,
+                    'email' => $temporaryDonation->email,
+                    'name' => $temporaryDonation->name,
+                    'tracking_number' => $data['nomor_resi'],
+                    'status' => 'pending',
+                ]);
+
+                $file = $request->file('bukti_foto');
+
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
+
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
+
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
+
+                // Upload image baru ke Cloudinary
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
+                    'folder' => 'bukti_foto',
+                    'use_filename' => true,
+                    'unique_filename' => true,
+                ]);
+
+                $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
+                $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
+
+                $donation->receipt()->create([
+                    'donation_id' => $donateNeedId,
+                    'cloudinary_public_id' => $publicId,
+                    'cloudinary_url' => $cloudinaryUrl,
+                    'uploaded_at' => now(),
+                ]);
+
+                $temporaryDonation->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Bukti Donation success',
                 ]);
             }
         } catch (\Exception $e) {

@@ -80,45 +80,23 @@
         <div class="form-section">
             <h2 class="section-title">Konfirmasi Donasi Barang</h2>
 
-            @Auth
-                <form action="{{ route('donations.confirm', $donation->slug) }}" method="POST" id="confirmationForm">
-                    @csrf
+            <form action="{{ route('donations.store.item', $donation->slug) }}" method="POST" id="confirmationForm">
+                @csrf
 
-                    <!-- Deskripsi Barang url -->
-                    <input type="hidden" name="item" value="true">
-                    <!-- Deskripsi Barang -->
-                    <div class="mb-4">
-                        <label for="deskripsi_barang" class="form-label">Deskripsi Barang<span class="required">*</span></label>
-                        <textarea id="deskripsi_barang" name="deskripsi_barang" rows="4" class="form-control"
-                            placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
-                    </div>
+                <!-- Deskripsi Barang url -->
+                <input type="hidden" name="item" value="true">
 
-                    <!-- Alamat Pengiriman -->
-                    <div class="mb-4">
-                        <label for="alamat_pengiriman" class="form-label">Mohon dikirim ke alamat berikut:</label>
-                        <div id="alamat_pengiriman" class="address-box">
-                            DonasiKita, Jln. Galak Banget No. 123, Surabaya, Jawa Timur
-                        </div>
-                    </div>
-
-                    <!-- Tombol Submit -->
-                    <div class="text-center">
-                        <button type="button" class="form-button" id="submitDonation">Lanjut</button>
-                    </div>
-                </form>
-            @else
-                <form action="{{ route('donations.confirm', $donation->slug) }}" method="POST" id="confirmationForm">
-                    @csrf
-
-                    <!-- Deskripsi Barang url -->
-                    <input type="hidden" name="item" value="true">
-
+                @guest
                     <!-- Nama -->
                     <div class="mb-4">
                         <label for="nama" class="form-label">
                             Nama Lengkap<span class="required">*</span>
                         </label>
-                        <input type="text" id="nama" name="nama" class="form-control" placeholder="Nama Lengkap">
+                        <input type="text" id="nama" name="name"
+                            class="form-control @error('name') is-invalid @enderror" placeholder="Nama Lengkap">
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Email -->
@@ -126,33 +104,32 @@
                         <label for="email" class="form-label">
                             Email<span class="required">*</span>
                         </label>
-                        <input type="email" id="email" name="email" class="form-control"
-                            placeholder="Email (example@mail.com)">
+                        <input type="email" id="email" name="email"
+                            class="form-control @error('email') is-invalid @enderror" placeholder="Email (example@mail.com)">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
+                @endguest
 
-                    <!-- Nomor Handphone -->
-                    <div class="mb-4">
-                        <label for="nomor_hp" class="form-label">
-                            Nomor Handphone<span class="required">*</span>
-                        </label>
-                        <input type="text" id="nomor_hp" name="nomor_hp" class="form-control" placeholder="Nomor Handphone">
-                    </div>
+                <!-- Deskripsi Barang -->
+                <div class="mb-4">
+                    <label for="deskripsi_barang" class="form-label">
+                        Deskripsi Barang<span class="required">*</span>
+                    </label>
+                    <textarea id="deskripsi_barang" name="deskripsi_barang" rows="4"
+                        class="form-control @error('deskripsi_barang') is-invalid @enderror"
+                        placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
+                    @error('deskripsi_barang')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                    <!-- Deskripsi Barang -->
-                    <div class="mb-4">
-                        <label for="deskripsi_barang" class="form-label">
-                            Deskripsi Barang<span class="required">*</span>
-                        </label>
-                        <textarea id="deskripsi_barang" name="deskripsi_barang" rows="4" class="form-control"
-                            placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
-                    </div>
-
-                    <!-- Tombol Submit -->
-                    <div class="text-center">
-                        <button type="submit" class="form-button" id="submitConfirmation">Kirim Konfirmasi</button>
-                    </div>
-                </form>
-            @endAuth
+                <!-- Tombol Submit -->
+                <div class="text-center">
+                    <button type="submit" class="form-button" id="submitConfirmation">Kirim Konfirmasi</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

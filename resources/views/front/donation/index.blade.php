@@ -285,14 +285,14 @@
                                 <p class="card-text text-muted">{{ $donation->towards }}</p>
                                 <div class="progress my-3">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{ (str_replace(['Rp', '.', ','], '', $donation->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%">
+                                        style="width: {{ (str_replace(['Rp', '.', ','], '', $donation->total_donated) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%">
                                     </div>
                                 </div>
                                 <p class="card-text text-dark">
-                                    <strong>{{ number_format($donation->donation->sum('amount'), 0, ',', '.') }}</strong> /
+                                    <strong>{{ number_format($donation->total_donated, 0, ',', '.') }}</strong> /
                                     {{ number_format($donation->target_amount, 0, ',', '.') }}</p>
                                 <div class="d-flex justify-content-between">
-                                    <small class="text-muted">{{ $donation->donation->count() }} donatur</small>
+                                    <small class="text-muted">{{ $donation->donator_count }} donatur</small>
                                     <small
                                         class="text-muted">{{ $donation->days_left->locale('id')->diffForHumans() ?? '0' }}</small>
                                 </div>

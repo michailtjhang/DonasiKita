@@ -1,5 +1,9 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
     <style>
@@ -77,20 +81,29 @@
         <!-- Form Konfirmasi -->
         <div class="form-section">
             <h2 class="section-title">Konfirmasi Transfer</h2>
-            <form id="confirmationForm" action="{{ route('donations.confirm-amount', $donation->slug, $id->id) }}"
+            <form id="confirmationForm"
+                action="{{ route('donations.confirm-amount', ['slug' => $donation->slug, 'temp_id' => $id]) }}"
                 method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Nama Rekening -->
                 <div class="mb-4">
                     <label for="nomor_resi" class="form-label">Identitas Pengirim Atas Nama</label>
-                    <input type="text" id="nomor_resi" name="nama_rekening" class="form-control"
+                    <input type="text" id="nomor_resi" name="nama_rekening"
+                        class="form-control @error('nama_rekening') is-invalid @enderror"
                         placeholder="Masukkan Nama Rekening">
+                    @error('nama_rekening')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Bukti Foto -->
                 <div class="mb-4">
                     <label for="bukti_foto" class="form-label">Unggah Bukti Transfer</label>
-                    <input type="file" id="bukti_foto" name="bukti_foto" class="form-control">
+                    <input type="file" id="bukti_foto" name="bukti_foto"
+                        class="form-control @error('bukti_foto') is-invalid @enderror">
+                    @error('bukti_foto')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Tombol Submit -->
@@ -105,7 +118,9 @@
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.getElementById('submitConfirmation').addEventListener('click', function() {
+        document.getElementById('submitConfirmation').addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah submit langsung
+
             // Menampilkan SweetAlert loading
             Swal.fire({
                 title: 'Sedang mengirim bukti...',
@@ -118,37 +133,38 @@
                 }
             });
 
-            // Mengirimkan form setelah tombol diklik
+            // Mengambil form dan data form
             var form = document.getElementById('confirmationForm');
-            form.submit();
-
-            // Response handling di controller (pastikan menggunakan AJAX)
-            // Anda perlu mengganti form submission dengan AJAX agar dapat menampilkan response sesuai kondisi success / failure
             var formData = new FormData(form);
 
-            // Melakukan AJAX POST ke server
+            // Mengirimkan form menggunakan AJAX
             fetch(form.action, {
                     method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest', // Untuk Laravel AJAX handling
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token
+                    },
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Cek apakah response sukses atau gagal
+                    // Response dari server
                     if (data.success) {
                         Swal.fire({
-                            title: 'Berhasil Dikonfirmasi',
-                            text: 'Kami akan memberikan notifikasi di email Anda jika bukti telah dikonfirmasi.',
+                            title: 'Berhasil Mengirim Bukti',
+                            text: data.message,
                             icon: 'success',
                             confirmButtonText: 'Selesai',
                             confirmButtonColor: '#6CB6DE',
                         }).then(() => {
-                            window.location.href =
-                            '{{ route('donations') }}'; // Redirect atau lakukan tindakan lain
+                            // Redirect ke halaman lain setelah sukses
+                            window.location.href = '{{ route('donations') }}';
                         });
                     } else {
+                        // Menangani error dari server
                         Swal.fire({
                             title: 'Gagal Mengirim Bukti',
-                            text: data.message, // Menampilkan pesan error dari response
+                            text: data.message || 'Terjadi kesalahan, silakan coba lagi.',
                             icon: 'error',
                             confirmButtonText: 'Coba Lagi',
                             confirmButtonColor: '#FF6B6B',
@@ -156,6 +172,7 @@
                     }
                 })
                 .catch(error => {
+                    // Menangani error dari sisi client (misalnya masalah koneksi)
                     Swal.fire({
                         title: 'Error',
                         text: 'Terjadi kesalahan. Silakan coba lagi.',

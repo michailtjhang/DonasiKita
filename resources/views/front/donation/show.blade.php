@@ -136,7 +136,7 @@
                     <!-- Progress Bar -->
                     <div class="progress my-3 rounded" style="height: 22px;  background-color: #bbddf0 !important;">
                         <div class="progress-bar progress-bar-animated rounded-5" role="progressbar"
-                            style="width: {{ (str_replace(['Rp', '.', ','], '', $donation->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%;  background-color:#50a8d7 !important"
+                            style="width: {{ (str_replace(['Rp', '.', ','], '', $amoutDonated) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%;  background-color:#50a8d7 !important"
                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
 
@@ -145,13 +145,13 @@
                         <div class="col-6">
                             <p class="mb-0 fw-light text-nowrap h3"
                                 style="color: #145071 !important; font-size: clamp(0.7rem, 1.5vw, 2rem);">
-                                Terkumpul: Rp {{ number_format($donation->donation->sum('amount'), 0, ',', '.') }}
+                                Terkumpul: Rp {{ number_format($amoutDonated, 0, ',', '.') }}
                             </p>
                         </div>
                         <div class="col-6 text-end">
                             <p class="mb-0 text-nowrap h3"
                                 style="color: #145071 !important; font-size: clamp(0.7rem, 1.5vw, 2rem);">
-                                <strong>{{ $donation->donation->count() }}</strong> Donatur
+                                <strong>{{ $donatorCount }}</strong> Donatur
                             </p>
                         </div>
                     </div>
