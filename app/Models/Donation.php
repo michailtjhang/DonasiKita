@@ -38,6 +38,6 @@ class Donation extends Model
 
     public function receipt()
     {
-        return $this->belongsTo(PaymentReceipts::class, 'receipt_id');
+        return $this->hasOne(PaymentReceipts::class, 'donation_id', 'donation_id');
     }
 }

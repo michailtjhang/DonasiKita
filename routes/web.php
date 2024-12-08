@@ -116,6 +116,9 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
             Route::get('donations/verification', [ReportController::class, 'donationVerification'])
                 ->name('reports.donations.verification'); // Verifikasi transfer dana
 
+            Route::post('/donations/verification/confirm/{id}', [ReportController::class, 'confirmDonation'])
+                ->name('reports.donations.verification.confirm');
+
             Route::get('donations', [ReportController::class, 'donations'])
                 ->name('reports.donations'); // Laporan donasi
 
