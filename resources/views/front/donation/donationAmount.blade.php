@@ -360,10 +360,21 @@
             }
         });
 
-        // Event listener untuk dropdown pilihan bank
+        // Fungsi untuk memilih bank
         function selectBank(bankId, bankName, bankLogo) {
+            // Perbarui label dropdown
             document.getElementById('selected-bank-name').textContent = bankName;
-            transferFee = bankFees[bankId] || 0; // Ambil biaya transfer berdasarkan bank yang dipilih
+
+            // Update biaya transfer berdasarkan bank
+            transferFee = bankFees[bankId] || 0;
+
+            // Pilih radio button yang sesuai
+            const radioButton = document.querySelector(`input[name="bank"][value="${bankId}"]`);
+            if (radioButton) {
+                radioButton.checked = true;
+            }
+
+            // Perbarui total donasi
             updateTotal();
 
             // Tutup dropdown

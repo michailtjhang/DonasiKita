@@ -53,8 +53,8 @@ Route::group(['middleware' => 'verifiedEmail'], function () {
     Route::post('/donations/{slug}/donation-item', [FrontDonationController::class, 'storeTemporaryItem'])->name('donations.store.item');
 
     // Route Konfirmasi (Barang dan Uang) dengan bukti pembayaran ddan resi
-    Route::post('/donations/{slug}/confirm-amount', [FrontDonationController::class, 'confirmAmount'])->name('donations.confirm-amount');
-    Route::post('/donations/{slug}/confirm-item', [FrontDonationController::class, 'confirmItem'])->name('donations.confirm-item');
+    Route::post('/donations/{slug}/confirm-amount/{temp_id}', [FrontDonationController::class, 'confirmAmount'])->name('donations.confirm-amount');
+    Route::post('/donations/{slug}/confirm-item/{temp_id}', [FrontDonationController::class, 'confirmItem'])->name('donations.confirm-item');
 
     Route::resource('profile', ProfileController::class);
 });
@@ -115,6 +115,9 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
         Route::prefix('reports')->group(function () {
             Route::get('donations/verification', [ReportController::class, 'donationVerification'])
                 ->name('reports.donations.verification'); // Verifikasi transfer dana
+
+            Route::post('/donations/verification/confirm/{id}', [ReportController::class, 'confirmDonation'])
+                ->name('reports.donations.verification.confirm');
 
             Route::get('donations', [ReportController::class, 'donations'])
                 ->name('reports.donations'); // Laporan donasi

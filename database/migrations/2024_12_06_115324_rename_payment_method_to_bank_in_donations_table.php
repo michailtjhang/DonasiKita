@@ -12,10 +12,30 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('donations', function (Blueprint $table) {
-            $table->renameColumn('payment_method', 'bank');
-            $table->string('sender_name')->nullable()->after('bank');
-            $table->string('tracking_number')->nullable()->after('sender_name'); // Menambahkan kolom tracking_number
-            $table->index('tracking_number'); // Menambahkan indeks pada kolom tracking_number
+            // Rename payment_method to bank
+            if (Schema::hasColumn('donations', 'payment_method')) {
+                $table->renameColumn('payment_method', 'bank');
+            }
+
+            // Make bank and amount nullable
+            if (Schema::hasColumn('donations', 'bank')) {
+                $table->string('bank')->nullable()->change();
+            }
+            if (Schema::hasColumn('donations', 'amount')) {
+                $table->string('amount')->nullable()->change();
+            }
+
+            // Add new columns
+            if (!Schema::hasColumn('donations', 'sender_name')) {
+                $table->string('sender_name')->nullable()->after('bank');
+            }
+            if (!Schema::hasColumn('donations', 'tracking_number')) {
+                $table->string('tracking_number')->nullable()->after('sender_name');
+                $table->index('tracking_number');
+            }
+            if (!Schema::hasColumn('donations', 'description_item')) {
+                $table->string('description_item')->nullable()->after('tracking_number');
+            }
         });
     }
 
@@ -25,10 +45,30 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('donations', function (Blueprint $table) {
-            $table->renameColumn('bank', 'payment_method'); // Membalikkan perubahan nama kolom
-            $table->dropColumn('sender_name'); // Menghapus kolom sender_name
-            $table->dropColumn('tracking_number'); // Menghapus kolom tracking_number
-            $table->dropIndex(['tracking_number']); // Menghapus indeks pada kolom tracking_number
+            // Rename bank back to payment_method
+            if (Schema::hasColumn('donations', 'bank')) {
+                $table->renameColumn('bank', 'payment_method');
+            }
+
+            // Revert nullable changes
+            if (Schema::hasColumn('donations', 'bank')) {
+                $table->string('bank')->change();
+            }
+            if (Schema::hasColumn('donations', 'amount')) {
+                $table->string('amount')->change();
+            }
+
+            // Drop columns
+            if (Schema::hasColumn('donations', 'sender_name')) {
+                $table->dropColumn('sender_name');
+            }
+            if (Schema::hasColumn('donations', 'tracking_number')) {
+                $table->dropIndex(['tracking_number']);
+                $table->dropColumn('tracking_number');
+            }
+            if (Schema::hasColumn('donations', 'description_item')) {
+                $table->dropColumn('description_item');
+            }
         });
     }
 };

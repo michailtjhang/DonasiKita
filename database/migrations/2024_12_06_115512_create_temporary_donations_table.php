@@ -18,8 +18,9 @@ return new class extends Migration
             $table->char('need_id', 5); // FK ke needs
             $table->string('email'); // Untuk mencatat email donatur tanpa login
             $table->string('name'); // Nama donatur
-            $table->double('amount');
-            $table->string('bank', 50); // Payment methods (e.g., credit_card, transfer)
+            $table->double('amount')->nullable();
+            $table->string('description_item')->nullable();
+            $table->string('bank', 50)->nullable(); // Payment methods (e.g., credit_card, transfer)
             $table->string('status', 50)->default('pending'); // pending, confirmed
             $table->timestamps();
         });

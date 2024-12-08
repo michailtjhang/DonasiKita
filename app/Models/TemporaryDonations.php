@@ -19,6 +19,7 @@ class TemporaryDonations extends Model
         'email',
         'name',
         'amount',
+        'description_item',
         'bank',
         'status',
     ];
