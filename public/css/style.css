@@ -428,6 +428,11 @@ footer {
 .profile-center {
     transform: translateX(-30%);
 }
+
+.text-large-responsive {
+    font-size: 26px;
+}
+
 /* responsive */
 @media (max-width: 576px) {
     .hero-section2 {
@@ -450,6 +455,9 @@ footer {
     }
     .profile-center {
         transform: translateX(0);
+    }
+    .text-large-responsive {
+        font-size: 18px;
     }
 }
 

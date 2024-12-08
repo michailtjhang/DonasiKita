@@ -487,7 +487,7 @@
                     <div class="th-blog blog-single">
                         <div class="mb-3">
                             @if ($article->thumbnail && $article->thumbnail->id_file)
-                                <x-cld-image public-id="{{ $article->thumbnail->id_file }}" class="card-img-top img-fluid" />
+                                <x-cld-image public-id="{{ $article->thumbnail->id_file }}" class="card-img-top img-fluid rounded rounded-3" />
                             @elseif ($article->thumbnail && $article->thumbnail->file_path)
                                 <img class="img img-fluid rounded rounded-3" src="{{ $article->thumbnail->file_path }}"
                                     alt="{{ $article->title }}">
@@ -510,7 +510,7 @@
 
                         </div>
                         <div class="card rounded rounded-3 px-3 py-1 my-5">
-                            <div class="blog-content text-dark fs-6">
+                            <div class="blog-content text-dark fs-6 mt-3">
                                 <p class="text-justify">
                                     {!! $article->content !!}
                                 </p>
