@@ -135,7 +135,7 @@
 @endsection
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
+<section class="hero-section2 w-100 space-section" style="background-image: url('/images/hero-bg-2.svg');">
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
         <h1 class="hero-title2">{{ $content['hero_section']['title'] }}</h1>
@@ -152,7 +152,7 @@
             </div>
             <div class="col-lg-6 col-12 text-dark align-items-center px-5">
                 <h3 class="bolder-text text-dark mb-3">{{ $content['company_section']['name'] }}</h3>
-                <p>
+                <p class="text-large-responsive">
                     {!! $content['company_section']['description'] !!}
                 </p>
             </div>
