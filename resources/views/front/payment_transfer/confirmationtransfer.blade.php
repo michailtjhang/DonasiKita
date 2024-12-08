@@ -25,6 +25,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        margin-top: 50px;
     }
 
     .form-section {
@@ -63,6 +64,15 @@
         font-size: 16px;
         color: #0F3D56;
     }
+
+    /* update : ux writing */
+    .text-info {
+        font-size: 10px;
+        font-weight: 600;
+        color: #0f3d56 !important;
+        margin-top : 10px;
+    }
+
 </style>
 @endsection
 
@@ -76,13 +86,16 @@
 
     <!-- Form Konfirmasi -->
     <div class="form-section">
-        <h2 class="section-title">Konfirmasi Transfer</h2>
+        <!-- <h2 class="section-title">Konfirmasi Transfer</h2> -->
+        <!-- UPDATE : HAPUS SECTION-TITLE -->
         <form id="confirmationForm" action="{{ route('confirmation.barang.submit') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <!-- Nama Rekening -->
             <div class="mb-4">
                 <label for="nomor_resi" class="form-label">Identitas Pengirim Atas Nama</label>
                 <input type="text" id="nomor_resi" name="nomor_resi" class="form-control" placeholder="Masukkan Nama Rekening">
+                <!-- update : ux writing -->
+                <div class="text-info">*Isi identitas pengirim dengan lengkap agar donasi dapat tercatat dengan baik.*</div> 
             </div>
 
             <!-- Bukti Foto -->
