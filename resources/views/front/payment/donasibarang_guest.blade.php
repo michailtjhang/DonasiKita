@@ -25,6 +25,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        margin-top: 35px;
     }
 
     .form-section {
@@ -65,10 +66,19 @@
         background: #2492CD;
         transform: scale(1.05);
     }
+
+    /* update : ux writing */
+    .text-info {
+        font-size: 10px;
+        font-weight: 600;
+        color: #0f3d56 !important;
+        margin-top: 10px;
+    }
 </style>
 @endsection
 
 @section('content')
+
 <div class="confirmation-container">
     <!-- Informasi -->
     <div class="info-section">
@@ -78,7 +88,8 @@
 
     <!-- Form Konfirmasi -->
     <div class="form-section">
-        <h2 class="section-title">Konfirmasi Donasi Barang</h2>
+        <!-- UPDATE : DELETE SECTION-FORM -->
+        <!-- <h2 class="section-title">Konfirmasi Donasi Barang</h2> -->
         <form id="confirmationForm">
             <!-- Nama -->
             <div class="mb-4">
@@ -110,6 +121,18 @@
                     Deskripsi Barang<span class="required">*</span>
                 </label>
                 <textarea id="deskripsi_barang" name="deskripsi_barang" rows="4" class="form-control" placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
+                <!-- update : ux writing -->
+                <div class="text-info">*Pastikan deskripsi barang sesuai untuk mempermudah pengelolaan kami.*</div> 
+            </div>
+
+            <!-- Alamat Pengiriman -->
+            <div class="mb-4">
+                <label for="alamat_pengiriman" class="form-label">Mohon dikirim ke alamat berikut:</label>
+                <div id="alamat_pengiriman" class="address-box">
+                    DonasiKita, Jln. Galak Banget No. 123, Surabaya, Jawa Timur
+                </div>
+                <!-- update : ux writing -->
+                <div class="text-info">*Kirim barang ke alamat yang tertera. Kami tidak bertanggung jawab jika pengiriman dilakukan ke alamat yang salah.*</div> 
             </div>
 
             <!-- Tombol Submit -->

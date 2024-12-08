@@ -30,6 +30,13 @@
         margin-bottom: 15px;
     }
 
+    /* update : ux writing */
+    .text-info {
+        font-size: 10px;
+        font-weight: 600;
+        color: #0f3d56 !important;
+    }
+
     /* Info Section */
     .info-section {
         display: flex;
@@ -53,8 +60,48 @@
 
     .info-title {
         font-size: 18px;
+        font-weight: light;
+        color: #0f3d56;
+    }
+
+    .title-info-section {
+        font-size: 18px;
         font-weight: 600;
         color: #0f3d56;
+    }
+
+    /* Identitas Diri Section */
+    .form-group {
+    margin-top: 10px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #0f3d56;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .required {
+        color: red;
+        font-weight: bold;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #0f3d56;
+        background: #f8fcff;
+        font-size: 14px;
+        color: #0f3d56;
+        margin-bottom: 15px;
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: #007bff; /* Warna biru saat fokus */
     }
 
     /* Nominal Donasi Section */
@@ -109,6 +156,7 @@
         cursor: pointer;
         font-size: 16px;
         color: #0f3d56;
+        font-weight: 600;
     }
 
     .dropdown-selected img {
@@ -230,33 +278,49 @@
     <!-- Info Section -->
     <div class="info-section">
         <img src="/images/donate/vector_blue.svg" alt="Icon">
-        <div class="info-title">Bantuan Kemanusiaan untuk Palestina</div>
+        <div class="title-info-section">Bantuan Kemanusiaan untuk Palestina</div>
     </div>
 
     <!-- Nominal Donasi Section -->
     <div class="form-section">
-        <h4>Nominal Donasi</h4>
-        <div class="nominal-buttons">
+        <div class="info-title">Nominal Donasi</div>
+        <div class="nominal-buttons py-2">  <!-- update jarak -->
             <button class="nominal" data-value="10000">Rp 10.000</button>
             <button class="nominal" data-value="30000">Rp 30.000</button>
             <button class="nominal" data-value="50000">Rp 50.000</button>
             <button class="nominal" data-value="100000">Rp 100.000</button>
         </div>
         <input type="text" id="custom-nominal" class="input-field" placeholder="Input donasi minimal Rp 1.000">
+        <!-- update : ux writing -->
+        <div class="text-info">*Masukkan nominal donasi Anda (minimal Rp1000) untuk melanjutkan.*</div> 
     </div>
 
+    <!-- UPDATE : UNTUK SECTION DATA DIRI KHUSUS UNTUK GUEST (NON LOGIN) -->
     <!-- Data Diri Section -->
     <div class="form-section">
-        <h4>Identitas Kamu</h4>
-        <input type="text" class="input-field" placeholder="Nama Lengkap">
-        <input type="email" class="input-field" placeholder="Email">
-        <input type="text" class="input-field" placeholder="No Telepon">
+        <div class="info-title">Identitas Kamu</div>
+            <!-- Nama Lengkap -->
+            <div class="form-group">
+                <label for="name">Nama Lengkap <span class="required">*</span></label>
+                <input type="text" id="name" class="input-field" placeholder="Nama Anda">
+            </div>
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" class="input-field" placeholder="Contoh: email@domain.com">
+            </div>
+            <!-- No Telepon -->
+            <div class="form-group">
+                <label for="phone">No Telepon <span class="required">*</span></label>
+                <input type="text" id="phone" class="input-field" placeholder="Contoh: 081234567890">
+            </div>
     </div>
+
 
     <!-- Pilih Bank Section -->
     <div class="form-section">
-        <h4>Pilih Bank</h4>
-        <div class="dropdown-container">
+        <div class="info-title">Pembayaran</div>  <!-- update : styling -->
+        <div class="dropdown-container py-2">
             <div class="dropdown-selected" onclick="toggleDropdown()">
                 <span id="selected-bank-name">Pilih Bank</span>
                 <i class="fa fa-chevron-down"></i>
