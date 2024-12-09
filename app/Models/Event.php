@@ -45,6 +45,11 @@ class Event extends Model
         return $this->hasOne(DetailEvent::class, 'event_id', 'event_id');
     }
 
+    public function eventRegistration() 
+    {
+        return $this->hasMany(EventRegistration::class, 'event_id', 'event_id');
+    }
+
     public function scopeFilter(Builder $query, array $filters): void
     {
         $query->when(

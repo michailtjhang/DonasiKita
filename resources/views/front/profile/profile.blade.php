@@ -207,15 +207,16 @@
                     <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
                         alt="Profile Image" class="profile-image img img-fluid rounded-circle">
                 </div>
-    
+
                 <!-- Profile Form Section -->
                 <div class="col-lg-8">
                     @include('_message')
-    
-                    <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST" class="needs-validation">
+
+                    <form action="{{ route('profile.update', auth()->user()->id) }}" method="POST"
+                        class="needs-validation">
                         @csrf
                         @method('PUT')
-    
+
                         <!-- Nama -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
@@ -225,7 +226,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-    
+
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -235,7 +236,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-    
+
                         <!-- Password -->
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
@@ -251,7 +252,7 @@
                                 @enderror
                             </div>
                         </div>
-    
+
                         <!-- Buttons -->
                         <div class="d-flex">
                             <button type="submit" class="save-changes-button me-2">Save Changes</button>
@@ -290,207 +291,45 @@
 
             <!-- Container untuk card -->
             <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
-                <!-- Card 1 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <img src="/images/event/followed-event-1.svg" class="card-img-top" alt="Donasi Buku">
-                    <div class="event-card-spacer">
-                        <div class="date-label bg-primary text-white event-date">
-                            28 Februari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer event-card-spacer">
-                        <p class="card-title fw-bold h4">Donasi Buku untuk Pendidikan</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none category-color">Edukasi</a> | Yayasan
-                            Literasi Nusantara
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 08:00 - 15:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Surabaya, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/followed-event-2.svg" class="card-img-top" alt="Donasi Buku">
+                @forelse ($futureEvents as $registration)
+                    <!-- Card 1 -->
+                    <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
+                        style="scroll-snap-align: start; width: 300px;">
+                        <img src="{{ $registration->event->thumbnail ? $registration->event->thumbnail->file_path : '/images/event/followed-event-1.svg' }}"
+                            class="card-img-top" alt="Donasi Buku">
                         <div class="event-card-spacer">
                             <div class="date-label bg-primary text-white event-date">
-                                02 Maret
+                                {{ \Carbon\Carbon::parse($registration->event->detailEvent->start)->format('d F') }}
+                            </div>
+                        </div>
+                        <div class="event-details event-card-spacer event-card-spacer">
+                            <p class="card-title fw-bold h4">{{ $registration->event->title }}</p>
+                            <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
+                                {{ \Carbon\Carbon::parse($registration->event->detailEvent->start)->format('d F Y') }} | <a
+                                    href="/events?category={{ $registration->event->category->slug }}"
+                                    class="text-decoration-none category-color">{{ $registration->event->category->name }}</a>
+                            </p>
+                            <p class="card-text text-extra-small opacity-75 small">
+                                {{ Str::limit(strip_tags($registration->event->description), 50, '...') }}
+                            </p>
+                            <div class="card-text text-extra-small d-flex justify-content-between">
+                                <div class="col-md-6">
+                                    <i class="fa-solid fa-clock"></i>
+                                    {{ $registration->event->detailEvent->start->format('H:i') }} -
+                                    {{ $registration->event->detailEvent->end->format('H:i') }} <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    {{ $registration->event->location->name_location }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="event-details event-card-spacer event-card-spacer">
-                        <p class="card-title fw-bold h4">Konser Musik untuk Harapan</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            10 Feb 25 | <a href="#" class="text-decoration-none category-color">Hiburan</a> | Author
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 18:00 - 22:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Jakarta, Indonesia
-                            </div>
-                        </div>
+                @empty
+                    <div class="text-center">
+                        <p class="fw-bold text-primary">Belum ada event yang diikuti</p>
                     </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/followed-event-3.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            10 Februari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Pameran Seni Amal</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            01 Jan 25 | <a href="#" class="text-decoration-none category-color">Hiburan</a> |
-                            Yayasan Seni Peduli
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 08:00 - 15:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Surabaya, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                {{-- <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4" style="scroll-snap-align: start; width: 300px;">
-                <div class="position-relative">
-                    <img src="/images/event/followed-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                    <div class="date-label bg-primary text-white event-date">
-                        15 Maret
-                    </div>
-                </div>
-                <div class="event-details event-card-spacer">
-                    <p class="card-title fw-bold h4">Penggalangan Dana Virtual: Game Marathon</p>
-                    <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                        08 Feb 25 | <a href="#" class="text-decoration-none category-color">Hiburan</a> | Komunitas Gamer Peduli
-                    </p>
-                    <p class="card-text text-extra-small opacity-75 small">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                    </p>
-                    <div class="card-text text-extra-small d-flex justify-content-between">
-                        <div class="col-md-6">
-                            <i class="fa-solid fa-clock"></i> 18:00 - 06:00 <br>
-                        </div>
-                        <div class="col-md-6">
-                            <i class="fa-solid fa-location-dot"></i> Online (Zoom)
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-                <!-- Card 5 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event//followed-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            21 Januari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Donor Darah Massal</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            20 Jan 25 | <a href="#" class="text-decoration-none category-color">Kesehatan</a> |
-                            Palang Merah Indonesia
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 08:00 - 021:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Yogyakarta, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/followed-event-5.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            28 Februari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Konser Amal untuk Anak Yatim</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none category-color">Sosial</a> |
-                            Komunitas Musik Peduli
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 18:00 - 21:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Yogyakarta, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 7 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/followed-event-6.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            05 Maret
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Bazar Buku untuk Pendidikan</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none category-color">Edukasi</a> |
-                            Yayasan Buku Cerdas
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 10:00 - 19:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Bandung, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
                 <!-- Tambahkan Card 4, 5, dst dengan format serupa -->
             </div>
         </div>
@@ -505,209 +344,42 @@
 
             <!-- Container untuk card -->
             <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
-                <!-- Card 1 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/history-event-1.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            15 Maret
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Penggalangan Dana Virtual: Game Marathon</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            08 Feb 25 | <a href="#" class="text-decoration-none category-color">Hiburan</a> |
-                            Komunitas Gamer Peduli
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 18:00 - 06:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Online (Zoom)
+                @forelse ($pastEvents as $registration)
+                    <!-- Card 1 -->
+                    <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
+                        style="scroll-snap-align: start; width: 300px;">
+                        <div class="position-relative">
+                            <img src="/images/event/history-event-1.svg" class="card-img-top" alt="Donasi Buku">
+                            <div class="date-label bg-primary text-white event-date">
+                                {{ \Carbon\Carbon::parse($registration->event->detailEvent->start)->format('d F') }}
                             </div>
                         </div>
+                        <div class="event-details event-card-spacer">
+                            <p class="card-title fw-bold h4">{{ $registration->event->title }}</p>
+                            <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
+                                {{ \Carbon\Carbon::parse($registration->event->detailEvent->end)->format('d F Y') }} | <a
+                                    href="/events?category={{ $registration->event->category->slug }}"
+                                    class="text-decoration-none category-color">{{ $registration->event->category->name }}</a>
+                            </p>
+                            <p class="card-text text-extra-small opacity-75 small">
+                                {{ Str::limit(strip_tags($registration->event->description), 50, '...') }}
+                            </p>
+                            <div class="card-text text-extra-small d-flex justify-content-between">
+                                <div class="col-md-6">
+                                    <i class="fa-solid fa-clock"></i> {{ $registration->event->detailEvent->start->format('H:i') }} - {{ $registration->event->detailEvent->end->format('H:i') }} <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <i class="fa-solid fa-location-dot"></i> {{ $registration->event->location->name_location }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @empty
+                    <div class="text-center">
+                        <p class="fw-bold text-primary">Belum ada event yang pernah diikuti</p>
+                    </div>
+                @endforelse
 
-
-                <!-- Card 2 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/history-event-2.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            10 Maret
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Pelatihan Relawan Bencana</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none category-color">Edukasi</a> |
-                            Yayasan Relawan Nusantara
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 09:00 - 15:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Bogor, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/history-event-3.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            30 Maret
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Seminar Bisnis Sosial</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            10 Feb 25 | <a href="#" class="text-decoration-none category-color">Edukasi</a> |
-                            Yayasan Inspirasi Bisnis
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 09:00 - 13:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Aula Inovasi, Surabaya
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/history-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            24 Februari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Workshop Pemberdayaan UMKM</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            02 Jan 25 | <a href="#" class="text-decoration-none category-color">Edukasi</a> |
-                            Lembaga Bisnis Mandiri
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 09:00 - 16:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Coworking Space, Bali
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event//history-event-4.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            18 Februari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Lomba Lari 5k untuk Kesehatan</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            15 Jan 25 | <a href="#" class="text-decoration-none category-color">Kesehatan</a> |
-                            Komunitas Sehat Bersama
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 06:00 - 09:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Bandung, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/history-event-5.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            10 Februari
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Pameran Seni Amal</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            01 Jan 25 | <a href="#" class="text-decoration-none category-color">Seni</a> | Yayasan
-                            Seni Peduli
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 10:00 - 18:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Galeri Nasional, Jakarta
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 7 -->
-                <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
-                    style="scroll-snap-align: start; width: 300px;">
-                    <div class="position-relative">
-                        <img src="/images/event/followed-event-6.svg" class="card-img-top" alt="Donasi Buku">
-                        <div class="date-label bg-primary text-white event-date">
-                            05 Maret
-                        </div>
-                    </div>
-                    <div class="event-details event-card-spacer">
-                        <p class="card-title fw-bold h4">Bazar Buku untuk Pendidikan</p>
-                        <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                            04 Feb 25 | <a href="#" class="text-decoration-none category-color">Edukasi</a> |
-                            Yayasan Buku Cerdas
-                        </p>
-                        <p class="card-text text-extra-small opacity-75 small">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...
-                        </p>
-                        <div class="card-text text-extra-small d-flex justify-content-between">
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-clock"></i> 10:00 - 19:00 <br>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa-solid fa-location-dot"></i> Bandung, Indonesia
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- Tambahkan Card 4, 5, dst dengan format serupa -->
             </div>
         </div>
