@@ -349,7 +349,7 @@
                     <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
-                            <img src="/images/event/history-event-1.svg" class="card-img-top" alt="Donasi Buku">
+                            <img src="{{ $registration->event->thumbnail ? $registration->event->thumbnail->file_path : '/images/event/history-event-1.svg' }}" class="card-img-top" alt="Donasi Buku">
                             <div class="date-label bg-primary text-white event-date">
                                 {{ \Carbon\Carbon::parse($registration->event->detailEvent->start)->format('d F') }}
                             </div>
