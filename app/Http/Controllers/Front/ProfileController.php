@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Buglinjo\LaravelWebp\Facades\Webp;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {

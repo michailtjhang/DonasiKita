@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Need;
-use App\Models\Donation;
 use App\Models\Thumbnail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -12,6 +11,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Buglinjo\LaravelWebp\Facades\Webp;
 
 class DonationController extends Controller
 {
@@ -129,14 +129,30 @@ class DonationController extends Controller
             // Simpan data ke tabel `needs`
             $need = Need::create($needData);
 
-            // // upload image
-            // $file = $request->file('img'); // get file
-            // $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
-            // $file->move(storage_path('app/public/cover'), $filename); // path file
-
             // Upload image ke Cloudinary
             $file = $request->file('img');
-            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+
+            // Nama file WebP
+            $webpFileName = time() . '.webp';
+
+            // Path folder tujuan
+            $tempFolder = public_path('temp');
+
+            // Pastikan folder `temp` ada, jika tidak, buat folder
+            if (!file_exists($tempFolder)) {
+                mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+            }
+
+            // Path tujuan penyimpanan sementara file WebP
+            $webpPath = $tempFolder . '/' . $webpFileName;
+
+            // Konversi gambar ke WebP
+            WebP::make($file)
+                ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                ->save($webpPath);
+
+            // Upload image baru ke Cloudinary
+            $cloudinaryResponse = cloudinary()->upload($webpPath, [
                 'folder' => 'cover',
                 'use_filename' => true,
                 'unique_filename' => true,
@@ -236,21 +252,28 @@ class DonationController extends Controller
             // Update file gambar jika ada file baru yang diupload
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
+                
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
 
-                // // Upload file ke folder public
-                // $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-                // $file->move(storage_path('app/public/cover'), $filename);
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
 
-                // // Hapus file lama jika ada
-                // if ($need->thumbnail && $need->thumbnail->file_path) {
-                //     $oldFilePath = storage_path('app/public/cover/' . $need->thumbnail->file_path);
-                //     if (file_exists($oldFilePath)) {
-                //         unlink($oldFilePath);
-                //     }
-                // }
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
 
                 // Upload image baru ke Cloudinary
-                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
                     'folder' => 'cover',
                     'use_filename' => true,
                     'unique_filename' => true,

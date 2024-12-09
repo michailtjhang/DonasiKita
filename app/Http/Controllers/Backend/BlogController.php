@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
 use Illuminate\Validation\Rule;
-
+use Buglinjo\LaravelWebp\Facades\Webp;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -130,14 +130,30 @@ class BlogController extends Controller
             // Simpan data ke tabel Blog
             $blog = Blog::create($data);
 
-            // upload image
-            // $file = $request->file('img'); // get file
-            // $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
-            // $file->move(storage_path('app/public/cover'), $filename); // path file
-
             // Upload image ke Cloudinary
             $file = $request->file('img');
-            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+
+            // Nama file WebP
+            $webpFileName = time() . '.webp';
+
+            // Path folder tujuan
+            $tempFolder = public_path('temp');
+
+            // Pastikan folder `temp` ada, jika tidak, buat folder
+            if (!file_exists($tempFolder)) {
+                mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+            }
+
+            // Path tujuan penyimpanan sementara file WebP
+            $webpPath = $tempFolder . '/' . $webpFileName;
+
+            // Konversi gambar ke WebP
+            WebP::make($file)
+                ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                ->save($webpPath);
+
+            // Upload image baru ke Cloudinary
+            $cloudinaryResponse = cloudinary()->upload($webpPath, [
                 'folder' => 'cover',
                 'use_filename' => true,
                 'unique_filename' => true,
@@ -210,7 +226,7 @@ class BlogController extends Controller
         if (empty($PermissionRole)) {
             return back();
         }
-        
+
         // Validasi data
         $request->validate([
             'title' => [
@@ -231,20 +247,27 @@ class BlogController extends Controller
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
 
-                // // Upload file baru
-                // $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-                // $file->move(storage_path('app/public/cover'), $filename);
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
 
-                // // Hapus file lama jika ada
-                // if (!empty($blog->thumbnail->file_path)) {
-                //     $oldFilePath = storage_path('app/public/cover/' . $blog->thumbnail->file_path);
-                //     if (file_exists($oldFilePath)) {
-                //         unlink($oldFilePath);
-                //     }
-                // }
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
+
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
 
                 // Upload image baru ke Cloudinary
-                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
                     'folder' => 'cover',
                     'use_filename' => true,
                     'unique_filename' => true,

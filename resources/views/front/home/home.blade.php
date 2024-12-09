@@ -123,7 +123,7 @@
     <section id="donate-content" class="bg-skyline space-section">
         <div class="container d-flex justify-content-center bg-skyline ">
 
-            <div class="row  justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center">
                 <div class="row mx-2">
                     <h3 class="fw-bold">Donation</h3>
                     <div class="d-flex flex-wrap align-items-center pb-2">
@@ -132,7 +132,7 @@
                             Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
                         </p>
                         <!-- Tombol -->
-                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4  col-lg-1"
+                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-1"
                             style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                             See More
                         </a>

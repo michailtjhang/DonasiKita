@@ -349,7 +349,8 @@
                     <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
                         style="scroll-snap-align: start; width: 300px;">
                         <div class="position-relative">
-                            <img src="{{ $registration->event->thumbnail ? $registration->event->thumbnail->file_path : '/images/event/history-event-1.svg' }}" class="card-img-top" alt="Donasi Buku">
+                            <img src="{{ $registration->event->thumbnail ? $registration->event->thumbnail->file_path : '/images/event/history-event-1.svg' }}"
+                                class="card-img-top" alt="Donasi Buku">
                             <div class="date-label bg-primary text-white event-date">
                                 {{ \Carbon\Carbon::parse($registration->event->detailEvent->start)->format('d F') }}
                             </div>
@@ -366,10 +367,13 @@
                             </p>
                             <div class="card-text text-extra-small d-flex justify-content-between">
                                 <div class="col-md-6">
-                                    <i class="fa-solid fa-clock"></i> {{ $registration->event->detailEvent->start->format('H:i') }} - {{ $registration->event->detailEvent->end->format('H:i') }} <br>
+                                    <i class="fa-solid fa-clock"></i>
+                                    {{ $registration->event->detailEvent->start->format('H:i') }} -
+                                    {{ $registration->event->detailEvent->end->format('H:i') }} <br>
                                 </div>
                                 <div class="col-md-6">
-                                    <i class="fa-solid fa-location-dot"></i> {{ $registration->event->location->name_location }}
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    {{ $registration->event->location->name_location }}
                                 </div>
                             </div>
                         </div>
@@ -440,6 +444,18 @@
             closeProfilePicturePopup(); // Menutup pop-up segera setelah tombol "Upload" diklik
 
             if (file) {
+                // Menampilkan SweetAlert yang menunjukkan proses upload
+                Swal.fire({
+                    title: 'Sedang mengupload image profile...',
+                    text: 'Harap tunggu beberapa saat.',
+                    icon: 'info',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading(); // Menampilkan indikator loading
+                    }
+                });
+
                 const formData = new FormData();
                 formData.append("profile_image", file); // Sesuaikan nama field dengan controller
                 formData.append("_method", "PUT"); // Laravel membutuhkan metode PUT
@@ -504,6 +520,18 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Menampilkan SweetAlert yang menunjukkan proses upload
+                    Swal.fire({
+                        title: 'Sedang menghapus image profile...',
+                        text: 'Harap tunggu beberapa saat.',
+                        icon: 'info',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading(); // Menampilkan indikator loading
+                        }
+                    });
+
                     const url = "{{ route('profile.destroy', auth()->user()->id) }}"; // Route untuk destroy
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 

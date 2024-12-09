@@ -102,7 +102,8 @@
         <div class=" rounded-4 ">
             <p class="card-title fw-bold text-dark my-4 h1">{{ $event->title }}</p>
             @if ($event->thumbnail && $event->thumbnail->id_file)
-                <x-cld-image public-id="{{ $event->thumbnail->id_file }}" class="card-img-top img-fluid rounded rounded-3"/>
+                <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
+                    class="card-img-top img-fluid rounded rounded-3" />
             @elseif ($event->thumbnail && $event->thumbnail->file_path)
                 <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
                     class="card-img-top img-fluid rounded rounded-3">
@@ -178,10 +179,9 @@
 
                                 <!-- Progress Bar -->
                                 <div class="progress " style="height: 3px; background-color: #bbddf0;">
-                                    <div class="progress-bar " role="progressbar"
-                                        style="width: {{ ($partisipan['sukarelawan']->count() * 100) / $event->detailEvent->capacity_volunteers }}%; background-color: #2492CD; "
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: {{ $event->detailEvent->capacity_volunteers > 0 ? ($partisipan['sukarelawan']->count() * 100) / $event->detailEvent->capacity_volunteers : 0 }}%; background-color: #2492CD;"
                                         aria-valuenow="150" aria-valuemin="0" aria-valuemax="1000">
-
                                     </div>
                                 </div>
                                 <p class="h3 pt-3">
