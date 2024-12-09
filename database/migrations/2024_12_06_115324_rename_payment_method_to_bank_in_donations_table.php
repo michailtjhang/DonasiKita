@@ -12,15 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('donations', function (Blueprint $table) {
-            // Rename payment_method to bank
-            if (Schema::hasColumn('donations', 'payment_method')) {
-                $table->renameColumn('payment_method', 'bank');
-            }
-
             // Make bank and amount nullable
-            if (Schema::hasColumn('donations', 'bank')) {
-                $table->string('bank')->nullable()->change();
-            }
             if (Schema::hasColumn('donations', 'amount')) {
                 $table->string('amount')->nullable()->change();
             }
@@ -45,15 +37,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('donations', function (Blueprint $table) {
-            // Rename bank back to payment_method
-            if (Schema::hasColumn('donations', 'bank')) {
-                $table->renameColumn('bank', 'payment_method');
-            }
-
             // Revert nullable changes
-            if (Schema::hasColumn('donations', 'bank')) {
-                $table->string('bank')->change();
-            }
             if (Schema::hasColumn('donations', 'amount')) {
                 $table->string('amount')->change();
             }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email'); // Untuk mencatat email donatur tanpa login
             $table->string('name'); // Nama donatur
             $table->double('amount');
-            $table->string('payment_method', 50); // Payment methods (e.g., credit_card, transfer)
+            $table->string('bank', 50)->nullable(); // Payment methods (e.g., credit_card, transfer)
             $table->string('status', 50)->default('pending'); // pending, confirmed
             $table->timestamps();
         });

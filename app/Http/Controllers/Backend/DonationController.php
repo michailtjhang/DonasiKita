@@ -8,6 +8,7 @@ use App\Models\Thumbnail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -95,7 +96,7 @@ class DonationController extends Controller
         }
 
         $request->validate([
-            'title' => 'required|string|max:200',
+            'title' => 'required|string|max:200|unique:needs',
             'towards' => 'required|string|max:200',
             'description' => 'required|max:2000',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
@@ -212,9 +213,14 @@ class DonationController extends Controller
         if (empty($PermissionRole)) {
             return back();
         }
-        
+
         $request->validate([
-            'title' => 'required|string|max:200',
+            'title' => [
+                'required',
+                'string',
+                'max:200',
+                Rule::unique('needs')->ignore($id),
+            ],
             'towards' => 'required|string|max:200',
             'description' => 'required|max:2000',
             'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',

@@ -68,10 +68,14 @@ class AuthController extends Controller
 
     public function register()
     {
+
+        // Check if user is already logged in
         if (!empty(Auth::check())) {
+            // Jika user sudah login
             if (Auth::user()->role_id == '01j8kkdk3abh0a671dr5rqkshy') {
                 return redirect()->intended('login');
             } else {
+                // Jika role admin
                 return redirect()->intended('admin/dashboard');
             }
         }

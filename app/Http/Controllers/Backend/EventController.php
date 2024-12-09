@@ -11,6 +11,7 @@ use App\Models\DetailEvent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -272,9 +273,14 @@ class EventController extends Controller
         if (empty($PermissionRole)) {
             return back();
         }
-        
+
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('events')->ignore($id),
+            ],
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',

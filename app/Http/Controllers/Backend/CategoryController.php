@@ -7,6 +7,7 @@ use App\Models\Thumbnail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,7 +42,7 @@ class CategoryController extends Controller
     {
         // Validasi
         $request->validate([
-            'name' => 'required|min:3',
+            'name' => 'required|unique:categories|min:3',
             'description' => 'required',
             'img' => 'required',
         ], [
@@ -88,7 +89,11 @@ class CategoryController extends Controller
     {
         // Validasi
         $request->validate([
-            'name' => 'required|min:3',
+            'name' => [
+                'required',
+                'min:3',
+                Rule::unique('categories', 'name')->ignore($id),
+            ],
             'description' => 'required',
             'img' => 'required',
         ], [

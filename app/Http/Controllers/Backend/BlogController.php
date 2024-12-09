@@ -8,6 +8,8 @@ use App\Models\Thumbnail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use Illuminate\Validation\Rule;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -103,7 +105,7 @@ class BlogController extends Controller
 
         // Validasi
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:blogs',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'content' => 'required|min:10|max:10000',
             'category_id' => 'required',
@@ -211,7 +213,10 @@ class BlogController extends Controller
         
         // Validasi data
         $request->validate([
-            'title' => 'required',
+            'title' => [
+                'required',
+                Rule::unique('blogs', 'title')->ignore($id),
+            ],
             'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'content' => 'required|min:10|max:10000',
             'category_id' => 'required',
