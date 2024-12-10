@@ -48,7 +48,7 @@
                         <i class="fas fa-file-pdf pr-2"></i> PDF
                     </button>
                     <button id="exportExcel" class="btn btn-success btn-sm p-2 d-flex align-items-center">
-                        <i class="fas fa-file-excel pr-2"></i> Excel
+                        <i class="fas fa-file-csv pr-2"></i> CSV
                     </button>
                 </div>
             </div>
@@ -140,13 +140,6 @@
                             }
                         }
                     ],
-                    dom: '<"d-flex justify-content-between align-items-center"<"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>',
-                    language: {
-                        lengthMenu: "_MENU_ entries per page",
-                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                        infoEmpty: "No entries available",
-                        infoFiltered: "(filtered from _MAX_ total entries)"
-                    }
                 });
             }
 
@@ -155,6 +148,7 @@
 
             // Inisialisasi Date Range Picker
             $('#daterange_textbox').daterangepicker({
+                autoUpdateInput: false, // Jangan isi input saat diinisialisasi
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -165,9 +159,11 @@
                         'month').endOf('month')]
                 },
                 locale: {
-                    format: 'YYYY-MM-DD'
+                    format: 'YYYY-MM-DD',
+                    cancelLabel: 'Clear'
                 }
             }, function(start, end) {
+                $('#daterange_textbox').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
                 $('#dataTable').DataTable().destroy(); // Hancurkan DataTable sebelumnya
                 fetch_data(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD')); // Muat ulang data
             });
@@ -190,24 +186,26 @@
         $(document).ready(function() {
             // Fungsi untuk menangani ekspor PDF
             $('#exportPdf').on('click', function() {
-                let start_date = $('#daterange_textbox').data('daterangepicker')?.startDate.format(
-                    'YYYY-MM-DD');
-                let end_date = $('#daterange_textbox').data('daterangepicker')?.endDate.format(
-                    'YYYY-MM-DD');
+                // Periksa apakah rentang tanggal dipilih
+                let start_date = $('#daterange_textbox').val() ?
+                    $('#daterange_textbox').data('daterangepicker').startDate.format('YYYY-MM-DD') : '';
+                let end_date = $('#daterange_textbox').val() ?
+                    $('#daterange_textbox').data('daterangepicker').endDate.format('YYYY-MM-DD') : '';
 
                 window.location.href =
-                    `?start_date=${start_date}&end_date=${end_date}`;
+                    `donations/export/pdf?start_date=${start_date}&end_date=${end_date}`;
             });
 
             // Fungsi untuk menangani ekspor Excel
             $('#exportExcel').on('click', function() {
-                let start_date = $('#daterange_textbox').data('daterangepicker')?.startDate.format(
-                    'YYYY-MM-DD');
-                let end_date = $('#daterange_textbox').data('daterangepicker')?.endDate.format(
-                    'YYYY-MM-DD');
+                // Periksa apakah rentang tanggal dipilih
+                let start_date = $('#daterange_textbox').val() ?
+                    $('#daterange_textbox').data('daterangepicker').startDate.format('YYYY-MM-DD') : '';
+                let end_date = $('#daterange_textbox').val() ?
+                    $('#daterange_textbox').data('daterangepicker').endDate.format('YYYY-MM-DD') : '';
 
                 window.location.href =
-                    `?start_date=${start_date}&end_date=${end_date}`;
+                    `donations/export/csv?start_date=${start_date}&end_date=${end_date}`;
             });
         });
     </script>

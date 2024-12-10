@@ -63,7 +63,7 @@
                         !empty($PermissionReportEvents) ||
                         !empty($PermissionReportDonationsVerification))
                     <li class="nav-item">
-                        <a href="#" class="nav-link @if (Request::segment(2) == 'report') active @endif">
+                        <a href="#" class="nav-link @if (Request::segment(2) == 'reports') active @endif">
                             <i class="fas fa-chart-pie nav-icon"></i>
                             <p>
                                 Report

@@ -122,8 +122,8 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
             Route::get('donations', [ReportController::class, 'donations'])
                 ->name('reports.donations'); // Laporan donasi
 
-            Route::get('donations/export/{format}', [ReportController::class, 'exportDonations'])
-                ->name('reports.donations.export'); // Export laporan donasi (PDF/Excel)
+            Route::get('/{type}/export/{format}', [ReportController::class, 'exportData'])
+                ->name('reports.export'); // Export laporan donasi (PDF/CSV)
 
             Route::get('event-participants', [ReportController::class, 'eventParticipants'])
                 ->name('reports.event.participants'); // Laporan peserta/volunteer

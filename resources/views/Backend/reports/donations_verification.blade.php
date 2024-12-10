@@ -5,7 +5,6 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Tambahkan CSS untuk memastikan pagination berada di kanan -->
@@ -22,7 +21,6 @@
 
     <!-- ======================== datatable ========================= -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
 @endsection
 
 @section('content')
@@ -34,25 +32,6 @@
             </ol>
         </nav>
         <div class="card-body">
-            @include('_message')
-
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <!-- Date Range Picker -->
-                    <input type="text" id="daterange_textbox" class="form-control" placeholder="Select Date Range"
-                        autocomplete="off" readonly>
-                </div>
-                <div class="col-md-9 d-flex justify-content-end align-items-center">
-                    <!-- Export Buttons -->
-                    <button id="exportPdf" class="btn btn-danger btn-sm m-2 p-2 d-flex align-items-center">
-                        <i class="fas fa-file-pdf pr-2"></i> PDF
-                    </button>
-                    <button id="exportExcel" class="btn btn-success btn-sm p-2 d-flex align-items-center">
-                        <i class="fas fa-file-excel pr-2"></i> Excel
-                    </button>
-                </div>
-            </div>
-
 
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover table-stripped">
@@ -128,102 +107,54 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <!-- Load Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- moment -->
-    <script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
+    <!-- Load DataTables JS -->
     <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <!-- SweetAlert2 -->
     <script src="https://adminlte.io/themes/v3/plugins/sweetalert2/sweetalert2.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            // Inisialisasi DataTable
-            var table;
-
-            // Fungsi untuk memuat data dengan rentang tanggal
-            function fetch_data(start_date = '', end_date = '') {
-                table = $('#dataTable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    destroy: true, // Hapus instansi DataTable sebelumnya
-                    ajax: {
-                        url: "{{ url()->current() }}",
-                        type: "GET",
-                        data: {
-                            start_date: start_date,
-                            end_date: end_date
-                        }
+            $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ url()->current() }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
                     },
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            orderable: false
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'email',
-                            name: 'email'
-                        },
-                        {
-                            data: 'type_donation',
-                            name: 'type_donation'
-                        },
-                        {
-                            data: 'proof',
-                            name: 'proof',
-                            orderable: false,
-                            render: function(data) {
-                                return `<button class="btn btn-info btn-sm view-proof" data-proof="${data}">
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'type_donation',
+                        name: 'type_donation'
+                    },
+                    {
+                        data: 'proof',
+                        name: 'proof',
+                        orderable: false,
+                        render: function(data) {
+                            return `<button class="btn btn-info btn-sm view-proof" data-proof="${data}">
                         Lihat Bukti
                     </button>`;
-                            }
-                        },
-                        {
-                            data: 'confirmation',
-                            name: 'confirmation',
-                            orderable: false,
-                            render: function(data, type, row) {
-                                return `<button class="btn btn-success btn-sm confirm-donation" data-id="${row.id}">
+                        }
+                    },
+                    {
+                        data: 'confirmation',
+                        name: 'confirmation',
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return `<button class="btn btn-success btn-sm confirm-donation" data-id="${row.id}">
                         Konfirmasi
                     </button>`;
-                            }
                         }
-                    ],
-                    dom: '<"d-flex justify-content-between align-items-center"<"search-box"f><"length-control"l>>rt<"d-flex justify-content-between align-items-center"<"info-left"i><"pagination-right"p>>',
-                    language: {
-                        lengthMenu: "_MENU_ entries per page",
-                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                        infoEmpty: "No entries available",
-                        infoFiltered: "(filtered from _MAX_ total entries)"
-                    }
-                });
-            }
-
-            // Inisialisasi DataTable pertama kali
-            fetch_data();
-
-            // Inisialisasi Date Range Picker
-            $('#daterange_textbox').daterangepicker({
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                        'month').endOf('month')]
-                },
-                locale: {
-                    format: 'YYYY-MM-DD'
-                }
-            }, function(start, end) {
-                $('#dataTable').DataTable().destroy(); // Hancurkan DataTable sebelumnya
-                fetch_data(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD')); // Muat ulang data
+                    },
+                ]
             });
 
             // Tambahkan input search ke setiap kolom footer
@@ -279,6 +210,18 @@
 
             // Klik tombol Yes (Konfirmasi)
             $('#confirmYes').off().on('click', function() {
+                // Menampilkan SweetAlert yang menunjukkan proses upload
+                Swal.fire({
+                    title: 'Sedang menyimpan konfirmasi...',
+                    text: 'Harap tunggu beberapa saat.',
+                    icon: 'info',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading(); // Menampilkan indikator loading
+                    }
+                });
+
                 // Kirim request untuk konfirmasi
                 $.ajax({
                     url: `verification/confirm/${donationId}`,
@@ -322,6 +265,18 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        // Menampilkan SweetAlert yang menunjukkan proses upload
+                        Swal.fire({
+                            title: 'Sedang menolak donasi...',
+                            text: 'Harap tunggu beberapa saat.',
+                            icon: 'info',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading(); // Menampilkan indikator loading
+                            }
+                        });
+
                         // Kirim request untuk menolak donasi
                         $.ajax({
                             url: `verification/confirm/${donationId}`,
