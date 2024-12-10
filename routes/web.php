@@ -20,7 +20,7 @@ use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
 
-Route::group(['middleware' => 'verifiedEmail'], function () {
+Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
     Route::get('/about', [HomeController::class, 'about'])->name('about');
@@ -111,6 +111,9 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
 
+        // routes/web.php
+        Route::get('/api/visitor-stats', [DashboardController::class, 'getVisitorStats']);
+
         // Route laporan
         Route::prefix('reports')->group(function () {
             Route::get('donations/verification', [ReportController::class, 'donationVerification'])
@@ -122,8 +125,8 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
             Route::get('donations', [ReportController::class, 'donations'])
                 ->name('reports.donations'); // Laporan donasi
 
-            Route::get('donations/export/{format}', [ReportController::class, 'exportDonations'])
-                ->name('reports.donations.export'); // Export laporan donasi (PDF/Excel)
+            Route::get('/{type}/export/{format}', [ReportController::class, 'exportData'])
+                ->name('reports.export'); // Export laporan donasi (PDF/CSV)
 
             Route::get('event-participants', [ReportController::class, 'eventParticipants'])
                 ->name('reports.event.participants'); // Laporan peserta/volunteer

@@ -43,9 +43,16 @@ class DonationController extends Controller
 
     public function show(String $slug)
     {
-        $donation = Need::with(['donation', 'thumbnail'])->whereSlug($slug)->firstOrFail();
-        $amoutDonated = Donation::where('need_id', $donation->need_id)->where('status', 'approved')->sum('amount');
-        $donatorCount = Donation::where('need_id', $donation->need_id)->where('status', 'approved')->count();
+        $donation = Need::with(['donation', 'thumbnail'])
+            ->whereSlug($slug)
+            ->where('days_left', '>', now())
+            ->firstOrFail();
+        $amoutDonated = Donation::where('need_id', $donation->need_id)
+            ->where('status', 'approved')
+            ->sum('amount');
+        $donatorCount = Donation::where('need_id', $donation->need_id)
+            ->where('status', 'approved')
+            ->count();
 
         return view('front.donation.show', [
             'page_title' => $donation->title,

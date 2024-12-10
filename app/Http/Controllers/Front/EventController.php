@@ -14,6 +14,9 @@ class EventController extends Controller
     {
         $events = Event::with('category', 'thumbnail', 'detailEvent', 'location')
             ->filter(request(['keyword', 'category']))
+            ->whereHas('detailEvent', function ($query) {
+                $query->where('end', '>=', now()); // Pastikan event belum selesai
+            })
             ->latest()
             ->paginate(9); // 9 item per halaman
 
@@ -25,7 +28,12 @@ class EventController extends Controller
 
     public function show(string $slug)
     {
-        $event = Event::with('category', 'thumbnail', 'detailEvent', 'location')->whereSlug($slug)->firstOrFail();
+        $event = Event::with('category', 'thumbnail', 'detailEvent', 'location')
+            ->whereHas('detailEvent', function ($query) {
+                $query->where('end', '>=', now()); // Pastikan event belum selesai
+            })
+            ->whereSlug($slug)
+            ->firstOrFail();
 
         $partisipanPeserta = EventRegistration::where('event_id', $event->event_id)
             ->where('status', 'peserta')->get();

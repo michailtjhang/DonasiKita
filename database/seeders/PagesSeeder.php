@@ -78,25 +78,25 @@ class PagesSeeder extends Seeder
                                 'title' => 'Bantu anak kurang gizi',
                                 'subtitle' => 'Yuk Bantu anak-anak di desa mendapatkan gizi yang pantas',
                                 'image' => '/images/hero-bg.svg',
-                                'button_link' => 'Bantu Sekarang'
+                                'button_link' => '/donations/bantu-anak-kurang-gizi'
                             ],
                             [
                                 'title' => 'Darurat Gunung Lewotobi',
                                 'subtitle' => 'Bersama membantu korban yang terdampak bencana alam ini',
                                 'image' => '/images/hero/2.svg',
-                                'button_link' => 'Bantu Sekarang'
+                                'button_link' => '/donations/darurat-gunung-lewotobi'
                             ],
                             [
                                 'title' => 'Banjir di Desa Rawajaya',
                                 'subtitle' => 'Ayo tolong Bencana yang disebabkan limpasan air dari sungai Jakadenda',
                                 'image' => '/images/hero/3.svg',
-                                'button_link' => 'Bantu Sekarang'
+                                'button_link' => '/donations/banjir-di-desa-rawajaya'
                             ],
                             [
                                 'title' => 'Tanah Longsor di Desa Kertajaya',
                                 'subtitle' => 'Ayo buat transportasi lancar dari tanah longsor yang menimpa jalan',
                                 'image' => '/images/hero/4.svg',
-                                'button_link' => 'Bantu Sekarang'
+                                'button_link' => '/donations/tanah-longsor-di-desa-kertajaya'
                             ]
                         ]
                     ],
