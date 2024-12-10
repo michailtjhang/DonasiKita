@@ -91,6 +91,44 @@
             width: 100%;
             height: 100%;
         }
+
+        #shareNowBtn:hover{
+            background-color: #6cb6de !important;
+        }
+
+        .social-links {
+            margin: 0;
+            padding: 0;
+            margin-top: 10px;
+            list-style-type: none;
+            display: inline-block;
+        }
+
+        .social-links li {
+            display: inline-block;
+            margin-right: 50px;
+        }
+
+        .social-links li:last-child {
+            margin-right: 0;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background-color: var(--dark-color);
+            font-size: 22px;
+            color: var(--light-color);
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .social-links a:hover {
+            color: var(--dark-color);
+            background-color: var(--aqua-color);
+        }
     </style>
 @endsection
 
@@ -189,11 +227,12 @@
                                 </p>
                                 <br>
                                 <ul class="h3">
-                                    <li class="mb-1"><strong>Location: </strong>Gedung Serba Guna, Jakarta, Jawa Barat,
-                                        Indonesia</li>
-                                    <li class="mb-1"><strong>Waktu: </strong>7.30:00–17:00</li>
-                                    <li class="mb-1"><strong>Hari: </strong>15 Des 2025</li>
-                                    <li class="mb-1"><strong>DressCode </strong>Casual, warna biru</li>
+                                    <li class="mb-1"><strong>Location:
+                                        </strong>{{ $event->location->name_location ?? 'TBA' }}
+                                    </li>
+                                    <li class="mb-1"><strong>Jam:
+                                        </strong>{{ $event->detailEvent->start->format('H:i') ?? 'TBA' }}–{{ $event->detailEvent->end->format('H:i') ?? 'TBA' }}
+                                    </li>
                                 </ul>
                             </div>
                         @endif
@@ -214,7 +253,7 @@
         <div class="row g-1 justify-content-center">
             <!-- Share Button -->
             <div class="col-12 col-md-4  d-flex justify-content-center mb-3 mb-md-0 mb-lg-0">
-                <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center"
+                <button id="shareNowBtn" class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center"
                     style="background-color: #bbddf0;">
                     <h1 class="d-flex align-items-center mb-0" style="font-size: 1.5rem; color: #0f3d56;">
                         <i class="fas fa-share-alt me-2"></i> Share
@@ -402,6 +441,49 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const donateNowBtn = document.getElementById('shareNowBtn');
+            if (donateNowBtn) {
+                donateNowBtn.addEventListener('click', () => {
+                    Swal.fire({
+                        title: '<strong>Bagikan ke Media Sosial</strong>',
+                        html: `
+                            <ul class="social-links" style="list-style: none; padding: 0; display: flex; gap: 10px; justify-content: center;">
+                                <li>
+                                    <a href="https://www.instagram.com/?url={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://api.whatsapp.com/send?text={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/share?url={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        `,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        customClass: {
+                            popup: 'custom-swal-popup'
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

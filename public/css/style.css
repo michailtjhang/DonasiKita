@@ -433,6 +433,13 @@ footer {
     font-size: 26px;
 }
 
+.media-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mengisi seluruh area div dengan tetap menjaga rasio */
+    display: block; /* Hindari penambahan spasi akibat inline elements */
+}
+
 /* responsive */
 @media (max-width: 576px) {
     .hero-section2 {
