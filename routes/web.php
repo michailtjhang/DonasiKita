@@ -20,7 +20,7 @@ use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
 
-Route::group(['middleware' => 'verifiedEmail'], function () {
+Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
     Route::get('/about', [HomeController::class, 'about'])->name('about');
@@ -110,6 +110,9 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
+
+        // routes/web.php
+        Route::get('/api/visitor-stats', [DashboardController::class, 'getVisitorStats']);
 
         // Route laporan
         Route::prefix('reports')->group(function () {

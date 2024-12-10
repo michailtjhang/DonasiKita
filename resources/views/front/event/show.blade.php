@@ -245,8 +245,9 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</button>
-                <a href="{{ url('/event') }}">
+                <a href="{{ url('/donations') }}" class="btn btn-custom" id="button-event"
+                    style="font-size: 40px;">Donate</a>
+                <a href="{{ url('/events') }}">
                     <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
                 </a>
             </div>
