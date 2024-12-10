@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\LogVisitor;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\AdminUserMiddleware;
 use App\Http\Middleware\VerifyEmailMiddleware;
@@ -15,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'useradmin' => AdminUserMiddleware::class,
-            'verifiedEmail' => VerifyEmailMiddleware::class
+            'verifiedEmail' => VerifyEmailMiddleware::class,
+            'logvisitor' => LogVisitor::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

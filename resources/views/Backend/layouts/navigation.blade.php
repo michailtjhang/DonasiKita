@@ -29,6 +29,18 @@
                 $PermissionEvent = App\Models\PermissionRole::getPermission('Event', Auth::user()->role_id);
                 $PermissionDonation = App\Models\PermissionRole::getPermission('Donation', Auth::user()->role_id);
                 $PermissionPage = App\Models\PermissionRole::getPermission('Pages', Auth::user()->role_id);
+                $PermissionReportDonations = App\Models\PermissionRole::getPermission(
+                    'Report Donations',
+                    Auth::user()->role_id,
+                );
+                $PermissionReportEvents = App\Models\PermissionRole::getPermission(
+                    'Report Events',
+                    Auth::user()->role_id,
+                );
+                $PermissionReportDonationsVerification = App\Models\PermissionRole::getPermission(
+                    'Report Verify Donations',
+                    Auth::user()->role_id,
+                );
             @endphp
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
@@ -46,45 +58,56 @@
                     </li>
                 @endif
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link @if (Request::segment(2) == 'report') active @endif">
-                        <i class="fas fa-chart-pie nav-icon"></i>
-                        <p>
-                            Report
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
+                @if (
+                    !empty($PermissionReportDonations) ||
+                        !empty($PermissionReportEvents) ||
+                        !empty($PermissionReportDonationsVerification))
+                    <li class="nav-item">
+                        <a href="#" class="nav-link @if (Request::segment(2) == 'reports') active @endif">
+                            <i class="fas fa-chart-pie nav-icon"></i>
+                            <p>
+                                Report
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
 
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('reports.donations') }}"
-                                class="nav-link @if (Request::segment(3) == 'donations') active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Report Donation</p>
-                            </a>
-                        </li>
-                    </ul>
+                        @if (!empty($PermissionReportDonations))
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('reports.donations') }}"
+                                        class="nav-link @if (Request::segment(3) == 'donations' && Request::segment(4) != 'verification') active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Report Donation</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
 
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('reports.donations.verification') }}"
-                                class="nav-link @if (Request::segment(3) == 'donations') active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Donation Verification</p>
-                            </a>
-                        </li>
-                    </ul>
+                        @if (!empty($PermissionReportDonationsVerification))
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('reports.donations.verification') }}"
+                                        class="nav-link @if (Request::segment(4) == 'verification') active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Donation Verification</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
 
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('reports.event.participants') }}"
-                                class="nav-link @if (Request::segment(3) == 'event') active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Report Event</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        @if (!empty($PermissionReportEvents))
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('reports.event.participants') }}"
+                                        class="nav-link @if (Request::segment(3) == 'event-participants') active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Report Event</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
+                    </li>
+                @endif
 
                 @if (!empty($PermissionDonation) || !empty($PermissionArticle) || !empty($PermissionEvent))
                     <li class="nav-header">Management Page</li>
