@@ -125,15 +125,13 @@
         .media-img img {
             width: 100%;
             height: 100%;
-            -webkit-transition: 0.4s ease-in-out;
-            transition: 0.4s ease-in-out;
         }
 
         .post-title {
             font-weight: 600;
             font-size: 18px;
             line-height: 26px;
-            margin: 0 0 8px 0;
+            /* margin: 8px 0 8px 0; */
             text-transform: capitalize;
         }
 
@@ -144,12 +142,6 @@
 
         .post-title .recent-post-meta p:hover {
             color: #4b9bf0 !important;
-        }
-
-        .recent-post:hover .media-img img {
-            -webkit-transform: scale(1.1);
-            -ms-transform: scale(1.1);
-            transform: scale(1.1);
         }
 
         .th-comments-wrap {

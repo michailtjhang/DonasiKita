@@ -29,8 +29,8 @@
                         <div class="row d-flex align-items-center">
                             <div class="media-img col-4">
                                 <a href="">
-                                    <img class="img img-fluid rounded rounded-4" src="{{ $item->thumbnail->file_path }}"
-                                        alt="Blog Image">
+                                    <img class="img img-fluid rounded rounded-4 h-100 w-100" src="{{ $item->thumbnail->file_path }}"
+                                        alt="Blog Image" > 
                                 </a>
                             </div>
                             <div class="media-body col-8 px-4 justify-content-center">
