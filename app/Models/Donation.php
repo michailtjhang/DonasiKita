@@ -19,10 +19,11 @@ class Donation extends Model
         'email',
         'name',
         'amount',
-        'payment_method',
+        'bank',
         'status',
-        'receipt_id',
-        'note',
+        'sender_name',
+        'tracking_number',
+        'description_item',
     ];
 
     public function user()
@@ -37,6 +38,6 @@ class Donation extends Model
 
     public function receipt()
     {
-        return $this->belongsTo(PaymentReceipts::class, 'receipt_id');
+        return $this->hasOne(PaymentReceipts::class, 'donation_id', 'donation_id');
     }
 }

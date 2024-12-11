@@ -210,8 +210,8 @@
     <!-- End Search Bar -->
 
     <!-- Kategori Event -->
-    <div class="container-fluid spacer-x pt-2 mb-5">
-        <div class="row justify-content-center  px-2  mx-2 ">
+    <div class="container pt-2 mb-5">
+        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
             <h2 class="fw-bold">Jelajahi dan Ikuti Beragam Acara Kebaikan</h2>
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
@@ -301,7 +301,7 @@
 @section('script')
     <script>
         var data = @json($events);
-        console.log(data)
+        
         document.querySelectorAll('.pagination-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
                 var page = this.getAttribute('data-page');

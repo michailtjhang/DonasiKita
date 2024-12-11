@@ -6,17 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class EventRegistration extends Model
+class TemporaryDonations extends Model
 {
     use HasFactory, HasUlids;
 
     protected $keyType = 'string';
-    protected $table = 'event_registrations';
+    protected $table = 'temporary_donations';
     protected $fillable = [
-        'registration_id',
+        'temp_id',
         'user_id',
-        'event_id',
-        'status'
+        'need_id',
+        'email',
+        'name',
+        'amount',
+        'description_item',
+        'bank',
+        'status',
     ];
 
     public function user()
@@ -24,8 +29,8 @@ class EventRegistration extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function event()
+    public function need()
     {
-        return $this->belongsTo(Event::class, 'event_id', 'event_id');
+        return $this->belongsTo(Need::class, 'need_id');
     }
 }

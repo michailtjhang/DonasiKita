@@ -125,15 +125,13 @@
         .media-img img {
             width: 100%;
             height: 100%;
-            -webkit-transition: 0.4s ease-in-out;
-            transition: 0.4s ease-in-out;
         }
 
         .post-title {
             font-weight: 600;
             font-size: 18px;
             line-height: 26px;
-            margin: 0 0 8px 0;
+            /* margin: 8px 0 8px 0; */
             text-transform: capitalize;
         }
 
@@ -144,12 +142,6 @@
 
         .post-title .recent-post-meta p:hover {
             color: #4b9bf0 !important;
-        }
-
-        .recent-post:hover .media-img img {
-            -webkit-transform: scale(1.1);
-            -ms-transform: scale(1.1);
-            transform: scale(1.1);
         }
 
         .th-comments-wrap {
@@ -487,7 +479,7 @@
                     <div class="th-blog blog-single">
                         <div class="mb-3">
                             @if ($article->thumbnail && $article->thumbnail->id_file)
-                                <x-cld-image public-id="{{ $article->thumbnail->id_file }}" class="card-img-top img-fluid" />
+                                <x-cld-image public-id="{{ $article->thumbnail->id_file }}" class="card-img-top img-fluid rounded rounded-3" />
                             @elseif ($article->thumbnail && $article->thumbnail->file_path)
                                 <img class="img img-fluid rounded rounded-3" src="{{ $article->thumbnail->file_path }}"
                                     alt="{{ $article->title }}">
@@ -510,7 +502,7 @@
 
                         </div>
                         <div class="card rounded rounded-3 px-3 py-1 my-5">
-                            <div class="blog-content text-dark fs-6">
+                            <div class="blog-content text-dark fs-6 mt-3">
                                 <p class="text-justify">
                                     {!! $article->content !!}
                                 </p>
@@ -555,8 +547,8 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</button>
-                <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
+                <a href="{{ url('/donations') }}" class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</a>
+                <a href="{{ url('/events') }}" class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</a>
             </div>
         </div>
     </section>

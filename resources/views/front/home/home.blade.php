@@ -57,6 +57,11 @@
         color: #0f3d56 !important;
     }
 
+    #accordion img {
+        height: 300px; /* Tetapkan tinggi maksimum */
+        object-fit: contain; /* Menjaga proporsi gambar */
+    }
+
     /* .accordion-button:hover {
     color: #084298;
 } */
@@ -99,19 +104,14 @@
     <!-- About Content Section -->
     <section id="about-content" class="space-section">
         <div class="container-fluid py-5 justify-content-center text-center bg-skyline">
-            <h1 class="bolder-text text-dark" style="margin-bottom: 50px"> Kamu Adalah Harapan Lainnya</h1>
+            <h1 class="bolder-text text-dark" style="margin-bottom: 50px">{{ $content['about_section']['title'] }}</h1>
             <div class="row mx-auto text-wrap" style="width:80%;">
                 <div class="col-lg-6 col-12">
-                    <img src="/images/content/about.svg" class="about-image img-fluid" alt="">
+                    <img src="{{ $content['about_section']['image'] }}" class="about-image img-fluid" alt="">
                 </div>
                 <div class="col-lg-6 col-12 text-dark d-flex  px-5">
-                    <p style="font-size: 26px; text-align:left">
-                        <span class="fw-bold">DonasiKita </span>meyakinkan Anda untuk menjadi bagian dari perubahan positif
-                        melalui platform donasi yang transparan, aman, dan terpercaya. Dengan menghubungkan donatur dengan
-                        beragam program bantuan, kami berkomitmen untuk memperkuat solidaritas sosial serta memberdayakan
-                        komunitas yang membutuhkan di seluruh Indonesia. Bersama, kita dapat menciptakan masa depan yang
-                        lebih peduli, inklusif, dan berdaya, di mana setiap kontribusi kecil membawa dampak besar bagi
-                        mereka yang membutuhkan uluran tangan kita.
+                    <p class="text-large-responsive" style="text-align:left">
+                        {!! $content['about_section']['description'] !!}
                     </p>
                 </div>
             </div>
@@ -123,7 +123,7 @@
     <section id="donate-content" class="bg-skyline space-section">
         <div class="container d-flex justify-content-center bg-skyline ">
 
-            <div class="row  justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center">
                 <div class="row mx-2">
                     <h3 class="fw-bold">Donation</h3>
                     <div class="d-flex flex-wrap align-items-center pb-2">
@@ -132,7 +132,7 @@
                             Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
                         </p>
                         <!-- Tombol -->
-                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4  col-lg-1"
+                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-1"
                             style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                             See More
                         </a>
@@ -146,8 +146,8 @@
                             <a href="{{ route('donations.show', $item->slug) }}">
                                 <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                                     @if ($item->thumbnail && $item->thumbnail->file_path)
-                                        <img src="{{ $item->thumbnail->file_path }}" class="card-img-top" alt="..."
-                                            style="object-fit: cover !important;">
+                                        <img src="{{ $item->thumbnail->file_path }}" class="card-img-top img-fluid blog-img" alt="..."
+                                            style="object-fit: cover !important; height: 200px !important;">
                                     @else
                                         <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                             style="height: 160px;">
@@ -193,10 +193,10 @@
     <!-- Quote Content Section -->
     <section id="quote-content" class="space-section">
         <div class="container-fluid d-flex justify-content-center align-items-center text-center bg-skyline"
-            style="background-image: url('/images/quotes.svg'); height: 400px; background-size: cover; background-position: center; background-repeat: no-repeat;">
+            style="background-image: url('{{ $content['quote_section']['image'] }}'); height: 400px; background-size: cover; background-position: center; background-repeat: no-repeat;">
             <p class="text-light m-0" style="font-size: 35px; text-shadow: 2px 2px #000;">
-                "Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain." <br>
-                <span class="fw-bold mt-3">-Rasulullah SAW-</span>
+                {{ $content['quote_section']['quote'] }}<br>
+                <span class="fw-bold mt-3">- {{ $content['quote_section']['author'] }} -</span>
             </p>
         </div>
     </section>
@@ -279,8 +279,8 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Donate</button>
-                <a href="{{ url('/event') }}">
+                <a href="{{ url('/donations') }}" class="btn btn-custom" id="button-event" style="font-size: 30px;">Donate</a>
+                <a href="{{ url('/events') }}">
                     <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Sukarelawan</button>
                 </a>
             </div>
@@ -319,7 +319,7 @@
                                         <a href="{{ route('blog.show', $item->slug) }}">
                                             <img src="{{ $item->thumbnail->file_path }}"
                                                 class="card-img-top img-fluid blog-img" alt="{{ $item->title }}"
-                                                style="height: 200px !important;">
+                                                style="height: 200px !important; object-fit: cover !important;">
                                         </a>
                                     @else
                                         <a href="{{ route('blog.show', $item->slug) }}">
@@ -361,17 +361,17 @@
     <section id="accodrion" class="space-section">
         <h1 class="bolder-text text-dark text-center mb-5 ">Frequently Asked Question</h1>
         <div class="container">
-            <div class="row">
+            <div class="row d-flex align-items-stretch">
                 <!-- Kolom Kiri: Gambar -->
-                <div class="col-lg-6 col-12 d-flex justify-content-center mb-5">
+                <div class="col-lg-6 col-12 text-center justify-content-center mb-5">
                     <img src="{{ url('/images/faq.svg') }}" alt="" class="img img-fluid">
                 </div>
                 <!-- Kolom Kanan: Accordion -->
                 <div class="col-lg-6 col-12 p-4">
                     <div class="accordion" id="accordionExample">
                         @foreach($content['faq_section']['faq'] as $index => $faq)
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading{{ $index }}">
+                        <div class="accordion-item accordion-rounded mb-3">
+                            <h2 class="accordion-header accordion-rounded" id="heading{{ $index }}">
                                 <button class="accordion-button {{ $index !== 0 ? 'collapsed' : '' }}" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $index }}">
                                     <B>{{ $faq['questions'] }}</B>

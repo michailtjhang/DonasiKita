@@ -20,29 +20,41 @@ use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
 
-Route::group(['middleware' => 'verifiedEmail'], function () {
+Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
     Route::get('/about', [HomeController::class, 'about'])->name('about');
 
+    // Route Blog
     Route::get('/blogs', [ArticleController::class, 'index'])->name('blog');
     Route::get('blog/{slug}', [ArticleController::class, 'show'])->name('blog.show');
 
+    // Route Category
     Route::get('/blogs/categories', [FrontCategoryController::class, 'indexBlog'])->name('blogs.categories');
     Route::get('/events/categories', [FrontCategoryController::class, 'indexEvent'])->name('events.categories');
     Route::get('/blogs/category/{slug}', [FrontCategoryController::class, 'showBlog'])->name('blogs.category');
     Route::get('/events/category/{slug}', [FrontCategoryController::class, 'showEvent'])->name('events.category');
 
+    // Route Event
     Route::get('/events', [FrontEventController::class, 'index'])->name('events');
     Route::get('/events/{slug}', [FrontEventController::class, 'show'])->name('events.show');
     Route::post('/events/join', [FrontEventController::class, 'join'])->name('events.join');
 
+    // Route Donation
     Route::get('/donations', [FrontDonationController::class, 'index'])->name('donations');
     Route::get('/donations/{slug}', [FrontDonationController::class, 'show'])->name('donations.show');
-    Route::post('/donations/{slug}', [FrontDonationController::class, 'store'])->name('donations.store');
+
+    // Route Form Donation Uang
     Route::get('/donations/{slug}/donation-amount', [FrontDonationController::class, 'showAmount'])->name('donations.amount');
+    Route::post('/donations/{slug}/donation-amount', [FrontDonationController::class, 'storeTemporaryAmount'])->name('donations.store.amount');
+
+    // Route Form Donation Barang
     Route::get('/donations/{slug}/donation-item', [FrontDonationController::class, 'showItem'])->name('donations.item');
-    Route::post('/donations/{slug}/confirm', [FrontDonationController::class, 'confirm'])->name('donations.confirm');
+    Route::post('/donations/{slug}/donation-item', [FrontDonationController::class, 'storeTemporaryItem'])->name('donations.store.item');
+
+    // Route Konfirmasi (Barang dan Uang) dengan bukti pembayaran ddan resi
+    Route::post('/donations/{slug}/confirm-amount/{temp_id}', [FrontDonationController::class, 'confirmAmount'])->name('donations.confirm-amount');
+    Route::post('/donations/{slug}/confirm-item/{temp_id}', [FrontDonationController::class, 'confirmItem'])->name('donations.confirm-item');
 
     Route::resource('profile', ProfileController::class);
 });
@@ -99,16 +111,23 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
 
+        // routes/web.php
+        Route::get('/api/visitor-stats', [DashboardController::class, 'getVisitorStats']);
+        Route::get('/api/donation-stats', [DashboardController::class, 'getDonationStats']);
+
         // Route laporan
         Route::prefix('reports')->group(function () {
             Route::get('donations/verification', [ReportController::class, 'donationVerification'])
                 ->name('reports.donations.verification'); // Verifikasi transfer dana
 
+            Route::post('/donations/verification/confirm/{id}', [ReportController::class, 'confirmDonation'])
+                ->name('reports.donations.verification.confirm');
+
             Route::get('donations', [ReportController::class, 'donations'])
                 ->name('reports.donations'); // Laporan donasi
 
-            Route::get('donations/export/{format}', [ReportController::class, 'exportDonations'])
-                ->name('reports.donations.export'); // Export laporan donasi (PDF/Excel)
+            Route::get('/{type}/export/{format}', [ReportController::class, 'exportData'])
+                ->name('reports.export'); // Export laporan donasi (PDF/CSV)
 
             Route::get('event-participants', [ReportController::class, 'eventParticipants'])
                 ->name('reports.event.participants'); // Laporan peserta/volunteer

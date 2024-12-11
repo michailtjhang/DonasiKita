@@ -7,8 +7,8 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .container {
-            margin-top: 100px;
+        .container-form {
+            margin-top: 50px;
             margin-bottom: 50px;
         }
 
@@ -28,6 +28,13 @@
             color: #0f3d56;
             font-weight: bold;
             margin-bottom: 15px;
+        }
+
+        /* update : ux writing */
+        .text-info {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f3d56 !important;
         }
 
         /* Info Section */
@@ -73,6 +80,7 @@
             font-size: 14px;
             padding: 8px 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .nominal-buttons button.active {
@@ -189,10 +197,20 @@
             margin-left: auto;
             margin-right: auto;
             display: block;
+            transition: background-color 0.3s ease;
         }
 
         .pay-button:hover {
             background: #2492cd;
+        }
+
+        .radio-button {
+            margin-left: auto;
+        }
+
+        .radio-button input {
+            cursor: pointer;
+            margin-left: 10px;
         }
 
         @media (max-width: 768px) {
@@ -215,132 +233,180 @@
 @endsection
 
 @section('content')
-    <div class="container my-5">
+    <div class="container-form py-1">
         <!-- Info Section -->
         <div class="info-section">
             <img src="/images/donate/vector_blue.svg" alt="Icon">
-            <div class="info-title">{{ $donation->title }}</div>
+            <div class="info-title">Bantuan Kemanusiaan untuk Palestina</div>
         </div>
 
-        <!-- Nominal Donasi Section -->
-        <div class="form-section">
-            <h4>Nominal Donasi</h4>
-            <div class="nominal-buttons">
-                <button class="nominal" data-value="10000">Rp 10.000</button>
-                <button class="nominal" data-value="30000">Rp 30.000</button>
-                <button class="nominal" data-value="50000">Rp 50.000</button>
-                <button class="nominal" data-value="100000">Rp 100.000</button>
-            </div>
-            <input type="text" id="custom-nominal" class="input-field" placeholder="Input donasi minimal Rp 1.000">
-        </div>
-
-        <form action="{{ route('donations.confirm', $donation->slug) }}" method="POST" id="confirmationForm">
+        <form action="{{ route('donations.store.amount', $donation->slug) }}" method="POST" id="confirmationForm">
             @csrf
-
-            <!-- Hidden Input -->
-            <input type="hidden" name="amount" value="true">
-            
-            <div>
-                @guest
-                    <!-- Data Diri Section -->
-                    <div class="form-section">
-                        <h4>Identitas Kamu</h4>
-                        <input type="text" class="input-field" placeholder="Nama Lengkap">
-                        <input type="email" class="input-field" placeholder="Email">
-                        <input type="text" class="input-field" placeholder="No Telepon">
-                    </div>
-                @endguest
-
-                <!-- Pilih Bank Section -->
-                <div class="form-section">
-                    <h4>Pilih Bank</h4>
-                    <div class="dropdown-container">
-                        <div class="dropdown-selected" onclick="toggleDropdown()">
-                            <!-- <img id="selected-bank-icon" src="#" *alt="#"*/> -->
-                            <span id="selected-bank-name">Pilih Bank</span>
-                            <i class="fa fa-chevron-down"></i>
-                        </div>
-                        <div class="dropdown-options" id="dropdown-options">
-                            <div class="dropdown-option"
-                                onclick="selectBank('mandiri', 'Bank Mandiri', '/images/payment/mandiri.svg')">
-                                <img src="/images/payment/mandiri.svg" alt="Bank Mandiri">
-                                <span>Bank Mandiri - 1234567890987</span>
-                            </div>
-                            <div class="dropdown-option"
-                                onclick="selectBank('bca', 'Bank Central Asia (BCA)', '/images/payment/bca.svg')">
-                                <img src="/images/payment/bca.svg" alt="Bank Central Asia (BCA)">
-                                <span>Bank Central Asia (BCA) - 1234567890987 </span>
-                            </div>
-                            <div class="dropdown-option"
-                                onclick="selectBank('bni', 'Bank Negara Indonesia (BNI)', '/images/payment/bni.svg')">
-                                <img src="/images/payment/bni.svg" alt="Bank Negara Indonesia (BNI)">
-                                <span>Bank Negara Indonesia (BNI) - 1234567890987</span>
-                            </div>
-                            <div class="dropdown-option"
-                                onclick="selectBank('bri', 'Bank Rakyat Indonesia (BRI)', '/images/payment/bri.svg')">
-                                <img src="/images/payment/bri.svg" alt="Bank Rakyat Indonesia (BRI)">
-                                <span>Bank Rakyat Indonesia (BRI) - 1234567890987</span>
-                            </div>
-                            <div class="dropdown-option"
-                                onclick="selectBank('danamon', 'Bank Danamon', '/images/payment/danamon.svg')">
-                                <img src="/images/payment/danamon.svg" alt="Bank Danamon">
-                                <span>Bank Danamon - 1234567890987</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Nominal Donasi Section -->
+            <div class="form-section">
+                <h4>Nominal Donasi</h4>
+                <div class="nominal-buttons">
+                    <button class="nominal" type="button" data-value="10000">Rp 10.000</button>
+                    <button class="nominal" type="button" data-value="30000">Rp 30.000</button>
+                    <button class="nominal" type="button" data-value="50000">Rp 50.000</button>
+                    <button class="nominal" type="button" data-value="100000">Rp 100.000</button>
                 </div>
+                <input type="text" id="custom-nominal" name="amount" class="input-field"
+                    placeholder="Input donasi minimal Rp 10.000" value="{{ old('amount') }}">
+                <!-- update : ux writing -->
+                <div class="text-info">*Masukkan nominal donasi Anda (minimal Rp. 10.000) untuk melanjutkan.*</div>
 
-                <!-- Total Donasi Section -->
-                <div class="total-section">
-                    <span>Total Donasi</span>
-                    <span id="total-donation">Rp 0</span>
-                </div>
-
-                <!-- Pay Button -->
-                <button type="submit" class="pay-button">Lanjut Pembayaran</button>
+                @error('amount')
+                    <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                @enderror
             </div>
+
+            @guest
+                <!-- Data Diri Section -->
+                <div class="form-section">
+                    <h4>Identitas Kamu</h4>
+                    <input type="text" class="input-field" name="name" placeholder="Nama Lengkap"
+                        value="{{ old('name') }}">
+                    @error('name')
+                        <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                    @enderror
+                    <input type="email" class="input-field" name="email" placeholder="Email" value="{{ old('email') }}">
+                    @error('email')
+                        <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                    @enderror
+                </div>
+            @endguest
+
+            <!-- Pilih Bank Section -->
+            <div class="form-section">
+                <h4>Pilih Bank</h4>
+                <div class="dropdown-container">
+                    <div class="dropdown-selected" onclick="toggleDropdown()">
+                        <span id="selected-bank-name">Pilih Bank</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-options" id="dropdown-options">
+                        <div class="dropdown-option"
+                            onclick="selectBank('mandiri', 'Bank Mandiri', '/images/payment/mandiri.svg')">
+                            <img src="/images/payment/mandiri.svg" alt="Bank Mandiri">
+                            <span>Bank Mandiri - 1234567890987</span>
+                            <label class="radio-button"><input type="radio" name="bank" value="mandiri"
+                                    {{ old('bank') == 'mandiri' ? 'checked' : '' }}> </label>
+                        </div>
+                        <div class="dropdown-option"
+                            onclick="selectBank('bca', 'Bank Central Asia (BCA)', '/images/payment/bca.svg')">
+                            <img src="/images/payment/bca.svg" alt="Bank Central Asia (BCA)">
+                            <span>Bank Central Asia (BCA) - 1234567890987</span>
+                            <label class="radio-button"><input type="radio" name="bank" value="bca"
+                                    {{ old('bank') == 'bca' ? 'checked' : '' }}> </label>
+                        </div>
+                        <div class="dropdown-option"
+                            onclick="selectBank('bni', 'Bank Negara Indonesia (BNI)', '/images/payment/bni.svg')">
+                            <img src="/images/payment/bni.svg" alt="Bank Negara Indonesia (BNI)">
+                            <span>Bank Negara Indonesia (BNI) - 1234567890987</span>
+                            <label class="radio-button"><input type="radio" name="bank" value="bni"
+                                    {{ old('bank') == 'bni' ? 'checked' : '' }}> </label>
+                        </div>
+                        <div class="dropdown-option"
+                            onclick="selectBank('bri', 'Bank Rakyat Indonesia (BRI)', '/images/payment/bri.svg')">
+                            <img src="/images/payment/bri.svg" alt="Bank Rakyat Indonesia (BRI)">
+                            <span>Bank Rakyat Indonesia (BRI) - 1234567890987</span>
+                            <label class="radio-button"><input type="radio" name="bank" value="bri"
+                                    {{ old('bank') == 'bri' ? 'checked' : '' }}> </label>
+                        </div>
+                    </div>
+                </div>
+                @error('bank')
+                    <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Total Section -->
+            <div class="total-section">
+                <span>Total Donasi</span>
+                <span id="total-amount">Rp 0</span>
+            </div>
+
+            <!-- Payment Button -->
+            <button class="pay-button my-5" type="submit">Bayar Sekarang</button>
         </form>
     </div>
 @endsection
 
 @section('script')
     <script>
-        const nominalButtons = document.querySelectorAll('.nominal');
-        const customNominal = document.getElementById('custom-nominal');
-        const totalDonation = document.getElementById('total-donation');
-        const dropdownOptions = document.getElementById('dropdown-options');
-        const bankIcon = document.getElementById('selected-bank-icon');
-        const bankName = document.getElementById('selected-bank-name');
+        let selectedNominal = 0;
+        let transferFee = 0;
+        const bankFees = {
+            mandiri: 4000,
+            bca: 4500,
+            bni: 3000,
+            bri: 3500
+        };
 
-        nominalButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                nominalButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                customNominal.value = '';
-                totalDonation.textContent = 'Rp ' + button.getAttribute('data-value');
+        // Event listener untuk tombol nominal
+        document.querySelectorAll('.nominal').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah refresh halaman
+                document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                selectedNominal = parseInt(this.getAttribute('data-value'));
+                document.getElementById('custom-nominal').value = selectedNominal; // Isi input field
+                updateTotal();
             });
         });
 
-        customNominal.addEventListener('input', () => {
-            nominalButtons.forEach(btn => btn.classList.remove('active'));
-            totalDonation.textContent = 'Rp ' + (customNominal.value || 0);
-        });
-
-        function toggleDropdown() {
-            dropdownOptions.classList.toggle('show');
-        }
-
-        function selectBank(code, name, iconPath) {
-            bankIcon.src = iconPath;
-            bankName.textContent = name;
-            dropdownOptions.classList.remove('show');
-        }
-
-        // Close dropdown when clicked outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown-container')) {
-                dropdownOptions.classList.remove('show');
+        // Event listener untuk input manual nominal
+        document.getElementById('custom-nominal').addEventListener('input', function() {
+            const value = parseInt(this.value) || 0;
+            if (value >= 10000) { // Validasi minimal Rp 10.000
+                selectedNominal = value;
+                document.querySelectorAll('.nominal').forEach(b => b.classList.remove('active'));
+                updateTotal();
+            } else {
+                selectedNominal = 0;
+                updateTotal();
             }
         });
+
+        // Fungsi untuk memilih bank
+        function selectBank(bankId, bankName, bankLogo) {
+            // Perbarui label dropdown
+            document.getElementById('selected-bank-name').textContent = bankName;
+
+            // Update biaya transfer berdasarkan bank
+            transferFee = bankFees[bankId] || 0;
+
+            // Pilih radio button yang sesuai
+            const radioButton = document.querySelector(`input[name="bank"][value="${bankId}"]`);
+            if (radioButton) {
+                radioButton.checked = true;
+            }
+
+            // Perbarui total donasi
+            updateTotal();
+
+            // Tutup dropdown
+            const dropdown = document.getElementById('dropdown-options');
+            dropdown.classList.remove('show');
+        }
+
+        // Fungsi untuk memperbarui total donasi
+        function updateTotal() {
+            const totalAmount = selectedNominal + transferFee;
+            const totalAmountElement = document.getElementById('total-amount');
+            totalAmountElement.innerHTML = `
+            <span>Total Donasi:</span>
+            <span>Rp ${totalAmount.toLocaleString()}</span>
+            <div style="font-size: 10px; color: #6c757d;">(Termasuk biaya transfer Rp ${transferFee.toLocaleString()})</div>
+        `;
+        }
+
+        // Fungsi untuk menampilkan/menyembunyikan dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-options');
+            dropdown.classList.toggle('show');
+        }
     </script>
 @endsection

@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('donations', function (Blueprint $table) {
-            $table->uuid('receipt_id')->nullable()->after('status'); // ID unik untuk bukti pembayaran
-            $table->text('note')->nullable()->after('receipt_id'); // Catatan opsional
+        Schema::create('visitors', function (Blueprint $table) {
+            $table->id();
+            $table->date('date');
+            $table->integer('count');
+            $table->timestamps();
         });
     }
 
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('donations', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('visitors');
     }
 };

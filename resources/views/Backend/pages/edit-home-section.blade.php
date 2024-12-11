@@ -28,20 +28,20 @@
                                     <div class="form-group">
                                         <label for="carousel_title_{{ $key }}">Title</label>
                                         <input type="text" name="carousel[{{ $key }}][title]"
-                                            id="carousel_title_{{ $key }}" value="{{ $carousel['title'] }}"
+                                            id="carousel_title_{{ $key }}" value="{{ $carousel['title'] ?? '' }}"
                                             class="form-control">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="carousel_subtitle_{{ $key }}">Subtitle</label>
                                         <textarea name="carousel[{{ $key }}][subtitle]" id="carousel_subtitle_{{ $key }}"
-                                            class="form-control">{{ $carousel['subtitle'] }}</textarea>
+                                            class="form-control">{{ $carousel['subtitle'] ?? '' }}</textarea>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="button_{{ $key }}">Button Link</label>
                                         <input type="text" name="carousel[{{ $key }}][button_link]"
-                                            id="button_{{ $key }}" value="{{ $carousel['button_link'] }}"
+                                            id="button_{{ $key }}" value="{{ $carousel['button_link'] ?? '' }}"
                                             class="form-control">
                                     </div>
 
@@ -69,7 +69,7 @@
                                         <!-- Existing Image -->
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ $carousel['image'] ?? asset($carousel['image']) }}"
+                                            <img src="{{ $carousel['image'] ?? asset($carousel['image']) ?? '' }}"
                                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>
@@ -119,7 +119,7 @@
                         <!-- Existing Image -->
                         <div class="col-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
-                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) }}"
+                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) ?? '' }}"
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
@@ -162,23 +162,6 @@
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
-                    </div>
-                @elseif($section === 'invitation_section')
-                    <div class="form-group">
-                        <label for="invitation_title">Invitation Title</label>
-                        <input type="text" name="title" id="invitation_title"
-                            value="{{ $sectionData['title'] ?? '' }}" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="invitation_description">Invitation Description</label>
-                        <textarea name="description" id="invitation_description" class="form-control">{{ $sectionData['description'] ?? '' }}</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="invitation_buttons">Buttons</label>
-                        <input type="text" name="buttons" id="invitation_buttons"
-                            value="{{ json_encode($sectionData['buttons'] ?? []) }}" class="form-control">
                     </div>
                 @elseif($section === 'faq_section')
                     <div class="faq-container">
@@ -273,9 +256,20 @@
                 </div>
                 <div class="form-group">
                     <label for="carousel_image_${carouselIndex}">Image</label>
-                    <input type="text" name="carousel[${carouselIndex}][image]" id="carousel_image_${carouselIndex}" class="form-control">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="carousel[${carouselIndex}][image]" id="carousel_image_${carouselIndex}" onchange="previewImage(event, ${carouselIndex})">
+                        <label class="custom-file-label" for="carousel_image_${carouselIndex}">Choose file</label>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-danger mt-2" onclick="removeCarouselItem(${carouselIndex})">Remove</button>
+
+                <div class="row mt-3 text-center">
+                    <div class="col-6">
+                        <span class="d-block mb-2 text-muted">Preview:</span>
+                        <img id="imgPreview_${carouselIndex}" src="" alt="Preview Image" class="img-thumbnail shadow-sm border" style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-danger mt-4" onclick="removeCarouselItem(${carouselIndex})">Remove</button>
             `;
                 row.appendChild(formGroup); // Menambahkan carousel ke baris yang sesuai
                 carouselIndex++;
@@ -310,11 +304,11 @@
                     <h5>Faq Item ${faqIndex + 1}</h5>
                     <div class="form-group">
                         <label for="questions_${faqIndex}">Questions</label>
-                        <input type="text" name="faq[${faqIndex}][questions]" id="questions_${faqIndex}" class="form-control">
+                        <input type="text" name="questions[${faqIndex}]" id="questions_${faqIndex}" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="answers_${faqIndex}">Answers</label>
-                        <textarea name="faq[${faqIndex}][answers]" id="answers_${faqIndex}" class="form-control"></textarea>
+                        <textarea name="answers[${faqIndex}]" id="answers_${faqIndex}" class="form-control"></textarea>
                     </div>
                     <button type="button" class="btn btn-danger mt-2" onclick="removeFaqItem(${faqIndex})">Remove</button>
                 `;

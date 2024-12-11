@@ -69,8 +69,8 @@
         }
 
         .card-img-top {
-            height: 150px;
-            object-fit: fill;
+            height: 180px;
+            object-fit: cover;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
             width: 100%;
@@ -299,10 +299,10 @@
                             <a href="{{ route('blog.show', $article->slug) }}">
                                 @if ($article->thumbnail && $article->thumbnail->id_file)
                                     <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
+                                        class="card-img-top img-fluid blog-img" />
                                 @elseif ($article->thumbnail && $article->thumbnail->file_path)
                                     <img src="{{ $article->thumbnail->file_path }}"
-                                        class="card-img-top img-fluid" alt="{{ $article->title }}">
+                                    class="card-img-top img-fluid blog-img" alt="{{ $article->title }}">
                                 @else
                                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                         style="height: 200px;">
@@ -319,7 +319,7 @@
                                 </h5>
                                 <p class="card-text text-muted mb-3">{{ Str::limit(strip_tags($article->content), 100, '...') }}
                                 </p>
-                                <div class="d-flex flex-wrap  align-items-center mt-3">
+                                <div class="d-flex flex-wrap  align-items-center mt-2">
                                     <small
                                         class="text-muted">{{ $article->created_at->locale('id')->diffForHumans() }}</small>
                                     <span class="text-muted mx-1">|</span>
@@ -330,7 +330,7 @@
                                     <span class="text-muted mx-1">|</span>
                                     <small class="text-muted">Oleh {{ $article->user->name ?? 'Anonim' }}</small>
                                 </div>
-                                <div class="d-flex w-100 justify-content-center ">
+                                <div class="d-flex w-100 justify-content-center mt-2">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
                                         Read More
                                     </a>
@@ -360,6 +360,8 @@
 
 @section('script')
     <script>
+        var data = @json($articles);
+        
         document.querySelectorAll('.pagination-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
                 var page = this.getAttribute('data-page');

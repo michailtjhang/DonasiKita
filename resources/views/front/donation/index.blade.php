@@ -272,8 +272,8 @@
                     <a href="{{ route('donations.show', $donation->slug) }}" class="col-lg-4 col-md-6 mb-5">
                         <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
-                                <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top"
-                                    alt="{{ $donation->title }}" style="height: 160px !important;">
+                                <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top img-fluid blog-img"
+                                    alt="{{ $donation->title }}" style="object-fit: cover !important; height: 160px !important;">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                     style="height: 160px;">
@@ -285,14 +285,14 @@
                                 <p class="card-text text-muted">{{ $donation->towards }}</p>
                                 <div class="progress my-3">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{ (str_replace(['Rp', '.', ','], '', $donation->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%">
+                                        style="width: {{ (str_replace(['Rp', '.', ','], '', $donation->total_donated) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%">
                                     </div>
                                 </div>
                                 <p class="card-text text-dark">
-                                    <strong>{{ number_format($donation->donation->sum('amount'), 0, ',', '.') }}</strong> /
+                                    <strong>{{ number_format($donation->total_donated, 0, ',', '.') }}</strong> /
                                     {{ number_format($donation->target_amount, 0, ',', '.') }}</p>
                                 <div class="d-flex justify-content-between">
-                                    <small class="text-muted">{{ $donation->donation->count() }} donatur</small>
+                                    <small class="text-muted">{{ $donation->donator_count }} donatur</small>
                                     <small
                                         class="text-muted">{{ $donation->days_left->locale('id')->diffForHumans() ?? '0' }}</small>
                                 </div>
@@ -320,12 +320,14 @@
 @endsection
 @section('script')
     <script>
+        var data = @json($donations);
+
         document.querySelectorAll('.pagination-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
                 var page = this.getAttribute('data-page');
                 // Pindahkan halaman sesuai nomor halaman yang diklik
                 // Anda bisa memanfaatkan AJAX atau navigasi normal di sini
-                window.location.href = ?page=${page};
+                window.location.href = `?page=${page}`;
             });
         });
 
@@ -336,7 +338,7 @@
                 currentPage.previousElementSibling.classList.add('active');
                 // Pindahkan halaman ke halaman sebelumnya
                 var prevPage = currentPage.previousElementSibling.getAttribute('data-page');
-                window.location.href = ?page=${prevPage};
+                window.location.href = `?page=${prevPage}`;
             }
         });
 
@@ -347,7 +349,7 @@
                 currentPage.nextElementSibling.classList.add('active');
                 // Pindahkan halaman ke halaman berikutnya
                 var nextPage = currentPage.nextElementSibling.getAttribute('data-page');
-                window.location.href = ?page=${nextPage};
+                window.location.href = `?page=${nextPage}`;
             }
         });
     </script>

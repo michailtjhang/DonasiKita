@@ -221,7 +221,7 @@
                                     <span class="divider">|</span>
                                     <button>{{ $article->category->name }}</button>
                                     <span class="divider">|</span>
-                                    <button>{{ $article->writer }}</button>
+                                    <button>{{ $article->user->name }}</button>
                                 </div>
                                 <div class="d-flex w-100 justify-content-center mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">

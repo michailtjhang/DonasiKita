@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Models\EventRegistration;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Buglinjo\LaravelWebp\Facades\Webp;
 
 class ProfileController extends Controller
@@ -19,9 +19,30 @@ class ProfileController extends Controller
     public function index()
     {
         if (!empty(Auth::check())) {
-            // $profile = User::findOrFail(Auth::user()->id);
+            // Ambil data pengguna
+            $profile = User::findOrFail(Auth::user()->id);
+            // dd(EventRegistration::where('user_id', Auth::id())->with(['event', 'event.thumbnail', 'event.detailEvent'])->get());
+
+            // Ambil daftar event yang diikuti oleh user (event yang belum selesai)
+            $futureEvents = EventRegistration::where('user_id', Auth::id())
+                ->whereHas('event.detailEvent', function ($query) {
+                    $query->where('end', '>=', now()); // Ambil event yang belum selesai
+                })
+                ->with(['event', 'event.thumbnail', 'event.category'])
+                ->get();
+
+            // Ambil daftar event yang diikuti oleh user (event yang sudah selesai)
+            $pastEvents = EventRegistration::where('user_id', Auth::id())
+                ->whereHas('event.detailEvent', function ($query) {
+                    $query->where('end', '<', now()); // Ambil event yang sudah selesai
+                })
+                ->with(['event', 'event.thumbnail', 'event.category'])
+                ->get();
+
             return view('front.profile.profile', [
-                // 'profile' => $profile,
+                'profile' => $profile,
+                'futureEvents' => $futureEvents,
+                'pastEvents' => $pastEvents,
                 'page_title' => 'Profile',
             ]);
         } else {

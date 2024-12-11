@@ -11,9 +11,11 @@ use App\Models\DetailEvent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Buglinjo\LaravelWebp\Facades\Webp;
 
 class EventController extends Controller
 {
@@ -42,9 +44,9 @@ class EventController extends Controller
                     return $events->category->name;
                 })
                 ->addColumn('status', function ($events) {
-                    if ($events->status == 2) {
+                    if ($events->status == 'finished') {
                         return '<span class="badge badge-success">Finished</span>';
-                    } else if ($events->status == 1) {
+                    } else if ($events->status == 'ongoing') {
                         return '<span class="badge badge-warning">Ongoing</span>';
                     } else {
                         return '<span class="badge badge-secondary">Upcoming</span>';
@@ -52,8 +54,8 @@ class EventController extends Controller
                 })
                 ->addColumn('date', function ($events) {
                     // Format start dan end menjadi rentang tanggal
-                    $start = Carbon::parse($events->start)->format('d M Y h:i A');
-                    $end = Carbon::parse($events->end)->format('d M Y h:i A');
+                    $start = Carbon::parse($events->detailEvent->start)->format('d M Y h:i A');
+                    $end = Carbon::parse($events->detailEvent->end)->format('d M Y h:i A');
                     return "$start - $end";
                 })
                 ->addColumn('action', function ($events) use ($data) {
@@ -61,12 +63,12 @@ class EventController extends Controller
 
                     // Tambahkan tombol show jika izin Show ada
                     if (!empty($data['PermissionShow'])) {
-                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary m-1"><i class="fas fa-fw fa-eye"></i></a>';
                     }
 
                     // Tambahkan tombol Edit jika izin Edit ada
                     if (!empty($data['PermissionEdit'])) {
-                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning m-1"><i class="fas fa-fw fa-edit"></i></a>';
                     }
 
                     return $buttons;
@@ -169,14 +171,30 @@ class EventController extends Controller
             // Simpan ke tabel `detail_events`
             DetailEvent::create($detailData);
 
-            // // upload image
-            // $file = $request->file('img'); // get file
-            // $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // generate filename randomnes and extension
-            // $file->move(storage_path('app/public/cover'), $filename); // path file
-
             // Upload image ke Cloudinary
             $file = $request->file('img');
-            $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+
+            // Nama file WebP
+            $webpFileName = time() . '.webp';
+
+            // Path folder tujuan
+            $tempFolder = public_path('temp');
+
+            // Pastikan folder `temp` ada, jika tidak, buat folder
+            if (!file_exists($tempFolder)) {
+                mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+            }
+
+            // Path tujuan penyimpanan sementara file WebP
+            $webpPath = $tempFolder . '/' . $webpFileName;
+
+            // Konversi gambar ke WebP
+            WebP::make($file)
+                ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                ->save($webpPath);
+
+            // Upload image baru ke Cloudinary
+            $cloudinaryResponse = cloudinary()->upload($webpPath, [
                 'folder' => 'cover',
                 'use_filename' => true,
                 'unique_filename' => true,
@@ -272,9 +290,14 @@ class EventController extends Controller
         if (empty($PermissionRole)) {
             return back();
         }
-        
+
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('events')->ignore($id),
+            ],
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
@@ -288,7 +311,7 @@ class EventController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'when_volunteer' => 'required|boolean',
-            'status' => 'required|string|in:ongoing,finished',
+            'status' => 'required|string|in:upcoming,ongoing,finished',
         ]);
 
         $event = Event::with('thumbnail', 'location', 'detailEvent')->findOrFail($id); // Ambil event dengan relasi terkait
@@ -298,21 +321,28 @@ class EventController extends Controller
             // Update file gambar jika ada file baru yang diupload
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
+                
+                // Nama file WebP
+                $webpFileName = time() . '.webp';
 
-                // // Upload file
-                // $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-                // $file->move(storage_path('app/public/cover'), $filename);
+                // Path folder tujuan
+                $tempFolder = public_path('temp');
 
-                // // Hapus file lama jika ada
-                // if ($event->thumbnail && $event->thumbnail->file_path) {
-                //     $oldFilePath = storage_path('app/public/cover/' . $event->thumbnail->file_path);
-                //     if (file_exists($oldFilePath)) {
-                //         unlink($oldFilePath);
-                //     }
-                // }
+                // Pastikan folder `temp` ada, jika tidak, buat folder
+                if (!file_exists($tempFolder)) {
+                    mkdir($tempFolder, 0755, true); // Membuat folder dengan izin baca/tulis
+                }
+
+                // Path tujuan penyimpanan sementara file WebP
+                $webpPath = $tempFolder . '/' . $webpFileName;
+
+                // Konversi gambar ke WebP
+                WebP::make($file)
+                    ->quality(65) // Atur kualitas gambar (opsional, default: 70)
+                    ->save($webpPath);
 
                 // Upload image baru ke Cloudinary
-                $cloudinaryResponse = cloudinary()->upload($file->getRealPath(), [
+                $cloudinaryResponse = cloudinary()->upload($webpPath, [
                     'folder' => 'cover',
                     'use_filename' => true,
                     'unique_filename' => true,
@@ -336,9 +366,6 @@ class EventController extends Controller
 
             // Update slug
             $data['slug'] = Str::slug($data['title']);
-
-            // Jika ada input 'volunteer'
-            $data['capacity_volunteers'] = $data['volunteer'] ?? 0;
 
             // Proses tanggal dari input 'date'
             $dateRange = explode(' - ', $data['date']);

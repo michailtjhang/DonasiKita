@@ -41,7 +41,7 @@ class PageController extends Controller
                         foreach ($content as $section => $sectionData) {
                             // Menambahkan tombol edit untuk setiap section
                             if (!empty($data['PermissionEdit'])) {
-                                $actions .= '<a href="' . route('pages.edit.section', ['page' => $pages->name, 'section' => $section]) . '" class="btn btn-sm btn-warning">
+                                $actions .= '<a href="' . route('pages.edit.section', ['page' => $pages->name, 'section' => $section]) . '" class="btn btn-sm btn-warning mb-2">
                                     <i class="fas fa-fw fa-edit"></i> Edit ' . ucfirst($section) . '
                                 </a> ';
                             }
