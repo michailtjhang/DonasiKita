@@ -134,10 +134,7 @@ class ReportController extends Controller
             ->with(['event', 'event.thumbnail', 'event.category', 'user'])
             ->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
                 $query->whereBetween(DB::raw('DATE(created_at)'), [$start_date, $end_date]);
-            })
-            ->when(!$start_date && !$end_date, function ($query) {
-                // Tidak menambahkan filter tanggal jika $start_date dan $end_date kosong
-            })        
+            })    
             ->get()
             ->map(function ($participant) {
                 return [
