@@ -63,12 +63,12 @@ class EventController extends Controller
 
                     // Tambahkan tombol show jika izin Show ada
                     if (!empty($data['PermissionShow'])) {
-                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary m-1"><i class="fas fa-fw fa-eye"></i></a>';
                     }
 
                     // Tambahkan tombol Edit jika izin Edit ada
                     if (!empty($data['PermissionEdit'])) {
-                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning m-1"><i class="fas fa-fw fa-edit"></i></a>';
                     }
 
                     return $buttons;

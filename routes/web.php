@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
         // routes/web.php
         Route::get('/api/visitor-stats', [DashboardController::class, 'getVisitorStats']);
+        Route::get('/api/donation-stats', [DashboardController::class, 'getDonationStats']);
 
         // Route laporan
         Route::prefix('reports')->group(function () {

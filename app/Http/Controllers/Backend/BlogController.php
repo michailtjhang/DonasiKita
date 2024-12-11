@@ -58,12 +58,12 @@ class BlogController extends Controller
 
                     // Tambahkan tombol show jika izin Show ada
                     if (!empty($data['PermissionShow'])) {
-                        $buttons .= '<a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                        $buttons .= '<a href="article/' . $blogs->id . '" class="btn btn-sm btn-primary m-1"><i class="fas fa-fw fa-eye"></i></a>';
                     }
 
                     // Tambahkan tombol Edit jika izin Edit ada
                     if (!empty($data['PermissionEdit'])) {
-                        $buttons .= '<a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                        $buttons .= '<a href="article/' . $blogs->id . '/edit" class="btn btn-sm btn-warning m-1"><i class="fas fa-fw fa-edit"></i></a>';
                     }
 
                     return $buttons;
