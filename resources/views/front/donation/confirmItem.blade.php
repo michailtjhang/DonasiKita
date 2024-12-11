@@ -63,6 +63,14 @@
             font-size: 16px;
             color: #0F3D56;
         }
+
+        /* update : ux writing */
+        .text-info {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f3d56 !important;
+            margin-top: 10px;
+        }
     </style>
 @endsection
 
@@ -86,6 +94,10 @@
                     <label for="nomor_resi" class="form-label">Masukan Nomor Resi</label>
                     <input type="text" id="nomor_resi" name="nomor_resi"
                         class="form-control @error('nomor_resi') is-invalid @enderror" placeholder="Masukkan Nomor Resi">
+                    <!-- update : ux writing -->
+                    <div class="text-info">*Masukkan nomor resi yang valid agar kami dapat melakukan pengecekan dengan
+                        mudah.*</div>
+
                     @error('nomor_resi')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -96,6 +108,14 @@
                     <label for="bukti_foto" class="form-label">Unggah Foto Resi</label>
                     <input type="file" id="bukti_foto" name="bukti_foto"
                         class="form-control @error('bukti_foto') is-invalid @enderror">
+                    <!-- update : ux writing -->
+                    <div class="text-info">*Unggah gambar bukti pembayaran yang jelas dan valid untuk mempermudah proses
+                        verifikasi.*</div>
+                    <div class="text-info">*Pastikan gambar tidak buram agar kami dapat memproses pembayaran Anda dengan
+                        cepat.*</div>
+                    <div class="text-info">*Unggah bukti pembayaran sesuai format yang diminta untuk menghindari penolakan.*
+                    </div>
+
                     @error('bukti_foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

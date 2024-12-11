@@ -37,7 +37,7 @@
             @include('_message')
 
             <div class="row mb-3">
-                <div class="col-md-3">
+                <div class="col-md-3 col-lg-3">
                     <!-- Date Range Picker -->
                     <input type="text" id="daterange_textbox" class="form-control" placeholder="Select Date Range"
                         autocomplete="off" readonly>

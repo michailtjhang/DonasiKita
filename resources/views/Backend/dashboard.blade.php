@@ -16,38 +16,42 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
 
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ $total_article }}</h3>
-                        <p>Total Articles</p>
+                        <h3>{{ $total_Partisipan }}</h3>
+                        <p>Total Partisipan Event</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="ion ion-calendar"></i>
                     </div>
-                    <a href="{{ route('article.index') }}" class="small-box-footer">View <i
+                    <a href="{{ route('reports.event.participants') }}" class="small-box-footer">View <i
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
 
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{ $total_event }}</h3>
-                        <p>Total Events</p>
+                        @if ($donationPercentageChange == 0)
+                            <h3>100%</h3>
+                        @else
+                            <h3>{{ $donationPercentageChange }}%</h3>
+                        @endif
+                        <p>Percentage Donation</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{{ route('category.index') }}" class="small-box-footer">View <i
+                    <a href="{{ route('reports.donations') }}" class="small-box-footer">View <i
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-6">
-                <div class="small-box bg-danger">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>{{ $total_user }}</h3>
                         <p>User Registrations</p>
@@ -61,11 +65,26 @@
 
             </div>
 
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ $currentMonthVisitors }}</h3>
+                        <p>Visitors</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="" class="small-box-footer">View <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                </div>
+
+            </div>
+
         </div>
 
         <!-- Cards Articles -->
         <div class="row">
-            <div class="col-lg-4 col-4">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -108,7 +127,7 @@
             </div>
 
             <!-- Cards Events -->
-            <div class="col-lg-4 col-4">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -150,7 +169,7 @@
             </div>
 
             <!-- Cards Donations -->
-            <div class="col-lg-4 col-4">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -190,10 +209,45 @@
                 </div>
             </div>
 
+            <!-- Cards Categories -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="mb-0">Latest Categories</h4>
+                            <a href="{{ route('category.index') }}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-arrow-right"></i> See All
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Name</th>
+                                    <th>Created At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($last_category as $row)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->name }}</td>
+                                        <td>{{ $row->created_at->format('d F Y') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- AREA CHART -->
+        <!-- AREA CHART - Visitors -->
         <div class="row">
+            <!-- Visitors Chart -->
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
@@ -204,16 +258,19 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <p class="d-flex flex-column">
-                                <span id="currentVisitors" class="text-bold text-lg">{{ $currentMonthVisitors }}</span>
+                                <span id="currentVisitors" class="text-bold text-lg">{{ $currentMonthVisitors }} People</span>
                                 <span>Visitors This Month</span>
                             </p>
                             <p class="ml-auto d-flex flex-column text-right">
                                 @if ($percentageChange > 0)
                                     <span class="text-success">
                                         <i class="fas fa-arrow-up"></i> {{ $percentageChange }}%
-                                    @else
-                                        <span class="text-danger">
-                                            <i class="fas fa-arrow-down"></i> {{ $percentageChange }}%
+                                    @elseif ($percentageChange == 0)
+                                        <span class="text-success">
+                                            <i class="fas fa-arrow-up"></i> 100%
+                                        @else
+                                            <span class="text-danger">
+                                                <i class="fas fa-arrow-down"></i> {{ $percentageChange }}%
                                 @endif
                                 </span>
                                 <span class="text-muted">Since last week</span>
@@ -225,12 +282,45 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Donations Chart -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h4>Donations</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                                <span id="currentDonations" class="text-bold text-lg">Rp. {{ number_format($currentMonthDonations, 0, ',', '.') }}</span>
+                                <span>Donations This Month</span>
+                            </p>
+                            <p class="ml-auto d-flex flex-column text-right">
+                                @if ($donationPercentageChange > 0)
+                                    <span class="text-success">
+                                        <i class="fas fa-arrow-up"></i> {{ $donationPercentageChange }}%
+                                    @elseif ($donationPercentageChange == 0)
+                                        <span class="text-success">
+                                            <i class="fas fa-arrow-up"></i> 100%
+                                        @else
+                                            <span class="text-danger">
+                                                <i class="fas fa-arrow-down"></i> {{ $donationPercentageChange }}%
+                                @endif
+                                </span>
+                                <span class="text-muted">Since last month</span>
+                            </p>
+                        </div>
+                        <div class="position-relative mb-4">
+                            <canvas id="donation-chart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.card-body -->
-
-
-    </div>
 @endsection
 
 @section('js')
@@ -240,17 +330,13 @@
     <script src="https://adminlte.io/themes/v3/plugins/chart.js/Chart.min.js"></script>
 
     <script>
-        //--------------
-        //- AREA CHART -
-        //--------------
-
-        // Get context with jQuery - using jQuery's .get() method.
         $(function() {
-            const ctx = $('#visitors-chart').get(0).getContext('2d');
+            // Chart for Visitors
+            const visitorsCtx = $('#visitors-chart').get(0).getContext('2d');
 
-            // Fetch data from the API
+            // Fetch data for Visitors
             $.ajax({
-                url: 'api/visitor-stats', // Ganti dengan URL API Anda
+                url: 'api/visitor-stats',
                 method: 'GET',
                 success: function(response) {
                     const currentMonth = response.currentMonth;
@@ -266,7 +352,6 @@
                     // Combine labels for consistent X-Axis
                     const labels = [...new Set([...lastLabels, ...currentLabels])];
 
-                    // Map last month and current month data to the combined labels
                     const lastMonthData = labels.map(label => {
                         const entry = lastMonth.find(item => item.date === label);
                         return entry ? entry.count : 0;
@@ -277,8 +362,8 @@
                         return entry ? entry.count : 0;
                     });
 
-                    // Create the chart
-                    new Chart(ctx, {
+                    // Create the chart for Visitors
+                    new Chart(visitorsCtx, {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -312,17 +397,81 @@
                                         display: false
                                     }
                                 },
-                                y: {
-                                    grid: {
-                                        display: false
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Chart for Donations
+            const donationsCtx = $('#donation-chart').get(0).getContext('2d');
+
+            // Fetch data for Donations
+            $.ajax({
+                url: 'api/donation-stats',
+                method: 'GET',
+                success: function(response) {
+                    const currentMonth = response.currentMonth;
+
+                    // Extract labels and datasets
+                    const currentLabels = currentMonth.map(item => item.date);
+                    const currentData = currentMonth.map(item => item.amount);
+
+                    // Combine labels for consistent X-Axis
+                    const labels = [...new Set([...currentLabels])];
+
+                    const currentMonthData = labels.map(label => {
+                        const entry = currentMonth.find(item => item.date === label);
+                        return entry ? entry.amount : 0;
+                    });
+
+                    // Prepare the chart data
+                    var barChartCanvas = $('#donation-chart').get(0).getContext('2d');
+                    var barChartData = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'This Month',
+                            data: currentMonthData,
+                            borderColor: 'rgba(60,188,141,0.8)',
+                            backgroundColor: 'rgba(60,188,141,0.4)',
+                            fill: true,
+                        }]
+                    };
+
+                    // Define the chart options
+                    var barChartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        datasetFill: false,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        },
+                        plugins: {
+                            legend: {
+                                display: true
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    // Format tooltips to show zero when it's zero
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.raw === 0 ? '0' : tooltipItem.raw;
                                     }
                                 }
                             }
                         }
+                    };
+
+                    // Create the bar chart
+                    new Chart(barChartCanvas, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: barChartOptions
                     });
-                },
-                error: function(error) {
-                    console.error('Error fetching visitor stats:', error);
                 }
             });
         });

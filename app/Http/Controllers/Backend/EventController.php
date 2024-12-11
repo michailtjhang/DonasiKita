@@ -54,8 +54,8 @@ class EventController extends Controller
                 })
                 ->addColumn('date', function ($events) {
                     // Format start dan end menjadi rentang tanggal
-                    $start = Carbon::parse($events->start)->format('d M Y h:i A');
-                    $end = Carbon::parse($events->end)->format('d M Y h:i A');
+                    $start = Carbon::parse($events->detailEvent->start)->format('d M Y h:i A');
+                    $end = Carbon::parse($events->detailEvent->end)->format('d M Y h:i A');
                     return "$start - $end";
                 })
                 ->addColumn('action', function ($events) use ($data) {
@@ -63,12 +63,12 @@ class EventController extends Controller
 
                     // Tambahkan tombol show jika izin Show ada
                     if (!empty($data['PermissionShow'])) {
-                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-eye"></i></a>';
+                        $buttons .= '<a href="event/' . $events->id . '" class="btn btn-sm btn-primary m-1"><i class="fas fa-fw fa-eye"></i></a>';
                     }
 
                     // Tambahkan tombol Edit jika izin Edit ada
                     if (!empty($data['PermissionEdit'])) {
-                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>';
+                        $buttons .= '<a href="event/' . $events->id . '/edit" class="btn btn-sm btn-warning m-1"><i class="fas fa-fw fa-edit"></i></a>';
                     }
 
                     return $buttons;
@@ -311,7 +311,7 @@ class EventController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'when_volunteer' => 'required|boolean',
-            'status' => 'required|string|in:ongoing,finished',
+            'status' => 'required|string|in:upcoming,ongoing,finished',
         ]);
 
         $event = Event::with('thumbnail', 'location', 'detailEvent')->findOrFail($id); // Ambil event dengan relasi terkait

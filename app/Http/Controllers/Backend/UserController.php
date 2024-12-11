@@ -40,18 +40,18 @@ class UserController extends Controller
 
                     // Tambahkan tombol Edit jika izin Edit ada
                     if (!empty($data['PermissionEdit'])) {
-                        $buttons .= '<a href="' . route('user.edit', $user->id) . '" class="btn btn-sm btn-warning">
+                        $buttons .= '<a href="' . route('user.edit', $user->id) . '" class="btn btn-sm btn-warning m-1">
                                     <i class="fas fa-edit"></i>
                                  </a>';
                     }
 
                     // Tambahkan tombol Delete jika izin Delete ada
                     if (!empty($data['PermissionDelete']) && $user->id !== Auth::user()->id) {
-                        $buttons .= '<button class="btn btn-sm btn-danger" onclick="confirmDelete(\'' . route('user.destroy', $user->id) . '\', \'' . $user->name . '\')">
+                        $buttons .= '<button class="btn btn-sm btn-danger m-1" onclick="confirmDelete(\'' . route('user.destroy', $user->id) . '\', \'' . $user->name . '\')">
                                     <i class="fas fa-trash"></i>
                                  </button>';
                     } else if ($user->id === Auth::user()->id && !empty($data['PermissionDelete'])) {
-                        $buttons .= '<button class="btn btn-sm btn-danger" disabled onclick="confirmDelete(\'' . route('user.destroy', $user->id) . '\', \'' . $user->name . '\')">
+                        $buttons .= '<button class="btn btn-sm btn-danger m-1" disabled onclick="confirmDelete(\'' . route('user.destroy', $user->id) . '\', \'' . $user->name . '\')">
                                     <i class="fas fa-trash"></i>
                                  </button>';
                     } 
