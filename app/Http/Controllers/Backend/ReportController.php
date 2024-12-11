@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Donation;
-use Illuminate\Support\Facades\Response;
+use App\Mail\DonationStatusEmail;
+use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
@@ -52,12 +53,19 @@ class ReportController extends Controller
 
     public function confirmDonation($id, Request $request)
     {
+        // Menemukan donasi berdasarkan ID
         $donation = Donation::findOrFail($id);
 
-        $donation->status = $request->status === 'confirmed' ? 'approved' : 'rejected';
+        // Menentukan status berdasarkan request
+        $status = $request->status === 'confirmed' ? 'approved' : 'rejected';
+        $donation->status = $status;
         $donation->save();
 
-        return response()->json(['message' => 'Donasi telah diperbarui!']);
+        // Mengirim email kepada donor
+        $donorName = $donation->name; // Asumsikan ada kolom donor_name
+        Mail::to($donation->email)->send(new DonationStatusEmail($status, $donorName));
+
+        return response()->json(['message' => 'Donasi telah diperbarui dan email telah dikirim!']);
     }
 
     public function donations()
@@ -117,7 +125,7 @@ class ReportController extends Controller
             ->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
                 // Hanya tambahkan filter tanggal jika $start_date dan $end_date tidak kosong
                 $query->whereBetween(DB::raw('DATE(created_at)'), [$start_date, $end_date]);
-            })     
+            })
             ->get()
             ->map(function ($donation) {
                 return [
@@ -134,7 +142,7 @@ class ReportController extends Controller
             ->with(['event', 'event.thumbnail', 'event.category', 'user'])
             ->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
                 $query->whereBetween(DB::raw('DATE(created_at)'), [$start_date, $end_date]);
-            })    
+            })
             ->get()
             ->map(function ($participant) {
                 return [
