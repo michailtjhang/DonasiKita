@@ -30,6 +30,13 @@
             margin-bottom: 15px;
         }
 
+        /* update : ux writing */
+        .text-info {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f3d56 !important;
+        }
+
         /* Info Section */
         .info-section {
             display: flex;
@@ -246,6 +253,9 @@
                 </div>
                 <input type="text" id="custom-nominal" name="amount" class="input-field"
                     placeholder="Input donasi minimal Rp 10.000" value="{{ old('amount') }}">
+                <!-- update : ux writing -->
+                <div class="text-info">*Masukkan nominal donasi Anda (minimal Rp. 10.000) untuk melanjutkan.*</div>
+
                 @error('amount')
                     <span class="text-danger" style="font-size: 14px;">{{ $message }}</span>
                 @enderror

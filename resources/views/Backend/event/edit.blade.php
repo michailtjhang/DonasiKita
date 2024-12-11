@@ -136,10 +136,10 @@
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
                             name="status">
                             @if ($event->status != 'ongoing')
-                                <option hidden>-- Upcoming --</option>
+                                <option value="upcoming">-- Upcoming --</option>
                                 <option value="ongoing">Ongoing</option>
                             @else
-                                <option hidden>-- Ongoing --</option>
+                                <option value="ongoing">-- Ongoing --</option>
                             @endif
                             <option value="finished">Finished</option>
                         </select>

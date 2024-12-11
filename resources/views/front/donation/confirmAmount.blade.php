@@ -67,6 +67,14 @@
             font-size: 16px;
             color: #0F3D56;
         }
+
+        /* update : ux writing */
+        .text-info {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f3d56 !important;
+            margin-top: 10px;
+        }
     </style>
 @endsection
 
@@ -91,6 +99,10 @@
                     <input type="text" id="nomor_resi" name="nama_rekening"
                         class="form-control @error('nama_rekening') is-invalid @enderror"
                         placeholder="Masukkan Nama Rekening">
+                    <!-- update : ux writing -->
+                    <div class="text-info">*Isi identitas pengirim dengan lengkap agar donasi dapat tercatat dengan baik.*
+                    </div>
+
                     @error('nama_rekening')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
