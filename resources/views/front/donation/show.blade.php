@@ -213,14 +213,20 @@
     <script>
         document.getElementById('donateNowBtn').addEventListener('click', () => {
             Swal.fire({
-                title: '<strong>Gabung Sebagai</strong>',
+                title: '<strong>Bentuk Donasi</strong>',
                 html: `
-                    <button id="barangBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-                        Donasi Barang
-                    </button>
-                    <button id="uangBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-                        Donasi Uang
-                    </button>
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                        <!-- Button Donasi Barang -->
+                        <button id="barangBtn" style="display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px; cursor: pointer;">
+                            <img src="/images/donate/donasi.svg" alt="Barang Icon" style="width: 20px; height: 20px;" />
+                            Donasi Barang
+                        </button>
+                        <!-- Button Donasi Uang -->
+                        <button id="uangBtn" style="display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px; cursor: pointer;">
+                            <img src="/images/donate/Money.svg" alt="Uang Icon" style="width: 20px; height: 20px;" />
+                            Donasi Uang
+                        </button>
+                    </div>
                 `,
                 showConfirmButton: false,
                 customClass: {
