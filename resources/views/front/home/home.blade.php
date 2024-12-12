@@ -128,11 +128,11 @@
                     <h3 class="fw-bold">Donation</h3>
                     <div class="d-flex flex-wrap align-items-center pb-2">
                         <!-- Paragraf -->
-                        <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-11">
+                        <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-10">
                             Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
                         </p>
                         <!-- Tombol -->
-                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-1"
+                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-2"
                             style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                             See More
                         </a>
@@ -155,7 +155,9 @@
                                         </div>
                                     @endif
                                     <div class="card-body px-4">
-                                        <p class="card-text">{{ $item->title }}</p>
+                                        <p class="card-text">{{ $item->title }}
+                                            {{ Str::limit(strip_tags($item->title), 10, '...') }}
+                                        </p>
                                         <p class="text-dark mb-2">
                                             <i class="fa fa-user"></i>
                                             {{ $item->towards ?? 'Anonim' }}
@@ -206,7 +208,7 @@
     <!-- Blog Upcoming Event -->
     <section id="upcoming-content" class="space-section container-fluid bg-skyline w-100">
         <div class="container">
-            <div class="row justify-content-between align-items-center mx-auto">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-6 d-flex justify-content-start">
                     <h1 class="bolder-text text-dark text-start">Join Our Upcoming Event</h1>
                 </div>
@@ -244,7 +246,9 @@
                                 </div>
 
                                 <div class="event-details event-card-spacer">
-                                    <p class="event-title mb-3 fw-bold">{{ $item->title }}</p>
+                                    <p class="event-title mb-3 fw-bold">{{ $item->title }}
+                                        {{ Str::limit(strip_tags($item->title), 10, '...') }}
+                                    </p>
                                     <div class="event-info d-flex card-desc mb-3 justify-content-between">
                                         <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} -
                                             {{ $item->detailEvent->end->format('H:i') }}</span>
@@ -295,36 +299,16 @@
                         <h3 class="fw-bold">Blog & Article</h3>
                         <div class="d-flex flex-wrap align-items-center pb-2">
                             <!-- Paragraf -->
-                            <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-11">
+                            <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-10">
                                 Jelajahi kisah inspiratif dan info seputar event donasi. Baca sekarang dan beri dukungan.
                             </p>
                             <!-- Tombol -->
-                            <a href="{{ route('blog') }}" class="btn rounded rounded-5  fw-light col-4 col-lg-1"
+                            <a href="{{ route('blog') }}" class="btn rounded rounded-5  fw-light col-4 col-lg-2"
                                 style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                                 See More
                             </a>
                         </div>
-                    </div>
-                    <style>
-                        .blog-date {
-                            position: absolute;
-                            top: 10px; /* Jarak dari atas */
-                            left: 10px; /* Jarak dari kiri */
-                            background-color: #26547c;
-                            color: white;
-                            padding: 5px 10px;
-                            border-radius: 5px;
-                            font-weight: bold;
-                            font-size: 14px; /* Sesuaikan ukuran font */
-                            z-index: 10; /* Pastikan elemen berada di atas gambar */
-                        }
-
-                        .position-relative {
-                            position: relative; /* Parent gambar harus relative */
-                            display: block; /* Pastikan elemen ini tidak kolaps */
-                        }
-                    </style>
-                    
+                    </div>                    
                     <div class="row">
                         @foreach ($last_articles as $item)
                         <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
@@ -336,13 +320,10 @@
                                             class="card-img-top img-fluid blog-img" alt="{{ $item->title }}"
                                             style="height: 200px !important; object-fit: cover !important;">
                                     </a>
-                                    @if ($item->detailEvent && $item->detailEvent->start)
-                                        <div class="blog-date">
-                                            {{ $item->detailEvent->start->format('d M Y') }}
-                                        </div>
-                                    @endif
-                                </div>
-                                
+                                    <div class="blog-date">
+                                        {{ $item->created_at->locale('id')->diffForHumans() ? $item->created_at->locale('id')->diffForHumans() : 'Tanggal tidak tersedia' }}
+                                    </div>                             
+                                </div>                                
                                 @else
                                 <a href="{{ route('blog.show', $item->slug) }}">
                                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
@@ -352,8 +333,9 @@
                                 </a>
                                 @endif                            
                                 <div class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
-                                    {{ $item->created_at->format('d M Y') }}
-                                    <b class="text-dark">{{ $item->title }}</b>
+                                    <b class="text-dark">{{ $item->title }}
+                                        {{ Str::limit(strip_tags($item->title), 16, '...') }}
+                                    </b>
                                     <p class="card-text text-primary text-small mt-3">
                                         {{ Str::limit(strip_tags($item->content), 100, '...') }}
                                     </p>

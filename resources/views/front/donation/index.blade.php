@@ -225,11 +225,11 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
+    <section class="hero-section2 w-100 align-items-center" style="background-image: url('/images/donation-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Donation</h1>
-            <p class="hero-subtitle2">Salurkan bantuan anda, dengan menyumbang mulai dari Rp1000</p>
+            <h1 class="hero-title2">Bergabung dalam Gerakan Kebaikan</h1>
+            <p class="hero-subtitle2">Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.</p>
         </div>
     </section>
     <!-- End Hero Section -->
@@ -253,20 +253,6 @@
     <!-- Cards Section -->
     <section id="donation-cards" class="mb-5">
         <div class="container">
-            <div class="container d-flex justify-content-between align-items-center">
-                <!-- Left Section: Title and Description -->
-                <div>
-                    <h1
-                        style="font-size: 25px; font-weight: 700; font-family: 'Poppins', sans-serif; color: #0F3D56; margin-bottom: 5px;">
-                        Bergabung dalam Gerakan Kebaikan
-                    </h1>
-                    <p
-                        style="font-size: 18px; font-weight: 400; font-family: 'Poppins', sans-serif; color: #0F3D56; line-height: 1.5;">
-                        Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.
-                    </p>
-                </div>
-            </div>
-
             <div class="row justify-content-center" id="card-container">
                 @forelse ($donations as $donation)
                     <a href="{{ route('donations.show', $donation->slug) }}" class="col-lg-4 col-md-6 mb-5">
@@ -281,7 +267,9 @@
                                 </div>
                             @endif
                             <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $donation->title }}</h5>
+                                <h5 class="card-title text-dark">{{ $donation->title }}
+                                    {{ Str::limit(strip_tags($donation->title), 10, '...') }}
+                                </h5>
                                 <p class="card-text text-muted">{{ $donation->towards }}</p>
                                 <div class="progress my-3">
                                     <div class="progress-bar" role="progressbar"
