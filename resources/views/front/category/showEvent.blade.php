@@ -260,33 +260,31 @@
 
                             <!-- Date -->
                             <div class="event-card-spacer">
-                                <div class="event-date ms-2 mt-3">
-                                    {{ $event->detailEvent->start->format('d M') ?? 'TBA' }}
+                                <div class="event-date">
+                                    {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }}
                                 </div>
                             </div>
 
                             <!-- Details -->
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
-                                <p class="event-title fw-bold">{{ $event->title }}</p>
+                                <p class="event-title fw-bold">{{ $event->title }}
+                                    {{ Str::limit(strip_tags($event->title), 8, '...') }}
+                                </p>
                                 <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
                                     <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
                                         {{ $event->detailEvent->end->format('H:i') }}</span>
                                     <span><i class="fa fa-location-dot"></i>
                                         {{ $event->location->name_location ?? 'TBA' }}</span>
                                 </div>
-                                <!-- Metadata -->
-                                <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
-                                    {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} |
-                                    {{ $event->category->name ?? 'Uncategorized' }} |
-                                    {{ $event->organizer ?? 'Anonymous' }}
-                                </p>
-
                                 <!-- Description -->
                                 <p class="card-text  card-desc text-extra-small   small">
-                                    {{ Str::limit(strip_tags($event->description), 100, '...') }}
+                                    {{ Str::limit(strip_tags($event->description), 60, '...') }}
                                 </p>
-
+                                <p class="card-text  text-extra-small  card-desc small mt-3">
+                                    <a href="" class="me-2 text-light"><i class="fas fa-grip-horizontal"></i> {{ $event->category->name }} </a>
+                                    <a href="" class="text-light"><i class="fa fa-user"></i> {{ $event->user->name ?? 'Anonim' }}</a>
+                                </p>
                                 <!-- Time and Location -->
 
                             </div>

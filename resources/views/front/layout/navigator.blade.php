@@ -1,5 +1,5 @@
 <!-- Navbar Section -->
-<section id="navbar" class="px-5">
+<section id="navbar" class="px-5 mb-5">
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3">
         <div class="container d-flex align-items-center">

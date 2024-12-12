@@ -74,21 +74,21 @@
         /* responsive */
         @media (max-width: 576px) {
             .text-heading-donation {
-                font-size: 18px;
+                font-size: 16px;
                 /* Cocok untuk layar HP kecil */
             }
         }
 
         @media (max-width: 768px) {
             .text-heading-donation {
-                font-size: 24px;
+                font-size: 20px;
                 /* Cocok untuk layar tablet atau HP besar */
             }
         }
 
         @media (max-width: 992px) {
             .text-heading-donation {
-                font-size: 30px;
+                font-size: 24px;
                 /* Cocok untuk layar laptop kecil */
             }
         }
@@ -159,14 +159,14 @@
 
                     <!-- Yayasan -->
                     <div class="py-4">
-                        <h1 class="fw-light text-heading-donation" style="color: #0f3d56;">
+                        <h1 class="fw-light text-heading-donation fs-2" style="color: #0f3d56;">
                             <i class="fa-solid fa-user "></i> {{ $donation->towards }}
                         </h1>
                     </div>
 
                     <!-- Deskripsi -->
-                    <div class="container">
-                        <div class="border rounded p-4">
+                    <div class="">
+                        <div class="">
                             <p class="h4">
                                 {{ $donation->description }}
                             </p>
@@ -176,8 +176,8 @@
 
                     <!-- Goals -->
                     <h6 class="fw-bold mt-4 h3">What They Needed (Goals)</h6>
-                    <div class="container-fluid">
-                        <div class="border rounded p-4">
+                    <div class="">
+                        <div class="">
                             {!! $donation->description_need !!}
                         </div>
                     </div>

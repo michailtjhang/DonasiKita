@@ -174,7 +174,7 @@
                     <!-- Card Body -->
                     <div class="card-body mx-lg-4" id="card-content">
                         <!-- Default Content -->
-                        <div class="container border rounded-3 pb-2 mb-5" id="event-schedule">
+                        <div class="containerpb-2 mb-5" id="event-schedule">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="fw-bold pt-2 pb-5 h3">Peserta</p>
                                 <span style="font-size: 0.9rem;"
@@ -206,8 +206,8 @@
                         </div>
 
                         @if ($event->detailEvent->requires_volunteers == true)
-                            <div class="container border rounded-3 " id="event-schedule2">
-                                <div class="d-flex justify-content-between align-items-center">
+                            <div class="container" id="event-schedule2">
+                                <div class="d-flex justify-content-between align-items-center mt-3">
                                     <p class="fw-bold pt-2 pb-5 h3">Peserta Volunteer</p>
                                     <span style="font-size: 0.9rem;"
                                         class="pt-5 mt-1">{{ $partisipan['sukarelawan']->count() }}/{{ $event->detailEvent->capacity_volunteers ?? 0 }}
@@ -284,10 +284,9 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <a href="{{ url('/donations') }}" class="btn btn-custom" id="button-event"
-                    style="font-size: 40px;">Donate</a>
+                <a href="{{ url('/donations') }}" class="btn btn-custom btn-primary" id="button-event" style="font-size: 24px;">Donate</a>
                 <a href="{{ url('/events') }}">
-                    <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
+                    <button class="btn btn-primary btn-custom" id="button-event" style="font-size: 24px;">Sukarelawan</button>
                 </a>
             </div>
         </div>

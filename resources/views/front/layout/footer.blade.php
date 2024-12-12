@@ -6,11 +6,11 @@
             <!-- Grid row -->
             <div class="row mt-3">
                 <!-- Grid column -->
-                <div class="col-md-12 col-lg-3 col-xl-3 mb-4 text-center">
+                <div class="col-md-12 col-lg-3 col-xl-3 mb-4">
                     <!-- Content -->
                     <img src="/images/logo-footer.svg" alt="" style="width: 100px;">
-                    <p>
-                        Bersama Kita Berbagi, <br> Bersama Kita Mengubah.
+                    <p class="mt-3">
+                        Bersama Kita Berbagi <br> Bersama Kita Mengubah.
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -110,7 +110,7 @@
             <!-- Grid row -->
         </div>
         <p class="text-small text-center text-secondary">
-            {{ $config['footer'] }}
+            {!! $config['footer'] !!}
         </p>
     </section>
     <!-- Section: Links  -->
