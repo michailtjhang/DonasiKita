@@ -196,32 +196,36 @@
                 @forelse ($articles as $article)
                     <div class="col-lg-4 col-md-6 mb-4 d-flex">
                         <div class="donation-card rounded rounded-5 ">
-                            <a href="{{ route('blog.show', $article->slug) }}">
-                                @if ($article->thumbnail && $article->thumbnail->id_file)
-                                    <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
-                                @elseif ($article->thumbnail && $article->thumbnail->file_path)
-                                    <img src="{{ $article->thumbnail->file_path }}"
-                                        class="card-img-top" alt="{{ $article->title }}">
-                                @else
-                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                        style="height: 200px;">
-                                        <span>No cover image</span>
+                            <div class="position-relative">
+                                <a href="{{ route('blog.show', $article->slug) }}">
+                                    @if ($article->thumbnail && $article->thumbnail->id_file)
+                                        <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
+                                            class="card-img-top img-fluid" />
+                                    @elseif ($article->thumbnail && $article->thumbnail->file_path)
+                                        <img src="{{ $article->thumbnail->file_path }}"
+                                            class="card-img-top" alt="{{ $article->title }}">
+                                    @else
+                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                            style="height: 200px;">
+                                            <span>No cover image</span>
+                                        </div>
+                                    @endif
+                                    <div class="blog-date">
+                                        {{ $article->created_at->locale('id')->diffForHumans() ? $article->created_at->locale('id')->diffForHumans() : 'Tanggal tidak tersedia' }}
                                     </div>
-                                @endif
-                            </a>
+                                </a>
+                            </div>
                             <div class="card-body">
-                                <h5 class="card-titlem b-3">
+                                <h6 class="card-titlem b-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
-                                        class="text-dark text-decoration-none">{{ $article->title }}</a>
-                                </h5>
+                                        class="text-dark text-decoration-none">{{ $article->title }}
+                                        {{ Str::limit(strip_tags($article->title), 10, '...') }}
+                                    </a>
+                                </h6>
                                 <p class="card-text mb-3">{{ Str::limit($article->category->description, 100, '...') }}</p>
-                                <div class="card-buttons mb-3">
-                                    <button>{{ $article->created_at->format('d M Y') }}</button>
-                                    <span class="divider">|</span>
-                                    <button>{{ $article->category->name }}</button>
-                                    <span class="divider">|</span>
-                                    <button>{{ $article->user->name }}</button>
+                                <div class="text-primary text-small mb-3">
+                                    <a href="" class="me-2"><i class="fas fa-grip-horizontal text-dark"></i> {{ $article->category->name }} </a>
+                                    <a href=""><i class="fa fa-user text-dark"></i> {{ $article->user->name ?? 'Anonim' }}</a>
                                 </div>
                                 <div class="d-flex w-100 justify-content-center mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
