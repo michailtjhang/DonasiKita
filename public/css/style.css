@@ -118,6 +118,11 @@ footer {
 }
 
 .btn-primary {
+    background-color: var(--primary-color);
+    border: 0px;
+}
+
+.btn-primary:hover {
     background-color: var(--aqua-color);
     border: 0px;
 }
@@ -381,6 +386,19 @@ footer {
     text-align: center;
     width: 100%; /* Memastikan tombol memenuhi lebar elemen induk */
 }
+
+.blog-btn:hover {
+    background-color: var(--dark-color);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px; /* Ubah padding agar lebih proporsional */
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    width: 100%; /* Memastikan tombol memenuhi lebar elemen induk */
+}
+
 .bg-footer {
     background: rgb(9, 38, 53) !important;
 }
