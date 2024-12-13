@@ -223,12 +223,7 @@
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center mt-4">
                         <div class="event-card rounded rounded-5">
                             <!-- Thumbnail -->
-                            @if ($event->thumbnail && $event->thumbnail->id_file)
-                                <a href="{{ route('events.show', $event->slug) }}">
-                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
-                                </a>
-                            @elseif ($event->thumbnail && $event->thumbnail->file_path)
+                            @if ($event->thumbnail && $event->thumbnail->file_path)
                                 <a href="{{ route('events.show', $event->slug) }}">
                                     <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
                                         class="img-fluid overflow-hidden">
@@ -250,7 +245,7 @@
                             <!-- Details -->
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
-                                <p class="event-title fw-bold">{{ $event->title }}
+                                <p class="event-title fw-bold">
                                     {{ Str::limit(strip_tags($event->title), 8, '...') }}
                                 </p>
                                 <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
@@ -265,7 +260,7 @@
                                 </p>
                                 <p class="card-text  text-extra-small  card-desc small mt-3">
                                     <a href="" class="me-2 text-light"><i class="fas fa-grip-horizontal"></i> {{ $event->category->name }} </a>
-                                    <a href="" class="text-light"><i class="fa fa-user"></i> {{ $event->user->name ?? 'Anonim' }}</a>
+                                    <a href="" class="text-light"><i class="fa fa-user"></i> {{ $event->organizer ?? 'Anonim' }}</a>
                                 </p>
 
 

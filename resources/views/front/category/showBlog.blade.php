@@ -1,4 +1,25 @@
 @extends('front.layout.app')
+
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <style>
         /* Adjust Card Styling */
@@ -17,8 +38,10 @@
         }
 
         .card-img-top {
-            height: 150px;
+            height: 180px;
             object-fit: cover;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
             width: 100%;
             border-bottom: 1px solid #e0e0e0;
         }
@@ -41,8 +64,9 @@
         .card-text {
             font-size: 0.875rem;
             text-align: left;
-            margin-bottom: 0.1rem;
-            max-height: 60px;
+            margin-bottom: 1rem;
+            min-height: 40px;
+            max-height: 80px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -194,20 +218,17 @@
             <p class="text-muted">Menampilkan artikel kategori "{{ ucfirst($categories) }}"</p>
             <div id="card-container" class="row">
                 @forelse ($articles as $article)
-                    <div class="col-lg-4 col-md-6 mb-4 d-flex">
-                        <div class="donation-card rounded rounded-5 ">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card rounded rounded-5 h-100 shadow-sm">
                             <div class="position-relative">
                                 <a href="{{ route('blog.show', $article->slug) }}">
-                                    @if ($article->thumbnail && $article->thumbnail->id_file)
-                                        <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
-                                            class="card-img-top img-fluid" />
-                                    @elseif ($article->thumbnail && $article->thumbnail->file_path)
+                                    @if ($article->thumbnail && $article->thumbnail->file_path)
                                         <img src="{{ $article->thumbnail->file_path }}"
-                                            class="card-img-top" alt="{{ $article->title }}">
+                                            class="card-img-top img-fluid blog-img" alt="{{ $article->title }}">
                                     @else
                                         <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                             style="height: 200px;">
-                                            <span>No cover image</span>
+                                            <span>No cover image available</span>
                                         </div>
                                     @endif
                                     <div class="blog-date">
@@ -215,19 +236,24 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="card-body">
-                                <h6 class="card-titlem b-3">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
-                                        class="text-dark text-decoration-none">{{ $article->title }}
-                                        {{ Str::limit(strip_tags($article->title), 10, '...') }}
+                                        class="text-dark text-decoration-none">
+                                        {{ Str::limit(strip_tags($article->title), 16, '...') }}
                                     </a>
-                                </h6>
-                                <p class="card-text mb-3">{{ Str::limit($article->category->description, 100, '...') }}</p>
+                                </h5>
+                                <p class="card-text text-muted mb-3">
+                                    {{ Str::limit(strip_tags($article->content), 100, '...') }}
+                                </p>
                                 <div class="text-primary text-small mb-3">
-                                    <a href="" class="me-2"><i class="fas fa-grip-horizontal text-dark"></i> {{ $article->category->name }} </a>
-                                    <a href=""><i class="fa fa-user text-dark"></i> {{ $article->user->name ?? 'Anonim' }}</a>
+                                    <a href="/blogs?category={{ $article->category->slug }}" class="me-2"><i
+                                            class="fas fa-grip-horizontal text-dark"></i> {{ $article->category->name }}
+                                    </a>
+                                    <a href=""><i class="fa fa-user text-dark"></i>
+                                        {{ $article->user->name ?? 'Anonim' }}</a>
                                 </div>
-                                <div class="d-flex w-100 justify-content-center mb-3">
+                                <div class="d-flex w-100 justify-content-center mt-2">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
                                         Read More
                                     </a>
@@ -253,6 +279,7 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     <script>
         console.log(@json($articles))

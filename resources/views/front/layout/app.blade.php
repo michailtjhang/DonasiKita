@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     @yield('seoMeta')
 
-    <title>{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'Laravel') }}</title>
+    @yield('csrfMeta')
+
+    <title>{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}</title>
     <link rel="stylesheet" href="/css/bootsrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <!-- ======================== Icon ========================= -->
@@ -22,12 +25,13 @@
 </head>
 
 <body class="bg-skyline">
+
     @include('front.layout.navigator')
+
     @yield('content')
+
     @include('front.layout.footer')
-    <a href="https://wa.me/yourphonenumber" target="_blank" class="whatsapp-icon">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    
     <script src="/js/bootsrap.min.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

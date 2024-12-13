@@ -1,4 +1,35 @@
 @extends('front.layout.app')
+
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ Str::limit(strip_tags($donation->content), 150, '...') }}">
+    <meta name="keywords"
+        content="{{ $keywords }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ Str::limit(strip_tags($donation->description), 150, '...') }}">
+    <meta property="og:image" content="{{ $donation->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta name="twitter:description"
+        content="{{ Str::limit(strip_tags($donation->description), 150, '...') }}">
+    <meta name="twitter:image" content="{{ $donation->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+@endsection
+
 @section('style')
     <style>
         .list-unstyled li {
@@ -94,6 +125,7 @@
         }
     </style>
 @endsection
+
 @section('content')
     <div class="space-section"></div>
 
@@ -209,6 +241,7 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     <script>
         document.getElementById('donateNowBtn').addEventListener('click', () => {

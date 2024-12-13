@@ -54,11 +54,15 @@ class DonationController extends Controller
             ->where('status', 'approved')
             ->count();
 
+        // Generate keywords dari deskripsi
+        $keywords = $this->generateKeywords($donation->description);
+
         return view('front.donation.show', [
             'page_title' => $donation->title,
             'donation' => $donation,
             'amoutDonated' => $amoutDonated,
-            'donatorCount' => $donatorCount
+            'donatorCount' => $donatorCount,
+            'keywords' => $keywords,
         ]);
     }
 
@@ -513,5 +517,32 @@ class DonationController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    function generateKeywords($description, $limit = 10)
+    {
+        // Hilangkan karakter spesial
+        $description = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', '', $description));
+
+        // Pisahkan kata-kata
+        $words = explode(' ', $description);
+
+        // Hilangkan kata-kata umum (stop words)
+        $stopWords = ['dan', 'atau', 'yang', 'di', 'ke', 'dari', 'ini', 'itu', 'adalah', 'sebagai', 'dengan', 'untuk'];
+        $filteredWords = array_filter($words, function ($word) use ($stopWords) {
+            return !in_array($word, $stopWords) && strlen($word) > 2;
+        });
+
+        // Hitung frekuensi kata
+        $wordCounts = array_count_values($filteredWords);
+
+        // Urutkan berdasarkan frekuensi
+        arsort($wordCounts);
+
+        // Ambil kata-kata paling sering muncul
+        $keywords = array_keys(array_slice($wordCounts, 0, $limit, true));
+
+        // Gabungkan menjadi string keyword
+        return implode(', ', $keywords);
     }
 }

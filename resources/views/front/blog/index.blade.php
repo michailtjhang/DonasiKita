@@ -1,5 +1,25 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
     <style>
@@ -249,7 +269,8 @@
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
             <h1 class="hero-title2">Temukan Kisah & Inspirasi Terbaru!</h1>
-            <p class="hero-subtitle2">"Dari aksi kemanusiaan hingga cerita penuh makna, temukan <br> artikel menarik yang menginspirasi langkah baikmu."</p>
+            <p class="hero-subtitle2">"Dari aksi kemanusiaan hingga cerita penuh makna, temukan <br> artikel menarik yang
+                menginspirasi langkah baikmu."</p>
         </div>
     </section>
 
@@ -283,7 +304,7 @@
                     </p>
                 </div>
                 <a href="{{ route('blogs.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
-                style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
+                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
             </div>
 
             <div class="row" id="card-container">
@@ -292,36 +313,36 @@
                         <div class="card rounded rounded-5 h-100 shadow-sm">
                             <div class="position-relative">
                                 <a href="{{ route('blog.show', $article->slug) }}">
-                                    @if ($article->thumbnail && $article->thumbnail->id_file)
-                                    <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid blog-img" />
-                                @elseif ($article->thumbnail && $article->thumbnail->file_path)
-                                    <img src="{{ $article->thumbnail->file_path }}"
-                                    class="card-img-top img-fluid blog-img" alt="{{ $article->title }}">
-                                @else
-                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                        style="height: 200px;">
-                                        <span>No cover image available</span>
+                                    @if ($article->thumbnail && $article->thumbnail->file_path)
+                                        <img src="{{ $article->thumbnail->file_path }}"
+                                            class="card-img-top img-fluid blog-img" alt="{{ $article->title }}">
+                                    @else
+                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                            style="height: 200px;">
+                                            <span>No cover image available</span>
+                                        </div>
+                                    @endif
+                                    <div class="blog-date">
+                                        {{ $article->created_at->locale('id')->diffForHumans() ? $article->created_at->locale('id')->diffForHumans() : 'Tanggal tidak tersedia' }}
                                     </div>
-                                @endif
-                                <div class="blog-date">
-                                    {{ $article->created_at->locale('id')->diffForHumans() ? $article->created_at->locale('id')->diffForHumans() : 'Tanggal tidak tersedia' }}
-                                </div>
                                 </a>
                             </div>
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <h5 class="card-title mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
                                         class="text-dark text-decoration-none">
-                                        {{ $article->title }}
                                         {{ Str::limit(strip_tags($article->title), 16, '...') }}
                                     </a>
                                 </h5>
-                                <p class="card-text text-muted mb-3">{{ Str::limit(strip_tags($article->content), 100, '...') }}
+                                <p class="card-text text-muted mb-3">
+                                    {{ Str::limit(strip_tags($article->content), 100, '...') }}
                                 </p>
                                 <div class="text-primary text-small mb-3">
-                                    <a href="/blogs?category={{ $article->category->slug }}" class="me-2"><i class="fas fa-grip-horizontal text-dark"></i> {{ $article->category->name }} </a>
-                                    <a href=""><i class="fa fa-user text-dark"></i> {{ $article->user->name ?? 'Anonim' }}</a>
+                                    <a href="/blogs?category={{ $article->category->slug }}" class="me-2"><i
+                                            class="fas fa-grip-horizontal text-dark"></i> {{ $article->category->name }}
+                                    </a>
+                                    <a href=""><i class="fa fa-user text-dark"></i>
+                                        {{ $article->user->name ?? 'Anonim' }}</a>
                                 </div>
                                 <div class="d-flex w-100 justify-content-center mt-2">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
@@ -354,7 +375,7 @@
 @section('script')
     <script>
         var data = @json($articles);
-        
+
         document.querySelectorAll('.pagination-dot').forEach(function(dot) {
             dot.addEventListener('click', function() {
                 var page = this.getAttribute('data-page');

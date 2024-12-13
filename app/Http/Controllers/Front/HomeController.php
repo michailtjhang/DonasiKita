@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Front;
 use App\Models\Blog;
 use App\Models\Need;
 use App\Models\Event;
-use App\Models\Config;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -24,6 +23,8 @@ class HomeController extends Controller
     }
     public function about()
     {
-        return view('front.about.about');
+        return view('front.about.about', [
+            'page_title' => 'About Us',
+        ]);
     }
 }

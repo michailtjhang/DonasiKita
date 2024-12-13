@@ -1,7 +1,39 @@
 @extends('front.layout.app')
-@section('seoMeta')
+
+@section('csrfMeta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
+
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ Str::limit(strip_tags($event->content), 150, '...') }}">
+    <meta name="keywords"
+        content="{{ $keywords }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ Str::limit(strip_tags($event->description), 150, '...') }}">
+    <meta property="og:image" content="{{ $event->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta name="twitter:description"
+        content="{{ Str::limit(strip_tags($event->description), 150, '...') }}">
+    <meta name="twitter:image" content="{{ $event->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+@endsection
+
 @section('style')
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -139,10 +171,7 @@
     <section id="detail-donation" class="container">
         <div class=" rounded-4 ">
             <p class="card-title fw-bold text-dark my-4 h1">{{ $event->title }}</p>
-            @if ($event->thumbnail && $event->thumbnail->id_file)
-                <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                    class="card-img-top img-fluid rounded rounded-3" />
-            @elseif ($event->thumbnail && $event->thumbnail->file_path)
+            @if ($event->thumbnail && $event->thumbnail->file_path)
                 <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
                     class="card-img-top img-fluid rounded rounded-3">
             @else
@@ -293,6 +322,7 @@
     </section>
     <!-- End Blog Invitatitation -->
 @endsection
+
 @section('script')
     <!-- Custom JS -->
     <script>

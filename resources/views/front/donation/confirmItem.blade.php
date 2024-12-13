@@ -173,7 +173,7 @@
                             confirmButtonColor: '#6CB6DE',
                         }).then(() => {
                             // Redirect ke halaman lain setelah sukses
-                            window.location.href = '{{ route('donations') }}';
+                            window.location.href = '{{ route('donations.show', $donation->slug) }}';
                         });
                     } else {
                         // Menangani error dari server
