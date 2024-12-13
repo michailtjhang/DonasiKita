@@ -49,12 +49,16 @@ class EventController extends Controller
             'peserta' => $partisipanPeserta,
             'sukarelawan' => $partisipanSukarelawan
         ];
+        
+        // Generate keywords dari deskripsi
+        $keywords = $this->generateKeywords($event->description);
 
         return view('front.event.show', [
             'page_title' => $event->title,
             'event' => $event,
             'partisipan' => $partisipan,
-            'userJoined' => $userJoined
+            'userJoined' => $userJoined,
+            'keywords' => $keywords
         ]);
     }
 
@@ -83,5 +87,32 @@ class EventController extends Controller
         ]);
 
         return response()->json(['success' => true, 'message' => "Anda telah bergabung sebagai $status!"]);
+    }
+
+    function generateKeywords($description, $limit = 10)
+    {
+        // Hilangkan karakter spesial
+        $description = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', '', $description));
+
+        // Pisahkan kata-kata
+        $words = explode(' ', $description);
+
+        // Hilangkan kata-kata umum (stop words)
+        $stopWords = ['dan', 'atau', 'yang', 'di', 'ke', 'dari', 'ini', 'itu', 'adalah', 'sebagai', 'dengan', 'untuk'];
+        $filteredWords = array_filter($words, function ($word) use ($stopWords) {
+            return !in_array($word, $stopWords) && strlen($word) > 2;
+        });
+
+        // Hitung frekuensi kata
+        $wordCounts = array_count_values($filteredWords);
+
+        // Urutkan berdasarkan frekuensi
+        arsort($wordCounts);
+
+        // Ambil kata-kata paling sering muncul
+        $keywords = array_keys(array_slice($wordCounts, 0, $limit, true));
+
+        // Gabungkan menjadi string keyword
+        return implode(', ', $keywords);
     }
 }

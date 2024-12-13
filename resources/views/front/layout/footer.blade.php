@@ -22,7 +22,7 @@
                         Navigation
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Home</a>
+                        <a href="{{ url('/') }}" class="text-reset">Home</a>
                     </p>
                     <p>
                         <a href="#!" class="text-reset">Program</a>
@@ -31,7 +31,7 @@
                         <a href="#!" class="text-reset">BelanjaLokal</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">About Us</a>
+                        <a href="{{ route('about') }}" class="text-reset">About Us</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -40,7 +40,7 @@
                 <div class="col-md-6 col-lg-3 col-xl-3 mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
-                    
+
                     <a href="" class="text-reset">
                         <p><i class="fas fa-envelope me-3"></i> {{ $config['email'] }}</p>
                     </a>
@@ -49,7 +49,7 @@
                         <div class="me-3">
                             <i class="fas fa-home"></i>
                         </div>
-                    
+
                         <!-- Kolom Kanan -->
                         <div>
                             <p class="mb-0">
@@ -57,7 +57,7 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     <a href="" class="text-reset py-3 my-3">
                         <p><i class="fas fa-phone me-3"></i> {{ $config['phone'] }}</p>
                     </a>
@@ -116,3 +116,9 @@
     <!-- Section: Links  -->
 </footer>
 <!-- Footer -->
+
+<!-- Whatsapp Icon -->
+<a href="https://wa.me/{{ $config['phone'] }}" target="_blank" class="whatsapp-icon">
+    <i class="fab fa-whatsapp"></i>
+</a>
+<!-- Whatsapp Icon -->

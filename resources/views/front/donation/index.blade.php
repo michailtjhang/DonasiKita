@@ -1,5 +1,25 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
     <style>
@@ -267,7 +287,7 @@
                                 </div>
                             @endif
                             <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $donation->title }}
+                                <h5 class="card-title text-dark">
                                     {{ Str::limit(strip_tags($donation->title), 10, '...') }}
                                 </h5>
                                 <p class="card-text text-muted">{{ $donation->towards }}</p>

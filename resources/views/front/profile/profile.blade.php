@@ -316,7 +316,7 @@
 
                                 <div class="event-details event-card-spacer">
                                     <p class="event-title mb-3 fw-bold">
-                                        {{ Str::limit(strip_tags($registration->event->title), 50, '...') }}
+                                        {{ Str::limit(strip_tags($registration->event->title), 25, '...') }}
                                         <!-- Limit awalnya 10 kalau mengikuti di home tapi kalau 10 itu detail judul tidak terlihat -->
                                     </p>
                                     <div class="event-info d-flex card-desc mb-3 justify-content-between">
@@ -336,7 +336,7 @@
                                             {{ $registration->event->category->name }}
                                         </a>
                                         <a href="" class="text-light"><i class="fa fa-user"></i>
-                                            {{ $registration->event->user->name ?? 'Anonim' }}
+                                            {{ $registration->event->organizer ?? 'Anonim' }}
                                         </a>
                                     </p>
                                 </div>
@@ -366,7 +366,7 @@
             <div class="container mx-auto bg-skyline pt-4 event-container" id="container-followed"
             style="padding: 0 !important;">
             <div class="row justify-content-center text-center py-0 my-0 gx-4" style="margin: 0 !important;">
-                <!-- @forelse ($futureEvents as $registration) -->
+                @forelse ($pastEvents as $registration)
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4">
                         <a href="{{ route('events.show', $registration->event->slug) }}" class="text-light">
                             <div class="event-card rounded rounded-5">
@@ -385,7 +385,7 @@
 
                                 <div class="event-details event-card-spacer">
                                     <p class="event-title mb-3 fw-bold">
-                                        {{ Str::limit(strip_tags($registration->event->title), 50, '...') }}
+                                        {{ Str::limit(strip_tags($registration->event->title), 25, '...') }}
                                         <!-- Limit awalnya 10 kalau mengikuti di home tapi kalau 10 itu detail judul tidak terlihat -->
                                     </p>
                                     <div class="event-info d-flex card-desc mb-3 justify-content-between">
@@ -405,7 +405,7 @@
                                             {{ $registration->event->category->name }}
                                         </a>
                                         <a href="" class="text-light"><i class="fa fa-user"></i>
-                                            {{ $registration->event->user->name ?? 'Anonim' }}
+                                            {{ $registration->event->organizer ?? 'Anonim' }}
                                         </a>
                                     </p>
                                 </div>

@@ -1,5 +1,35 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
+    <meta name="keywords"
+        content="{{ $keywords }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
+    <meta property="og:image" content="{{ $article->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta name="twitter:description"
+        content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
+    <meta name="twitter:image" content="{{ $article->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+@endsection
+
 @section('style')
     <style>
         :root {
@@ -479,9 +509,7 @@
                         <div class="card rounded rounded-3 px-3 py-1 mb-5">
                             <h2 class="bolder-text mb-4 text-dark">{{ $article->title }}</h2>
                             <div class="">
-                                @if ($article->thumbnail && $article->thumbnail->id_file)
-                                    <x-cld-image public-id="{{ $article->thumbnail->id_file }}" class="card-img-top img-fluid rounded rounded-3" />
-                                @elseif ($article->thumbnail && $article->thumbnail->file_path)
+                                @if ($article->thumbnail && $article->thumbnail->file_path)
                                     <img class="img img-fluid rounded rounded-3" src="{{ $article->thumbnail->file_path }}"
                                         alt="{{ $article->title }}">
                                 @else
@@ -500,7 +528,7 @@
                                         </p>
                                     </div>
                                 </div>
-    
+
                             </div>
                             <div class="text-dark fs-6">
                                 <p class="text-justify">
@@ -529,7 +557,7 @@
                         </div>
                         <div class="card rounded rounded-3 px-3 py-1 my-5">
                             <div class="th-comment-form text-dark fs-4" id="disqus_thread">
-    
+
                             </div>
                         </div>
                     </div>
@@ -549,9 +577,11 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <a href="{{ url('/donations') }}" class="btn btn-custom btn-primary" id="button-event" style="font-size: 24px;">Donate</a>
+                <a href="{{ url('/donations') }}" class="btn btn-custom btn-primary" id="button-event"
+                    style="font-size: 24px;">Donate</a>
                 <a href="{{ url('/events') }}">
-                    <button class="btn btn-primary btn-custom" id="button-event" style="font-size: 24px;">Sukarelawan</button>
+                    <button class="btn btn-primary btn-custom" id="button-event"
+                        style="font-size: 24px;">Sukarelawan</button>
                 </a>
             </div>
         </div>
