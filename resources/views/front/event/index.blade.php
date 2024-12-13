@@ -179,12 +179,11 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
+    <section class="hero-section2 w-100" style="background-image: url('/images/event-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Event</h1>
-            <p class="hero-subtitle2-event">Telusuri berbagai acara inspiratif yang mendukung misi kemanusiaan.<br>Setiap
-                partisipasi Anda adalah langkah kecil menuju perubahan besar.</p>
+            <h1 class="hero-title2">Ikuti Beragam Acara Kebaikan</h1>
+            <p class="hero-subtitle2-event">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
         </div>
     </section>
     <!-- End Hero Section -->
@@ -212,7 +211,6 @@
     <!-- Kategori Event -->
     <div class="container pt-2 mb-5">
         <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
-            <h2 class="fw-bold">Jelajahi dan Ikuti Beragam Acara Kebaikan</h2>
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
                 <a href="{{ route('events.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
@@ -244,32 +242,32 @@
 
                             <!-- Date -->
                             <div class="event-card-spacer">
-                                <div class="event-date ms-2 mt-3">
-                                    {{ $event->detailEvent->start->format('d M') ?? 'TBA' }}
+                                <div class="event-date">
+                                    {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }}
                                 </div>
                             </div>
 
                             <!-- Details -->
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
-                                <p class="event-title fw-bold">{{ $event->title }}</p>
+                                <p class="event-title fw-bold">{{ $event->title }}
+                                    {{ Str::limit(strip_tags($event->title), 8, '...') }}
+                                </p>
                                 <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
                                     <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
                                         {{ $event->detailEvent->end->format('H:i') }}</span>
                                     <span><i class="fa fa-location-dot"></i>
                                         {{ $event->location->name_location ?? 'TBA' }}</span>
                                 </div>
-                                <!-- Metadata -->
-                                <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
-                                    {{ $event->detailEvent->start->format('d M Y') ?? 'TBA' }} |
-                                    {{ $event->category->name ?? 'Uncategorized' }} |
-                                    {{ $event->organizer ?? 'Anonymous' }}
-                                </p>
-
                                 <!-- Description -->
                                 <p class="card-text  card-desc text-extra-small   small">
-                                    {{ Str::limit(strip_tags($event->description), 100, '...') }}
+                                    {{ Str::limit(strip_tags($event->description), 60, '...') }}
                                 </p>
+                                <p class="card-text  text-extra-small  card-desc small mt-3">
+                                    <a href="" class="me-2 text-light"><i class="fas fa-grip-horizontal"></i> {{ $event->category->name }} </a>
+                                    <a href="" class="text-light"><i class="fa fa-user"></i> {{ $event->user->name ?? 'Anonim' }}</a>
+                                </p>
+
 
                                 <!-- Time and Location -->
 

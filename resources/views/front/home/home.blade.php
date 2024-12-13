@@ -72,8 +72,8 @@
             <div class="carousel-inner">
                 @foreach ($content['hero_section']['carousel'] as $key => $item)
                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                        <div class="hero-section d-flex align-items-center justify-content-center text-center vh-100"
-                            style="background-image: url('{{ $item['image'] }}');">
+                        <div class="hero-section d-flex align-items-center justify-content-center text-center"
+                            style="background-image: url('{{ $item['image'] }}'); height:90vh;">
                             <div class="spacer-x">
                                 <h1 class="hero-title bolder-text display-4">{{ $item['title'] }}</h1>
                                 <p class="lead">{{ $item['subtitle'] }}</p>
@@ -128,11 +128,11 @@
                     <h3 class="fw-bold">Donation</h3>
                     <div class="d-flex flex-wrap align-items-center pb-2">
                         <!-- Paragraf -->
-                        <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-11">
+                        <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-10">
                             Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
                         </p>
                         <!-- Tombol -->
-                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-1"
+                        <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-2"
                             style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                             See More
                         </a>
@@ -155,7 +155,9 @@
                                         </div>
                                     @endif
                                     <div class="card-body px-4">
-                                        <p class="card-text">{{ $item->title }}</p>
+                                        <p class="card-text">{{ $item->title }}
+                                            {{ Str::limit(strip_tags($item->title), 10, '...') }}
+                                        </p>
                                         <p class="text-dark mb-2">
                                             <i class="fa fa-user"></i>
                                             {{ $item->towards ?? 'Anonim' }}
@@ -206,7 +208,7 @@
     <!-- Blog Upcoming Event -->
     <section id="upcoming-content" class="space-section container-fluid bg-skyline w-100">
         <div class="container">
-            <div class="row justify-content-between align-items-center mx-auto">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-6 d-flex justify-content-start">
                     <h1 class="bolder-text text-dark text-start">Join Our Upcoming Event</h1>
                 </div>
@@ -244,23 +246,22 @@
                                 </div>
 
                                 <div class="event-details event-card-spacer">
-                                    <p class="event-title mb-3 fw-bold">{{ $item->title }}</p>
+                                    <p class="event-title mb-3 fw-bold">{{ $item->title }}
+                                        {{ Str::limit(strip_tags($item->title), 10, '...') }}
+                                    </p>
                                     <div class="event-info d-flex card-desc mb-3 justify-content-between">
                                         <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} -
                                             {{ $item->detailEvent->end->format('H:i') }}</span>
                                         <span><i class="fa fa-location-dot"></i>
                                             {{ $item->location->name_location }}</span>
                                     </div>
-                                    <p class="card-text card-desc  fw-thin text-extra-small mb-3  p-0 m-0">
-                                        {{ $item->detailEvent->start->format('d M Y') }} | <a href="#"
-                                            class="text-decoration-none text-light">{{ $item->category->name }}</a>
-                                        |
-                                        {{ $item->user->name ?? 'Anonim' }}
-                                    </p>
                                     <p class="card-text  text-extra-small  card-desc  small">
                                         {{ Str::limit(strip_tags($item->description), 100, '...') }}
                                     </p>
-
+                                    <p class="card-text  text-extra-small  card-desc small mt-3">
+                                        <a href="" class="me-2 text-light"><i class="fas fa-grip-horizontal"></i> {{ $item->category->name }} </a>
+                                        <a href="" class="text-light"><i class="fa fa-user"></i> {{ $item->user->name ?? 'Anonim' }}</a>
+                                    </p>
                                 </div>
                             </div>
                         </a>
@@ -279,9 +280,9 @@
             <div class="banner-content">
                 <h1 style="font-size: 60px;">Your help means a lot</h1>
                 <p style="font-size: 41px;">donate or be a volunteer now!</p>
-                <a href="{{ url('/donations') }}" class="btn btn-custom" id="button-event" style="font-size: 30px;">Donate</a>
+                <a href="{{ url('/donations') }}" class="btn btn-custom btn-primary" id="button-event" style="font-size: 24px;">Donate</a>
                 <a href="{{ url('/events') }}">
-                    <button class="btn btn-custom" id="button-event" style="font-size: 30px;">Sukarelawan</button>
+                    <button class="btn btn-primary btn-custom" id="button-event" style="font-size: 24px;">Sukarelawan</button>
                 </a>
             </div>
         </div>
@@ -298,59 +299,61 @@
                         <h3 class="fw-bold">Blog & Article</h3>
                         <div class="d-flex flex-wrap align-items-center pb-2">
                             <!-- Paragraf -->
-                            <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-11">
+                            <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-10">
                                 Jelajahi kisah inspiratif dan info seputar event donasi. Baca sekarang dan beri dukungan.
                             </p>
                             <!-- Tombol -->
-                            <a href="{{ route('blog') }}" class="btn rounded rounded-5  fw-light col-4 col-lg-1"
+                            <a href="{{ route('blog') }}" class="btn rounded rounded-5  fw-light col-4 col-lg-2"
                                 style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
                                 See More
                             </a>
                         </div>
-                    </div>
-
-
+                    </div>                    
                     <div class="row">
                         @foreach ($last_articles as $item)
-                            <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3  ">
-                                <div class="card rounded rounded-5 overflow-hidden shadow w-100 d-flex flex-column">
-                                    {{-- acuan img blog --}}
-                                    @if ($item->thumbnail && $item->thumbnail->file_path)
-                                        <a href="{{ route('blog.show', $item->slug) }}">
-                                            <img src="{{ $item->thumbnail->file_path }}"
-                                                class="card-img-top img-fluid blog-img" alt="{{ $item->title }}"
-                                                style="height: 200px !important; object-fit: cover !important;">
+                        <div class="d-flex justify-content-center col-lg-4 col-md-6 col-12 mb-3">
+                            <div class="card rounded rounded-5 overflow-hidden shadow w-100 d-flex flex-column">
+                                @if ($item->thumbnail && $item->thumbnail->file_path)
+                                <div class="position-relative">
+                                    <a href="{{ route('blog.show', $item->slug) }}">
+                                        <img src="{{ $item->thumbnail->file_path }}"
+                                            class="card-img-top img-fluid blog-img" alt="{{ $item->title }}"
+                                            style="height: 200px !important; object-fit: cover !important;">
+                                    </a>
+                                    <div class="blog-date">
+                                        {{ $item->created_at->locale('id')->diffForHumans() ? $item->created_at->locale('id')->diffForHumans() : 'Tanggal tidak tersedia' }}
+                                    </div>                             
+                                </div>                                
+                                @else
+                                <a href="{{ route('blog.show', $item->slug) }}">
+                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                        style="height: 200px;">
+                                        <span>No cover image</span>
+                                    </div>
+                                </a>
+                                @endif                            
+                                <div class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
+                                    <b class="text-dark">{{ $item->title }}
+                                        {{ Str::limit(strip_tags($item->title), 16, '...') }}
+                                    </b>
+                                    <p class="card-text text-primary text-small mt-3">
+                                        {{ Str::limit(strip_tags($item->content), 100, '...') }}
+                                    </p>
+                                    <div class="text-primary text-small mb-3">
+                                        <a href="" class="me-2"><i class="fas fa-grip-horizontal text-dark"></i> {{ $item->category->name }} </a>
+                                        <a href=""><i class="fa fa-user text-dark"></i> {{ $item->user->name ?? 'Anonim' }}</a>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn w-100">
+                                            Read More
                                         </a>
-                                    @else
-                                        <a href="{{ route('blog.show', $item->slug) }}">
-                                            <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                                style="height: 200px;">
-                                                <span>No cover image</span>
-                                            </div>
-                                        </a>
-                                    @endif
-                                    <div
-                                        class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
-                                        <b class="text-dark">{{ $item->title }}</b>
-                                        <p class="card-text text-primary text-small mt-3">
-                                            {{ Str::limit(strip_tags($item->content), 100, '...') }}
-                                        </p>
-                                        <div class="text-primary text-small">
-
-                                            {{ $item->created_at->format('d M Y') }} | {{ $item->category->name }}
-                                            | {{ $item->user->name ?? 'Anonim' }}</p>
-                                        </div>
-                                        <div class="d-flex w-100">
-                                            <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn w-100">
-                                                Read More
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
-
                     </div>
+                    
                 </div>
             </div>
         </div>

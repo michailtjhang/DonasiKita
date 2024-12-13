@@ -73,6 +73,12 @@
             color: #0f3d56 !important;
             margin-top: 10px;
         }
+        .text-info1 {
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f3d56 !important;
+            margin-top: 6px;
+        }
     </style>
 @endsection
 
@@ -130,6 +136,7 @@
                         placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
                     <!-- update : ux writing -->
                     <div class="text-info">*Pastikan deskripsi barang sesuai untuk mempermudah pengelolaan kami.*</div>
+                    <div class="text-info1">*Masih bingung? Hubungi kami untuk panduan donasi barang dan informasi lebih lengkap!*</div>
 
                     @error('deskripsi_barang')
                         <div class="invalid-feedback">{{ $message }}</div>

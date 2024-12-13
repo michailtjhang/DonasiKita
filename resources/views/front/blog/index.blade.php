@@ -245,12 +245,11 @@
 @endsection
 
 @section('content')
-    <section class="hero-section2 w-100" style="background-image: url('/images/hero-bg-2.svg');">
+    <section class="hero-section2 w-100" style="background-image: url('/images/blog-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Blog</h1>
-            <p class="hero-subtitle2">Temukan artikel inspiratif, tips, dan informasi terbaru tentang aksi kemanusiaan,
-                lingkungan, kesehatan, dan hiburan yang mendukung kegiatan penggalangan dana.</p>
+            <h1 class="hero-title2">Temukan Kisah & Inspirasi Terbaru!</h1>
+            <p class="hero-subtitle2">"Dari aksi kemanusiaan hingga cerita penuh makna, temukan <br> artikel menarik yang menginspirasi langkah baikmu."</p>
         </div>
     </section>
 
@@ -276,28 +275,24 @@
 
     <section id="blog-cards" class="my-5">
         <div class="container">
-            <div class="container d-flex justify-content-between align-items-center my-4">
+            <div class="d-flex justify-content-between align-items-center my-4">
                 <div>
-                    <h1
-                        style="font-size: 25px; font-weight: 700; font-family: 'Poppins', sans-serif; color: #0F3D56; margin-bottom: 5px;">
-                        Blog
-                    </h1>
                     <p
                         style="font-size: 18px; font-weight: 400; font-family: 'Poppins', sans-serif; color: #0F3D56; line-height: 1.5;">
                         Temukan berbagai Blog menarik yang mendukung misi kemanusiaan dan edukasi tentang bencana.
                     </p>
                 </div>
-                <a href="{{ route('blogs.categories') }}" class="see-all-categories" id="categoriesButton">
-                    See All Categories
-                </a>
+                <a href="{{ route('blogs.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
+                style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
             </div>
 
             <div class="row" id="card-container">
                 @forelse ($articles as $article)
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card rounded rounded-5 h-100 shadow-sm">
-                            <a href="{{ route('blog.show', $article->slug) }}">
-                                @if ($article->thumbnail && $article->thumbnail->id_file)
+                            <div class="position-relative">
+                                <a href="{{ route('blog.show', $article->slug) }}">
+                                    @if ($article->thumbnail && $article->thumbnail->id_file)
                                     <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
                                         class="card-img-top img-fluid blog-img" />
                                 @elseif ($article->thumbnail && $article->thumbnail->file_path)
@@ -309,26 +304,24 @@
                                         <span>No cover image available</span>
                                     </div>
                                 @endif
-                            </a>
+                                <div class="blog-date">
+                                    {{ $article->created_at->locale('id')->diffForHumans() ? $article->created_at->locale('id')->diffForHumans() : 'Tanggal tidak tersedia' }}
+                                </div>
+                                </a>
+                            </div>
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <h5 class="card-title mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
                                         class="text-dark text-decoration-none">
                                         {{ $article->title }}
+                                        {{ Str::limit(strip_tags($article->title), 16, '...') }}
                                     </a>
                                 </h5>
                                 <p class="card-text text-muted mb-3">{{ Str::limit(strip_tags($article->content), 100, '...') }}
                                 </p>
-                                <div class="d-flex flex-wrap  align-items-center mt-2">
-                                    <small
-                                        class="text-muted">{{ $article->created_at->locale('id')->diffForHumans() }}</small>
-                                    <span class="text-muted mx-1">|</span>
-                                    <a href="/blogs?category={{ $article->category->slug }}"
-                                        class="text-muted text-decoration-none">
-                                        {{ $article->category->name }}
-                                    </a>
-                                    <span class="text-muted mx-1">|</span>
-                                    <small class="text-muted">Oleh {{ $article->user->name ?? 'Anonim' }}</small>
+                                <div class="text-primary text-small mb-3">
+                                    <a href="/blogs?category={{ $article->category->slug }}" class="me-2"><i class="fas fa-grip-horizontal text-dark"></i> {{ $article->category->name }} </a>
+                                    <a href=""><i class="fa fa-user text-dark"></i> {{ $article->user->name ?? 'Anonim' }}</a>
                                 </div>
                                 <div class="d-flex w-100 justify-content-center mt-2">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">

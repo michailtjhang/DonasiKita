@@ -135,7 +135,7 @@
 @endsection
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section2 w-100 space-section" style="background-image: url('/images/hero-bg-2.svg');">
+<section class="hero-section2 w-100 space-section align-items-center" style="background-image: url('/images/about-hero.svg');">
     <div class="hero-overlay2"></div>
     <div class="hero-content2 text-left px-5 ms-5">
         <h1 class="hero-title2">{{ $content['hero_section']['title'] }}</h1>
@@ -143,6 +143,7 @@
     </div>
 </section>
 <!-- End Hero Section -->
+
 <!-- Company Section -->
 <section id="about-company" class="space-section">
     <div class="container-fluid py-5 justify-content-center text-left bg-skyline">
@@ -210,9 +211,9 @@
         <div class="banner-content">
             <h1 style="font-size: 60px;">Your help means a lot</h1>
             <p style="font-size: 41px;">donate or be a volunteer now!</p>
-            <a href="{{url('/donations')}}" class="btn btn-custom" id="button-event" style="font-size: 40px;">Donate</a>
-            <a href="{{url('/events')}}">
-                <button class="btn btn-custom" id="button-event" style="font-size: 40px;">Sukarelawan</button>
+            <a href="{{ url('/donations') }}" class="btn btn-custom btn-primary" id="button-event" style="font-size: 24px;">Donate</a>
+            <a href="{{ url('/events') }}">
+                <button class="btn btn-primary btn-custom" id="button-event" style="font-size: 24px;">Sukarelawan</button>
             </a>
         </div>
     </div>
