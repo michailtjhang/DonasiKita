@@ -72,7 +72,7 @@ DonasiKita adalah sebuah
 Projek Virtual Internship MSIB7 - Group 3 (Charity Platform)
 
 - **[Backend - Michail](https://github.com/michailtjhang)**
-- **[Frontend - Arshada Riza Putri](https://github.com/arshandariza)**
+- **[Frontend - Arshanda Riza Putri](https://github.com/arshandariza)**
 - **[Frontend - Christian Putri](https://github.com/christianptrii)**
 - **[UI/UX - ]()**
 - **[UI/UX - ]()**

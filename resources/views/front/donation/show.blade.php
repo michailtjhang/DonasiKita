@@ -1,4 +1,35 @@
 @extends('front.layout.app')
+
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ Str::limit(strip_tags($donation->content), 150, '...') }}">
+    <meta name="keywords"
+        content="{{ $keywords }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ Str::limit(strip_tags($donation->description), 150, '...') }}">
+    <meta property="og:image" content="{{ $donation->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta name="twitter:description"
+        content="{{ Str::limit(strip_tags($donation->description), 150, '...') }}">
+    <meta name="twitter:image" content="{{ $donation->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+@endsection
+
 @section('style')
     <style>
         .list-unstyled li {
@@ -94,6 +125,7 @@
         }
     </style>
 @endsection
+
 @section('content')
     <div class="space-section"></div>
 
@@ -209,18 +241,25 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     <script>
         document.getElementById('donateNowBtn').addEventListener('click', () => {
             Swal.fire({
-                title: '<strong>Gabung Sebagai</strong>',
+                title: '<strong>Bentuk Donasi</strong>',
                 html: `
-                    <button id="barangBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-                        Donasi Barang
-                    </button>
-                    <button id="uangBtn" style="width: 100%; margin: 5px 0; padding: 10px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px;">
-                        Donasi Uang
-                    </button>
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                        <!-- Button Donasi Barang -->
+                        <button id="barangBtn" style="display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px; cursor: pointer;">
+                            <img src="/images/donate/donasi.svg" alt="Barang Icon" style="width: 20px; height: 20px;" />
+                            Donasi Barang
+                        </button>
+                        <!-- Button Donasi Uang -->
+                        <button id="uangBtn" style="display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px; cursor: pointer;">
+                            <img src="/images/donate/Money.svg" alt="Uang Icon" style="width: 20px; height: 20px;" />
+                            Donasi Uang
+                        </button>
+                    </div>
                 `,
                 showConfirmButton: false,
                 customClass: {

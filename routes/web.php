@@ -20,6 +20,23 @@ use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
 
+// Route Auth
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'auth_login']);
+
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'auth_register']);
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route Email
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('throttle:6,1')->name('verification.resend');
+});
+
+// Route Landing Page
 Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -56,54 +73,10 @@ Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
     Route::post('/donations/{slug}/confirm-amount/{temp_id}', [FrontDonationController::class, 'confirmAmount'])->name('donations.confirm-amount');
     Route::post('/donations/{slug}/confirm-item/{temp_id}', [FrontDonationController::class, 'confirmItem'])->name('donations.confirm-item');
 
-    Route::resource('profile', ProfileController::class);
+    Route::resource('profile', ProfileController::class)->only(['index', 'update', 'destroy']);
 });
 
-Route::get('/donasibarang_login', function () {
-    return view('front.payment.donasibarang_login');
-});
-
-Route::get('/donasibarang_guest', function () {
-    return view('front.payment.donasibarang_guest');
-});
-
-Route::get('/confirmationbarang', function () {
-    return view('front.payment.confirmationbarang');
-});
-
-Route::get('/transfer_guest', function () {
-    return view('front.payment_transfer.transfer_guest');
-});
-
-Route::get('/transfer_login', function () {
-    return view('front.payment_transfer.transfer_login');
-});
-
-Route::get('/confirmationtransfer', function () {
-    return view('front.payment_transfer.confirmationtransfer');
-});
-
-Route::post('/confirmationbarang', function () {
-    // Tambahkan logika backend untuk menangani data yang dikirim (opsional)
-    return response()->json(['message' => 'Form submitted successfully!']);
-})->name('confirmation.barang.submit');
-
-Route::post('/donasi-barang-submit', [DonationController::class, 'store'])->name('donasi.barang.submit');
-
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'auth_login']);
-
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/register', [AuthController::class, 'auth_register']);
-
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
-    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('throttle:6,1')->name('verification.resend');
-});
-
+// Route Admin CMS
 Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
     Route::prefix('admin')->group(function () {
