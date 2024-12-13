@@ -181,7 +181,7 @@
                                 <div class="card rounded rounded-5 overflow-hidden shadow card-item">
                                     @if ($item->thumbnail && $item->thumbnail->file_path)
                                         <img src="{{ $item->thumbnail->file_path }}" class="card-img-top img-fluid blog-img"
-                                            alt="..." style="object-fit: cover !important; height: 200px !important;">
+                                            alt="..." style="object-fit: cover !important; height: 200px !important; width: 500px !important">
                                     @else
                                         <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                             style="height: 160px;">
@@ -190,7 +190,7 @@
                                     @endif
                                     <div class="card-body px-4">
                                         <p class="card-text">
-                                            {{ Str::limit(strip_tags($item->title), 25, '...') }}
+                                            {{ Str::limit(strip_tags($item->title), 35, '...') }}
                                         </p>
                                         <p class="text-dark mb-2">
                                             <i class="fa fa-user"></i>
@@ -257,9 +257,9 @@
 
 
 
-        <div class="container mx-auto bg-skyline pt-4 event-container" id="container-upcoming"
+        <div class="container mx-auto bg-skyline pt-4 " id="container-upcoming"
             style="padding: 0 !important;">
-            <div class="row justify-content-center text-center py-0 my-0 gx-4" style="margin: 0 !important;">
+            <div class="row justify-content-start text-center py-0 my-0 gx-4" style="margin: 0 !important;">
 
                 @foreach ($last_events as $item)
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 ">
@@ -281,7 +281,7 @@
 
                                 <div class="event-details event-card-spacer">
                                     <p class="event-title mb-3 fw-bold">
-                                        {{ Str::limit(strip_tags($item->title), 10, '...') }}
+                                        {{ Str::limit(strip_tags($item->title), 55, '...') }}
                                     </p>
                                     <div class="event-info d-flex card-desc mb-3 justify-content-between">
                                         <span><i class="fa fa-clock"></i> {{ $item->detailEvent->start->format('H:i') }} -
@@ -373,7 +373,7 @@
                                     <div
                                         class="card-body blog-details-container d-flex flex-column justify-content-between px-4">
                                         <b class="text-dark">
-                                            {{ Str::limit(strip_tags($item->title), 16, '...') }}
+                                            {{ Str::limit(strip_tags($item->title), 35, '...') }}
                                         </b>
                                         <p class="card-text text-primary text-small mt-3">
                                             {{ Str::limit(strip_tags($item->content), 100, '...') }}
