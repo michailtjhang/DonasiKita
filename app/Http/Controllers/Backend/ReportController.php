@@ -38,6 +38,9 @@ class ReportController extends Controller
                 ->addColumn('proof', function ($donations) {
                     return $donations->receipt->cloudinary_url ?? ''; // Asumsikan kolom `proof_url` menyimpan URL gambar
                 })
+                ->addColumn('donation', function ($donations) {
+                    return $donations->amount ? 'Rp. ' . number_format($donations->amount, 0, ',', '.') : $donations->description_item;
+                })
                 ->addColumn('confirmation', function ($donations) {
                     return ''; // Placeholder untuk kolom konfirmasi
                 })
@@ -64,7 +67,11 @@ class ReportController extends Controller
         // Mengirim email kepada donor
         $donorName = $donation->name; // Asumsikan ada kolom donor_name
         Mail::to($donation->email)->send(new DonationStatusEmail($status, $donorName));
-
+        
+        if ($status === 'rejected') {
+            $donation->delete();
+        }
+        
         return response()->json(['message' => 'Donasi telah diperbarui dan email telah dikirim!']);
     }
 
