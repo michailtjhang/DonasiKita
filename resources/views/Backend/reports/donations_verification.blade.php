@@ -41,6 +41,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Type Donation</th>
+                            <th>Detail Donation</th>
                             <th>Bukti</th>
                             <th>Konfirmasi</th>
                         </tr>
@@ -52,6 +53,7 @@
                             <th><input type="text" placeholder="Search Email" class="form-control form-control-sm"></th>
                             <th><input type="text" placeholder="Search Type Donation"
                                     class="form-control form-control-sm"></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -133,6 +135,10 @@
                     {
                         data: 'type_donation',
                         name: 'type_donation'
+                    },
+                    {
+                        data: 'donation',
+                        name: 'donation'
                     },
                     {
                         data: 'proof',

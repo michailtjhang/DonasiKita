@@ -163,6 +163,11 @@ class BlogController extends Controller
             $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
             $publicId = $cloudinaryResponse->getPublicId();
 
+            // Langsung hapus file sementara setelah upload
+            if (file_exists($webpPath)) {
+                unlink($webpPath); // Hapus file
+            }
+
             // Simpan data Thumbnail ke tabel Thumbnail
             Thumbnail::create([
                 'file_path' => $cloudinaryUrl,
@@ -275,6 +280,11 @@ class BlogController extends Controller
 
                 $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
                 $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
 
                 // Hapus file lama dari Cloudinary jika ada
                 if (!empty($blog->thumbnail->id_file)) {
