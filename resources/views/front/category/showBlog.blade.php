@@ -240,7 +240,7 @@
                                 <h5 class="card-title mb-3">
                                     <a href="{{ route('blog.show', $article->slug) }}"
                                         class="text-dark text-decoration-none">
-                                        {{ Str::limit(strip_tags($article->title), 16, '...') }}
+                                        {{ Str::limit(strip_tags($article->title), 25, '...') }}
                                     </a>
                                 </h5>
                                 <p class="card-text text-muted mb-3">
