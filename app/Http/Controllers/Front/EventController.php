@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\EventRegistration;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventRegistrationNotification;
 
 class EventController extends Controller
 {
@@ -49,7 +51,7 @@ class EventController extends Controller
             'peserta' => $partisipanPeserta,
             'sukarelawan' => $partisipanSukarelawan
         ];
-        
+
         // Generate keywords dari deskripsi
         $keywords = $this->generateKeywords($event->description);
 
@@ -79,12 +81,14 @@ class EventController extends Controller
         } while (EventRegistration::where('registration_id', $registrationId)->exists()); // Pastikan unik
 
         // Contoh penyimpanan ke tabel "event_participants"
-        EventRegistration::create([
+        $registration = EventRegistration::create([
             'registration_id' => $registrationId,
             'event_id' => $eventId,
             'user_id' => auth()->id(),
             'status' => $status,
         ]);
+        // Kirim email notifikasi
+        Mail::to(auth()->user()->email)->send(new EventRegistrationNotification($registration));
 
         return response()->json(['success' => true, 'message' => "Anda telah bergabung sebagai $status!"]);
     }
