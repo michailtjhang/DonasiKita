@@ -92,21 +92,11 @@
                             </div>
 
                             <!-- Existing Image -->
-                            @if ($donation->thumbnail && $donation->thumbnail->id_file)
-                                <div class="col-6">
-                                    <span class="d-block mb-2 text-muted">Existing:</span>
-                                    <x-cld-image public-id="{{ $donation->thumbnail->id_file }}"
-                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                        style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
-                                </div>
-                            @elseif ($donation->thumbnail && $donation->thumbnail->file_path)
-                                <div class="col-6">
-                                    <span class="d-block mb-2 text-muted">Existing:</span>
-                                    <img src="{{ asset('storage/cover/' . $donation->thumbnail->file_path) }}"
-                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                        style="max-height: 150px; max-width: 100%; object-fit: cover;">
-                                </div>
-                            @endif
+                            <div class="col-6">
+                                <span class="d-block mb-2 text-muted">Existing:</span>
+                                <img src="{{ $donation->thumbnail->file_path }}" class="img-thumbnail shadow-sm border"
+                                    alt="Existing Image" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                            </div>
                         </div>
                     </div>
 
@@ -139,7 +129,7 @@
                         @enderror
 
                     </div>
-                    
+
                     <div class="form-group col-6">
                         <label for="description">Description Towards</label>
                         <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description', $donation->description) !!}</textarea>
@@ -155,8 +145,7 @@
 
                 <div class="form-group">
                     <label for="description_need">Description Towards Needs</label>
-                    <textarea id="summernote" name="description_need"
-                        class="form-control @error('description_need') is-invalid @enderror">
+                    <textarea id="summernote" name="description_need" class="form-control @error('description_need') is-invalid @enderror">
                         {!! old('description_need', $donation->description_need) !!}
                     </textarea>
 
@@ -167,7 +156,7 @@
                     @enderror
 
                 </div>
-                
+
                 <div class="col d-flex justify-content-between align-items-center mt-3">
                     <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
                     <button type="submit" class="btn btn-success">Save</button>
