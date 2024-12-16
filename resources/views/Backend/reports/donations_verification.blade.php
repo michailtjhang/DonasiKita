@@ -155,7 +155,9 @@
                         name: 'confirmation',
                         orderable: false,
                         render: function(data, type, row) {
-                            return `<button class="btn btn-success btn-sm confirm-donation" data-id="${row.id}">
+                            const typeDonation = row.amount === null ? 'item' :
+                            'amount'; // Tentukan tipe donasi
+                            return `<button class="btn btn-success btn-sm confirm-donation" data-id="${row.id}" data-type="${typeDonation}">
                         Konfirmasi
                     </button>`;
                         }
@@ -177,6 +179,7 @@
         });
     </script>
 
+    <!-- Fungsi untuk menangani ekspor PDF dan Excel -->
     <script>
         $(document).ready(function() {
             // Fungsi untuk menangani ekspor PDF
@@ -203,59 +206,135 @@
         });
     </script>
 
+    <!-- Modal untuk menampilkan bukti donasi dan konfirmasi -->
     <script>
+        // Fungsi untuk menampilkan modal
         $(document).on('click', '.view-proof', function() {
             const proofImageUrl = $(this).data('proof');
             $('#proofImage').attr('src', proofImageUrl);
             $('#proofModal').modal('show'); // Menampilkan modal
         });
 
+        // Fungsi untuk konfirmasi donasi
         $(document).on('click', '.confirm-donation', function() {
             const donationId = $(this).data('id');
-            $('#confirmationModal').modal('show'); // Menampilkan modal
+            const typeDonation = $(this).data('type'); // Ambil tipe donasi dari atribut data-type
+
+            $('#confirmationModal').modal('show'); // Tampilkan modal konfirmasi
 
             // Klik tombol Yes (Konfirmasi)
             $('#confirmYes').off().on('click', function() {
-                // Menampilkan SweetAlert yang menunjukkan proses upload
-                Swal.fire({
-                    title: 'Sedang menyimpan konfirmasi...',
-                    text: 'Harap tunggu beberapa saat.',
-                    icon: 'info',
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading(); // Menampilkan indikator loading
-                    }
-                });
+                $('#confirmationModal').modal('hide'); // Sembunyikan modal
 
-                // Kirim request untuk konfirmasi
-                $.ajax({
-                    url: `verification/confirm/${donationId}`,
-                    method: 'POST',
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        status: 'confirmed'
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Donasi telah dikonfirmasi!',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.reload();
-                        });
-                    },
-                    error: function(xhr) {
-                        Swal.fire({
-                            title: 'Gagal!',
-                            text: xhr.responseJSON?.message ||
-                                'Terjadi kesalahan saat memproses data.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
+                if (typeDonation === 'amount') {
+                    // SweetAlert untuk input jumlah donasi
+                    Swal.fire({
+                        title: 'Masukkan Jumlah Donasi',
+                        input: 'number',
+                        inputAttributes: {
+                            min: 1,
+                            required: true
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Kirim',
+                        cancelButtonText: 'Batal',
+                        preConfirm: (amount) => {
+                            if (!amount || amount <= 0) {
+                                Swal.showValidationMessage(
+                                    'Jumlah donasi harus lebih besar dari 0');
+                                return false;
+                            }
+                            return amount;
+                        }
+                    }).then((inputResult) => {
+                        if (inputResult.isConfirmed) {
+                            const amount = inputResult.value;
+
+                            Swal.fire({
+                                title: 'Sedang menyimpan konfirmasi...',
+                                text: 'Harap tunggu beberapa saat.',
+                                icon: 'info',
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+
+                            // Kirim request AJAX untuk menyimpan data
+                            $.ajax({
+                                url: `verification/confirm/${donationId}`,
+                                method: 'POST',
+                                data: {
+                                    _token: $('meta[name="csrf-token"]').attr('content'),
+                                    status: 'confirmed',
+                                    type_donation: typeDonation,
+                                    amount: amount
+                                },
+                                success: function(response) {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Donasi telah dikonfirmasi!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        window.location.reload();
+                                    });
+                                },
+                                error: function(xhr) {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: xhr.responseJSON?.message ||
+                                            'Terjadi kesalahan saat memproses data.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } else if (typeDonation === 'item') {
+                    // Langsung konfirmasi tanpa input jumlah
+                    Swal.fire({
+                        title: 'Sedang menyimpan konfirmasi...',
+                        text: 'Harap tunggu beberapa saat.',
+                        icon: 'info',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    $.ajax({
+                        url: `verification/confirm/${donationId}`,
+                        method: 'POST',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            status: 'confirmed',
+                            type_donation: typeDonation
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Donasi telah dikonfirmasi!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr) {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: xhr.responseJSON?.message ||
+                                    'Terjadi kesalahan saat memproses data.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
             });
 
             // Klik tombol No (Reject)
@@ -279,7 +358,8 @@
                             showConfirmButton: false,
                             allowOutsideClick: false,
                             didOpen: () => {
-                                Swal.showLoading(); // Menampilkan indikator loading
+                                Swal
+                                    .showLoading(); // Menampilkan indikator loading
                             }
                         });
 
@@ -288,7 +368,8 @@
                             url: `verification/confirm/${donationId}`,
                             method: 'POST',
                             data: {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                _token: $('meta[name="csrf-token"]').attr(
+                                    'content'),
                                 status: 'rejected'
                             },
                             success: function(response) {
@@ -304,7 +385,8 @@
                             error: function(xhr) {
                                 Swal.fire({
                                     title: 'Gagal!',
-                                    text: xhr.responseJSON?.message ||
+                                    text: xhr.responseJSON
+                                        ?.message ||
                                         'Terjadi kesalahan saat memproses data.',
                                     icon: 'error',
                                     confirmButtonText: 'OK'

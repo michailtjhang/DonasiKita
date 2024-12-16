@@ -32,9 +32,6 @@ class DonationController extends Controller
             return $donation;
         });
 
-        // Debug untuk memverifikasi hasil
-        // dd($donations);
-
         return view('front.donation.index', [
             'page_title' => 'Donations',
             'donations' => $donations,

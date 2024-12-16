@@ -87,21 +87,11 @@
                             </div>
 
                             <!-- Existing Image -->
-                            @if ($article->thumbnail && $article->thumbnail->id_file)
-                                <div class="col-6">
-                                    <span class="d-block mb-2 text-muted">Existing:</span>
-                                    <x-cld-image public-id="{{ $article->thumbnail->id_file }}"
-                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                        style="max-height: 150px; max-width: 100%; object-fit: cover;" alt="Cover Image" />
-                                </div>
-                            @elseif ($article->thumbnail && $article->thumbnail->file_path)
-                                <div class="col-6">
-                                    <span class="d-block mb-2 text-muted">Existing:</span>
-                                    <img src="{{ asset('storage/cover/' . $article->thumbnail->file_path) }}"
-                                        class="img-thumbnail shadow-sm border" alt="Existing Image"
-                                        style="max-height: 150px; max-width: 100%; object-fit: cover;">
-                                </div>
-                            @endif
+                            <div class="col-6">
+                                <span class="d-block mb-2 text-muted">Existing:</span>
+                                <img src="{{ $article->thumbnail->file_path }}" class="img-thumbnail shadow-sm border"
+                                    alt="Existing Image" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                            </div>
                         </div>
                     </div>
 
@@ -134,7 +124,7 @@
                         </div>
                     @enderror
                 </div>
-                
+
                 <div class="col d-flex justify-content-between align-items-center mt-3">
                     <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
                     <button type="submit" class="btn btn-success">Save</button>

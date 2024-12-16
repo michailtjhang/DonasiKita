@@ -29,16 +29,9 @@
                     <tr>
                         <th>Image</th>
                         <td>
-                            @if ($event->thumbnail && $event->thumbnail->id_file)
+                            @if ($event->thumbnail && $event->thumbnail->file_path)
                                 <a href="{{ $event->thumbnail->file_path }}" target="_blank" rel="noopener noreferrer">
-                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}" width="500"
-                                        alt="Cover Image" />
-                                </a>
-                            @elseif ($event->thumbnail && $event->thumbnail->file_path)
-                                <a href="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}" target="_blank"
-                                    rel="noopener noreferrer">
-                                    <img src="{{ asset('storage/cover/' . $event->thumbnail->file_path) }}"
-                                        alt="Cover Image" width="500">
+                                    <img src="{{ $event->thumbnail->file_path }}" alt="Cover Image" width="500">
                                 </a>
                             @else
                                 <span>No cover image available</span>
@@ -55,7 +48,8 @@
                     </tr>
                     <tr>
                         <th>Date Events</th>
-                        <td>: {{ $event->detailEvent->start->format('d F Y H:i') }} - {{ $event->detailEvent->end->format('d F Y H:i') }}</td>
+                        <td>: {{ $event->detailEvent->start->format('d F Y H:i') }} -
+                            {{ $event->detailEvent->end->format('d F Y H:i') }}</td>
                     </tr>
                     <tr>
                         <th>Location</th>
