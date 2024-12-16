@@ -70,8 +70,8 @@
                 </div>
 
                 <div class="col d-flex justify-content-between align-items-center mt-3">
-                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
+                    <button type="submit" class="btn btn-success">Update Role</button>
                 </div>
             </form>
         </div>

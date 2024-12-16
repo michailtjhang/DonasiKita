@@ -32,9 +32,6 @@ class DonationController extends Controller
             return $donation;
         });
 
-        // Debug untuk memverifikasi hasil
-        // dd($donations);
-
         return view('front.donation.index', [
             'page_title' => 'Donations',
             'donations' => $donations,
@@ -221,7 +218,7 @@ class DonationController extends Controller
             if (Auth::check()) {
                 $request->validate([
                     'nama_rekening' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -290,7 +287,7 @@ class DonationController extends Controller
             } else {
                 $request->validate([
                     'nama_rekening' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -378,7 +375,7 @@ class DonationController extends Controller
             if (Auth::check()) {
                 $request->validate([
                     'nomor_resi' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -446,7 +443,7 @@ class DonationController extends Controller
             } else {
                 $request->validate([
                     'nomor_resi' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 

@@ -326,6 +326,7 @@
         </div>
     </section>
 @endsection
+
 @section('script')
     <script>
         var data = @json($donations);

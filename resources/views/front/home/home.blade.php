@@ -200,17 +200,17 @@
                                             Target
                                         <div class="progress" style="height: 10px;">
                                             <div class="progress-bar progress-bar-animated" role="progressbar"
-                                                style="width: {{ (str_replace(['Rp', '.', ','], '', $item->donation->sum('amount')) / intval(str_replace(['Rp', '.', ','], '', $item->target_amount))) * 100 }}%;"
+                                                style="width: {{ (str_replace(['Rp', '.', ','], '', $item->total_donated) / intval(str_replace(['Rp', '.', ','], '', $item->target_amount))) * 100 }}%;"
                                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                             </div>
                                         </div>
                                         </p>
                                         <p class="text-medium mt-2">
-                                            Rp {{ number_format($item->donation->sum('amount'), 0, ',', '.') }}/ <span
+                                            Rp {{ number_format($item->total_donated, 0, ',', '.') }}/ <span
                                                 class="fw-bold">Rp
                                                 {{ number_format($item->target_amount, 0, ',', '.') }}</span>
                                             <br>
-                                        <p class="text-small">{{ $item->donation->count() }} donatur</p>
+                                        <p class="text-small">{{ $item->donator_count }} donatur</p>
                                         </p>
                                     </div>
                                 </div>

@@ -113,6 +113,16 @@
                     <label for="bukti_foto" class="form-label">Unggah Bukti Transfer</label>
                     <input type="file" id="bukti_foto" name="bukti_foto"
                         class="form-control @error('bukti_foto') is-invalid @enderror">
+                    <!-- update : ux writing -->
+                    <div class="text-info">*Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG.
+                        Pastikan foto yang diunggah jelas dan tidak mengandung unsur yang tidak pantas.*</div>
+                    <div class="text-info">*Unggah gambar bukti pembayaran yang jelas dan valid untuk mempermudah proses
+                        verifikasi.*</div>
+                    <div class="text-info">*Pastikan gambar tidak buram agar kami dapat memproses pembayaran Anda dengan
+                        cepat.*</div>
+                    <div class="text-info">*Unggah bukti pembayaran sesuai format yang diminta untuk menghindari penolakan.*
+                    </div>
+                    
                     @error('bukti_foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

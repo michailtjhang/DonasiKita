@@ -23,7 +23,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('donation.index') }}">Donation List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('donation.index') }}">Donations</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -36,11 +36,14 @@
 
                 <div class="row">
 
-                    <div class="col-6 form-group">
-                        <label for="title">Title</label>
+                    <div class="col-md-6 form-group">
+                        <label for="title">Donation Title</label>
                         <input type="text" name="title" id="title"
-                            class="form-control @error('title') is-invalid @enderror" placeholder="Please Enter Title"
-                            value="{{ old('title') }}">
+                            class="form-control @error('title') is-invalid @enderror"
+                            placeholder="Please Enter Donation Title" value="{{ old('title') }}">
+                        <small class="form-text text-muted">
+                            *Masukkan judul yang jelas dan deskriptif untuk memudahkan pemahaman. Judul tidak boleh sama*
+                        </small>
 
                         @error('title')
                             <div class="invalid-feedback">
@@ -50,11 +53,11 @@
 
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="towards">Towards</label>
+                    <div class="col-md-6 form-group">
+                        <label for="towards">Purpose of Donation</label>
                         <input type="text" name="towards" id="towards"
-                            class="form-control @error('towards') is-invalid @enderror" placeholder="Please Enter Towards"
-                            value="{{ old('towards') }}">
+                            class="form-control @error('towards') is-invalid @enderror"
+                            placeholder="Please Enter Purpose of Donation" value="{{ old('towards') }}">
 
                         @error('towards')
                             <div class="invalid-feedback">
@@ -66,13 +69,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="img">Image Cover</label>
+                    <div class="form-group col-md-6">
+                        <label for="img">Donation Cover Image</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
                                 name="img" id="img" onchange="previewImage(event)">
                             <label class="custom-file-label" for="img">Choose file</label>
                         </div>
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang
+                            diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
 
                         @error('img')
                             <div class="invalid-feedback d-block">
@@ -85,11 +92,11 @@
                             style="display: none; max-height: 150px;">
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="amount">Amount Needed</label>
+                    <div class="col-md-6 form-group">
+                        <label for="amount">Donation Target Amount</label>
                         <input type="text" inputmode="numeric" name="amount" id="amount"
-                            class="form-control @error('amount') is-invalid @enderror" placeholder="Please Enter Amount"
-                            value="{{ old('amount') }}">
+                            class="form-control @error('amount') is-invalid @enderror"
+                            placeholder="Please Enter Donation Target Amount" value="{{ old('amount') }}">
 
                         @error('amount')
                             <div class="invalid-feedback">
@@ -101,8 +108,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="days_left">Deadline Date</label>
+                    <div class="form-group col-md-6">
+                        <label for="days_left">Donation Deadline</label>
                         <input type="date" name="days_left" id="days_left"
                             class="form-control @error('days_left') is-invalid @enderror" value="{{ old('days_left') }}">
 
@@ -114,9 +121,13 @@
 
                     </div>
 
-                    <div class="form-group col-6">
-                        <label for="description">Description Towards</label>
+                    <div class="form-group col-md-6">
+                        <label for="description">Donation Purpose Description</label>
                         <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description') !!}</textarea>
+                        <small class="form-text text-muted">
+                            *Maksimal 2.000 karakter untuk deskripsi ini. Tuliskan deskripsi yang singkat dan jelas untuk
+                            memudahkan pemahaman. Hindari kata-kata kasar atau tidak pantas.*
+                        </small>
 
                         @error('description')
                             <div class="invalid-feedback">
@@ -128,10 +139,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description_need">Description Towards Needs</label>
+                    <label for="description_need">Details of Required Needs</label>
                     <textarea id="summernote" name="description_need" class="form-control @error('description_need') is-invalid @enderror">
                         {!! old('description_need') !!}
                     </textarea>
+                    <small class="form-text text-muted">
+                        *Maksimal 5.000 karakter untuk deskripsi ini. Tuliskan deskripsi yang singkat dan jelas untuk
+                        memudahkan pemahaman. Hindari kata-kata kasar atau tidak pantas.*
+                    </small>
 
                     @error('description_need')
                         <div class="invalid-feedback">

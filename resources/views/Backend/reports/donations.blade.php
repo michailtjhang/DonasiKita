@@ -61,6 +61,8 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Penerima</th>
+                            <th>Nama Rekening Pengirim/No Resi</th>
                             <th>Amount/Description Items</th>
                             <th>Type Donation</th>
                             <th>Date Donation</th>
@@ -71,9 +73,16 @@
                             <th></th>
                             <th><input type="text" placeholder="Search Nama" class="form-control form-control-sm"></th>
                             <th><input type="text" placeholder="Search Email" class="form-control form-control-sm"></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th><input type="text" placeholder="Search Penerima" class="form-control form-control-sm">
+                            </th>
+                            <th><input type="text" placeholder="Search Nama Rekening/No Resi"
+                                    class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Amount/Description Items"
+                                    class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Type Donation"
+                                    class="form-control form-control-sm"></th>
+                            <th><input type="text" placeholder="Search Date Donation"
+                                    class="form-control form-control-sm"></th>
                         </tr>
                     </tfoot>
 
@@ -123,6 +132,14 @@
                         {
                             data: 'email',
                             name: 'email'
+                        },
+                        {
+                            data: 'name_receiver',
+                            name: 'name_receiver'
+                        },
+                        {
+                            data: 'name_donation',
+                            name: 'name_donation'
                         },
                         {
                             data: 'donation',

@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Donation;
-use App\Mail\DonationStatusEmail;
-use Illuminate\Support\Facades\Mail;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\PermissionRole;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Mail\DonationStatusEmail;
 use App\Models\EventRegistration;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
@@ -32,8 +33,11 @@ class ReportController extends Controller
                 ->addIndexColumn()
                 ->addColumn('type_donation', function ($donations) {
                     return $donations->amount == null
-                        ? '<span class="badge badge-success">Amount</span>'
-                        : '<span class="badge badge-primary">Item</span>';
+                        ? '<span class="badge badge-primary">Item</span>'
+                        : '<span class="badge badge-success">Amount</span>';
+                })
+                ->addColumn('name', function ($donations) {
+                    return $donations->sender_name?? $donations->tracking_number;
                 })
                 ->addColumn('proof', function ($donations) {
                     return $donations->receipt->cloudinary_url ?? ''; // Asumsikan kolom `proof_url` menyimpan URL gambar
@@ -56,22 +60,49 @@ class ReportController extends Controller
 
     public function confirmDonation($id, Request $request)
     {
+        // Validasi dasar
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:confirmed,rejected',
+            'type_donation' => 'required|in:amount,item',
+        ]);
+
+        // Tambahkan validasi untuk 'amount' jika tipe donasi adalah 'amount'
+        $validator->sometimes('amount', 'required|numeric|min:1', function ($input) {
+            return $input->type_donation === 'amount' && $input->status === 'confirmed';
+        });
+
+        // Jika validasi gagal, kirim respons error
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Validasi berhasil
+        $validated = $validator->validated();
+
         // Menemukan donasi berdasarkan ID
         $donation = Donation::findOrFail($id);
 
-        // Menentukan status berdasarkan request
-        $status = $request->status === 'confirmed' ? 'approved' : 'rejected';
-        $donation->status = $status;
-        $donation->save();
+        if ($validated['status'] === 'confirmed') {
+            $donation->status = 'approved';
 
-        // Mengirim email kepada donor
-        $donorName = $donation->name; // Asumsikan ada kolom donor_name
-        Mail::to($donation->email)->send(new DonationStatusEmail($status, $donorName));
-        
-        if ($status === 'rejected') {
+            // Hanya simpan amount jika tipe donasi adalah 'amount'
+            if ($validated['type_donation'] === 'amount') {
+                $donation->amount = $validated['amount'];
+            }
+
+            $donation->save();
+
+            // Mengirim email kepada donor
+            $donorName = $donation->name;
+            Mail::to($donation->email)->send(new DonationStatusEmail('approved', $donorName));
+        } else {
+            $donation->status = 'rejected';
+            $donation->save();
+
+            // Jika status ditolak, hapus donasi (opsional)
             $donation->delete();
         }
-        
+
         return response()->json(['message' => 'Donasi telah diperbarui dan email telah dikirim!']);
     }
 
@@ -98,8 +129,14 @@ class ReportController extends Controller
                 ->addIndexColumn()
                 ->addColumn('type_donation', function ($donations) {
                     return $donations->amount == null
-                        ? '<span class="badge badge-success">Amount</span>'
-                        : '<span class="badge badge-primary">Item</span>';
+                        ? '<span class="badge badge-primary">Item</span>'
+                        : '<span class="badge badge-success">Amount</span>';
+                })
+                ->addColumn('name_receiver', function ($donations) {
+                    return $donations->need->towards;
+                })
+                ->addColumn('name_donation', function ($donations) {
+                    return $donations->sender_name?? $donations->tracking_number;
                 })
                 ->addColumn('donation', function ($donations) {
                     return $donations->amount ?
@@ -138,11 +175,13 @@ class ReportController extends Controller
                 return [
                     'name' => $donation->name,
                     'email' => $donation->email,
+                    'Penerima' => $donation->need->towards,
+                    'Nama_Rekening_Pengirim/No_Resi' => $donation->sender_name ?? $donation->tracking_number,
                     'amount/description_item' => $donation->amount
                         ? 'Rp. ' . number_format($donation->amount, 0, ',', '.')
                         : $donation->description_item,
                     'type_donation' => $donation->amount == null ? 'Item' : 'Amount',
-                    'created_at' => $donation->created_at->format('Y-m-d'),
+                    'date_donation' => $donation->created_at->format('Y-m-d'),
                 ];
             })
             : EventRegistration::query()
@@ -157,7 +196,7 @@ class ReportController extends Controller
                     'email' => $participant->user->email,
                     'event' => $participant->event->title,
                     'status' => $participant->status,
-                    'created_at' => $participant->created_at->format('Y-m-d'),
+                    'date_joined' => $participant->created_at->format('Y-m-d'),
                 ];
             });
 
@@ -178,8 +217,8 @@ class ReportController extends Controller
             ];
 
             $columns = $type === 'donations'
-                ? ['Name', 'Email', 'Amount/Description Items', 'Type Donation', 'Date']
-                : ['Name', 'Email', 'Event', 'Status', 'Date'];
+                ? ['Name', 'Email', 'Penerima', 'Nama Rekening Pengirim/No Resi', 'Amount/Description Items', 'Type Donation', 'Date_Donation']
+                : ['Name', 'Email', 'Event', 'Status', 'Date_Joined'];
 
             $callback = function () use ($data, $columns) {
                 $file = fopen('php://output', 'w');

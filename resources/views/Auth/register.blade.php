@@ -183,7 +183,7 @@
 
             <div class="social-auth-links text-center">
                 <p class="pt-2">- OR -</p>
-                <a href="#" class="btn btn-block btn-danger d-flex align-items-center justify-content-center">
+                <a href="{{ route('auth.socialite.redirect') }}" class="btn btn-block btn-danger d-flex align-items-center justify-content-center">
                     <i class="fab fa-google me-2"></i> Sign in using Google
                 </a>
             </div>

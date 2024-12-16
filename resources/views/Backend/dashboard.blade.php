@@ -82,8 +82,8 @@
 
         </div>
 
-        <!-- Cards Articles -->
         <div class="row">
+            <!-- Cards Articles -->
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">

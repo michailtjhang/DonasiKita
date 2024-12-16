@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
 use App\Http\Controllers\Front\ArticleController;
 use App\Http\Controllers\Front\ProfileController;
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Backend\ConfigController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -28,6 +29,10 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'auth_register']);
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route Socialite
+Route::get('/auth/redirect', [SocialiteController::class, 'redirect'])->name('auth.socialite.redirect');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.socialite.callback');
 
 // Route Email
 Route::middleware('auth')->group(function () {

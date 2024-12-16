@@ -33,7 +33,7 @@ class Donation extends Model
 
     public function need()
     {
-        return $this->belongsTo(Need::class, 'need_id');
+        return $this->belongsTo(Need::class, 'need_id', 'need_id');
     }
 
     public function receipt()
