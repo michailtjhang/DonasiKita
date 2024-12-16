@@ -237,7 +237,7 @@
 
         /* Container Styling */
         #donation-cards .container {
-            max-width: 1200px;
+            /* max-width: 1200px; */
             margin: 0 auto;
         }
     </style>
@@ -279,7 +279,7 @@
                         <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top img-fluid blog-img"
-                                    alt="{{ $donation->title }}" style="object-fit: cover !important; height: 160px !important;">
+                                    alt="{{ $donation->title }}" style="object-fit: cover !important; height: 160px !important; width: 500px !important">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                     style="height: 160px;">
@@ -288,7 +288,7 @@
                             @endif
                             <div class="card-body">
                                 <h5 class="card-title text-dark">
-                                    {{ Str::limit(strip_tags($donation->title), 10, '...') }}
+                                    {{ Str::limit(strip_tags($donation->title), 50, '...') }}
                                 </h5>
                                 <p class="card-text text-muted">{{ $donation->towards }}</p>
                                 <div class="progress my-3">

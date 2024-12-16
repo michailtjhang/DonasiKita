@@ -102,6 +102,44 @@
             color: #fff;
         }
 
+        #shareNowBtn:hover {
+            background-color: #6cb6de !important;
+        }
+
+        .social-links {
+            margin: 0;
+            padding: 0;
+            margin-top: 10px;
+            list-style-type: none;
+            display: inline-block;
+        }
+
+        .social-links li {
+            display: inline-block;
+            margin-right: 50px;
+        }
+
+        .social-links li:last-child {
+            margin-right: 0;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background-color: var(--dark-color);
+            font-size: 22px;
+            color: var(--light-color);
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .social-links a:hover {
+            color: var(--dark-color);
+            background-color: var(--aqua-color);
+        }
+
         /* responsive */
         @media (max-width: 576px) {
             .text-heading-donation {
@@ -225,7 +263,7 @@
             <!-- Share Button -->
             <div class="col-12 col-md-4 d-flex justify-content-center mb-3 mb-md-0 mb-lg-0 ">
                 <button class="btn btn-primary w-100 py-4 d-flex justify-content-center align-items-center "
-                    style="background-color: #bbddf0;">
+                    style="background-color: #bbddf0;" id="shareNowBtn">
                     <h1 class="d-flex align-items-center mb-0" style="font-size: 1.5rem; color: #0f3d56;">
                         <i class="fas fa-share-alt me-2"></i> Share
                     </h1>
@@ -281,4 +319,46 @@
             });
         });
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const donateNowBtn = document.getElementById('shareNowBtn');
+        if (donateNowBtn) {
+            donateNowBtn.addEventListener('click', () => {
+                Swal.fire({
+                    title: '<strong>Bagikan ke Media Sosial</strong>',
+                    html: `
+                        <ul class="social-links" style="list-style: none; padding: 0; display: flex; gap: 10px; justify-content: center;">
+                            <li>
+                                <a href="https://www.instagram.com/?url={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://api.whatsapp.com/send?text={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/share?url={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank" style="text-decoration: none; font-size: 24px;">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    `,
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                    customClass: {
+                        popup: 'custom-swal-popup'
+                    }
+                });
+            });
+        }
+    });
+</script>
 @endsection

@@ -169,7 +169,7 @@
             width: 100%;
             min-width: 240px;
             /* Menambahkan minimum width 200px */
-            max-width: 350px;
+            /* max-width: 350px; */
             /* Menjaga lebar tidak lebih dari 350px */
             padding: 0;
             box-sizing: border-box;
@@ -220,6 +220,10 @@
         }
 
         @media (max-width: 480px) {
+            /* .event-card{
+                min-width: 250px;
+                max-width: 350px;
+            } */
             .search-box {
                 max-width: 100%;
                 /* Full width untuk layar sangat kecil */
@@ -256,11 +260,11 @@
 
     <!-- Kategori Event -->
     <div class="container mt-5">
-        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2 ">
+        <div class="row justify-content-center">
             <h2 class="fw-bold">Event Categories</h2>
             <p class="text-muted">All Event Category</p>
             <!-- Wadah kartu -->
-            <div id="card-container" class="row d-flex justify-content-between gx-2">
+            <div id="card-container" class="row d-flex justify-content-start">
                 @foreach ($categories as $category)
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 spacer-tablet">
                         <a href="{{ route('events.category', $category->slug) }}" class="text-decoration-none">

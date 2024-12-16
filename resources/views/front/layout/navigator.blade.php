@@ -33,6 +33,16 @@
                         <a class="nav-link @if (Request::segment(1) == 'blog' || Request::segment(1) == 'blogs') active @endif"
                             href="{{ route('blog') }}">Blogs & Article</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Language
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="?lang=en">English</a></li>
+                            <li><a class="dropdown-item" href="?lang=id">Bahasa Indonesia</a></li>
+                        </ul>
+                    </li>
                     @auth
                         <li class="nav-item">
                             <div class="dropdown">
