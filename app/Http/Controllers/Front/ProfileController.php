@@ -96,11 +96,11 @@ class ProfileController extends Controller
                     Rule::unique('users')->ignore(Auth::user()->id), // Abaikan email milik user yang sedang login
                 ],
                 'password' => 'nullable | required_with:old_password | string  | min:8',
-                'profile_image' => 'nullable | image | mimes:jpg,jpeg,gif,png,svg | max:2048',
+                'profile_image' => 'nullable | image | mimes:jpg,jpeg,png | max:2048',
             ],
             [
                 'profile_image.max' => 'Maksimal 2 MB',
-                'profile_image.image' => 'File ekstensi harus jpg, jpeg, gif, png, svg',
+                'profile_image.image' => 'File ekstensi harus jpg, jpeg, png',
             ]
         );
 

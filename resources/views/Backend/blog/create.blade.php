@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Article & Blog List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('article.index') }}">Articles & Blogs </a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -29,11 +29,14 @@
 
                 <div class="row">
 
-                    <div class="col-6 form-group">
-                        <label for="title">Title</label>
+                    <div class="col-md-6 form-group">
+                        <label for="title">Article Title</label>
                         <input type="text" name="title" id="title"
-                            class="form-control @error('title') is-invalid @enderror" placeholder="Please Enter Title"
-                            value="{{ old('title') }}">
+                            class="form-control @error('title') is-invalid @enderror"
+                            placeholder="Please Enter Article Title" value="{{ old('title') }}">
+                        <small class="form-text text-muted">
+                            *Masukkan judul yang jelas dan deskriptif untuk memudahkan pemahaman. Judul tidak boleh sama*
+                        </small>
 
                         @error('title')
                             <div class="invalid-feedback">
@@ -43,8 +46,8 @@
 
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="category_id">Category</label>
+                    <div class="col-md-6 form-group">
+                        <label for="category_id">Article Category</label>
                         <select class="custom-select rounded-0 @error('category_id') is-invalid @enderror" id="category_id"
                             name="category_id">
                             <option value="" hidden>-- Please select --</option>
@@ -63,13 +66,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-6 form-group">
-                        <label for="img">Image Cover</label>
+                    <div class="col-md-6 form-group">
+                        <label for="img">Article Cover Image</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input @error('img') is-invalid @enderror"
                                 name="img" id="img" onchange="previewImage(event)">
                             <label class="custom-file-label" for="img">Choose file</label>
                         </div>
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang
+                            diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
 
                         @error('img')
                             <div class="invalid-feedback d-block">
@@ -82,8 +89,8 @@
                             style="display: none; max-height: 150px;">
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="status">Status</label>
+                    <div class="col-md-6 form-group">
+                        <label for="status">Article Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
                             name="status">
                             <option value="" hidden>-- Please select --</option>
@@ -101,10 +108,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">Description</label>
+                    <label for="content">Article Description</label>
                     <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
                         {!! old('content') !!}
                     </textarea>
+                    <small class="form-text text-muted">
+                        *Maksimal 10.000 karakter untuk deskripsi ini. Tuliskan deskripsi yang singkat dan jelas untuk
+                        memudahkan pemahaman. Hindari kata-kata kasar atau tidak pantas.*
+                    </small>
 
                     @error('content')
                         <div class="invalid-feedback">

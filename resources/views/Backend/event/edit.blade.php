@@ -23,7 +23,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('event.index') }}">Event List </a></li>
+                <li class="breadcrumb-item"><a href="{{ route('event.index') }}">Events</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $page_title }}</li>
             </ol>
         </nav>
@@ -37,11 +37,14 @@
 
                 <div class="row">
 
-                    <div class="col-6 form-group">
-                        <label for="title">Title</label>
+                    <div class="col-md-6 form-group">
+                        <label for="title">Event Title</label>
                         <input type="text" name="title" id="title"
-                            class="form-control @error('title') is-invalid @enderror" placeholder="Please Enter Title"
+                            class="form-control @error('title') is-invalid @enderror" placeholder="Please Enter Event Title"
                             value="{{ old('title', $event->title) }}">
+                        <small class="form-text text-muted">
+                            *Masukkan judul yang jelas dan deskriptif untuk memudahkan pemahaman. Judul tidak boleh sama*
+                        </small>
 
                         @error('title')
                             <div class="invalid-feedback">
@@ -51,8 +54,8 @@
 
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="category_id">Category</label>
+                    <div class="col-md-6 form-group">
+                        <label for="category_id">Event Category</label>
                         <select class="custom-select rounded-0 @error('category_id') is-invalid @enderror" id="category_id"
                             name="category_id">
                             <option value="" hidden>-- Please select --</option>
@@ -80,6 +83,10 @@
                             id="img" onchange="previewImage(event)">
                         <label class="custom-file-label" for="img">Choose file</label>
                     </div>
+                    <small class="form-text text-muted">
+                        *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang diunggah
+                        jelas dan tidak mengandung unsur yang tidak pantas.*
+                    </small>
 
                     @error('img')
                         <div class="invalid-feedback d-block">
@@ -90,14 +97,14 @@
                     <!-- Row for Preview and Existing Image -->
                     <div class="row mt-3 text-center">
                         <!-- Preview Image -->
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <span class="d-block mb-2 text-muted">Preview:</span>
                             <img id="imgPreview" src="" alt="Preview Image" class="img-thumbnail shadow-sm border"
                                 style="display: none; max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
 
                         <!-- Existing Image -->
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
                             <img src="{{ $event->thumbnail->file_path }}" class="img-thumbnail shadow-sm border"
                                 alt="Existing Image" style="max-height: 150px; max-width: 100%; object-fit: cover;">
@@ -107,11 +114,11 @@
 
                 <div class="row">
                     <!-- Organizer -->
-                    <div class="form-group col-6">
-                        <label for="organizer">Organizer</label>
+                    <div class="form-group col-md-6">
+                        <label for="organizer">Event Organizer</label>
                         <input type="text" name="organizer" id="organizer"
                             class="form-control @error('organizer') is-invalid @enderror"
-                            placeholder="Please Enter Organizer" value="{{ old('organizer', $event->organizer) }}">
+                            placeholder="Please Enter Event Organizer" value="{{ old('organizer', $event->organizer) }}">
 
                         @error('organizer')
                             <div class="invalid-feedback">
@@ -121,7 +128,7 @@
                     </div>
 
                     <!-- Status Event -->
-                    <div class="col-6 form-group">
+                    <div class="col-md-6 form-group">
                         <label for="status">Status</label>
                         <select class="custom-select rounded-0 @error('status') is-invalid @enderror" id="status"
                             name="status">
@@ -144,10 +151,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">Description</label>
+                    <label for="content">Event Description</label>
                     <textarea id="summernote" name="content" class="form-control @error('content') is-invalid @enderror">
                         {!! old('content', $event->description) !!}
                     </textarea>
+                    <small class="form-text text-muted">
+                        *Maksimal 5.000 karakter untuk deskripsi ini. Tuliskan deskripsi yang singkat dan jelas untuk
+                        memudahkan pemahaman. Hindari kata-kata kasar atau tidak pantas.*
+                    </small>
 
                     @error('content')
                         <div class="invalid-feedback">
@@ -160,7 +171,7 @@
                 <div class="row mt-3">
                     <!-- Date Event Input -->
                     <div class="col-md-6 form-group">
-                        <label for="reservationtime">Event Date & Time</label>
+                        <label for="reservationtime">Event Schedule</label>
                         <div class="input-group">
                             <input type="text" class="form-control float-right @error('date') is-invalid @enderror"
                                 id="reservationtime" name="date" value="{{ old('date', $date) }}">
@@ -176,7 +187,7 @@
 
                     <!-- Volunteer Switch -->
                     <div class="col-md-6 form-group">
-                        <label for="when_volunteer">Require Volunteer?</label>
+                        <label for="when_volunteer">Do You Need Volunteers?</label>
                         <div>
                             <input type="checkbox" id="when_volunteer" name="when_volunteer" data-bootstrap-switch
                                 data-off-color="danger" data-on-color="success">
@@ -186,11 +197,11 @@
 
                 <div class="row mt-3">
 
-                    <div class="col-6 form-group">
-                        <label for="participant">Capacity Participant</label>
+                    <div class="col-md-6 form-group">
+                        <label for="participant">Participant Capacity</label>
                         <input type="text" id="participant" name="participant"
                             class="form-control @error('participant') is-invalid @enderror"
-                            placeholder="Please Enter Participant"
+                            placeholder="Please Enter Participant Capacity"
                             value="{{ old('participant', $event->detailEvent->capacity_participants) }}">
 
                         @error('participant')
@@ -200,10 +211,14 @@
                         @enderror
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="description_participant">Description Participant</label>
+                    <div class="col-md-6 form-group">
+                        <label for="description_participant">Participant Description</label>
                         <textarea type="text" id="participant_description" name="participant_description"
                             class="form-control @error('participant_description') is-invalid @enderror">{{ old('participant_description', $event->detailEvent->description_participants) }}</textarea>
+                        <small class="form-text text-muted">
+                            *Maksimal 500 karakter untuk deskripsi ini. Tuliskan deskripsi yang singkat dan jelas untuk
+                            memudahkan pemahaman. Hindari kata-kata kasar atau tidak pantas.*
+                        </small>
 
                         @error('participant_description')
                             <div class="invalid-feedback">
@@ -215,11 +230,11 @@
                 </div>
 
                 <div class="row" id="volunteer_container">
-                    <div class="col-6 form-group">
-                        <label for="Volunteer">Capacity Volunteer</label>
+                    <div class="col-md-6 form-group">
+                        <label for="Volunteer">Volunteer Capacity</label>
                         <input type="text" id="Volunteer" name="volunteer"
                             class="form-control @error('volunteer') is-invalid @enderror"
-                            placeholder="Please Enter Volunteer"
+                            placeholder="Please Enter Volunteer Capacity"
                             value="{{ old('volunteer', $event->detailEvent->$event->detailEvent->capacity_volunteers ?? 0) }}">
 
                         @error('volunteer')
@@ -229,11 +244,15 @@
                         @enderror
                     </div>
 
-                    <div class="col-6
+                    <div class="col-md-6
                             form-group">
-                        <label for="description_volunteer">Description Volunteer</label>
+                        <label for="description_volunteer">Volunteer Description</label>
                         <textarea type="text" id="description_volunteer" name="volunteer_description"
                             class="form-control @error('volunteer_description') is-invalid @enderror">{{ old('volunteer_description', $event->detailEvent->description_volunteers) }}</textarea>
+                        <small class="form-text text-muted">
+                            *Maksimal 500 karakter untuk deskripsi ini. Tuliskan deskripsi yang singkat dan jelas untuk
+                            memudahkan pemahaman. Hindari kata-kata kasar atau tidak pantas.*
+                        </small>
 
                         @error('volunteer_description')
                             <div class="invalid-feedback">
@@ -244,9 +263,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="location">Location Name</label>
+                    <label for="location">Event Location</label>
                     <input type="text" id="location" name="location"
-                        class="form-control @error('location') is-invalid @enderror" placeholder="Enter a location"
+                        class="form-control @error('location') is-invalid @enderror" placeholder="Enter a Event Location"
                         value="{{ old('location', $event->location->name_location) }}">
 
                     @error('location')
@@ -260,14 +279,14 @@
 
                 <div class="row mt-3">
 
-                    <div class="col-6 form-group">
-                        <label for="latitude">Latitude</label>
+                    <div class="col-md-6 form-group">
+                        <label for="latitude">Event Latitude</label>
                         <input type="text" id="latitude" name="latitude" class="form-control" readonly
                             value="{{ old('latitude', $event->location->latitude) }}">
                     </div>
 
-                    <div class="col-6 form-group">
-                        <label for="longitude">Longitude</label>
+                    <div class="col-md-6 form-group">
+                        <label for="longitude">Event Longitude</label>
                         <input type="text" id="longitude" name="longitude" class="form-control" readonly
                             value="{{ old('longitude', $event->location->longitude) }}">
                     </div>
@@ -275,8 +294,8 @@
                 </div>
 
                 <div class="col d-flex justify-content-between align-items-center mt-3">
-                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
+                    <button type="submit" class="btn btn-success">Update Event</button>
                 </div>
             </form>
         </div>

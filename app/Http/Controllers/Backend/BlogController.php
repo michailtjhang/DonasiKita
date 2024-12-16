@@ -106,7 +106,7 @@ class BlogController extends Controller
         // Validasi
         $request->validate([
             'title' => 'required|unique:blogs',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             'content' => 'required|min:10|max:10000',
             'category_id' => 'required',
             'status' => 'required',
@@ -238,7 +238,7 @@ class BlogController extends Controller
                 'required',
                 Rule::unique('blogs', 'title')->ignore($id),
             ],
-            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'content' => 'required|min:10|max:10000',
             'category_id' => 'required',
             'status' => 'required',

@@ -36,6 +36,9 @@ class ReportController extends Controller
                         ? '<span class="badge badge-primary">Item</span>'
                         : '<span class="badge badge-success">Amount</span>';
                 })
+                ->addColumn('name', function ($donations) {
+                    return $donations->sender_name?? $donations->tracking_number;
+                })
                 ->addColumn('proof', function ($donations) {
                     return $donations->receipt->cloudinary_url ?? ''; // Asumsikan kolom `proof_url` menyimpan URL gambar
                 })
@@ -126,8 +129,14 @@ class ReportController extends Controller
                 ->addIndexColumn()
                 ->addColumn('type_donation', function ($donations) {
                     return $donations->amount == null
-                        ? '<span class="badge badge-success">Amount</span>'
-                        : '<span class="badge badge-primary">Item</span>';
+                        ? '<span class="badge badge-primary">Item</span>'
+                        : '<span class="badge badge-success">Amount</span>';
+                })
+                ->addColumn('name_receiver', function ($donations) {
+                    return $donations->need->towards;
+                })
+                ->addColumn('name_donation', function ($donations) {
+                    return $donations->sender_name?? $donations->tracking_number;
                 })
                 ->addColumn('donation', function ($donations) {
                     return $donations->amount ?
@@ -166,11 +175,13 @@ class ReportController extends Controller
                 return [
                     'name' => $donation->name,
                     'email' => $donation->email,
+                    'Penerima' => $donation->need->towards,
+                    'Nama_Rekening_Pengirim/No_Resi' => $donation->sender_name ?? $donation->tracking_number,
                     'amount/description_item' => $donation->amount
                         ? 'Rp. ' . number_format($donation->amount, 0, ',', '.')
                         : $donation->description_item,
                     'type_donation' => $donation->amount == null ? 'Item' : 'Amount',
-                    'created_at' => $donation->created_at->format('Y-m-d'),
+                    'date_donation' => $donation->created_at->format('Y-m-d'),
                 ];
             })
             : EventRegistration::query()
@@ -185,7 +196,7 @@ class ReportController extends Controller
                     'email' => $participant->user->email,
                     'event' => $participant->event->title,
                     'status' => $participant->status,
-                    'created_at' => $participant->created_at->format('Y-m-d'),
+                    'date_joined' => $participant->created_at->format('Y-m-d'),
                 ];
             });
 
@@ -206,8 +217,8 @@ class ReportController extends Controller
             ];
 
             $columns = $type === 'donations'
-                ? ['Name', 'Email', 'Amount/Description Items', 'Type Donation', 'Date']
-                : ['Name', 'Email', 'Event', 'Status', 'Date'];
+                ? ['Name', 'Email', 'Penerima', 'Nama Rekening Pengirim/No Resi', 'Amount/Description Items', 'Type Donation', 'Date_Donation']
+                : ['Name', 'Email', 'Event', 'Status', 'Date_Joined'];
 
             $callback = function () use ($data, $columns) {
                 $file = fopen('php://output', 'w');

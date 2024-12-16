@@ -12,10 +12,13 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Category Name</label>
                         <input type="text" name="name" id="name"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="Please Enter Name"
-                            value="{{ old('name') }}">
+                            class="form-control @error('name') is-invalid @enderror"
+                            placeholder="Please Enter Category Name" value="{{ old('name') }}">
+                        <small class="form-text text-muted">
+                            *Masukkan nama yang jelas dan deskriptif untuk memudahkan pemahaman.*
+                        </small>
 
                         @error('name')
                             <div class="invalid-feedback">
@@ -26,7 +29,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Description</label>
+                        <label for="description">Category Description</label>
                         <textarea name="description" class="form-control @error('description') is-invalid @enderror">{!! old('description') !!}</textarea>
 
                         @error('description')
@@ -38,10 +41,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="image">Image</label>
+                        <label for="image">Category Image</label>
                         <input type="file" name="img" id="image"
                             class="form-control @error('img') is-invalid @enderror" placeholder="Please Enter Image"
                             value="{{ old('img') }}">
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang
+                            diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
 
                         @error('img')
                             <div class="invalid-feedback">
