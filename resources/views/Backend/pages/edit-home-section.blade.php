@@ -55,6 +55,10 @@
                                             <label class="custom-file-label"
                                                 for="carousel_image_{{ $key }}">Choose file</label>
                                         </div>
+                                        <small class="form-text text-muted">
+                                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan
+                                            foto yang diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                                        </small>
                                     </div>
 
                                     <div class="row mt-3 text-center">
@@ -69,7 +73,7 @@
                                         <!-- Existing Image -->
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ $carousel['image'] ?? asset($carousel['image']) ?? '' }}"
+                                            <img src="{{ $carousel['image'] ?? (asset($carousel['image']) ?? '') }}"
                                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>
@@ -106,6 +110,10 @@
                                 onchange="previewImage(event)">
                             <label class="custom-file-label" for="about_image">Choose file</label>
                         </div>
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang
+                            diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
                     </div>
 
                     <div class="row mt-3 text-center">
@@ -119,7 +127,7 @@
                         <!-- Existing Image -->
                         <div class="col-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
-                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) ?? '' }}"
+                            <img src="{{ $sectionData['image'] ?? (asset($sectionData['image']) ?? '') }}"
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
@@ -140,10 +148,14 @@
                     <div class="form-group">
                         <label for="background_image">Background Image</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="image"
-                                id="background_image" onchange="previewImage(event)">
+                            <input type="file" class="custom-file-input" name="image" id="background_image"
+                                onchange="previewImage(event)">
                             <label class="custom-file-label" for="background_image">Choose file</label>
                         </div>
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang
+                            diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
                     </div>
 
                     <div class="row mt-3 text-center">
@@ -260,6 +272,9 @@
                         <input type="file" class="custom-file-input" name="carousel[${carouselIndex}][image]" id="carousel_image_${carouselIndex}" onchange="previewImage(event, ${carouselIndex})">
                         <label class="custom-file-label" for="carousel_image_${carouselIndex}">Choose file</label>
                     </div>
+                    <small class="form-text text-muted">
+                        *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                    </small>
                 </div>
 
                 <div class="row mt-3 text-center">
