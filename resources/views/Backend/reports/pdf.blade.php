@@ -4,9 +4,19 @@
 <head>
     <title>{{ $title }}</title>
     <style>
+        body {
+            font-size: 12px;
+        }
+
+        td {
+            font-size: 11px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
+            /* Ensures responsive layout */
         }
 
         table,
@@ -19,6 +29,8 @@
         td {
             padding: 8px;
             text-align: left;
+            word-wrap: break-word;
+            /* Ensures long text wraps */
         }
 
         th {

@@ -31,7 +31,7 @@ class UserController extends Controller
 
         // Jika request adalah Ajax untuk DataTables
         if (request()->ajax()) {
-            $users = User::with('role')->get();
+            $users = User::with('role')->where('role_id', '=', '01j8kkdk3abh0a671dr5rqkshy')->get();
 
             return DataTables::of($users)
                 ->addIndexColumn()
