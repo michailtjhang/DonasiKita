@@ -88,7 +88,6 @@
 
         <!-- Form Konfirmasi -->
         <div class="form-section">
-            <h2 class="section-title">Konfirmasi Transfer</h2>
             <form id="confirmationForm"
                 action="{{ route('donations.confirm-amount', ['slug' => $donation->slug, 'temp_id' => $id]) }}"
                 method="POST" enctype="multipart/form-data">

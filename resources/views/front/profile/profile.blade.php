@@ -284,10 +284,14 @@
     </div>
 
     <!-- Followed Event -->
-<section id="folowed-event" class="container pt-5 mb-5">
-    <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
-        <h2 class="fw-bold">Event yang Diikuti</h2>
-        <p class="text-muted">Selesaikan Event untuk membantu saudara kita.</p>
+    <section id="folowed-event" class="container pt-5 mb-5">
+        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
+            <h2 class="fw-bold" style="color: #0F3D56">Event yang Diikuti</h2>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">Selesaikan Event untuk membantu saudara kita.</p>
+                <a href="#" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
+                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">Ikuti Event Lainnya</a>
+            </div>
 
         <!-- Container untuk card -->
         <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
@@ -352,7 +356,7 @@
 <!-- History Event -->
 <section id="history-event" class="container py-2 mb-5">
     <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
-        <h2 class="fw-bold">History yang pernah di ikuti</h2>
+        <h2 class="fw-bold" style="color: #0F3D56;">History yang pernah diikuti</h2>
         <p class="text-muted">Semua progress anda akan disimpan dan menjadi langkah untuk mengubah dunia.</p>
 
         <!-- Container untuk card -->
@@ -413,6 +417,58 @@
     </div>
 </section>
 <!-- End HistoryEvent -->
+
+<!-- History Donation -->
+<section id="history-donation" class="container pt-5 mb-5">
+        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
+            <h2 class="fw-bold" style="color: #0F3D56">History Donasi</h2>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">Terimakasih telah membantu mereka yang membutuhkan.</p>
+                <a href="#" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
+                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">Ayo berdonasi lagi</a>
+            </div>
+            <p class="fw-bold" style="color: #0F3D56">Kamu telah mendonasikan 2 barang dan Rp 200.000.000 kepada mereka yang membutuhkan</p>
+        
+                @php
+                $cards = [
+                    ['date' => '20 Desember 2024', 'title' => 'Renovasi Masjid di Pelosok Negeri', 'amount' => 'Rp 100.000,00', 'desc' => 'Dana Berhasil Dinonasikan', 'icon' => 'images/history/uang.svg'],
+                    ['date' => '20 Desember 2024', 'title' => 'Renovasi Masjid di Pelosok Negeri', 'amount' => 'Baju, Celana, dan Makanan', 'desc' => 'Barang Berhasil Dinonasikan', 'icon' => 'images/history/barang.svg'],
+                    ['date' => '20 Desember 2024', 'title' => 'Bantu Petani Lokal di Masa Sulit', 'amount' => 'Rp 500.000,00', 'desc' => 'Dana Berhasil Dinonasikan', 'icon' => 'images/history/uang.svg'],
+                    ['date' => '20 Desember 2024', 'title' => 'Bantu Petani Lokal di Masa Sulit', 'amount' => 'Peralatan Tani', 'desc' => 'Barang Berhasil Dinonasikan', 'icon' => 'images/history/barang.svg']
+                ];
+            @endphp
+
+            @foreach ($cards as $card)
+                <div style="width: 100%; max-width: 1520px; margin-bottom: 20px; background: #FFFFFF; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px 30px;">
+                    <!-- Tanggal -->
+                    <div style="color: #0F3D56; font-size: 16px; font-family: Poppins, sans-serif; font-weight: 700; margin-bottom: 10px;">
+                        {{ $card['date'] }}
+                    </div>
+                    <!-- Konten -->
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <!-- Gambar SVG -->
+                        <div style="width: 40px; height: 45px;">
+                            <img src="{{ asset($card['icon']) }}" alt="Icon" style="width: 100%; height: auto;">
+                        </div>
+                        <!-- Deskripsi -->
+                        <div style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <div style="color: #0F3D56; font-weight: bold; font-size: 18px;">
+                                    {{ $card['title'] }}
+                                </div>
+                                <div style="color: #6C757D; font-size: 18px;">
+                                    {{ $card['amount'] }}
+                                </div>
+                            </div>
+                            <div style="color: #007BFF; font-size: 14px;">
+                                {{ $card['desc'] }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach 
+        </div>
+</section>
 @endsection
 
 @section('script')

@@ -93,8 +93,7 @@
 
         <!-- Form Konfirmasi -->
         <div class="form-section">
-            <h2 class="section-title">Konfirmasi Donasi Barang</h2>
-
+            
             <form action="{{ route('donations.store.item', $donation->slug) }}" method="POST" id="confirmationForm">
                 @csrf
 
@@ -137,8 +136,9 @@
                         placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
                     <!-- update : ux writing -->
                     <div class="text-info">*Pastikan deskripsi barang sesuai untuk mempermudah pengelolaan kami.*</div>
-                    <div class="text-info1">*Masih bingung? Hubungi kami untuk panduan donasi barang dan informasi lebih
-                        lengkap!*</div>
+                    <div class="text-info1">
+                        *Silahkan tanyakan jika masih ada kebingungan, <a href="https://wa.me" target="_blank">hubungi kami disini</a>.*
+                    </div>
 
                     @error('deskripsi_barang')
                         <div class="invalid-feedback">{{ $message }}</div>
