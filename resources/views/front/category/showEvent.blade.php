@@ -1,4 +1,25 @@
 @extends('front.layout.app')
+
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <style>
         .search-container {
@@ -148,7 +169,7 @@
             width: 100%;
             min-width: 240px;
             /* Menambahkan minimum width 200px */
-            max-width: 350px;
+            /* max-width: 350px; */
             /* Menjaga lebar tidak lebih dari 350px */
             padding: 0;
             box-sizing: border-box;
@@ -201,7 +222,7 @@
             }
         }
     </style>
-@endsection('style')
+@endsection
 
 @section('content')
     <!-- Hero Section -->
@@ -231,22 +252,17 @@
     <div class="container mt-5">
 
         <!-- Event -->
-        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
+        <div class="row justify-content-center">
             <h2 class="fw-bold">Event</h2>
             <p class="text-muted">Menampilkan event kategori "{{ ucfirst($categories) }}"</p>
 
             <!-- Card Container -->
-            <div id="card-container" class="row d-flex justify-content-center gx-2">
+            <div id="card-container" class="row d-flex justify-content-center ">
                 @forelse ($events as $event)
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center mt-4">
                         <div class="event-card rounded rounded-5">
                             <!-- Thumbnail -->
-                            @if ($event->thumbnail && $event->thumbnail->id_file)
-                                <a href="{{ route('events.show', $event->slug) }}">
-                                    <x-cld-image public-id="{{ $event->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
-                                </a>
-                            @elseif ($event->thumbnail && $event->thumbnail->file_path)
+                            @if ($event->thumbnail && $event->thumbnail->file_path)
                                 <a href="{{ route('events.show', $event->slug) }}">
                                     <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
                                         class="img-fluid overflow-hidden">
@@ -268,8 +284,8 @@
                             <!-- Details -->
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
-                                <p class="event-title fw-bold">{{ $event->title }}
-                                    {{ Str::limit(strip_tags($event->title), 8, '...') }}
+                                <p class="event-title fw-bold">
+                                    {{ Str::limit(strip_tags($event->title), 55, '...') }}
                                 </p>
                                 <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
                                     <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
@@ -282,8 +298,10 @@
                                     {{ Str::limit(strip_tags($event->description), 60, '...') }}
                                 </p>
                                 <p class="card-text  text-extra-small  card-desc small mt-3">
-                                    <a href="" class="me-2 text-light"><i class="fas fa-grip-horizontal"></i> {{ $event->category->name }} </a>
-                                    <a href="" class="text-light"><i class="fa fa-user"></i> {{ $event->user->name ?? 'Anonim' }}</a>
+                                    <a href="" class="me-2 text-light"><i class="fas fa-grip-horizontal"></i>
+                                        {{ $event->category->name }} </a>
+                                    <a href="" class="text-light"><i class="fa fa-user"></i>
+                                        {{ $event->user->name ?? 'Anonim' }}</a>
                                 </p>
                                 <!-- Time and Location -->
 
@@ -309,6 +327,7 @@
 
     </div>
 @endsection
+
 @section('script')
     <script>
         var data = @json($events);

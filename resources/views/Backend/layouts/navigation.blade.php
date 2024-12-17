@@ -113,26 +113,6 @@
                     <li class="nav-header">Management Page</li>
                 @endif
 
-                @if (!empty($PermissionDonation))
-                    <li class="nav-item">
-                        <a href="{{ route('donation.index') }}"
-                            class="nav-link @if (Request::segment(2) == 'donation') active @endif">
-                            <i class="fas fa-hand-holding-heart nav-icon"></i>
-                            <p>Donasi</p>
-                        </a>
-                    </li>
-                @endif
-
-                @if (!empty($PermissionPage))
-                    <li class="nav-item">
-                        <a href="{{ route('pages.index') }}"
-                            class="nav-link @if (Request::segment(2) == 'pages') active @endif">
-                            <i class="fas fa-globe nav-icon"></i>
-                            <p>Webiste</p>
-                        </a>
-                    </li>
-                @endif
-
                 @if (!empty($PermissionArticle))
                     <li class="nav-item">
                         <a href="{{ route('article.index') }}"
@@ -143,12 +123,32 @@
                     </li>
                 @endif
 
+                @if (!empty($PermissionDonation))
+                    <li class="nav-item">
+                        <a href="{{ route('donation.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'donation') active @endif">
+                            <i class="fas fa-hand-holding-heart nav-icon"></i>
+                            <p>Donation</p>
+                        </a>
+                    </li>
+                @endif
+
                 @if (!empty($PermissionEvent))
                     <li class="nav-item">
                         <a href="{{ route('event.index') }}"
                             class="nav-link @if (Request::segment(2) == 'event') active @endif">
                             <i class="fas fa-calendar nav-icon"></i>
-                            <p>Event</p>
+                            <p>Events</p>
+                        </a>
+                    </li>
+                @endif
+
+                @if (!empty($PermissionPage))
+                    <li class="nav-item">
+                        <a href="{{ route('pages.index') }}"
+                            class="nav-link @if (Request::segment(2) == 'pages') active @endif">
+                            <i class="fas fa-globe nav-icon"></i>
+                            <p>Pages Website</p>
                         </a>
                     </li>
                 @endif
@@ -192,7 +192,7 @@
                         <a href="{{ route('role.index') }}"
                             class="nav-link @if (Request::segment(2) == 'role') active @endif">
                             <i class="fas fa-users-cog nav-icon"></i>
-                            <p>Role</p>
+                            <p>Role & Permission</p>
                         </a>
                     </li>
                 @endif

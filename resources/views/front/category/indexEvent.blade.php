@@ -1,5 +1,25 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <style>
         .search-container {
@@ -149,7 +169,7 @@
             width: 100%;
             min-width: 240px;
             /* Menambahkan minimum width 200px */
-            max-width: 350px;
+            /* max-width: 350px; */
             /* Menjaga lebar tidak lebih dari 350px */
             padding: 0;
             box-sizing: border-box;
@@ -200,6 +220,10 @@
         }
 
         @media (max-width: 480px) {
+            /* .event-card{
+                min-width: 250px;
+                max-width: 350px;
+            } */
             .search-box {
                 max-width: 100%;
                 /* Full width untuk layar sangat kecil */
@@ -236,19 +260,16 @@
 
     <!-- Kategori Event -->
     <div class="container mt-5">
-        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2 ">
+        <div class="row justify-content-center">
             <h2 class="fw-bold">Event Categories</h2>
             <p class="text-muted">All Event Category</p>
             <!-- Wadah kartu -->
-            <div id="card-container" class="row d-flex justify-content-between gx-2">
+            <div id="card-container" class="row d-flex justify-content-start">
                 @foreach ($categories as $category)
                     <div class="col-md-6 col-lg-4 col-12 d-flex justify-content-center mt-4 spacer-tablet">
                         <a href="{{ route('events.category', $category->slug) }}" class="text-decoration-none">
                             <div class="event-card rounded rounded-5">
-                                @if ($category->thumbnail && $category->thumbnail->id_file)
-                                    <x-cld-image public-id="{{ $category->thumbnail->id_file }}"
-                                        class="card-img-top img-fluid" />
-                                @elseif ($category->thumbnail && $category->thumbnail->file_path)
+                                @if ($category->thumbnail && $category->thumbnail->file_path)
                                     <img src="{{ $category->thumbnail->file_path }}"
                                         alt="{{ $category->name }}" class="img-fluid">
                                 @else

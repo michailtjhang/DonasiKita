@@ -14,32 +14,34 @@
                 @csrf
                 @method('PATCH')
 
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name"
-                        class="form-control @error('name') is-invalid @enderror" value="{{ $data['user']->name }}"
-                        placeholder="Please Enter Name">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name"
+                            class="form-control @error('name') is-invalid @enderror" value="{{ $data['user']->name }}"
+                            placeholder="Please Enter Name">
 
-                    @error('name')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
-                </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email"
-                        class="form-control @error('email') is-invalid @enderror" value="{{ $data['user']->email }}"
-                        placeholder="Please Enter Email">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email"
+                            class="form-control @error('email') is-invalid @enderror" value="{{ $data['user']->email }}"
+                            placeholder="Please Enter Email">
 
-                    @error('email')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -82,14 +84,17 @@
                                 Show Password
                             </label>
                         </div>
-                        (Do you want to change password? Please enter new password. Otherwise leave it blank)
+                        <small class="form-text text-muted">
+                            *Gunakan password yang kuat (minimal 8 karakter) untuk menjaga keamanan akun Anda.*
+                            <br>(Do you want to change password? Please enter new password. Otherwise leave it blank)
+                        </small>
                     </div>
 
                 </div>
 
                 <div class="col d-flex justify-content-between align-items-center mt-3">
-                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Back</button>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
+                    <button type="submit" class="btn btn-success">Update User</button>
                 </div>
             </form>
         </div>

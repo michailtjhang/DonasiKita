@@ -99,7 +99,7 @@ class DonationController extends Controller
             'title' => 'required|string|max:200|unique:needs',
             'towards' => 'required|string|max:200',
             'description' => 'required|max:2000',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             'amount' => 'required|numeric',
             'description_need' => 'required|max:5000',
             'days_left' => 'required|date|min:1',
@@ -161,6 +161,11 @@ class DonationController extends Controller
             // Simpan URL dan Public ID dari Cloudinary
             $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
             $publicId = $cloudinaryResponse->getPublicId();
+
+            // Langsung hapus file sementara setelah upload
+            if (file_exists($webpPath)) {
+                unlink($webpPath); // Hapus file
+            }
 
             // Simpan data Thumbnail ke tabel Thumbnail
             Thumbnail::create([
@@ -239,7 +244,7 @@ class DonationController extends Controller
             ],
             'towards' => 'required|string|max:200',
             'description' => 'required|max:2000',
-            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'amount' => 'required|numeric',
             'description_need' => 'required|max:5000',
             'days_left' => 'required|date',
@@ -281,6 +286,11 @@ class DonationController extends Controller
 
                 $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
                 $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
 
                 // Hapus file lama dari Cloudinary jika ada
                 if (!empty($need->thumbnail->id_file)) {

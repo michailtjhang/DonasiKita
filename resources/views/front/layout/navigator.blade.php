@@ -5,7 +5,7 @@
         <div class="container d-flex align-items-center">
 
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="/images/logo-navbar.svg" alt="" srcset="" class="logo-brand img-fluid">
+                <img src="{{ asset('/images/logo-navbar.svg') }}" alt="" srcset="" class="logo-brand img-fluid">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,15 +33,25 @@
                         <a class="nav-link @if (Request::segment(1) == 'blog' || Request::segment(1) == 'blogs') active @endif"
                             href="{{ route('blog') }}">Blogs & Article</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Language
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="?lang=en">English</a></li>
+                            <li><a class="dropdown-item" href="?lang=id">Bahasa Indonesia</a></li>
+                        </ul>
+                    </li>
                     @auth
                         <li class="nav-item">
                             <div class="dropdown">
-                                <button class="dropbtn bg-light"><img src="https://www.w3schools.com/w3images/avatar2.png"
+                                <button class="dropbtn bg-light"><img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
                                         alt="Avatar" class="avatar"></button>
                                 <div class="dropdown-content bg-light profile-dropdown bg-light px-2 py-2">
                                     <hr class="dropdown-divider">
                                     <div class="text-center">
-                                        <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Avatar"
+                                        <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}" alt="Avatar"
                                             class="avatar mb-2">
                                     </div>
                                     <div class="text-center px-2 mb-2">

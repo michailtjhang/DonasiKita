@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }} | Log in</title>
+    <!-- ======================== Icon ========================= -->
+    <link rel="icon" type="image/x-svg" href="{{ asset('img/icon.svg') }}">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -208,7 +210,7 @@
 
             <div class="social-auth-links text-center">
                 <p class="pt-2">- OR -</p>
-                <a href="#" class="btn btn-block btn-danger d-flex align-items-center justify-content-center">
+                <a href="{{ route('auth.socialite.redirect') }}" class="btn btn-block btn-danger d-flex align-items-center justify-content-center">
                     <i class="fab fa-google me-2"></i> Sign in using Google
                 </a>
             </div>

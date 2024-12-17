@@ -32,9 +32,6 @@ class DonationController extends Controller
             return $donation;
         });
 
-        // Debug untuk memverifikasi hasil
-        // dd($donations);
-
         return view('front.donation.index', [
             'page_title' => 'Donations',
             'donations' => $donations,
@@ -54,11 +51,15 @@ class DonationController extends Controller
             ->where('status', 'approved')
             ->count();
 
+        // Generate keywords dari deskripsi
+        $keywords = $this->generateKeywords($donation->description);
+
         return view('front.donation.show', [
             'page_title' => $donation->title,
             'donation' => $donation,
             'amoutDonated' => $amoutDonated,
-            'donatorCount' => $donatorCount
+            'donatorCount' => $donatorCount,
+            'keywords' => $keywords,
         ]);
     }
 
@@ -217,7 +218,7 @@ class DonationController extends Controller
             if (Auth::check()) {
                 $request->validate([
                     'nama_rekening' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -286,7 +287,7 @@ class DonationController extends Controller
             } else {
                 $request->validate([
                     'nama_rekening' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -374,7 +375,7 @@ class DonationController extends Controller
             if (Auth::check()) {
                 $request->validate([
                     'nomor_resi' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -442,7 +443,7 @@ class DonationController extends Controller
             } else {
                 $request->validate([
                     'nomor_resi' => 'required|string|max:50',
-                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                    'bukti_foto' => 'required|image|mimes:jpg,png,jpeg|max:2048',
                 ]);
                 $data = $request->all();
 
@@ -513,5 +514,32 @@ class DonationController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    function generateKeywords($description, $limit = 10)
+    {
+        // Hilangkan karakter spesial
+        $description = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', '', $description));
+
+        // Pisahkan kata-kata
+        $words = explode(' ', $description);
+
+        // Hilangkan kata-kata umum (stop words)
+        $stopWords = ['dan', 'atau', 'yang', 'di', 'ke', 'dari', 'ini', 'itu', 'adalah', 'sebagai', 'dengan', 'untuk'];
+        $filteredWords = array_filter($words, function ($word) use ($stopWords) {
+            return !in_array($word, $stopWords) && strlen($word) > 2;
+        });
+
+        // Hitung frekuensi kata
+        $wordCounts = array_count_values($filteredWords);
+
+        // Urutkan berdasarkan frekuensi
+        arsort($wordCounts);
+
+        // Ambil kata-kata paling sering muncul
+        $keywords = array_keys(array_slice($wordCounts, 0, $limit, true));
+
+        // Gabungkan menjadi string keyword
+        return implode(', ', $keywords);
     }
 }

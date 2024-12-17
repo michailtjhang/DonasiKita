@@ -102,19 +102,28 @@ class AuthController extends Controller
             'password_confirmation.required' => 'Password confirmation is required',
         ]);
 
-        // Cari user terakhir
-        $user = User::latest()->first();
+        // Cari user terakhir berdasarkan ID terbaru
+        $user = User::latest('id')->first();
         $kodeUser = "US";
 
         // Jika user terakhir belum ada
-        if ($user == null) {
+        if (!$user || !$user->id_user) {
             $id_user = $kodeUser . "001";
         } else {
-            // Jika user terakhir sudah ada
-            $id_user = $user->id_user;
-            $urutan = (int) substr($id_user, 3, 3);
-            $urutan++;
-            $id_user = $kodeUser . sprintf("%03s", $urutan);
+            // Ambil id_user terakhir
+            $id_user_terakhir = $user->id_user;
+
+            // Pastikan id_user mengikuti format "USXXX"
+            if (preg_match('/^US(\d{3})$/', $id_user_terakhir, $matches)) {
+                // Ambil angka terakhir, tambahkan 1
+                $urutan = (int) $matches[1] + 1;
+            } else {
+                // Jika format tidak sesuai, reset ke 001
+                $urutan = 1;
+            }
+
+            // Format ulang ID user dengan padding nol di depan
+            $id_user = $kodeUser . sprintf("%03d", $urutan);
         }
 
         // Membuat user

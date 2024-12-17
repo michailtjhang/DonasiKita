@@ -26,6 +26,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'provider_id',
+        'provider_name',
+        'access_token',
+        'refresh_token',
+        'email_verified_at',
     ];
 
     // Ambil data

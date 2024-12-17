@@ -115,7 +115,7 @@ class EventController extends Controller
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
-            'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
             'participant_description' => 'required|string|max:500',
@@ -203,6 +203,11 @@ class EventController extends Controller
             // Simpan URL dan Public ID dari Cloudinary
             $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
             $publicId = $cloudinaryResponse->getPublicId();
+
+            // Langsung hapus file sementara setelah upload
+            if (file_exists($webpPath)) {
+                unlink($webpPath); // Hapus file
+            }
 
             // Simpan data Thumbnail ke tabel Thumbnail
             Thumbnail::create([
@@ -301,7 +306,7 @@ class EventController extends Controller
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|max:5000',
             'organizer' => 'required|string|max:255',
-            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'date' => 'required|string',
             'participant' => 'required|integer|min:1',
             'participant_description' => 'required|string|max:500',
@@ -350,6 +355,11 @@ class EventController extends Controller
 
                 $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
                 $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
 
                 // Hapus file lama dari Cloudinary jika ada
                 if (!empty($event->thumbnail->id_file)) {

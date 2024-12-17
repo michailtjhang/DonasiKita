@@ -1,5 +1,25 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
     <style>
@@ -217,7 +237,7 @@
 
         /* Container Styling */
         #donation-cards .container {
-            max-width: 1200px;
+            /* max-width: 1200px; */
             margin: 0 auto;
         }
     </style>
@@ -259,7 +279,7 @@
                         <div class="donation-card rounded rounded-5">
                             @if ($donation->thumbnail && $donation->thumbnail->file_path)
                                 <img src="{{ $donation->thumbnail->file_path }}" class="card-img-top img-fluid blog-img"
-                                    alt="{{ $donation->title }}" style="object-fit: cover !important; height: 160px !important;">
+                                    alt="{{ $donation->title }}" style="object-fit: cover !important; height: 160px !important; width: 500px !important">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
                                     style="height: 160px;">
@@ -267,8 +287,8 @@
                                 </div>
                             @endif
                             <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $donation->title }}
-                                    {{ Str::limit(strip_tags($donation->title), 10, '...') }}
+                                <h5 class="card-title text-dark">
+                                    {{ Str::limit(strip_tags($donation->title), 50, '...') }}
                                 </h5>
                                 <p class="card-text text-muted">{{ $donation->towards }}</p>
                                 <div class="progress my-3">
@@ -306,6 +326,7 @@
         </div>
     </section>
 @endsection
+
 @section('script')
     <script>
         var data = @json($donations);

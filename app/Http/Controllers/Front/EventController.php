@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\EventRegistration;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EventRegistrationNotification;
 
 class EventController extends Controller
 {
@@ -29,8 +32,13 @@ class EventController extends Controller
     public function show(string $slug)
     {
         $event = Event::with('category', 'thumbnail', 'detailEvent', 'location')
-            ->whereHas('detailEvent', function ($query) {
-                $query->where('end', '>=', now()); // Pastikan event belum selesai
+            ->where(function ($query) {
+                $query->whereHas('detailEvent', function ($subQuery) {
+                    $subQuery->where('end', '>=', now()); // Event yang belum selesai
+                })
+                    ->orWhereHas('eventRegistration', function ($subQuery) {
+                        $subQuery->where('user_id', Auth::id()); // Event yang sudah selesai, tapi user pernah join
+                    });
             })
             ->whereSlug($slug)
             ->firstOrFail();
@@ -50,11 +58,15 @@ class EventController extends Controller
             'sukarelawan' => $partisipanSukarelawan
         ];
 
+        // Generate keywords dari deskripsi
+        $keywords = $this->generateKeywords($event->description);
+
         return view('front.event.show', [
             'page_title' => $event->title,
             'event' => $event,
             'partisipan' => $partisipan,
-            'userJoined' => $userJoined
+            'userJoined' => $userJoined,
+            'keywords' => $keywords
         ]);
     }
 
@@ -75,13 +87,42 @@ class EventController extends Controller
         } while (EventRegistration::where('registration_id', $registrationId)->exists()); // Pastikan unik
 
         // Contoh penyimpanan ke tabel "event_participants"
-        EventRegistration::create([
+        $registration = EventRegistration::create([
             'registration_id' => $registrationId,
             'event_id' => $eventId,
             'user_id' => auth()->id(),
             'status' => $status,
         ]);
+        // Kirim email notifikasi
+        Mail::to(auth()->user()->email)->send(new EventRegistrationNotification($registration));
 
         return response()->json(['success' => true, 'message' => "Anda telah bergabung sebagai $status!"]);
+    }
+
+    function generateKeywords($description, $limit = 10)
+    {
+        // Hilangkan karakter spesial
+        $description = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', '', $description));
+
+        // Pisahkan kata-kata
+        $words = explode(' ', $description);
+
+        // Hilangkan kata-kata umum (stop words)
+        $stopWords = ['dan', 'atau', 'yang', 'di', 'ke', 'dari', 'ini', 'itu', 'adalah', 'sebagai', 'dengan', 'untuk'];
+        $filteredWords = array_filter($words, function ($word) use ($stopWords) {
+            return !in_array($word, $stopWords) && strlen($word) > 2;
+        });
+
+        // Hitung frekuensi kata
+        $wordCounts = array_count_values($filteredWords);
+
+        // Urutkan berdasarkan frekuensi
+        arsort($wordCounts);
+
+        // Ambil kata-kata paling sering muncul
+        $keywords = array_keys(array_slice($wordCounts, 0, $limit, true));
+
+        // Gabungkan menjadi string keyword
+        return implode(', ', $keywords);
     }
 }

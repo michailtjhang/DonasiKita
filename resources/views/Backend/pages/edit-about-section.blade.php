@@ -43,6 +43,10 @@
                                 onchange="previewImage(event)">
                             <label class="custom-file-label" for="logo">Choose file</label>
                         </div>
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang
+                            diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
                     </div>
 
                     <div class="row mt-3 text-center">
@@ -56,7 +60,7 @@
                         <!-- Existing Image -->
                         <div class="col-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
-                            <img src="{{ $sectionData['image'] ?? asset($sectionData['logo']) ?? '' }}"
+                            <img src="{{ $sectionData['image'] ?? (asset($sectionData['logo']) ?? '') }}"
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
@@ -79,6 +83,9 @@
                                 onchange="previewImage(event)">
                             <label class="custom-file-label" for="about_image">Choose file</label>
                         </div>
+                        <small class="form-text text-muted">
+                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                        </small>
                     </div>
 
                     <div class="row mt-3 text-center">
@@ -92,7 +99,7 @@
                         <!-- Existing Image -->
                         <div class="col-6">
                             <span class="d-block mb-2 text-muted">Existing:</span>
-                            <img src="{{ $sectionData['image'] ?? asset($sectionData['image']) ?? '' }}"
+                            <img src="{{ $sectionData['image'] ?? (asset($sectionData['image']) ?? '') }}"
                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                         </div>
@@ -123,6 +130,9 @@
                                             <label class="custom-file-label" for="team_image_{{ $key }}">Choose
                                                 file</label>
                                         </div>
+                                        <small class="form-text text-muted">
+                                            *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                                        </small>
                                     </div>
                                     <div class="row mt-3 text-center">
                                         <!-- Preview Image -->
@@ -136,7 +146,7 @@
                                         <!-- Existing Image -->
                                         <div class="col-6">
                                             <span class="d-block mb-2 text-muted">Existing:</span>
-                                            <img src="{{ $team['image'] ?? asset($team['image']) ?? '' }}"
+                                            <img src="{{ $team['image'] ?? (asset($team['image']) ?? '') }}"
                                                 class="img-thumbnail shadow-sm border" alt="Existing Image"
                                                 style="max-height: 150px; max-width: 100%; object-fit: cover;">
                                         </div>
@@ -213,6 +223,9 @@
                         <input type="file" name="team[${teamIndex}][image]" id="team_image_${teamIndex}" class="custom-file-input" onchange="previewTeamImage(event, ${teamIndex})">
                         <label class="custom-file-label" for="team_image_${teamIndex}">Choose file</label>
                     </div>
+                    <small class="form-text text-muted">
+                        *Unggah foto dengan ukuran maksimal 2MB dan format JPG, PNG, atau JPEG. Pastikan foto yang diunggah jelas dan tidak mengandung unsur yang tidak pantas.*
+                    </small>
                 </div>
                 <div class="row mt-3 text-center">
                     <div class="col-6">

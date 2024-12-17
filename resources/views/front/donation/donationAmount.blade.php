@@ -338,10 +338,10 @@
         let selectedNominal = 0;
         let transferFee = 0;
         const bankFees = {
-            mandiri: 4000,
-            bca: 4500,
-            bni: 3000,
-            bri: 3500
+            mandiri: 0,
+            bca: 0,
+            bni: 0,
+            bri: 0
         };
 
         // Event listener untuk tombol nominal
@@ -399,7 +399,7 @@
             totalAmountElement.innerHTML = `
             <span>Total Donasi:</span>
             <span>Rp ${totalAmount.toLocaleString()}</span>
-            <div style="font-size: 10px; color: #6c757d;">(Termasuk biaya transfer Rp ${transferFee.toLocaleString()})</div>
+            <div style="font-size: 10px; color: #6c757d;">(Tidak termasuk biaya Admin & Transfer)</div>
         `;
         }
 
@@ -408,5 +408,39 @@
             const dropdown = document.getElementById('dropdown-options');
             dropdown.classList.toggle('show');
         }
+    </script>
+
+    <script>
+        // SweetAlert konfirmasi sebelum kirim
+        document.getElementById('confirmationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah submit form langsung
+            
+            const selectedBank = document.querySelector('input[name="bank"]:checked');
+            const totalAmount = selectedNominal + transferFee;
+
+            if (!selectedBank || totalAmount <= 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Silakan pilih bank dan masukkan nominal donasi minimal Rp 10.000.',
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Konfirmasi Donasi',
+                text: `Apakah Anda yakin ingin mengirim donasi sebesar Rp ${totalAmount.toLocaleString()} ke ${selectedBank.value.toUpperCase()}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Lanjutkan',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit(); // Lanjutkan kirim form
+                }
+            });
+        });
     </script>
 @endsection

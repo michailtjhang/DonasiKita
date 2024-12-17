@@ -1,5 +1,25 @@
 @extends('front.layout.app')
 
+@section('seoMeta')
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="{{ $config['meta_description'] }}">
+    <meta name="keywords"
+        content="{{ $config['meta_keywords'] }}">
+    <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
+
+    <!-- Open Graph Meta Tags for social media sharing -->
+    <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
+    <meta property="og:description"
+        content="{{ $config['meta_description'] }}">
+    <meta property="og:image" content="{{ $config['logo'] ?? asset('images/logo-navbar.svg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+@endsection
+
 @section('style')
     <style>
         /* Styling untuk kategori */
@@ -241,10 +261,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <a href="{{ route('blogs.category', $category->slug) }}" class="text-decoration-none">
                         <div class="card-category rounded rounded-5">
-                            @if ($category->thumbnail && $category->thumbnail->id_file)
-                                <x-cld-image public-id="{{ $category->thumbnail->id_file }}"
-                                    class="card-img-top img-fluid" />
-                            @elseif ($category->thumbnail && $category->thumbnail->file_path)
+                            @if ($category->thumbnail && $category->thumbnail->file_path)
                                 <img src="{{ $category->thumbnail->file_path }}" alt="{{ $category->name }}">
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"

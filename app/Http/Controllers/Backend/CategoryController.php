@@ -45,7 +45,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|unique:categories|min:3',
             'description' => 'required',
-            'img' => 'required',
+            'img' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ], [
             'name.required' => 'Name is required',
             'name.min' => 'Name must be at least 3 characters',
@@ -89,6 +89,11 @@ class CategoryController extends Controller
             $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
             $publicId = $cloudinaryResponse->getPublicId();
 
+            // Langsung hapus file sementara setelah upload
+            if (file_exists($webpPath)) {
+                unlink($webpPath); // Hapus file
+            }
+
             Thumbnail::create([
                 'file_path' => $cloudinaryUrl,
                 'id_file' => $publicId,
@@ -112,7 +117,7 @@ class CategoryController extends Controller
                 Rule::unique('categories', 'name')->ignore($id),
             ],
             'description' => 'required',
-            'img' => 'required',
+            'img' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ], [
             'name.required' => 'Name is required',
             'name.min' => 'Name must be at least 3 characters',
@@ -154,6 +159,11 @@ class CategoryController extends Controller
 
                 $cloudinaryUrl = $cloudinaryResponse->getSecurePath();
                 $publicId = $cloudinaryResponse->getPublicId();
+
+                // Langsung hapus file sementara setelah upload
+                if (file_exists($webpPath)) {
+                    unlink($webpPath); // Hapus file
+                }
 
                 // Hapus file lama dari Cloudinary jika ada
                 if (!empty($blog->thumbnail->id_file)) {
