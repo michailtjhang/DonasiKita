@@ -248,8 +248,8 @@
     <section class="hero-section2 w-100 align-items-center" style="background-image: url('/images/donation-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Bergabung dalam Gerakan Kebaikan</h1>
-            <p class="hero-subtitle2">Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.</p>
+            <h1 class="hero-title2">@lang('messages.donation_header_title')</h1>
+            <p class="hero-subtitle2">@lang('messages.donation_header_subtitle')</p>
         </div>
     </section>
     <!-- End Hero Section -->

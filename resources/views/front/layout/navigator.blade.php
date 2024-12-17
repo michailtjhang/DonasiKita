@@ -40,8 +40,8 @@
                             <img src="{{ asset('/images/language.svg') }}" alt="Language Logo" width="45" height="45">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                            <li><a class="dropdown-item" href="?lang=en">English</a></li>
-                            <li><a class="dropdown-item" href="?lang=id">Bahasa Indonesia</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/locale/en') }}">English</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/locale/id') }}">Bahasa Indonesia</a></li>
                         </ul>
                     </li>
                     @auth
