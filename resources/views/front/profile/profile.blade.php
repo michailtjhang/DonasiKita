@@ -286,189 +286,201 @@
     <!-- Followed Event -->
     <section id="folowed-event" class="container pt-5 mb-5">
         <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
-            <h2 class="fw-bold" style="color: #0F3D56">Event yang Diikuti</h2>
+            <h2 class="fw-bold" style="color: #0F3D56">@lang('messages.profile_followed_event_title')</h2>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="text-muted mb-0">Selesaikan Event untuk membantu saudara kita.</p>
+                <p class="text-muted mb-0">@lang('messages.profile_followed_event_subtitle').</p>
                 <a href="#" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
-                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">Ikuti Event Lainnya</a>
+                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">@lang('messages.btn_see_more_event')</a>
             </div>
 
-        <!-- Container untuk card -->
-        <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
-            <!-- Card 1 -->
-            @forelse($futureEvents as $registration)
-            <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4" style="scroll-snap-align: start; width: 300px;">
-                <a href="{{ route('events.show', $registration->event->slug) }}" class="text-light">
-                @if ($registration->event->thumbnail && $registration->event->thumbnail->file_path)
-                    <img src="{{ $registration->event->thumbnail->file_path }}" alt="{{ $registration->event->title }}"
-                        class="img-fluid overflow-hidden">
-                @else
-                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                        style="height: 450px;">
-                        <span>No cover image</span>
-                    </div>
-                @endif>
-                <div class="event-card-spacer">
-                    <div class="date-label bg-primary text-white event-date">
-                        {{ $registration->event->detailEvent->start->format('d M Y') }}
-                    </div>
-                </div>
-                <div class="event-details event-card-spacer event-card-spacer">
-                    <p class="card-title fw-bold h4">
-                        {{ Str::limit(strip_tags($registration->event->title), 25, '...') }}
-                    </p>
-                    <div class="card-text text-extra-small d-flex justify-content-between">
-                        <div class="col-md-6">
-                            <i class="fa-solid fa-clock"></i> 
-                            {{ $registration->event->detailEvent->start->format('H:i') }} -
-                            {{$registration->event->detailEvent->end->format('H:i') }}
-                            <br>
-                        </div>
-                        <div class="col-md-6">
-                            <i class="fa-solid fa-location-dot"></i> {{ $registration->event->location->name_location }}
-                        </div>
-                    </div>
-                
-                    <p class="card-text text-extra-small opacity-75 small">
-                        {{ Str::limit(strip_tags($registration->event->description), 100, '...') }}
-                    </p>
-                    <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                        <a href="#" class="me-2 text-decoration-none text-light">
-                            <i class="fas fa-grip-horizontal"></i> {{$registration->event->category->name }}
+            <!-- Container untuk card -->
+            <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
+                <!-- Card 1 -->
+                @forelse($futureEvents as $registration)
+                    <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
+                        style="scroll-snap-align: start; width: 300px;">
+                        <a href="{{ route('events.show', $registration->event->slug) }}" class="text-light">
+                            @if ($registration->event->thumbnail && $registration->event->thumbnail->file_path)
+                                <img src="{{ $registration->event->thumbnail->file_path }}"
+                                    alt="{{ $registration->event->title }}" class="img-fluid overflow-hidden">
+                            @else
+                                <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                    style="height: 450px;">
+                                    <span>No cover image</span>
+                                </div>
+                            @endif>
+                            <div class="event-card-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    {{ $registration->event->detailEvent->start->format('d M Y') }}
+                                </div>
+                            </div>
+                            <div class="event-details event-card-spacer event-card-spacer">
+                                <p class="card-title fw-bold h4">
+                                    {{ Str::limit(strip_tags($registration->event->title), 25, '...') }}
+                                </p>
+                                <div class="card-text text-extra-small d-flex justify-content-between">
+                                    <div class="col-md-6">
+                                        <i class="fa-solid fa-clock"></i>
+                                        {{ $registration->event->detailEvent->start->format('H:i') }} -
+                                        {{ $registration->event->detailEvent->end->format('H:i') }}
+                                        <br>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        {{ $registration->event->location->name_location }}
+                                    </div>
+                                </div>
+
+                                <p class="card-text text-extra-small opacity-75 small">
+                                    {{ Str::limit(strip_tags($registration->event->description), 100, '...') }}
+                                </p>
+                                <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
+                                    <a href="#" class="me-2 text-decoration-none text-light">
+                                        <i class="fas fa-grip-horizontal"></i> {{ $registration->event->category->name }}
+                                    </a>
+                                    <i class="fa fa-user"> </i> {{ $registration->event->organizer ?? 'Anonim' }}
+                                </p>
+                            </div>
                         </a>
-                        <i class="fa fa-user"> </i> {{ $registration->event->organizer ?? 'Anonim' }}
-                   </p>                    
-                </div>
-                </a>
-            </div>
-            @empty
-            <div class="col-12 text-center mt-4">
-                <p class="fw-bold text-primary">Belum ada event yang diikuti</p>
-            </div>
-            @endforelse
-
-            
-        </div>
-    </div>
-</section>
-<!-- End Followed Event -->
-
-<!-- History Event -->
-<section id="history-event" class="container py-2 mb-5">
-    <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
-        <h2 class="fw-bold" style="color: #0F3D56;">History yang pernah diikuti</h2>
-        <p class="text-muted">Semua progress anda akan disimpan dan menjadi langkah untuk mengubah dunia.</p>
-
-        <!-- Container untuk card -->
-        <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
-            <!-- Card 1 -->
-            @forelse ($pastEvents as $registration)
-            <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4" style="scroll-snap-align: start; width: 300px;">
-            <a href="{{ route('events.show', $registration->event->slug) }}" class="text-light">
-            @if ($registration->event->thumbnail && $registration->event->thumbnail->file_path)
-                <img src="{{ $registration->event->thumbnail->file_path }}" alt="{{ $registration->event->title }}"
-                    class="img-fluid overflow-hidden">
-            @else
-                <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                    style="height: 450px;">
-                    <span>No cover image</span>
-                </div>
-            @endif>
-            <div class="event-card-spacer">
-                <div class="date-label bg-primary text-white event-date">
-                    {{ $registration->event->detailEvent->start->format('d M Y') }}
-                </div>
-            </div>
-            <div class="event-details event-card-spacer event-card-spacer">
-                <p class="card-title fw-bold h4">
-                    {{ Str::limit(strip_tags($registration->event->title), 25, '...') }}
-                </p>
-                <div class="card-text text-extra-small d-flex justify-content-between">
-                    <div class="col-md-6">
-                        <i class="fa-solid fa-clock"></i> 
-                        {{ $registration->event->detailEvent->start->format('H:i') }} -
-                        {{$registration->event->detailEvent->end->format('H:i') }}
-                        <br>
                     </div>
-                    <div class="col-md-6">
-                        <i class="fa-solid fa-location-dot"></i> {{ $registration->event->location->name_location }}
+                @empty
+                    <div class="col-12 text-center mt-4">
+                        <p class="fw-bold text-primary">Belum ada event yang diikuti</p>
                     </div>
-                </div>
-            
-                <p class="card-text text-extra-small opacity-75 small">
-                    {{ Str::limit(strip_tags($registration->event->description), 100, '...') }}
-                </p>
-                <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
-                    <a href="#" class="me-2 text-decoration-none text-light">
-                        <i class="fas fa-grip-horizontal"></i> {{$registration->event->category->name }}
-                    </a>
-                    <i class="fa fa-user"> </i> {{ $registration->event->organizer ?? 'Anonim' }}
-               </p>                    
-            </div>
-            </a>
-        </div>
-            @empty
-            <div class="col-12 text-center mt-4">
-                <p class="fw-bold text-primary">Belum ada event yang selesai</p>
-            </div>
-            @endforelse
+                @endforelse
 
-        </div>
-    </div>
-</section>
-<!-- End HistoryEvent -->
 
-<!-- History Donation -->
-<section id="history-donation" class="container pt-5 mb-5">
+            </div>
+        </div>
+    </section>
+    <!-- End Followed Event -->
+
+    <!-- History Event -->
+    <section id="history-event" class="container py-2 mb-5">
+        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
+            <h2 class="fw-bold" style="color: #0F3D56;">@lang('messages.profile_history_event_title')</h2>
+            <p class="text-muted">@lang('messages.profile_history_event_subtitle')</p>
+
+            <!-- Container untuk card -->
+            <div class="card-container d-flex gap-3" style="overflow-x: auto; scroll-snap-type: x mandatory;">
+                <!-- Card 1 -->
+                @forelse ($pastEvents as $registration)
+                    <div class="event-card-short flex-shrink-0 rounded rounded-5 shadow-sm mb-4"
+                        style="scroll-snap-align: start; width: 300px;">
+                        <a href="{{ route('events.show', $registration->event->slug) }}" class="text-light">
+                            @if ($registration->event->thumbnail && $registration->event->thumbnail->file_path)
+                                <img src="{{ $registration->event->thumbnail->file_path }}"
+                                    alt="{{ $registration->event->title }}" class="img-fluid overflow-hidden">
+                            @else
+                                <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                    style="height: 450px;">
+                                    <span>No cover image</span>
+                                </div>
+                            @endif>
+                            <div class="event-card-spacer">
+                                <div class="date-label bg-primary text-white event-date">
+                                    {{ $registration->event->detailEvent->start->format('d M Y') }}
+                                </div>
+                            </div>
+                            <div class="event-details event-card-spacer event-card-spacer">
+                                <p class="card-title fw-bold h4">
+                                    {{ Str::limit(strip_tags($registration->event->title), 25, '...') }}
+                                </p>
+                                <div class="card-text text-extra-small d-flex justify-content-between">
+                                    <div class="col-md-6">
+                                        <i class="fa-solid fa-clock"></i>
+                                        {{ $registration->event->detailEvent->start->format('H:i') }} -
+                                        {{ $registration->event->detailEvent->end->format('H:i') }}
+                                        <br>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        {{ $registration->event->location->name_location }}
+                                    </div>
+                                </div>
+
+                                <p class="card-text text-extra-small opacity-75 small">
+                                    {{ Str::limit(strip_tags($registration->event->description), 100, '...') }}
+                                </p>
+                                <p class="card-text fw-thin text-extra-small opacity-75 p-0 m-0">
+                                    <a href="#" class="me-2 text-decoration-none text-light">
+                                        <i class="fas fa-grip-horizontal"></i> {{ $registration->event->category->name }}
+                                    </a>
+                                    <i class="fa fa-user"> </i> {{ $registration->event->organizer ?? 'Anonim' }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                @empty
+                    <div class="col-12 text-center mt-4">
+                        <p class="fw-bold text-primary">Belum ada event yang selesai</p>
+                    </div>
+                @endforelse
+
+            </div>
+        </div>
+    </section>
+    <!-- End HistoryEvent -->
+
+    <!-- History Donation -->
+    <section id="history-donation" class="container pt-5 mb-5">
         <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5  mx-md-5 px-2  mx-2 ">
             <h2 class="fw-bold" style="color: #0F3D56">History Donasi</h2>
             <div class="d-flex justify-content-between align-items-center">
                 <p class="text-muted mb-0">Terimakasih telah membantu mereka yang membutuhkan.</p>
-                <a href="#" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
+                <a href="{{ route('donations') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
                     style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">Ayo berdonasi lagi</a>
             </div>
-            <p class="fw-bold" style="color: #0F3D56">Kamu telah mendonasikan 2 barang dan Rp 200.000.000 kepada mereka yang membutuhkan</p>
-        
-                @php
-                $cards = [
-                    ['date' => '20 Desember 2024', 'title' => 'Renovasi Masjid di Pelosok Negeri', 'amount' => 'Rp 100.000,00', 'desc' => 'Dana Berhasil Dinonasikan', 'icon' => 'images/history/uang.svg'],
-                    ['date' => '20 Desember 2024', 'title' => 'Renovasi Masjid di Pelosok Negeri', 'amount' => 'Baju, Celana, dan Makanan', 'desc' => 'Barang Berhasil Dinonasikan', 'icon' => 'images/history/barang.svg'],
-                    ['date' => '20 Desember 2024', 'title' => 'Bantu Petani Lokal di Masa Sulit', 'amount' => 'Rp 500.000,00', 'desc' => 'Dana Berhasil Dinonasikan', 'icon' => 'images/history/uang.svg'],
-                    ['date' => '20 Desember 2024', 'title' => 'Bantu Petani Lokal di Masa Sulit', 'amount' => 'Peralatan Tani', 'desc' => 'Barang Berhasil Dinonasikan', 'icon' => 'images/history/barang.svg']
-                ];
-            @endphp
+            <p class="fw-bold" style="color: #0F3D56">
+                Kamu telah mendonasikan {{ $totalItems }} barang dan Rp
+                {{ number_format($totalAmount, 0, ',', '.') }} kepada mereka yang membutuhkan.
+            </p>
 
-            @foreach ($cards as $card)
-                <div style="width: 100%; max-width: 1520px; margin-bottom: 20px; background: #FFFFFF; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px 30px;">
-                    <!-- Tanggal -->
-                    <div style="color: #0F3D56; font-size: 16px; font-family: Poppins, sans-serif; font-weight: 700; margin-bottom: 10px;">
-                        {{ $card['date'] }}
-                    </div>
-                    <!-- Konten -->
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <!-- Gambar SVG -->
-                        <div style="width: 40px; height: 45px;">
-                            <img src="{{ asset($card['icon']) }}" alt="Icon" style="width: 100%; height: auto;">
+            @if ($donations->count())
+                @foreach ($donations as $donation)
+                    <div
+                        style="width: 100%; max-width: 1520px; margin-bottom: 20px; background: #FFFFFF; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px 30px;">
+                        <!-- Tanggal -->
+                        <div
+                            style="color: #0F3D56; font-size: 16px; font-family: Poppins, sans-serif; font-weight: 700; margin-bottom: 10px;">
+                            {{ $donation->created_at->format('d M Y') }}
                         </div>
-                        <!-- Deskripsi -->
-                        <div style="flex: 1;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                <div style="color: #0F3D56; font-weight: bold; font-size: 18px;">
-                                    {{ $card['title'] }}
+                        <!-- Konten -->
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <!-- Gambar SVG -->
+                            <div style="width: 40px; height: 45px;">
+                                <img src="{{ $donation->amount == null ? asset('images/history/barang.svg') : asset('images/history/uang.svg') }}"
+                                    alt="Icon" style="width: 100%; height: auto;" />
+                            </div>
+                            <!-- Deskripsi -->
+                            <div style="flex: 1;">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                    <div style="color: #0F3D56; font-weight: bold; font-size: 18px;">
+                                        {{ $donation->need->title }}
+                                    </div>
+                                    <div style="color: #6C757D; font-size: 18px;">
+                                        Rp.
+                                        {{ $donation->amount == null ? $donation->description_item : number_format($donation->amount, 2) }}
+                                    </div>
                                 </div>
-                                <div style="color: #6C757D; font-size: 18px;">
-                                    {{ $card['amount'] }}
+                                <div style="color: #007BFF; font-size: 14px;">
+                                    {{ $donation->amount == null ? 'Barang Berhasil Dinonasikan' : 'Dana Berhasil Dinonasikan' }}
                                 </div>
                             </div>
-                            <div style="color: #007BFF; font-size: 14px;">
-                                {{ $card['desc'] }}
-                            </div>
                         </div>
                     </div>
+                @endforeach
+
+                <!-- Pagination Links -->
+                <div class="d-flex justify-content-center">
+                    {{ $donations->links('pagination::bootstrap-5') }}
                 </div>
-            @endforeach 
+            @else
+                <p class="fw-bold text-center text-primary">Belum ada donasi yang tercatat.</p>
+            @endif
         </div>
-</section>
+    </section>
 @endsection
 
 @section('script')

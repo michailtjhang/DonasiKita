@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\LogVisitor;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\AdminUserMiddleware;
@@ -17,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'useradmin' => AdminUserMiddleware::class,
             'verifiedEmail' => VerifyEmailMiddleware::class,
-            'logvisitor' => LogVisitor::class
+            'logvisitor' => LogVisitor::class,
+            'setlocale' => SetLocale::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

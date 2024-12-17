@@ -116,7 +116,7 @@
                             <div class="text-center">
                                 <a href="{{ $item['button_link'] }}" class="btn btn-primary"
                                     style="margin: 6px; padding: 10px 20px;">
-                                    <h3>Bantu Sekarang</h3>
+                                    <h3>@lang('messages.hero_title')</h3>
                                 </a>
                             </div>
                         </div>
@@ -163,12 +163,12 @@
                     <div class="d-flex flex-wrap align-items-center pb-2">
                         <!-- Paragraf -->
                         <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-10">
-                            Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!
+                            @lang('messages.donate_message')
                         </p>
                         <!-- Tombol -->
                         <a href="{{ route('donations') }}" class="btn rounded rounded-5 fw-light col-4 col-lg-2"
                             style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
-                            See More
+                            @lang('messages.see_more')
                         </a>
                     </div>
                 </div>
@@ -247,12 +247,12 @@
         <div class="container">
             <div class="row justify-content-between align-items-center">
                 <div class="col-6 d-flex justify-content-start">
-                    <h1 class="bolder-text text-dark text-start">Join Our Upcoming Event</h1>
+                    <h1 class="bolder-text text-dark text-start">@lang('messages.upcoming_event')</h1>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
                     <a href="{{ route('events') }}" class="btn rounded rounded-5 fw-light" id="button-event"
                         style="border: 2px solid #1a3a4f; color: #1a3a4f;padding: 10px 20px;">
-                        See More
+                        @lang('messages.see_more')
                     </a>
                 </div>
             </div>
@@ -317,13 +317,13 @@
         <div class="banner py-0 w-100">
             <div class="banner-overlay"></div>
             <div class="banner-content">
-                <h1 style="font-size: 60px;">Your help means a lot</h1>
-                <p style="font-size: 41px;">donate or be a volunteer now!</p>
+                <h1 style="font-size: 60px;">@lang('messages.help_means')</h1>
+                <p style="font-size: 41px;">@lang('messages.donate_now')</p>
                 <a href="{{ url('/donations') }}" class="btn btn-custom btn-primary" id="button-event"
-                    style="font-size: 24px;">Donate</a>
+                    style="font-size: 24px;">@lang('messages.btn_donate')</a>
                 <a href="{{ url('/events') }}">
                     <button class="btn btn-primary btn-custom" id="button-event"
-                        style="font-size: 24px;">Sukarelawan</button>
+                        style="font-size: 24px;">@lang('messages.btn_volunteer')</button>
                 </a>
             </div>
         </div>
@@ -341,12 +341,12 @@
                         <div class="d-flex flex-wrap align-items-center pb-2">
                             <!-- Paragraf -->
                             <p class="text-muted mb-2 flex-grow-1 col-12 col-lg-10">
-                                Jelajahi kisah inspiratif dan info seputar event donasi. Baca sekarang dan beri dukungan.
+                                @lang('messages.blog_intro')
                             </p>
                             <!-- Tombol -->
                             <a href="{{ route('blog') }}" class="btn rounded rounded-5  fw-light col-4 col-lg-2"
                                 style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">
-                                See More
+                                @lang('messages.see_more')
                             </a>
                         </div>
                     </div>
@@ -390,7 +390,7 @@
                                         </div>
                                         <div class="d-flex w-100">
                                             <a href="{{ route('blog.show', $item->slug) }}" class="btn blog-btn w-100">
-                                                Read More
+                                                @lang('messages.btn_read_more')
                                             </a>
                                         </div>
                                     </div>
@@ -407,7 +407,7 @@
 
     <!-- FAQ Content Section -->
     <section id="accodrion" class="space-section">
-        <h1 class="bolder-text text-dark text-center mb-5 ">Frequently Asked Question</h1>
+        <h1 class="bolder-text text-dark text-center mb-5 ">@lang('messages.faq_title')</h1>
         <div class="container">
             <div class="row d-flex align-items-stretch">
                 <!-- Kolom Kiri: Gambar -->
