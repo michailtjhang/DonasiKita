@@ -19,7 +19,7 @@
                     <p class="text-dark bolder-text">Popular Articles</p>
                 </div>
                 <div class="col-sm-auto mt-2 fs-6 ">
-                    <a style="text-decoration:#2185BB!important;" href="{{ route('blog') }}">See More</a>
+                    <a style="text-decoration:#2185BB!important;" href="{{ route('blog') }}">@lang('messages.see_more')</a>
                 </div>
             </div>
             <div class="recent-post-wrap">

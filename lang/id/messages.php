@@ -1,5 +1,29 @@
 <?php 
 
 return [
-  
+    'hero_title' => 'Bantu Sekarang',
+    'donate_message' => 'Berikan harapan, wujudkan perubahan. Mari berbagi kebaikan hari ini!',
+    'see_more' => 'Lihat Selengkapnya',
+    'faq_title' => 'Pertanyaan yang Sering Diajukan',
+    'upcoming_event' => 'Ikuti Acara Kami yang Akan Datang',
+    'blog_intro' => 'Jelajahi kisah inspiratif dan info seputar event donasi. Baca sekarang dan beri dukungan.',
+    'help_means' => 'Bantuan Anda Sangat Berarti',
+    'donate_now' => 'Donasi atau Jadi Relawan Sekarang!',
+    'btn_donate' => 'Donasi',
+    'btn_volunteer' => 'Sukarelawan',
+    'btn_see_more' => 'Lihat Semua Kategori',
+    'donation_header_title' => 'Bergabung dalam Gerakan Kebaikan',
+    'donation_header_subtitle' => 'Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.',
+    'event_header_title' => 'Ikuti Beragam Acara Kebaikan',
+    'event_header_subtitle' => 'Temukan berbagai event menarik yang mendukung misi kemanusiaan.',
+    'articles_header_title' => 'Temukan Kisah & Inspirasi Terbaru!',
+    'articles_header_subtitle' => '"Dari aksi kemanusiaan hingga cerita penuh makna, temukan <br> artikel menarik yang menginspirasi langkah baikmu."',
+    'articles_subtitle' => 'Temukan berbagai Blog menarik yang mendukung misi kemanusiaan dan edukasi tentang bencana.',
+    'btn_read_more' => 'Baca Selengkapnya',
+    'profile_followed_event_title' => 'Event yang Diikuti',
+    'profile_followed_event_subtitle' => 'Selesaikan Event untuk membantu saudara kita.',
+    'btn_see_more_event' => 'Ikuti Event Lainnya',
+    'profile_history_event_title' => 'History yang pernah diikuti',
+    'profile_history_event_subtitle' => 'Semua progress anda akan disimpan dan menjadi langkah untuk mengubah dunia.',
+    'profile_donation_title' => 'Terimakasih telah membantu mereka yang membutuhkan.',
 ];
