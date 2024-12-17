@@ -150,7 +150,7 @@
             width: 100%;
             min-width: 240px;
             /* Menambahkan minimum width 200px */
-            max-width: 350px;
+            /* max-width: 350px; */
             /* Menjaga lebar tidak lebih dari 350px */
             padding: 0;
             box-sizing: border-box;
@@ -210,7 +210,7 @@
 
     <!-- Kategori Event -->
     <div class="container pt-2 mb-5">
-        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
+        <div class="row justify-content-center">
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
                 <a href="{{ route('events.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
@@ -218,15 +218,15 @@
             </div>
 
             <!-- Wadah kartu -->
-            <div id="card-container" class="row d-flex justify-content-center">
+            <div id="" class="row">
                 @forelse ($events as $event)
-                    <div class="col-md-6 col-lg-4 d-flex justify-content-center mt-4">
-                        <div class="event-card rounded rounded-5">
+                    <div class="col-md-6 col-lg-4 mt-4">
+                        <div class="event-card rounded-5">
                             <!-- Thumbnail -->
                             @if ($event->thumbnail && $event->thumbnail->file_path)
                                 <a href="{{ route('events.show', $event->slug) }}">
                                     <img src="{{ $event->thumbnail->file_path }}" alt="{{ $event->title }}"
-                                        class="img-fluid overflow-hidden">
+                                        class="img-fluid overflow-hidden" style="height: 450px !important;">
                                 </a>
                             @else
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
@@ -246,7 +246,7 @@
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
                                 <p class="event-title fw-bold">
-                                    {{ Str::limit(strip_tags($event->title), 8, '...') }}
+                                    {{ Str::limit(strip_tags($event->title), 55, '...') }}
                                 </p>
                                 <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
                                     <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -

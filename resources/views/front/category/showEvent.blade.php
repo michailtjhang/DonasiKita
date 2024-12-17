@@ -169,7 +169,7 @@
             width: 100%;
             min-width: 240px;
             /* Menambahkan minimum width 200px */
-            max-width: 350px;
+            /* max-width: 350px; */
             /* Menjaga lebar tidak lebih dari 350px */
             padding: 0;
             box-sizing: border-box;
@@ -252,12 +252,12 @@
     <div class="container mt-5">
 
         <!-- Event -->
-        <div class="row justify-content-center px-lg-5 mx-lg-5 px-md-5 mx-md-5 px-2 mx-2">
+        <div class="row justify-content-center">
             <h2 class="fw-bold">Event</h2>
             <p class="text-muted">Menampilkan event kategori "{{ ucfirst($categories) }}"</p>
 
             <!-- Card Container -->
-            <div id="card-container" class="row d-flex justify-content-center gx-2">
+            <div id="card-container" class="row d-flex justify-content-center ">
                 @forelse ($events as $event)
                     <div class="col-md-6 col-lg-4 d-flex justify-content-center mt-4">
                         <div class="event-card rounded rounded-5">
@@ -285,7 +285,7 @@
                             <div class="event-details event-card-spacer">
                                 <!-- Title -->
                                 <p class="event-title fw-bold">
-                                    {{ Str::limit(strip_tags($event->title), 8, '...') }}
+                                    {{ Str::limit(strip_tags($event->title), 55, '...') }}
                                 </p>
                                 <div class="event-info mt-2 d-flex justify-content-between event-card-spacer-short mb-3">
                                     <span><i class="fa fa-clock"></i> {{ $event->detailEvent->start->format('H:i') }} -
