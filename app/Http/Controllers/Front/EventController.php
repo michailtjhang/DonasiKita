@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EventRegistration;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EventRegistrationNotification;
 
@@ -31,8 +32,13 @@ class EventController extends Controller
     public function show(string $slug)
     {
         $event = Event::with('category', 'thumbnail', 'detailEvent', 'location')
-            ->whereHas('detailEvent', function ($query) {
-                $query->where('end', '>=', now()); // Pastikan event belum selesai
+            ->where(function ($query) {
+                $query->whereHas('detailEvent', function ($subQuery) {
+                    $subQuery->where('end', '>=', now()); // Event yang belum selesai
+                })
+                    ->orWhereHas('eventRegistration', function ($subQuery) {
+                        $subQuery->where('user_id', Auth::id()); // Event yang sudah selesai, tapi user pernah join
+                    });
             })
             ->whereSlug($slug)
             ->firstOrFail();

@@ -252,14 +252,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h4>Visitors</h4>
+                            <h4>Action Visitors</h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex">
                             <p class="d-flex flex-column">
-                                <span id="currentVisitors" class="text-bold text-lg">{{ $currentMonthVisitors }} People</span>
-                                <span>Visitors This Month</span>
+                                <span id="currentVisitors" class="text-bold text-lg">{{ $currentMonthVisitors }} Action</span>
+                                <span>Action Visitors This Month</span>
                             </p>
                             <p class="ml-auto d-flex flex-column text-right">
                                 @if ($percentageChange > 0)
