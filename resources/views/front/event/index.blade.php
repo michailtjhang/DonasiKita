@@ -212,7 +212,7 @@
     <div class="container pt-2 mb-5">
         <div class="row justify-content-center">
             <div class="d-flex justify-content-between align-items-center mt-3">
-                <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
+                <p class="text-muted mb-0"></p>
                 <a href="{{ route('events.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
                     style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
             </div>

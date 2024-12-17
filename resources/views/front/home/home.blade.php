@@ -189,14 +189,17 @@
                                         </div>
                                     @endif
                                     <div class="card-body px-4">
-                                        <p class="card-text">
-                                            {{ Str::limit(strip_tags($item->title), 35, '...') }}
+                                        <p class="card-text text-dark">
+                                            {{ Str::limit(strip_tags($item->title), 50, '...') }}
+                                        </p>
+                                        <p class="card-description text-muted" style= "font-size:0.8rem ; width:90%; text-align: justify;">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                         <p class="text-dark mb-2">
                                             <i class="fa fa-user"></i>
                                             {{ $item->towards ?? 'Anonim' }}
                                         </p>
-                                        <p class="text-primary text-small mb-0">
+                                        <p class="text-primary text-small mb-1">
                                             Target
                                         <div class="progress" style="height: 10px;">
                                             <div class="progress-bar progress-bar-animated" role="progressbar"

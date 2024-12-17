@@ -1,7 +1,7 @@
 <!-- Navbar Section -->
 <section id="navbar" class="px-5 mb-5">
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3" style="background-color: rgba(0, 0, 0, 0.5);">
         <div class="container d-flex align-items-center">
 
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -12,7 +12,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                <ul class="navbar-nav ms-auto d-flex align-items-center" style="gap: 5px">
                     <li class="nav-item">
                         <a class="nav-link @if (Request::segment(1) == '') active @endif" aria-current="page"
                             href="{{ url('/') }}">Home</a>
@@ -36,7 +36,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Language
+                            <!-- Ganti teks 'Language' dengan logo gambar -->
+                            <img src="{{ asset('/images/language.svg') }}" alt="Language Logo" width="45" height="45">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                             <li><a class="dropdown-item" href="?lang=en">English</a></li>
