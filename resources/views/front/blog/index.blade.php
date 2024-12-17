@@ -268,9 +268,8 @@
     <section class="hero-section2 w-100" style="background-image: url('/images/blog-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Temukan Kisah & Inspirasi Terbaru!</h1>
-            <p class="hero-subtitle2">"Dari aksi kemanusiaan hingga cerita penuh makna, temukan <br> artikel menarik yang
-                menginspirasi langkah baikmu."</p>
+            <h1 class="hero-title2">@lang('messages.articles_header_title')</h1>
+            <p class="hero-subtitle2">@lang('messages.articles_header_subtitle')</p>
         </div>
     </section>
 
@@ -300,11 +299,11 @@
                 <div>
                     <p
                         style="font-size: 18px; font-weight: 400; font-family: 'Poppins', sans-serif; color: #0F3D56; line-height: 1.5;">
-                        Temukan berbagai Blog menarik yang mendukung misi kemanusiaan dan edukasi tentang bencana.
+                        @lang('messages.articles_subtitle')
                     </p>
                 </div>
                 <a href="{{ route('blogs.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
-                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
+                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">@lang('messages.btn_see_more')</a>
             </div>
 
             <div class="row" id="card-container">
@@ -346,7 +345,7 @@
                                 </div>
                                 <div class="d-flex w-100 justify-content-center mt-2">
                                     <a href="{{ route('blog.show', $article->slug) }}" class="btn blog-btn">
-                                        Read More
+                                        @lang('messages.btn_read_more')
                                     </a>
                                 </div>
                             </div>

@@ -26,19 +26,30 @@ class SocialiteController extends Controller
         if ($registeredUser) {
             // Login the registered user
             Auth::login($registeredUser);
-            return redirect()->intended('tickets');
+            return redirect()->intended('');
         } else {
-            // Generate id_number for new user
-            $latestUser = User::latest()->first();
+            // Cari user terakhir berdasarkan ID terbaru
+            $user = User::latest('id')->first();
             $kodeUser = "US";
 
-            if ($latestUser == null) {
-                $id_number = $kodeUser . "001";
+            // Jika user terakhir belum ada
+            if (!$user || !$user->id_user) {
+                $id_user = $kodeUser . "001";
             } else {
-                $id_number = $latestUser->id_number;
-                $urutan = (int) substr($id_number, 2, 3);
-                $urutan++;
-                $id_number = $kodeUser . sprintf("%03s", $urutan);
+                // Ambil id_user terakhir
+                $id_user_terakhir = $user->id_user;
+
+                // Pastikan id_user mengikuti format "USXXX"
+                if (preg_match('/^US(\d{3})$/', $id_user_terakhir, $matches)) {
+                    // Ambil angka terakhir, tambahkan 1
+                    $urutan = (int) $matches[1] + 1;
+                } else {
+                    // Jika format tidak sesuai, reset ke 001
+                    $urutan = 1;
+                }
+
+                // Format ulang ID user dengan padding nol di depan
+                $id_user = $kodeUser . sprintf("%03d", $urutan);
             }
 
             // Create or update the user with Socialite data and generated id_number
@@ -51,13 +62,14 @@ class SocialiteController extends Controller
                 'password' => hash('sha256', $socialUser->email),
                 'access_token' => $socialUser->token,
                 'refresh_token' => $socialUser->refreshToken,
-                'id_number' => $id_number, // Set id_number for the user
+                'id_user' => $id_user, // Set id_number for the user
+                'email_verified_at' => now(),
             ]);
         }
 
         // Log in the newly created user
         Auth::login($user);
 
-        return redirect()->intended('tickets');
+        return redirect()->intended('');
     }
 }

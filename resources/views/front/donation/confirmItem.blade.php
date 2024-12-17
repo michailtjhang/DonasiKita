@@ -79,12 +79,11 @@
         <!-- Informasi -->
         <div class="info-section">
             <img src="{{ asset('images/donate/vector_blue.svg') }}" alt="Icon" style="width: 24px; height: 24px;">
-            <div>Bukti Donasi Barang Anda</div>
+            <div>Konfirmasi Bukti Donasi Barang Anda</div>
         </div>
 
         <!-- Form Konfirmasi -->
         <div class="form-section">
-            <h2 class="section-title">Konfirmasi Pengiriman Barang</h2>
             <form id="confirmationForm"
                 action="{{ route('donations.confirm-item', ['slug' => $donation->slug, 'temp_id' => $id]) }}" method="POST"
                 enctype="multipart/form-data">

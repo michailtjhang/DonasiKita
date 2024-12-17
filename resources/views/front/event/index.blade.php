@@ -182,8 +182,8 @@
     <section class="hero-section2 w-100" style="background-image: url('/images/event-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Ikuti Beragam Acara Kebaikan</h1>
-            <p class="hero-subtitle2-event">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
+            <h1 class="hero-title2">@lang('messages.event_header_title')</h1>
+            <p class="hero-subtitle2-event">@lang('messages.event_header_subtitle')</p>
         </div>
     </section>
     <!-- End Hero Section -->
@@ -212,9 +212,9 @@
     <div class="container pt-2 mb-5">
         <div class="row justify-content-center">
             <div class="d-flex justify-content-between align-items-center mt-3">
-                <p class="text-muted mb-0">Temukan berbagai event menarik yang mendukung misi kemanusiaan.</p>
+                <p class="text-muted mb-0"></p>
                 <a href="{{ route('events.categories') }}" class="btn rounded rounded-5 hover-bg-primary hover-text-white"
-                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">See All Categories</a>
+                    style="border: 2px solid #1a3a4f; color: #1a3a4f; padding: 5px 10px;">@lang('messages.btn_see_more')</a>
             </div>
 
             <!-- Wadah kartu -->

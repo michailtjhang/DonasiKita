@@ -73,6 +73,7 @@
             color: #0f3d56 !important;
             margin-top: 10px;
         }
+
         .text-info1 {
             font-size: 10px;
             font-weight: 600;
@@ -92,8 +93,7 @@
 
         <!-- Form Konfirmasi -->
         <div class="form-section">
-            <h2 class="section-title">Konfirmasi Donasi Barang</h2>
-
+            
             <form action="{{ route('donations.store.item', $donation->slug) }}" method="POST" id="confirmationForm">
                 @csrf
 
@@ -136,7 +136,9 @@
                         placeholder="Masukkan deskripsi barang yang ingin didonasikan..."></textarea>
                     <!-- update : ux writing -->
                     <div class="text-info">*Pastikan deskripsi barang sesuai untuk mempermudah pengelolaan kami.*</div>
-                    <div class="text-info1">*Masih bingung? Hubungi kami untuk panduan donasi barang dan informasi lebih lengkap!*</div>
+                    <div class="text-info1">
+                        *Silahkan tanyakan jika masih ada kebingungan, <a href="https://wa.me" target="_blank">hubungi kami disini</a>.*
+                    </div>
 
                     @error('deskripsi_barang')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -161,4 +163,41 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        document.getElementById('confirmationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah form dikirim langsung
+
+            // Ambil nilai deskripsi barang
+            const deskripsiBarang = document.getElementById('deskripsi_barang').value.trim();
+
+            // Validasi jika deskripsi kosong
+            if (deskripsiBarang === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Harap masukkan deskripsi barang yang ingin didonasikan!',
+                });
+                return;
+            }
+
+            // Tampilkan konfirmasi dengan SweetAlert2
+            Swal.fire({
+                title: 'Konfirmasi Donasi Barang',
+                text: 'Apakah Anda yakin ingin mengirim konfirmasi donasi barang ini?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Kirim',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit(); // Kirim form jika dikonfirmasi
+                }
+            });
+        });
+    </script>
 @endsection

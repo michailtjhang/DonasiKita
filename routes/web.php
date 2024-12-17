@@ -20,6 +20,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Front\EventController as FrontEventController;
 use App\Http\Controllers\Front\CategoryController as FrontCategoryController;
 use App\Http\Controllers\Front\DonationController as FrontDonationController;
+use App\Http\Controllers\LocaleController;
 
 // Route Auth
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route Landing Page
-Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
+Route::group(['middleware' => ['verifiedEmail', 'logvisitor', 'setlocale']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
     Route::get('/about', [HomeController::class, 'about'])->name('about');
@@ -79,6 +80,8 @@ Route::group(['middleware' => ['verifiedEmail', 'logvisitor']], function () {
     Route::post('/donations/{slug}/confirm-item/{temp_id}', [FrontDonationController::class, 'confirmItem'])->name('donations.confirm-item');
 
     Route::resource('profile', ProfileController::class)->only(['index', 'update', 'destroy']);
+
+    Route::get('/locale/{lang}', [LocaleController::class, 'setLocale']);
 });
 
 // Route Admin CMS

@@ -85,9 +85,9 @@
             flex-direction: column;
             margin: 10px;
             /* Memberikan jarak antar card */
-            min-height: 380px;
+            min-height: 400px;
             /* Tinggi minimum untuk seragam */
-            max-height: 380px;
+            max-height: 400px;
             /* Tinggi maksimum untuk seragam */
         }
 
@@ -248,8 +248,8 @@
     <section class="hero-section2 w-100 align-items-center" style="background-image: url('/images/donation-hero.svg');">
         <div class="hero-overlay2"></div>
         <div class="hero-content2 text-left px-5 ms-5">
-            <h1 class="hero-title2">Bergabung dalam Gerakan Kebaikan</h1>
-            <p class="hero-subtitle2">Ribuan donatur telah membantu, sekarang giliran Anda untuk membuat perbedaan nyata.</p>
+            <h1 class="hero-title2">@lang('messages.donation_header_title')</h1>
+            <p class="hero-subtitle2">@lang('messages.donation_header_subtitle')</p>
         </div>
     </section>
     <!-- End Hero Section -->
@@ -290,13 +290,16 @@
                                 <h5 class="card-title text-dark">
                                     {{ Str::limit(strip_tags($donation->title), 50, '...') }}
                                 </h5>
-                                <p class="card-text text-muted">{{ $donation->towards }}</p>
-                                <div class="progress my-3">
+                                <h1 class="card-description text-muted" style= "font-size:0.8rem ; width:90%; text-align: justify;">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </h1>
+                                <p class="card-text text-primary">{{ $donation->towards }}</p>
+                                <div class="progress" style="margin-top: 1px">
                                     <div class="progress-bar" role="progressbar"
                                         style="width: {{ (str_replace(['Rp', '.', ','], '', $donation->total_donated) / intval(str_replace(['Rp', '.', ','], '', $donation->target_amount))) * 100 }}%">
                                     </div>
                                 </div>
-                                <p class="card-text text-dark">
+                                <p class="card-text text-dark" style="margin-top: 5px;">
                                     <strong>{{ number_format($donation->total_donated, 0, ',', '.') }}</strong> /
                                     {{ number_format($donation->target_amount, 0, ',', '.') }}</p>
                                 <div class="d-flex justify-content-between">

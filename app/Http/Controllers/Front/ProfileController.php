@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\User;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\EventRegistration;
@@ -39,11 +40,28 @@ class ProfileController extends Controller
                 ->with(['event', 'event.thumbnail', 'event.category'])
                 ->get();
 
+            // Ambil daftar donasi user dengan pagination 5 item per halaman
+            $donations = Donation::where('user_id', Auth::id())
+                ->with(['need', 'receipt'])
+                ->paginate(5);
+
+            // Hitung total barang dan total dana yang didonasikan
+            $totalItems = Donation::where('user_id', Auth::id())
+                ->whereNull('amount') // Jika amount null, berarti barang
+                ->count();
+
+            $totalAmount = Donation::where('user_id', Auth::id())
+                ->whereNotNull('amount') // Jika amount tidak null, berarti dana
+                ->sum('amount');
+
             return view('front.profile.profile', [
                 'profile' => $profile,
                 'futureEvents' => $futureEvents,
                 'pastEvents' => $pastEvents,
                 'page_title' => 'Profile',
+                'donations' => $donations,
+                'totalItems' => $totalItems,
+                'totalAmount' => $totalAmount,
             ]);
         } else {
             return redirect()->route('login');
