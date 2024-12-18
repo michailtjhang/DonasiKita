@@ -34,7 +34,7 @@ class DonationStatusEmail extends Mailable
     public function build()
     {
         return $this->view('backend.emails.donation-status')
-            ->subject($this->status === 'approved' ? 'Donasi Anda Diterima' : 'Donasi Anda Ditolak')
+            ->subject($this->status === 'approved' ? 'Donasi Anda Diterima' : 'Donasi Anda Tidak Memenuhi Verifikasi')
             ->with([
                 'status' => $this->status,
                 'donorName' => $this->donorName,
