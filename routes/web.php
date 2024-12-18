@@ -137,5 +137,7 @@ Route::group(['middleware' => ['auth', 'useradmin', 'verified']], function () {
 
         Route::post('/article/upload-image', [BlogController::class, 'uploadImage'])
             ->name('article.uploadImage');
+
+        Route::get('profile', [ProfileController::class, 'indexAdmin'])->name('profileAdmin');
     });
 });
