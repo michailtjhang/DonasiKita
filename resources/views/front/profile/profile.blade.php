@@ -460,8 +460,7 @@
                                         {{ $donation->need->title }}
                                     </div>
                                     <div style="color: #6C757D; font-size: 18px;">
-                                        Rp.
-                                        {{ $donation->amount == null ? $donation->description_item : number_format($donation->amount, 2) }}
+                                        {{ $donation->amount == null ? $donation->description_item : 'Rp.' . number_format($donation->amount, 0, ',', '.') }}
                                     </div>
                                 </div>
                                 <div style="color: #007BFF; font-size: 14px;">

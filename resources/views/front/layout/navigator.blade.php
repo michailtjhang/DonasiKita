@@ -1,11 +1,13 @@
 <!-- Navbar Section -->
 <section id="navbar" class="px-5 mb-5">
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3" style="background-color: rgba(0, 0, 0, 0.5);">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-5 py-3"
+        style="background-color: rgba(0, 0, 0, 0.5);">
         <div class="container d-flex align-items-center">
 
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{ asset('/images/logo-navbar.svg') }}" alt="" srcset="" class="logo-brand img-fluid">
+                <img src="{{ asset('/images/logo-navbar.svg') }}" alt="" srcset=""
+                    class="logo-brand img-fluid">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +39,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <!-- Ganti teks 'Language' dengan logo gambar -->
-                            <img src="{{ asset('/images/language.svg') }}" alt="Language Logo" width="45" height="45">
+                            <img src="{{ asset('/images/language.svg') }}" alt="Language Logo" width="45"
+                                height="45">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                             <li><a class="dropdown-item" href="{{ url('/locale/en') }}">English</a></li>
@@ -47,21 +50,28 @@
                     @auth
                         <li class="nav-item">
                             <div class="dropdown">
-                                <button class="dropbtn bg-light"><img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
+                                <button class="dropbtn bg-light"><img
+                                        src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
                                         alt="Avatar" class="avatar"></button>
                                 <div class="dropdown-content bg-light profile-dropdown bg-light px-2 py-2">
                                     <hr class="dropdown-divider">
                                     <div class="text-center">
-                                        <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}" alt="Avatar"
-                                            class="avatar mb-2">
+                                        <img src="{{ auth()->user()->media ? auth()->user()->media->cloudinary_url : 'https://www.w3schools.com/w3images/avatar2.png' }}"
+                                            alt="Avatar" class="avatar mb-2">
                                     </div>
                                     <div class="text-center px-2 mb-2">
                                         <p class="text-dark text-large">{{ Auth::user()->name }}</p>
                                     </div>
                                     <hr class="dropdown-divider">
                                     <div class="text-center px-2 mb-3">
-                                        <a href="{{ route('profile.index') }}" class="btn btn-primary w-100">See Profile</a>
+                                        <a href="{{ route('profile.index') }}" class="btn btn-primary w-100">See
+                                            Profile</a>
                                     </div>
+                                    @if (Auth::user()->role_id != '01j8kkdk3abh0a671dr5rqkshy')
+                                        <div class="text-center px-2 mb-3">
+                                            <a href="{{ route('dashboard') }}" class="btn btn-primary w-100">Dashboard</a>
+                                        </div>
+                                    @endif
                                     <div class="text-center px-2">
                                         <a href="{{ route('logout') }}" class="btn btn-primary w-100">Logout Account</a>
                                     </div>

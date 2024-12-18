@@ -212,4 +212,15 @@ class ProfileController extends Controller
             return response()->json(['error' => 'No profile picture found.'], 404);
         }
     }
+
+    public function indexAdmin(Request $request)
+    {
+        // Ambil data pengguna
+        $profile = User::findOrFail(Auth::user()->id);
+
+        return view('backend.profile.index', [
+            'profile' => $profile,
+            'page_title' => 'Profile',
+        ]);
+    }
 }

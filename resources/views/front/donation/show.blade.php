@@ -289,7 +289,7 @@
                     <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
                         <!-- Button Donasi Barang -->
                         <button id="barangBtn" style="display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #6cb2eb; border: none; border-radius: 5px; color: white; font-size: 16px; cursor: pointer;">
-                            <img src="/images/donate/donasi.svg" alt="Barang Icon" style="width: 20px; height: 20px;" />
+                            <img src="/images/donate/Item.svg" alt="Barang Icon" style="width: 20px; height: 20px;" />
                             Donasi Barang
                         </button>
                         <!-- Button Donasi Uang -->
