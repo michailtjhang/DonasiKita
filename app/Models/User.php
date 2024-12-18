@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
     // Ambil data berdasarkan role
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
     public function media()
