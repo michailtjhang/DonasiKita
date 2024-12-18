@@ -237,7 +237,7 @@
         <!-- Info Section -->
         <div class="info-section">
             <img src="/images/donate/vector_blue.svg" alt="Icon">
-            <div class="info-title">Bantuan Kemanusiaan untuk Palestina</div>
+            <div class="info-title">Donasi Uang</div>
         </div>
 
         <form action="{{ route('donations.store.amount', $donation->slug) }}" method="POST" id="confirmationForm">
