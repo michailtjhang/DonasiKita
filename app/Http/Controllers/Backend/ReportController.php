@@ -37,7 +37,7 @@ class ReportController extends Controller
                         : '<span class="badge badge-success">Amount</span>';
                 })
                 ->addColumn('name', function ($donations) {
-                    return $donations->sender_name?? $donations->tracking_number;
+                    return $donations->sender_name ?? $donations->tracking_number;
                 })
                 ->addColumn('proof', function ($donations) {
                     return $donations->receipt->cloudinary_url ?? ''; // Asumsikan kolom `proof_url` menyimpan URL gambar
@@ -60,18 +60,19 @@ class ReportController extends Controller
 
     public function confirmDonation($id, Request $request)
     {
-        // Validasi dasar
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:confirmed,rejected',
-            'type_donation' => 'required|in:amount,item',
         ]);
 
-        // Tambahkan validasi untuk 'amount' jika tipe donasi adalah 'amount'
-        $validator->sometimes('amount', 'required|numeric|min:1', function ($input) {
-            return $input->type_donation === 'amount' && $input->status === 'confirmed';
+        // Tambahkan validasi untuk 'type_donation' dan 'amount' jika status adalah 'confirmed'
+        $validator->sometimes('type_donation', 'required|in:amount,item', function ($input) {
+            return $input->status === 'confirmed';
         });
 
-        // Jika validasi gagal, kirim respons error
+        $validator->sometimes('amount', 'required|numeric|min:1', function ($input) {
+            return $input->status === 'confirmed' && $input->type_donation === 'amount';
+        });
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
@@ -98,6 +99,10 @@ class ReportController extends Controller
         } else {
             $donation->status = 'rejected';
             $donation->save();
+            
+            // Mengirim email kepada donor
+            $donorName = $donation->name;
+            Mail::to($donation->email)->send(new DonationStatusEmail('rejected', $donorName));
 
             // Jika status ditolak, hapus donasi (opsional)
             $donation->delete();
@@ -136,7 +141,7 @@ class ReportController extends Controller
                     return $donations->need->towards;
                 })
                 ->addColumn('name_donation', function ($donations) {
-                    return $donations->sender_name?? $donations->tracking_number;
+                    return $donations->sender_name ?? $donations->tracking_number;
                 })
                 ->addColumn('donation', function ($donations) {
                     return $donations->amount ?
