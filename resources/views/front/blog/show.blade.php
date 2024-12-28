@@ -2,24 +2,20 @@
 
 @section('seoMeta')
     <!-- Meta tags for SEO -->
-    <meta name="description"
-        content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
-    <meta name="keywords"
-        content="{{ $keywords }}">
+    <meta name="description" content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
+    <meta name="keywords" content="{{ $keywords }}">
     <meta name="author" content="{{ config('app.name', 'DonasiKita') }} Team">
 
     <!-- Open Graph Meta Tags for social media sharing -->
     <meta property="og:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
-    <meta property="og:description"
-        content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
     <meta property="og:image" content="{{ $article->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="article">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:title" content="{{ $page_title ?? 'HomePage' }} | {{ config('app.name', 'DonasiKita') }}">
-    <meta name="twitter:description"
-        content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($article->content), 150, '...') }}">
     <meta name="twitter:image" content="{{ $article->thumbnail->file_path ?? asset('images/logo-navbar.svg') }}">
 
     <!-- Canonical URL -->
@@ -358,6 +354,11 @@
             margin: 0;
         }
 
+        #imgUNcover {
+            width: 100%;
+            object-fit: contain;
+        }
+
         /* Medium Large devices */
         @media (max-width: 1399px) {
             .blog-content {
@@ -511,7 +512,7 @@
                             <div class="">
                                 @if ($article->thumbnail && $article->thumbnail->file_path)
                                     <img class="img img-fluid rounded rounded-3" src="{{ $article->thumbnail->file_path }}"
-                                        alt="{{ $article->title }}">
+                                        alt="{{ $article->title }}" id="imgUNcover">
                                 @else
                                     <span>No cover image available</span>
                                 @endif
